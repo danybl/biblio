@@ -73,9 +73,10 @@ public class Membre {
             rset.close();
             return tupleMembre;
 
-        } else {
-            return null;
         }
+        rset.close();
+        return null;
+
     }
 
     /**

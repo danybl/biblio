@@ -81,9 +81,10 @@ public class Reservation {
             tupleReservation.dateReservation = rset.getDate(4);
             rset.close();
             return tupleReservation;
-        } else {
-            return null;
         }
+        rset.close();
+        return null;
+
     }
 
     /**
@@ -103,9 +104,10 @@ public class Reservation {
             tupleReservation.dateReservation = rset.getDate(4);
             rset.close();
             return tupleReservation;
-        } else {
-            return null;
         }
+        rset.close();
+        return null;
+
     }
 
     /**
@@ -125,9 +127,10 @@ public class Reservation {
             tupleReservation.dateReservation = rset.getDate(4);
             rset.close();
             return tupleReservation;
-        } else {
-            return null;
         }
+        rset.close();
+        return null;
+
     }
 
     /**

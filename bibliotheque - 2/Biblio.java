@@ -218,18 +218,18 @@ public class Biblio {
         String commande = tokenizer.nextToken();
         if(commande.equals("exit")) {
             return true;
-        } else {
-            return false;
         }
+        return false;
+
     }
 
     /** lecture d'une chaine de caract�res de la transaction entrée à l'écran */
     static String readString(StringTokenizer tokenizer) throws BiblioException {
         if(tokenizer.hasMoreElements()) {
             return tokenizer.nextToken();
-        } else {
-            throw new BiblioException("autre paramètre attendu");
         }
+        throw new BiblioException("autre paramètre attendu");
+
     }
 
     /**
@@ -245,9 +245,9 @@ public class Biblio {
                     + token
                     + "\"");
             }
-        } else {
-            throw new BiblioException("autre paramètre attendu");
         }
+        throw new BiblioException("autre paramètre attendu");
+
     }
 
     /**
@@ -263,9 +263,9 @@ public class Biblio {
                     + token
                     + "\"");
             }
-        } else {
-            throw new BiblioException("autre paramètre attendu");
         }
+        throw new BiblioException("autre paramètre attendu");
+
     }
 
     /**
@@ -282,8 +282,8 @@ public class Biblio {
                     + token
                     + "\"");
             }
-        } else {
-            throw new BiblioException("autre paramètre attendu");
         }
+        throw new BiblioException("autre paramètre attendu");
+
     }
 }//class

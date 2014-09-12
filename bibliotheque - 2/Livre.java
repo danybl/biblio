@@ -74,10 +74,10 @@ public class Livre {
             tupleLivre.datePret = rset.getDate(6);
             rset.close();
             return tupleLivre;
-        } else {
-            rset.close();
-            return null;
         }
+        rset.close();
+        return null;
+
     }
 
     /**
