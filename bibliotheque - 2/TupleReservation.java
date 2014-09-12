@@ -1,7 +1,7 @@
 import java.sql.*;
 
 /**
- * Permet de repr�senter un tuple de la table membre.
+ * Permet de représenter un tuple de la table membre.
  * Je check juste si ca marche
  */
 

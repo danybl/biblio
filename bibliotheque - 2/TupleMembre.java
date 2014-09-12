@@ -1,5 +1,5 @@
 /**
- * Permet de représenter un tuple de la table membre.
+ * Permet de reprÃ©senter un tuple de la table membre.
  * 
  */
 

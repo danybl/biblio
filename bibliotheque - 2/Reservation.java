@@ -3,10 +3,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Permet d'effectuer les accès à la table reservation.
+ * Permet d'effectuer les accÃ¨s Ã  la table rÃ©servation.
  *<pre>
  *
- * Cette classe gère tous les accès à la table reservation.
+ * Cette classe gÃ©re tous les accÃ¨s Ã  la table rÃ©servation.
  *
  *</pre>
  */
@@ -26,7 +26,7 @@ public class Reservation {
     private Connexion cx;
 
     /**
-     * Creation d'une instance.
+     * CrÃ©ation d'une instance.
      */
     public Reservation(Connexion cx) throws SQLException {
 
@@ -44,7 +44,7 @@ public class Reservation {
     }
 
     /**
-     * Retourner la connexion associée.
+     * Retourner la connexion associï¿½e.
      */
     public Connexion getConnexion() {
 
@@ -87,7 +87,7 @@ public class Reservation {
     }
 
     /**
-     * Lecture de la première reservation d'un livre.
+     * Lecture de la premiï¿½re reservation d'un livre.
      */
     public TupleReservation getReservationLivre(int idLivre) throws SQLException {
 
@@ -109,7 +109,7 @@ public class Reservation {
     }
 
     /**
-     * Lecture de la première reservation d'un livre.
+     * Lecture de la premiï¿½re reservation d'un livre.
      */
     public TupleReservation getReservationMembre(int idMembre) throws SQLException {
 
@@ -131,7 +131,7 @@ public class Reservation {
     }
 
     /**
-     * Réservation d'un livre.
+     * Rï¿½servation d'un livre.
      */
     public void reserver(int idReservation,
         int idLivre,

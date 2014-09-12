@@ -1,7 +1,7 @@
 import java.sql.*;
 
 /**
- * Permet de représenter un tuple de la table livre.
+ * Permet de reprÃ©senter un tuple de la table livre.
  * 
 */
 
