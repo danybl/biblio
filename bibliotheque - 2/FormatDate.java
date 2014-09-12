@@ -3,7 +3,7 @@ import java.util.Date;
 
 /**
  * Permet de valider le format d'une date en YYYY-MM-DD et de la convertir en un
- * objet Date.
+ * objet Date .
  * 
  */
 public class FormatDate {
