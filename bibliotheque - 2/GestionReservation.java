@@ -2,17 +2,17 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 /**
- * Gestion des transactions de reliées aux réservations de livres
- * par les membres dans une bibliothèque.
+ * Gestion des transactions de reliÃ©es aux rÃ©servations de livres
+ * par les membres dans une bibliothÃ¨que.
  *
- * Ce programme permet de gérer les transactions réserver,
+ * Ce programme permet de gÃ©rer les transactions rÃ©server,
  * prendre et annuler.
  *
- * Pré-condition
- *   la base de données de la bibliothèque doit exister
+ * PrÃ©-condition
+ *   la base de donnÃ©es de la bibliothÃ¨que doit exister
  *
  * Post-condition
- *   le programme effectue les maj associées à chaque
+ *   le programme effectue les maj associÃ©es Ã  chaque
  *   transaction
  * </pre>
  */
@@ -28,16 +28,16 @@ public class GestionReservation {
     private Connexion cx;
 
     /**
-     * Creation d'une instance.
-     * La connection de l'instance de livre et de membre doit être la même que cx,
-     * afin d'assurer l'intégrité des transactions.
+     * CrÃ©ation d'une instance.
+     * La connection de l'instance de livre et de membre doit Ãªtre la mÃªme que cx,
+     * afin d'assurer l'intÃ©gritÃ© des transactions.
      */
     public GestionReservation(Livre livre,
         Membre membre,
         Reservation reservation) throws BiblioException {
         if(livre.getConnexion() != membre.getConnexion()
             || reservation.getConnexion() != membre.getConnexion()) {
-            throw new BiblioException("Les instances de livre, de membre et de reservation n'utilisent pas la même connexion au serveur");
+            throw new BiblioException("Les instances de livre, de membre et de reservation n'utilisent pas la mÃªme connexion au serveur");
         }
         this.cx = livre.getConnexion();
         this.livre = livre;
@@ -46,8 +46,8 @@ public class GestionReservation {
     }
 
     /**
-     * Réservation d'un livre par un membre.
-     * Le livre doit être prêté.
+     * RÃ©servation d'un livre par un membre.
+     * Le livre doit Ãªtre prÃ©tÃ©.
      */
     public void reserver(int idReservation,
         int idLivre,
@@ -56,7 +56,7 @@ public class GestionReservation {
         BiblioException,
         Exception {
         try {
-            /* Verifier que le livre est preté */
+            /* Verifier que le livre est pretï¿½ */
             TupleLivre tupleLivre = this.livre.getLivre(idLivre);
             if(tupleLivre == null) {
                 throw new BiblioException("Livre inexistant: "
@@ -73,7 +73,7 @@ public class GestionReservation {
                     + " deja prete a ce membre");
             }
 
-            /* Vérifier que le membre existe */
+            /* Vï¿½rifier que le membre existe */
             TupleMembre tupleMembre = this.membre.getMembre(idMembre);
             if(tupleMembre == null) {
                 throw new BiblioException("Membre inexistant: "
@@ -82,12 +82,12 @@ public class GestionReservation {
 
             /* Verifier si date reservation >= datePret */
             if(Date.valueOf(dateReservation).before(tupleLivre.datePret)) {
-                throw new BiblioException("Date de reservation inferieure à la date de pret");
+                throw new BiblioException("Date de reservation inferieure Ã  la date de pret");
             }
 
-            /* Vérifier que la réservation n'existe pas */
+            /* Vï¿½rifier que la rï¿½servation n'existe pas */
             if(this.reservation.existe(idReservation)) {
-                throw new BiblioException("Réservation "
+                throw new BiblioException("RÃ©servation "
                     + idReservation
                     + " existe deja");
             }
@@ -105,71 +105,71 @@ public class GestionReservation {
     }
 
     /**
-     * Prise d'une réservation.
-     * Le livre ne doit pas être prêté.
-     * Le membre ne doit pas avoir dépassé sa limite de pret.
-     * La réservation doit la être la première en liste.
+     * Prise d'une rÃ©servation.
+     * Le livre ne doit pas Ã¢tre prÃ©tÃ©.
+     * Le membre ne doit pas avoir dÃ©passÃ© sa limite de pret.
+     * La rÃ©servation doit la Ãªtre la premiÃ¨re en liste.
      */
     public void prendreRes(int idReservation,
         String datePret) throws SQLException,
         BiblioException,
         Exception {
         try {
-            /* Vérifie s'il existe une réservation pour le livre */
+            /* VÃ©rifie s'il existe une rÃ©servation pour le livre */
             TupleReservation tupleReservation = this.reservation.getReservation(idReservation);
             if(tupleReservation == null) {
-                throw new BiblioException("Réservation inexistante : "
+                throw new BiblioException("RÃ©servation inexistante : "
                     + idReservation);
             }
 
-            /* Vérifie que c'est la première réservation pour le livre */
+            /* VÃ©rifie que c'est la premiÃ¨re rÃ©servation pour le livre */
             TupleReservation tupleReservationPremiere = this.reservation.getReservationLivre(tupleReservation.idLivre);
             if(tupleReservation.idReservation != tupleReservationPremiere.idReservation) {
-                throw new BiblioException("La réservation n'est pas la première de la liste "
-                    + "pour ce livre; la premiere est "
+                throw new BiblioException("La rÃ©servation n'est pas la premiÃ¨re de la liste "
+                    + "pour ce livre; la premiÃ¨re est "
                     + tupleReservationPremiere.idReservation);
             }
 
             /* Verifier si le livre est disponible */
             TupleLivre tupleLivre = this.livre.getLivre(tupleReservation.idLivre);
             if(tupleLivre == null) {
-                throw new BiblioException("Livre inexistant: "
+                throw new BiblioException("Livre inÃ©xistant: "
                     + tupleReservation.idLivre);
             }
             if(tupleLivre.idMembre != 0) {
                 throw new BiblioException("Livre "
                     + tupleLivre.idLivre
-                    + " deja prêté à "
+                    + " deja prÃ©tÃ© Ã  "
                     + tupleLivre.idMembre);
             }
 
-            /* Vérifie si le membre existe et sa limite de pret */
+            /* VÃ©rifie si le membre existe et sa limite de pret */
             TupleMembre tupleMembre = this.membre.getMembre(tupleReservation.idMembre);
             if(tupleMembre == null) {
                 throw new BiblioException("Membre inexistant: "
                     + tupleReservation.idMembre);
             }
             if(tupleMembre.nbPret >= tupleMembre.limitePret) {
-                throw new BiblioException("Limite de prêt du membre "
+                throw new BiblioException("Limite de prÃªt du membre "
                     + tupleReservation.idMembre
                     + " atteinte");
             }
 
             /* Verifier si datePret >= tupleReservation.dateReservation */
             if(Date.valueOf(datePret).before(tupleReservation.dateReservation)) {
-                throw new BiblioException("Date de prêt inférieure à la date de réservation");
+                throw new BiblioException("Date de prÃªt infÃ©rieure Ã  la date de rÃ©servation");
             }
 
             /* Enregistrement du pret. */
             if(this.livre.preter(tupleReservation.idLivre,
                 tupleReservation.idMembre,
                 datePret) == 0) {
-                throw new BiblioException("Livre supprimé par une autre transaction");
+                throw new BiblioException("Livre supprimÃ© par une autre transaction");
             }
             if(this.membre.preter(tupleReservation.idMembre) == 0) {
-                throw new BiblioException("Membre supprimé par une autre transaction");
+                throw new BiblioException("Membre supprimÃ© par une autre transaction");
             }
-            /* Eliminer la réservation */
+            /* Eliminer la rÃ©servation */
             this.reservation.annulerRes(idReservation);
             this.cx.commit();
         } catch(Exception e) {
@@ -179,17 +179,17 @@ public class GestionReservation {
     }
 
     /**
-     * Annulation d'une réservation.
-     * La réservation doit exister.
+     * Annulation d'une rÃ©servation.
+     * La rÃ©servation doit exister.
      */
     public void annulerRes(int idReservation) throws SQLException,
     BiblioException,
     Exception {
         try {
 
-            /* Vérifier que la réservation existe */
+            /* VÃ©rifier que la rÃ©servation existe */
             if(this.reservation.annulerRes(idReservation) == 0) {
-                throw new BiblioException("Réservation "
+                throw new BiblioException("RÃ©servation "
                     + idReservation
                     + " n'existe pas");
             }
