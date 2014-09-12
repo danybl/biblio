@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 /**
- * Permet d'effectuer les accès à la table livre.
+ * Permet d'effectuer les accÃ¨s Ã  la table livre.
  */
 
 public class Livre {
@@ -21,7 +21,7 @@ public class Livre {
     private Connexion cx;
 
     /**
-     * Creation d'une instance. Des énoncés SQL pour chaque requête sont précompilés.
+     * CrÃ©ation d'une instance. Des Ã©noncÃ©s SQL pour chaque requÃªte sont prÃ©compilÃ©s.
      */
     public Livre(Connexion cx) throws SQLException {
 
@@ -36,7 +36,7 @@ public class Livre {
     }
 
     /**
-     * Retourner la connexion associée.
+     * Retourner la connexion associÃ©e.
      */
     public Connexion getConnexion() {
 
@@ -44,7 +44,7 @@ public class Livre {
     }
 
     /**
-     * Verifie si un livre existe.
+     * VÃ©rifie si un livre existe.
      */
     public boolean existe(int idLivre) throws SQLException {
 
@@ -81,7 +81,7 @@ public class Livre {
     }
 
     /**
-     * Ajout d'un nouveau livre dans la base de donnees.
+     * Ajout d'un nouveau livre dans la base de donnÃ©es.
      */
     public void acquerir(int idLivre,
         String titre,
@@ -116,7 +116,7 @@ public class Livre {
     }
 
     /**
-     * Rendre le livre disponible (non-prêté)
+     * Rendre le livre disponible (non-prÃªtÃ©)
      */
     public int retourner(int idLivre) throws SQLException {
         /* Enregistrement du pret. */

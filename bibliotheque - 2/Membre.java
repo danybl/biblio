@@ -3,8 +3,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Permet d'effectuer les accËs ‡ la table membre.
- * Cette classe gËre tous les accËs ‡ la table membre.
+ * Permet d'√©ffectuer les acc√®s √† la table membre.
+ * Cette classe g√®re tous les acc√®s √† la table membre.
  *
  *</pre>
  */
@@ -24,7 +24,7 @@ public class Membre {
     private Connexion cx;
 
     /**
-     * Creation d'une instance. PrÈcompilation d'ÈnoncÈs SQL.
+     * Cr√©ation d'une instance. Pr√©compilation d'√©nonc√©s SQL.
      */
     public Membre(Connexion cx) throws SQLException {
         this.cx = cx;
@@ -37,7 +37,7 @@ public class Membre {
     }
 
     /**
-     * Retourner la connexion associÈe.
+     * Retourner la connexion associ√©e.
      */
     public Connexion getConnexion() {
 
@@ -45,7 +45,7 @@ public class Membre {
     }
 
     /**
-     * Verifie si un membre existe.
+     * V√©rifie si un membre existe.
      */
     public boolean existe(int idMembre) throws SQLException {
         this.stmtExiste.setInt(1,
@@ -98,7 +98,7 @@ public class Membre {
     }
 
     /**
-     * Incrementer le nb de pret d'un membre.
+     * Incr√©menter le nb de pret d'un membre.
      */
     public int preter(int idMembre) throws SQLException {
         this.stmtUpdateIncrNbPret.setInt(1,
@@ -107,7 +107,7 @@ public class Membre {
     }
 
     /**
-     * Decrementer le nb de pret d'un membre.
+     * Decr√©menter le nb de pret d'un membre.
      */
     public int retourner(int idMembre) throws SQLException {
         this.stmtUpdateDecNbPret.setInt(1,
