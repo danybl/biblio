@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 //test 8545454
 
 /**
- * Hey dany!just a test....
+ * Hey GANG!just a test....franz
  * 
  * Interface du système de gestion d'une bibliothèque
  *
