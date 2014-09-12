@@ -10,6 +10,8 @@ import java.util.StringTokenizer;
 //test david
 
 /**
+ * Hey GANG!just a test....franz
+ * 
  * Interface du système de gestion d'une bibliothèque
  *
  * Ce programme permet d'appeler les transactions de base d'une
