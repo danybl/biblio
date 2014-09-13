@@ -114,7 +114,7 @@ public class Biblio {
     }
 
     /**
-     * D�codage et traitement d'une transaction
+     * Décodage et traitement d'une transaction
      */
     static void executerTransaction(StringTokenizer tokenizer) throws Exception {
         try {
@@ -226,7 +226,7 @@ public class Biblio {
 
     }
 
-    /** lecture d'une chaine de caract�res de la transaction entrée à l'écran */
+    /** lecture d'une chaine de caractères de la transaction entrée à l'écran */
     static String readString(StringTokenizer tokenizer) throws BiblioException {
         if(tokenizer.hasMoreElements()) {
             return tokenizer.nextToken();
@@ -236,7 +236,7 @@ public class Biblio {
     }
 
     /**
-     * lecture d'un int java de la transaction entr�e � l'�cran
+     * lecture d'un int java de la transaction entrée à l'écran
      */
     static int readInt(StringTokenizer tokenizer) throws BiblioException {
         if(tokenizer.hasMoreElements()) {

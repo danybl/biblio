@@ -8,14 +8,14 @@ import java.sql.SQLException;
  * Gestionnaire d'une connexion avec une BD relationnelle via JDBC.
  *
  * Ce programme ouvrir une connexion avec une BD via JDBC.
- * La méthode serveursSupportes() indique les serveurs supportés.
+ * La mÃ©thode serveursSupportes() indique les serveurs supportï¿½s.
  *
- * Pré-condition
- *   le driver JDBC approprié doit être accessible.
+ * PrÃ©-condition
+ *   le driver JDBC appropriÃ© doit Ãªtre accessible.
  *
  * Post-condition
- *   la connexion est ouverte en mode autocommit false et sérialisable,
- *   (s'il est supporté par le serveur).
+ *   la connexion est ouverte en mode autocommit false et sÃ©rialisable,
+ *   (s'il est supportÃ© par le serveur).
  * </pre>
  */
 public class Connexion {
@@ -23,9 +23,9 @@ public class Connexion {
     private Connection conn;
 
     /**
-     * Ouverture d'une connexion en mode autocommit false et sérialisable (si supporté)
+     * Ouverture d'une connexion en mode autocommit false et sÃ©rialisable (si supportÃ©)
      * @param serveur serveur SQL de la BD
-     * @bd nom de la base de données
+     * @bd nom de la base de donnÃ©es
      * @user userid sur le serveur SQL
      * @pass mot de passe sur le serveur SQL
      */
@@ -69,12 +69,12 @@ public class Connexion {
             // mettre en mode de commit manuel
             this.conn.setAutoCommit(false);
 
-            // mettre en mode sérialisable si possible
-            // (plus haut niveau d'integrité l'accès concurrent aux données)
+            // mettre en mode sï¿½rialisable si possible
+            // (plus haut niveau d'integritï¿½ l'accï¿½s concurrent aux donnï¿½es)
             DatabaseMetaData dbmd = this.conn.getMetaData();
             if(dbmd.supportsTransactionIsolationLevel(Connection.TRANSACTION_SERIALIZABLE)) {
                 this.conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-                System.out.println("Ouverture de la connexion en mode sérialisable :\n"
+                System.out.println("Ouverture de la connexion en mode sÃ©rialisable :\n"
                     + "Estampille "
                     + System.currentTimeMillis()
                     + " "
@@ -92,7 +92,7 @@ public class Connexion {
             throw e;
         } catch(Exception e) {
             e.printStackTrace(System.out);
-            throw new SQLException("JDBC Driver non instancié");
+            throw new SQLException("JDBC Driver non instanciÃ©");
         }
     }
 
@@ -102,7 +102,7 @@ public class Connexion {
     public void fermer() throws SQLException {
         this.conn.rollback();
         this.conn.close();
-        System.out.println("Connexion fermée"
+        System.out.println("Connexion fermÃ©e"
             + " "
             + this.conn);
     }
@@ -129,12 +129,12 @@ public class Connexion {
     }
 
     /**
-     * Retourne la liste des serveurs supportés par ce gestionnaire de connexions
+     * Retourne la liste des serveurs supportÃ©s par ce gestionnaire de connexions
      */
     public static String serveursSupportes() {
-        return "local : MySQL installé localement\n"
-            + "distant : Oracle installé au Département d'Informatique du Collège Ahuntsic\n"
-            + "postgres : Postgres installé localement\n"
-            + "access : Microsoft Access installé localement et inscrit dans ODBC";
+        return "local : MySQL installï¿½ localement\n"
+            + "distant : Oracle installï¿½ au Dï¿½partement d'Informatique du Collï¿½ge Ahuntsic\n"
+            + "postgres : Postgres installï¿½ localement\n"
+            + "access : Microsoft Access installï¿½ localement et inscrit dans ODBC";
     }
 }// Classe Connexion

@@ -4,17 +4,17 @@ import java.sql.Statement;
 /**
  *<pre>
  *
- *Permet de créer la BD utilisée par Biblio.java.
+ *Permet de crÃ©er la BD utilisÃ©e par Biblio.java.
  *
- *Paramètres:0- serveur SQL
+ *ParamÃ¨tres:0- serveur SQL
  *           1- bd nom de la BD
- *           2- user id pour établir une connexion avec le serveur SQL
+ *           2- user id pour ï¿½tablir une connexion avec le serveur SQL
  *           3- mot de passe pour le user id
  *</pre>
  */
 class CreerBD {
     public static void main(String args[]) throws Exception,
-    SQLException {
+        SQLException {
 
         if(args.length < 3) {
             System.out.println("Usage: java CreerBD <serveur> <bd> <user> <password>");

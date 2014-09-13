@@ -1,17 +1,17 @@
 import java.sql.SQLException;
 
 /**
- * Gestion des transactions de reliées à la création et
- * suppresion de membres dans une bibliothèque.
+ * Gestion des transactions de reliÃ©es Ã  la crÃ©ation et
+ * suppresion de membres dans une bibliothÃ¨que.
  *
- * Ce programme permet de gérer les transaction reliées à la
- * création et suppresion de membres.
+ * Ce programme permet de gÃ©rer les transaction reliÃ©es Ã  la
+ * crÃ©ation et suppresion de membres.
  *
- * Pré-condition
- *   la base de données de la bibliothèque doit exister
+ * PrÃ©-condition
+ *   la base de donnÃ©es de la bibliothÃ¨que doit exister
  *
  * Post-condition
- *   le programme effectue les maj associées à chaque
+ *   le programme effectue les maj associÃ©es Ã  chaque
  *   transaction
  * </pre>
  */
@@ -37,7 +37,7 @@ public class GestionMembre {
 
     /**
      * Ajout d'un nouveau membre dans la base de donnees.
-     * S'il existe deja, une exception est levee.
+     * S'il existe deja, une exception est levÃ©e.
      */
     public void inscrire(int idMembre,
         String nom,
@@ -46,7 +46,7 @@ public class GestionMembre {
         BiblioException,
         Exception {
         try {
-            /* Vérifie si le membre existe déja */
+            /* Vï¿½rifie si le membre existe dï¿½ja */
             if(this.membre.existe(idMembre)) {
                 throw new BiblioException("Membre existe deja: "
                     + idMembre);
@@ -65,13 +65,13 @@ public class GestionMembre {
     }
 
     /**
-     * Suppression d'un membre de la base de donnees.
+     * Suppression d'un membre de la base de donnÃ©es.
      */
     public void desinscrire(int idMembre) throws SQLException,
-    BiblioException,
-    Exception {
+        BiblioException,
+        Exception {
         try {
-            /* Vérifie si le membre existe et son nombre de pret en cours */
+            /* Vï¿½rifie si le membre existe et son nombre de pret en cours */
             TupleMembre tupleMembre = this.membre.getMembre(idMembre);
             if(tupleMembre == null) {
                 throw new BiblioException("Membre inexistant: "
@@ -85,7 +85,7 @@ public class GestionMembre {
             if(this.reservation.getReservationMembre(idMembre) != null) {
                 throw new BiblioException("Membre "
                     + idMembre
-                    + " a des réservations");
+                    + " a des rï¿½servations");
             }
 
             /* Suppression du membre */

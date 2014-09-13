@@ -1,19 +1,19 @@
 import java.sql.SQLException;
 
 /**
- * Système de gestion d'une bibliothèque
+ * Systï¿½me de gestion d'une bibliothï¿½que
  *
  *<pre>
- * Ce programme permet de gérer les transaction de base d'une
- * bibliothèque.  Il gère des livres, des membres et des
- * réservations. Les données sont conservées dans une base de
- * données relationnelles accédée avec JDBC.
+ * Ce programme permet de gÃ©rer les transaction de base d'une
+ * bibliothÃ¨que.  Il gÃ©re des livres, des membres et des
+ * rÃ©servations. Les donnÃ©es sont conservÃ©es dans une base de
+ * donnÃ©es relationnelles accÃ©dÃ©e avec JDBC.
  *
- * Pré-condition
- *   la base de données de la bibliothèque doit exister
+ * PrÃ©-condition
+ *   la base de donnÃ©es de la bibliothÃ¨que doit exister
  *
  * Post-condition
- *   le programme effectue les maj associées à chaque
+ *   le programme effectue les maj associÃ©es Ã  chaque
  *   transaction
  * </pre>
  */
@@ -42,8 +42,8 @@ public class GestionBibliotheque {
      * <pre>
      *
      * @param serveur SQL
-     * @param bd nom de la bade de données
-     * @param user user id pour établir une connexion avec le serveur SQL
+     * @param bd nom de la bade de donnÃ©es
+     * @param user user id pour Ã©tablir une connexion avec le serveur SQL
      * @param password mot de passe pour le user id
      *</pre>
      */

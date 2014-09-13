@@ -88,7 +88,7 @@ public class Reservation {
     }
 
     /**
-     * Lecture de la premi�re reservation d'un livre.
+     * Lecture de la première reservation d'un livre.
      */
     public TupleReservation getReservationLivre(int idLivre) throws SQLException {
 
@@ -111,7 +111,7 @@ public class Reservation {
     }
 
     /**
-     * Lecture de la premi�re reservation d'un livre.
+     * Lecture de la première reservation d'un livre.
      */
     public TupleReservation getReservationMembre(int idMembre) throws SQLException {
 
@@ -134,7 +134,7 @@ public class Reservation {
     }
 
     /**
-     * R�servation d'un livre.
+     * Réservation d'un livre.
      */
     public void reserver(int idReservation,
         int idLivre,

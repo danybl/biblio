@@ -1,17 +1,17 @@
 import java.sql.SQLException;
 
 /**
- * Gestion des transactions de reliées à la création et
- * suppresion de livres dans une bibliothèque.
+ * Gestion des transactions de reliÃ©es Ã  la crÃ©ation et
+ * suppresion de livres dans une bibliothÃ¨que.
  *
- * Ce programme permet de gérer les transaction reliées à la
- * création et suppresion de livres.
+ * Ce programme permet de gÃ©rer les transaction reliÃ©es Ã  la
+ * crÃ©ation et suppresion de livres.
  *
- * Pré-condition
- *   la base de données de la bibliothèque doit exister
+ * PrÃ©-condition
+ *   la base de donnÃ©es de la bibliothÃ¨que doit exister
  *
  * Post-condition
- *   le programme effectue les maj associées à chaque
+ *   le programme effectue les maj associÃ©es Ã  chaque
  *   transaction
  * </pre>
  */
@@ -34,8 +34,8 @@ public class GestionLivre {
     }
 
     /**
-     * Ajout d'un nouveau livre dans la base de données.
-     * S'il existe deja, une exception est levée.
+     * Ajout d'un nouveau livre dans la base de donnÃ©es.
+     * S'il existe deja, une exception est levÃ©e.
      */
     public void acquerir(int idLivre,
         String titre,
@@ -44,7 +44,7 @@ public class GestionLivre {
         BiblioException,
         Exception {
         try {
-            /* Vérifie si le livre existe déja */
+            /* Vï¿½rifie si le livre existe dï¿½ja */
             if(this.livre.existe(idLivre)) {
                 throw new BiblioException("Livre existe deja: "
                     + idLivre);
@@ -67,8 +67,8 @@ public class GestionLivre {
      * Vente d'un livre.
      */
     public void vendre(int idLivre) throws SQLException,
-    BiblioException,
-    Exception {
+        BiblioException,
+        Exception {
         try {
             TupleLivre tupleLivre = this.livre.getLivre(idLivre);
             if(tupleLivre == null) {
@@ -84,7 +84,7 @@ public class GestionLivre {
             if(this.reservation.getReservationLivre(idLivre) != null) {
                 throw new BiblioException("Livre "
                     + idLivre
-                    + " réservé ");
+                    + " rï¿½servï¿½ ");
             }
 
             /* Suppression du livre. */
