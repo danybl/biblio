@@ -6,11 +6,7 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.StringTokenizer;
 
-//test 8545454 tiret dany sd
-//test david_!
-
 /**
- * Hey GANG!just a test....franz
  *
  * Interface du système de gestion d'une bibliothèque
  *
@@ -48,7 +44,7 @@ public class Biblio {
      * fermeture de la BD.
      */
     public static void main(String argv[]) throws Exception {
-        // validation du nombre de param�tres
+        // validation du nombre de paramètres
         if(argv.length < 4) {
             System.out.println("Usage: java Biblio <serveur> <bd> <user> <password> [<fichier-transactions>]");
             System.out.println(Connexion.serveursSupportes());
@@ -57,8 +53,7 @@ public class Biblio {
         //test
         try {
             // ouverture du fichier de transactions
-            // s'il est sp�cifi� comme argument
-            //� modifier
+            // s'il est spécifié comme argument
             InputStream sourceTransaction;
             if(argv.length > 4) {
                 sourceTransaction = new FileInputStream(argv[4]);
@@ -90,7 +85,7 @@ public class Biblio {
         afficherAide();
         String transaction = lireTransaction(reader);
         while(!finTransaction(transaction)) {
-            /* d�coupage de la transaction en mots*/
+            /* découpage de la transaction en mots*/
             StringTokenizer tokenizer = new StringTokenizer(transaction,
                 " ");
             if(tokenizer.hasMoreTokens()) {
@@ -163,6 +158,8 @@ public class Biblio {
                 gestionBiblio.gestionInterrogation.listerLivres();
             } else if("listerLivresTitre".startsWith(command)) {
                 gestionBiblio.gestionInterrogation.listerLivresTitre(readString(tokenizer) /* mot */);
+            } else if("listerLivresRetard".startsWith(command)) {
+                //gestionBiblio.gestionReservation.listerLivresRetard(readString(tokenizer));
             } else {
                 System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
             }
