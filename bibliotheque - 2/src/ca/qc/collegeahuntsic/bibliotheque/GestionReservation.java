@@ -1,3 +1,6 @@
+
+package ca.qc.collegeahuntsic.bibliotheque;
+
 import java.sql.Date;
 import java.sql.SQLException;
 
@@ -183,8 +186,8 @@ public class GestionReservation {
      * La réservation doit exister.
      */
     public void annulerRes(int idReservation) throws SQLException,
-    BiblioException,
-    Exception {
+        BiblioException,
+        Exception {
         try {
 
             /* Vérifier que la réservation existe */

@@ -1,3 +1,6 @@
+
+package ca.qc.collegeahuntsic.bibliotheque;
+
 import java.sql.SQLException;
 
 /**
@@ -68,8 +71,8 @@ public class GestionMembre {
      * Suppression d'un membre de la base de données.
      */
     public void desinscrire(int idMembre) throws SQLException,
-        BiblioException,
-        Exception {
+    BiblioException,
+    Exception {
         try {
             /* V�rifie si le membre existe et son nombre de pret en cours */
             TupleMembre tupleMembre = this.membre.getMembre(idMembre);

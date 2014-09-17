@@ -1,3 +1,6 @@
+
+package ca.qc.collegeahuntsic.bibliotheque;
+
 import java.sql.SQLException;
 
 /**
@@ -67,8 +70,8 @@ public class GestionLivre {
      * Vente d'un livre.
      */
     public void vendre(int idLivre) throws SQLException,
-        BiblioException,
-        Exception {
+    BiblioException,
+    Exception {
         try {
             TupleLivre tupleLivre = this.livre.getLivre(idLivre);
             if(tupleLivre == null) {

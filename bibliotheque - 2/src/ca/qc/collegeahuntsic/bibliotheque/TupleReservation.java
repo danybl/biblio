@@ -1,4 +1,7 @@
-import java.sql.*;
+
+package ca.qc.collegeahuntsic.bibliotheque;
+
+import java.sql.Date;
 
 /**
  * Permet de représenter un tuple de la table membre.

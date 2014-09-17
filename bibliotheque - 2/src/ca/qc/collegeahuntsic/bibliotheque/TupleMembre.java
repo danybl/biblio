@@ -1,6 +1,9 @@
+
+package ca.qc.collegeahuntsic.bibliotheque;
+
 /**
  * Permet de représenter un tuple de la table membre.
- * 
+ *
  */
 
 public class TupleMembre {

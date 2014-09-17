@@ -1,3 +1,6 @@
+
+package ca.qc.collegeahuntsic.bibliotheque;
+
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -14,7 +17,7 @@ import java.sql.Statement;
  */
 class CreerBD {
     public static void main(String args[]) throws Exception,
-        SQLException {
+    SQLException {
 
         if(args.length < 3) {
             System.out.println("Usage: java CreerBD <serveur> <bd> <user> <password>");
