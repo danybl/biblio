@@ -2,6 +2,8 @@
 package ca.qc.collegeahuntsic.bibliotheque;
 
 import java.sql.SQLException;
+import ca.qc.collegeahuntsic.bibliotheque.dto.Membre;
+import ca.qc.collegeahuntsic.bibliotheque.dto.Reservation;
 
 /**
  * Gestion des transactions de reliées à la création et
