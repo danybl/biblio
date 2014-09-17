@@ -10,6 +10,7 @@ public class MembreDTO extends Dto {
 
     private static final long serialVersionUID = 1L;
 
+    //Region get/set
     public int getIdMembre() {
         return this.idMembre;
     }
@@ -49,6 +50,8 @@ public class MembreDTO extends Dto {
     public void setNbPret(int nbPret) {
         this.nbPret = nbPret;
     }
+
+    //EndRegion
 
     private int idMembre;
 
