@@ -1,3 +1,4 @@
+
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
 import java.sql.Date;
@@ -9,63 +10,65 @@ import java.sql.Date;
 
 public class LivreDTO extends Dto {
 
-	private int idLivre;
+    private static final long serialVersionUID = 1L;
 
-	private String titre;
+    private int idLivre;
 
-	private String auteur;
+    private String titre;
 
-	private Date dateAcquisition;
+    private String auteur;
 
-	private int idMembre;
+    private Date dateAcquisition;
 
-	private Date datePret;
+    private int idMembre;
 
-	public int getIdLivre() {
-		return this.idLivre;
-	}
+    private Date datePret;
 
-	public void setIdLivre(int idLivre) {
-		this.idLivre = idLivre;
-	}
+    public int getIdLivre() {
+        return this.idLivre;
+    }
 
-	public String getTitre() {
-		return this.titre;
-	}
+    public void setIdLivre(int idLivre) {
+        this.idLivre = idLivre;
+    }
 
-	public void setTitre(String titre) {
-		this.titre = titre;
-	}
+    public String getTitre() {
+        return this.titre;
+    }
 
-	public String getAuteur() {
-		return this.auteur;
-	}
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
 
-	public void setAuteur(String auteur) {
-		this.auteur = auteur;
-	}
+    public String getAuteur() {
+        return this.auteur;
+    }
 
-	public Date getDateAcquisition() {
-		return this.dateAcquisition;
-	}
+    public void setAuteur(String auteur) {
+        this.auteur = auteur;
+    }
 
-	public void setDateAcquisition(Date dateAcquisition) {
-		this.dateAcquisition = dateAcquisition;
-	}
+    public Date getDateAcquisition() {
+        return this.dateAcquisition;
+    }
 
-	public int getIdMembre() {
-		return this.idMembre;
-	}
+    public void setDateAcquisition(Date dateAcquisition) {
+        this.dateAcquisition = dateAcquisition;
+    }
 
-	public void setIdMembre(int idMembre) {
-		this.idMembre = idMembre;
-	}
+    public int getIdMembre() {
+        return this.idMembre;
+    }
 
-	public Date getDatePret() {
-		return this.datePret;
-	}
+    public void setIdMembre(int idMembre) {
+        this.idMembre = idMembre;
+    }
 
-	public void setDatePret(Date datePret) {
-		this.datePret = datePret;
-	}
+    public Date getDatePret() {
+        return this.datePret;
+    }
+
+    public void setDatePret(Date datePret) {
+        this.datePret = datePret;
+    }
 }
