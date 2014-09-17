@@ -24,6 +24,7 @@ public class LivreDTO extends Dto {
 
     private Date datePret;
 
+    //Region get/set
     public int getIdLivre() {
         return this.idLivre;
     }
@@ -71,4 +72,5 @@ public class LivreDTO extends Dto {
     public void setDatePret(Date datePret) {
         this.datePret = datePret;
     }
+    //Region
 }
