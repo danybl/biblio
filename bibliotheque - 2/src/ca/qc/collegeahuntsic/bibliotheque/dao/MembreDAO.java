@@ -1,7 +1,11 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.dao;
 
-public class MembreDAO {
+import java.sql.Connection;
+
+public class MembreDAO extends DAO {
+
+    private static final long serialVersionUID = 1L;
 
     //    private static final String INSERT_REQUEST = "INSERT INTO membre (idMembre, nom, telephone, limitePret, nbpret)"
     //        + "VALUES (?,?,?,?,?)";
@@ -31,4 +35,14 @@ public class MembreDAO {
         // TODO Auto-generated constructor stub
     }
 
+    //    public void delete(LivreDTO livreDTO) throws DAOException {
+    //        //        try(PreparedStatement deletePrepStmt = getConnection().preparedStament()){
+    //        //
+    //        //        }
+    //    }
+
+    public Connection getConnection() {
+        return null;
+
+    }
 }
