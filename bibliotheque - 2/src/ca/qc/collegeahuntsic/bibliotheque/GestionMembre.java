@@ -2,8 +2,9 @@
 package ca.qc.collegeahuntsic.bibliotheque;
 
 import java.sql.SQLException;
+import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
-import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 
 /**
  * Gestion des transactions de reliées à la création et
@@ -25,15 +26,15 @@ public class GestionMembre {
 
     private Connexion cx;
 
-    private MembreDTO membre;
+    private MembreDAO membre;
 
-    private ReservationDTO reservation;
+    private ReservationDAO reservation;
 
     /**
      * Creation d'une instance
      */
-    public GestionMembre(MembreDTO membre,
-        ReservationDTO reservation) {
+    public GestionMembre(MembreDAO membre,
+        ReservationDAO reservation) {
 
         this.cx = membre.getConnexion();
         this.membre = membre;
@@ -77,7 +78,7 @@ public class GestionMembre {
     Exception {
         try {
             /* V�rifie si le membre existe et son nombre de pret en cours */
-            TupleMembre tupleMembre = this.membre.getMembre(idMembre);
+            MembreDTO tupleMembre = this.membre.getMembre(idMembre);
             if(tupleMembre == null) {
                 throw new BiblioException("Membre inexistant: "
                     + idMembre);

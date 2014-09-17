@@ -1,10 +1,14 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
-public class Dto {
+import java.io.Serializable;
+
+public class Dto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     public Dto() {
-        // TODO Auto-generated constructor stub
+        super();
     }
 
 }
