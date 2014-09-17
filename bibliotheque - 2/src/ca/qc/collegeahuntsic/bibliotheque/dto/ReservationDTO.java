@@ -10,11 +10,40 @@ import java.sql.Date;
 
 public class ReservationDTO {
 
-    public int idReservation;
+    private int idReservation;
 
-    public int idLivre;
+    private int idLivre;
 
-    public int idMembre;
+    private int idMembre;
 
-    public Date dateReservation;
+    private Date dateReservation;
+
+    public ReservationDTO(int idReservation,
+        int idLivre,
+        int idMembre,
+        Date dateReservation) {
+        this.idReservation = idReservation;
+        this.idLivre = idLivre;
+        this.idMembre = idMembre;
+        this.dateReservation = dateReservation;
+    }
+
+    //Region get/set
+    public int getIdReservation() {
+        return this.idReservation;
+    }
+
+    public int getIdLivre() {
+        return this.idLivre;
+    }
+
+    public int getIdMembre() {
+        return this.idMembre;
+    }
+
+    public Date getDateReservation() {
+        return this.dateReservation;
+    }
+    //EndRegion
+
 }
