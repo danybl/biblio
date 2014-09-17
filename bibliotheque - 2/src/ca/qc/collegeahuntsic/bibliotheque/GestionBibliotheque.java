@@ -2,9 +2,6 @@
 package ca.qc.collegeahuntsic.bibliotheque;
 
 import java.sql.SQLException;
-import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 
 /**
  * Syst�me de gestion d'une biblioth�que
@@ -26,11 +23,11 @@ import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 public class GestionBibliotheque {
     public Connexion cx;
 
-    public LivreDAO livre;
+    public Livre livre;
 
-    public MembreDAO membre;
+    public Membre membre;
 
-    public ReservationDAO reservation;
+    public Reservation reservation;
 
     public GestionLivre gestionLivre;
 
@@ -63,9 +60,9 @@ public class GestionBibliotheque {
             bd,
             user,
             password);
-        this.livre = new LivreDAO(this.cx);
-        this.membre = new MembreDAO(this.cx);
-        this.reservation = new ReservationDAO(this.cx);
+        this.livre = new Livre(this.cx);
+        this.membre = new Membre(this.cx);
+        this.reservation = new Reservation(this.cx);
         this.gestionLivre = new GestionLivre(this.livre,
             this.reservation);
         this.gestionMembre = new GestionMembre(this.membre,

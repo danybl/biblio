@@ -3,9 +3,6 @@ package ca.qc.collegeahuntsic.bibliotheque;
 
 import java.sql.Date;
 import java.sql.SQLException;
-import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
@@ -28,11 +25,11 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 
 public class GestionPret {
 
-    private LivreDAO livre;
+    private Livre livre;
 
-    private MembreDAO membre;
+    private Membre membre;
 
-    private ReservationDAO reservation;
+    private Reservation reservation;
 
     private Connexion cx;
 
@@ -41,9 +38,9 @@ public class GestionPret {
      * La connection de l'instance de livre et de membre doit être la même que cx,
      * afin d'assurer l'intégrité des transactions.
      */
-    public GestionPret(LivreDAO livre,
-        MembreDAO membre,
-        ReservationDAO reservation) throws BiblioException {
+    public GestionPret(Livre livre,
+        Membre membre,
+        Reservation reservation) throws BiblioException {
         if(livre.getConnexion() != membre.getConnexion()
             || reservation.getConnexion() != membre.getConnexion()) {
             throw new BiblioException("Les instances de livre, de membre et de reservation n'utilisent pas la même connexion au serveur");
