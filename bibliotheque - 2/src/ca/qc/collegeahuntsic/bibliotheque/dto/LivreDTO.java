@@ -11,6 +11,16 @@ public class LivreDTO extends Dto {
 
 	private int idLivre;
 
+	private String titre;
+
+	private String auteur;
+
+	private Date dateAcquisition;
+
+	private int idMembre;
+
+	private Date datePret;
+
 	public int getIdLivre() {
 		return this.idLivre;
 	}
@@ -58,14 +68,4 @@ public class LivreDTO extends Dto {
 	public void setDatePret(Date datePret) {
 		this.datePret = datePret;
 	}
-
-	private String titre;
-
-	private String auteur;
-
-	private Date dateAcquisition;
-
-	private int idMembre;
-
-	private Date datePret;
 }
