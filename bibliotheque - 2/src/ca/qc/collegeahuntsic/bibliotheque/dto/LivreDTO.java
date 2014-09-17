@@ -72,5 +72,5 @@ public class LivreDTO extends Dto {
     public void setDatePret(Date datePret) {
         this.datePret = datePret;
     }
-    //Region
+    //EndRegion
 }
