@@ -14,7 +14,7 @@ import ca.qc.collegeahuntsic.bibliotheque.TupleMembre;
  *</pre>
  */
 
-public class Membre {
+public class MembreDTO {
 
     private PreparedStatement stmtExiste;
 
@@ -31,7 +31,7 @@ public class Membre {
     /**
      * Création d'une instance. Précompilation d'énoncés SQL.
      */
-    public Membre(Connexion cx) throws SQLException {
+    public MembreDTO(Connexion cx) throws SQLException {
         this.cx = cx;
         this.stmtExiste = cx.getConnection().prepareStatement("select idMembre, nom, telephone, limitePret, nbpret from membre where idmembre = ?");
         this.stmtInsert = cx.getConnection().prepareStatement("insert into membre (idmembre, nom, telephone, limitepret, nbpret) "

@@ -16,7 +16,7 @@ import ca.qc.collegeahuntsic.bibliotheque.TupleReservation;
  *</pre>
  */
 
-public class Reservation {
+public class ReservationDTO {
 
     private PreparedStatement stmtExiste;
 
@@ -33,7 +33,7 @@ public class Reservation {
     /**
      * Création d'une instance.
      */
-    public Reservation(Connexion cx) throws SQLException {
+    public ReservationDTO(Connexion cx) throws SQLException {
 
         this.cx = cx;
         this.stmtExiste = cx.getConnection().prepareStatement("select idReservation, idLivre, idMembre, dateReservation "

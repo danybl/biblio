@@ -13,7 +13,7 @@ import ca.qc.collegeahuntsic.bibliotheque.TupleLivre;
  * Permet d'effectuer les accès à la table livre.
  */
 
-public class Livre {
+public class LivreDTO {
 
     private PreparedStatement stmtExiste;
 
@@ -28,7 +28,7 @@ public class Livre {
     /**
      * Création d'une instance. Des énoncés SQL pour chaque requête sont précompilés.
      */
-    public Livre(Connexion cx) throws SQLException {
+    public LivreDTO(Connexion cx) throws SQLException {
 
         this.cx = cx;
         this.stmtExiste = cx.getConnection()

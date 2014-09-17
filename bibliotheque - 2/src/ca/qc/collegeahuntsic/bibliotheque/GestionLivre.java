@@ -2,8 +2,8 @@
 package ca.qc.collegeahuntsic.bibliotheque;
 
 import java.sql.SQLException;
-import ca.qc.collegeahuntsic.bibliotheque.dto.Livre;
-import ca.qc.collegeahuntsic.bibliotheque.dto.Reservation;
+import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 
 /**
  * Gestion des transactions de reliées à la création et
@@ -22,17 +22,17 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.Reservation;
  */
 public class GestionLivre {
 
-    private Livre livre;
+    private LivreDTO livre;
 
-    private Reservation reservation;
+    private ReservationDTO reservation;
 
     private Connexion cx;
 
     /**
      * Creation d'une instance
      */
-    public GestionLivre(Livre livre,
-        Reservation reservation) {
+    public GestionLivre(LivreDTO livre,
+        ReservationDTO reservation) {
         this.cx = livre.getConnexion();
         this.livre = livre;
         this.reservation = reservation;

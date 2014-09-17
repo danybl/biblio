@@ -2,9 +2,9 @@
 package ca.qc.collegeahuntsic.bibliotheque;
 
 import java.sql.SQLException;
-import ca.qc.collegeahuntsic.bibliotheque.dto.Livre;
-import ca.qc.collegeahuntsic.bibliotheque.dto.Membre;
-import ca.qc.collegeahuntsic.bibliotheque.dto.Reservation;
+import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 
 /**
  * Syst�me de gestion d'une biblioth�que
@@ -26,11 +26,11 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.Reservation;
 public class GestionBibliotheque {
     public Connexion cx;
 
-    public Livre livre;
+    public LivreDTO livre;
 
-    public Membre membre;
+    public MembreDTO membre;
 
-    public Reservation reservation;
+    public ReservationDTO reservation;
 
     public GestionLivre gestionLivre;
 
@@ -63,9 +63,9 @@ public class GestionBibliotheque {
             bd,
             user,
             password);
-        this.livre = new Livre(this.cx);
-        this.membre = new Membre(this.cx);
-        this.reservation = new Reservation(this.cx);
+        this.livre = new LivreDTO(this.cx);
+        this.membre = new MembreDTO(this.cx);
+        this.reservation = new ReservationDTO(this.cx);
         this.gestionLivre = new GestionLivre(this.livre,
             this.reservation);
         this.gestionMembre = new GestionMembre(this.membre,
