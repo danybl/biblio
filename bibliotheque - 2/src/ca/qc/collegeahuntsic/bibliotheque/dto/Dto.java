@@ -1,9 +1,9 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
-public class dto {
+public class Dto {
 
-    public dto() {
+    public Dto() {
         // TODO Auto-generated constructor stub
     }
 
