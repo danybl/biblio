@@ -8,7 +8,9 @@ import java.sql.Date;
  * Je check juste si ca marche
  */
 
-public class ReservationDTO {
+public class ReservationDTO extends Dto {
+
+    private static final long serialVersionUID = 1L;
 
     private int idReservation;
 
