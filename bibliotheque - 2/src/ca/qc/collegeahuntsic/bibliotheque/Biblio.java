@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.StringTokenizer;
+import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
 
 /**
  *
@@ -278,7 +280,7 @@ public class Biblio {
         if(tokenizer.hasMoreElements()) {
             String token = tokenizer.nextToken();
             try {
-                FormatDate.convertirDate(token);
+                FormatteurDate.convertirDate(token);
                 return token;
             } catch(ParseException e) {
                 throw new BiblioException("Date en format YYYY-MM-DD attendue à la place  de \""

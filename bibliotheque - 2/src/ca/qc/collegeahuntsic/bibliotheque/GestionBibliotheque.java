@@ -2,6 +2,7 @@
 package ca.qc.collegeahuntsic.bibliotheque;
 
 import java.sql.SQLException;
+import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 
 /**
  * Syst�me de gestion d'une biblioth�que
