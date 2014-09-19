@@ -1,13 +1,16 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.dao;
 
-import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 
 public class MembreDAO extends DAO {
 
     private static final long serialVersionUID = 1L;
 
-    //    private static final String INSERT_REQUEST = "INSERT INTO membre (idMembre, nom, telephone, limitePret, nbpret)"
+    private static final String ADD_REQUEST = "INSERT INTO membre (idMembre, nom, telephone, limitePret, nbpret)";
+
     //        + "VALUES (?,?,?,?,?)";
     //
     //    private static final String UPDATE_INFO_REQUEST = "UPDATE membre"
@@ -41,8 +44,26 @@ public class MembreDAO extends DAO {
     //        //        }
     //    }
 
-    public Connection getConnection() {
-        return null;
+    public void ajouter(int idMembre,
+        String nom,
+        long telephone,
+        int limitePret) throws DAOException {
+        /* Ajout du membre. */
 
+        try(
+            PreparedStatement preparedAjout = getConnection().prepareStatement(ADD_REQUEST);) {
+
+            preparedAjout.setInt(1,
+                idMembre);
+            preparedAjout.setString(2,
+                nom);
+            preparedAjout.setLong(3,
+                telephone);
+            preparedAjout.setInt(4,
+                limitePret);
+            preparedAjout.executeUpdate();
+        } catch(SQLException sqlException) {
+            throw new DAOException();
+        }
     }
 }
