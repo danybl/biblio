@@ -7,7 +7,7 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 
 public class DAO implements Serializable {
 
-    private Connexion connexion;
+    protected Connexion connexion;
 
     private static final long serialVersionUID = 1L;
 
