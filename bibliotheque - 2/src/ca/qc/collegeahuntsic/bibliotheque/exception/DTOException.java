@@ -2,18 +2,18 @@
 package ca.qc.collegeahuntsic.bibliotheque.exception;
 
 /**
- * Cette exception est utilisée en cas de problème avec un objet {@link ca.qc.collegeahuntsic.bibliotheque.dao.DAO}.
+ * Cette exception est utilisée en cas de problème avec un objet {@link ca.qc.collegeahuntsic.bibliotheque.dto.DTO}.
  *
- *
+ * @author Gilles Benichou
  */
-public class DAOException extends Exception {
+public class DTOException extends Exception {
     private static final long serialVersionUID = 1L;
 
     /**
      * Constructs a new exception with null as its detail message. The cause is not initialized, and may subsequently be initialized by a call
      * to {@link java.lang.Throwable#initCause(java.lang.Throwable) Throwable.initCause(Throwable)}.
      */
-    public DAOException() {
+    public DTOException() {
         super();
     }
 
@@ -24,7 +24,7 @@ public class DAOException extends Exception {
      * @param message The detail message. The detail message is saved for later retrieval by the
      *        {@link java.lang.Throwable#getMessage() Throwable.getMessage()} method
      */
-    public DAOException(String message) {
+    public DTOException(String message) {
         super(message);
     }
 
@@ -36,7 +36,7 @@ public class DAOException extends Exception {
      * @param cause The cause (which is saved for later retrieval by the {@link java.lang.Throwable#getCause() Throwable.getCause()} method).
      *        A null value is permitted, and indicates that the cause is nonexistent or unknown
      */
-    public DAOException(Throwable cause) {
+    public DTOException(Throwable cause) {
         super(cause);
     }
 
@@ -48,7 +48,7 @@ public class DAOException extends Exception {
      * @param cause The cause (which is saved for later retrieval by the {@link java.lang.Throwable#getCause() Throwable.getCause()} method).
      *        A null value is permitted, and indicates that the cause is nonexistent or unknown
      */
-    public DAOException(String message,
+    public DTOException(String message,
         Throwable cause) {
         super(message,
             cause);
@@ -63,7 +63,7 @@ public class DAOException extends Exception {
      * @param enableSuppression Whether or not suppression is enabled or disabled
      * @param writableStackTrace Whether or not the stack trace should be writable
      */
-    public DAOException(String message,
+    public DTOException(String message,
         Throwable cause,
         boolean enableSuppression,
         boolean writableStackTrace) {
@@ -72,5 +72,4 @@ public class DAOException extends Exception {
             enableSuppression,
             writableStackTrace);
     }
-
 }
