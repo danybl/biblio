@@ -1,7 +1,7 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * Permet de représenter un tuple de la table membre.
@@ -18,17 +18,7 @@ public class ReservationDTO extends DTO {
 
     private int idMembre;
 
-    private Date dateReservation;
-
-    public ReservationDTO(int idReservation,
-        int idLivre,
-        int idMembre,
-        Date dateReservation) {
-        this.idReservation = idReservation;
-        this.idLivre = idLivre;
-        this.idMembre = idMembre;
-        this.dateReservation = dateReservation;
-    }
+    private Timestamp dateReservation;
 
     //Region get/set
     public int getIdReservation() {
@@ -43,8 +33,24 @@ public class ReservationDTO extends DTO {
         return this.idMembre;
     }
 
-    public Date getDateReservation() {
+    public Timestamp getDateReservation() {
         return this.dateReservation;
+    }
+
+    public void setIdReservation(int idReservation) {
+        this.idReservation = idReservation;
+    }
+
+    public void setIdLivre(int idLivre) {
+        this.idLivre = idLivre;
+    }
+
+    public void setIdMembre(int idMembre) {
+        this.idMembre = idMembre;
+    }
+
+    public void setDateReservation(Timestamp dateReservation) {
+        this.dateReservation = dateReservation;
     }
     //EndRegion
 
