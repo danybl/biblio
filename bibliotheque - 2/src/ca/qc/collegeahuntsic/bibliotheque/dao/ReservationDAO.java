@@ -143,7 +143,7 @@ public class ReservationDAO extends DAO {
         return reservations;
     }//FinGetAll
 
-    public ReservationDTO findByIDLivre(LivreDTO livreDTO) throws DAOException {
+    public ReservationDTO findByLivre(LivreDTO livreDTO) throws DAOException {
         ReservationDTO reservationDTO = null;
         try(
             PreparedStatement findByIDLivrePreparedStatement = getConnection().prepareStatement(ReservationDAO.FIND_LIVRE_BY_ID)) {
@@ -165,7 +165,7 @@ public class ReservationDAO extends DAO {
         return reservationDTO;
     }//FinFindByIDLivre
 
-    public ReservationDTO findByIDMembre(MembreDTO membreDTO) throws DAOException {
+    public ReservationDTO findByMembre(MembreDTO membreDTO) throws DAOException {
         ReservationDTO reservationDTO = null;
         try(
             PreparedStatement findByIDMembrePreparedStatement = getConnection().prepareStatement(ReservationDAO.FIND_MEMBRE_BY_ID)) {
