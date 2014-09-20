@@ -10,6 +10,16 @@ public class MembreDTO extends DTO {
 
     private static final long serialVersionUID = 1L;
 
+    private int idMembre;
+
+    private String nom;
+
+    private int telephone;
+
+    private int limitePret;
+
+    private int nbPret;
+
     //Region get/set
     public int getIdMembre() {
         return this.idMembre;
@@ -27,11 +37,11 @@ public class MembreDTO extends DTO {
         this.nom = nom;
     }
 
-    public long getTelephone() {
+    public int getTelephone() {
         return this.telephone;
     }
 
-    public void setTelephone(long telephone) {
+    public void setTelephone(int telephone) {
         this.telephone = telephone;
     }
 
@@ -53,13 +63,4 @@ public class MembreDTO extends DTO {
 
     //EndRegion
 
-    private int idMembre;
-
-    private String nom;
-
-    private long telephone;
-
-    private int limitePret;
-
-    private int nbPret;
 }
