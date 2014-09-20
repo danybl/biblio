@@ -12,8 +12,6 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 
 /**
  * Service de la table <code>livre</code>.
- *
- * @author Gilles Benichou
  */
 public class LivreService extends Service {
     private static final long serialVersionUID = 1L;
@@ -272,7 +270,7 @@ public class LivreService extends Service {
                     + membreDTO.getIdMembre()
                     + ")");
             }
-            if(!getReservationDAO().findByLivre(unLivreDTO).isEmpty()) {
+            if(getReservationDAO().findByLivre(unLivreDTO) != null) {
                 throw new ServiceException("Le livre "
                     + unLivreDTO.getTitre()
                     + " (ID de livre : "
