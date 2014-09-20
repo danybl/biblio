@@ -6,7 +6,7 @@ package ca.qc.collegeahuntsic.bibliotheque.dto;
  *
  */
 
-public class MembreDTO extends Dto {
+public class MembreDTO extends DTO {
 
     private static final long serialVersionUID = 1L;
 
