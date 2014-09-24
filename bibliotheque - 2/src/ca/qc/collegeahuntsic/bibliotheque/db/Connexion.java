@@ -135,9 +135,9 @@ public class Connexion {
      * Retourne la liste des serveurs supportés par ce gestionnaire de connexions
      */
     public static String serveursSupportes() {
-        return "local : MySQL install� localement\n"
-            + "distant : Oracle install� au D�partement d'Informatique du Coll�ge Ahuntsic\n"
-            + "postgres : Postgres install� localement\n"
-            + "access : Microsoft Access install� localement et inscrit dans ODBC";
+        return "local : MySQL installé localement\n"
+            + "distant : Oracle installé au Département d'Informatique du Collège Ahuntsic\n"
+            + "postgres : Postgres installé localement\n"
+            + "access : Microsoft Access installé localement et inscrit dans ODBC";
     }
 }// Classe Connexion

@@ -43,6 +43,8 @@ public class Bibliotheque {
 
     private static boolean lectureAuClavier = true;
 
+    private static Connexion connexion;
+
     /**
      * Ouverture de la BD,
      * traitement des transactions et
@@ -64,6 +66,10 @@ public class Bibliotheque {
             } else {
                 lectureAuClavier = true;
             }
+            connexion = new Connexion(argv[0],
+                argv[1],
+                argv[2],
+                argv[3]);
             traiterTransactions(reader);
         } catch(Exception e) {
             e.printStackTrace(System.out);
