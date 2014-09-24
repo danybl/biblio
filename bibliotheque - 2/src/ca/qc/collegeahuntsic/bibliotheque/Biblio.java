@@ -39,7 +39,6 @@ import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
  * </pre>
  */
 public class Biblio {
-    private static GestionBibliotheque gestionBiblio;
 
     private static boolean lectureAuClavier = true;
 
