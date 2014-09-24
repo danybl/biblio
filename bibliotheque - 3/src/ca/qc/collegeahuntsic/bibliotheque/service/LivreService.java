@@ -57,15 +57,6 @@ public class LivreService extends Service {
     }
 
     /**
-     * Getter de la variable d'instance <code>this.membreDAO</code>.
-     *
-     * @return La variable d'instance <code>this.membreDAO</code>
-     */
-    private MembreDAO getMembreDAO() {
-        return this.membreDAO;
-    }
-
-    /**
      * Setter de la variable d'instance <code>this.membreDAO</code>.
      *
      * @param membreDAO La valeur à utiliser pour la variable d'instance <code>this.membreDAO</code>
@@ -222,24 +213,19 @@ public class LivreService extends Service {
                     + livreDTO.getIdLivre()
                     + " n'existe pas");
             }
-            MembreDTO membreDTO = getMembreDAO().read(unLivreDTO.getIdMembre());
-            if(getLivreDAO().findByMembre(membreDTO) != null) {
-                throw new ServiceException("Le livre "
-                    + unLivreDTO.getTitre()
-                    + " (ID de livre : "
-                    + unLivreDTO.getIdLivre()
-                    + ") a été prêté à "
-                    + membreDTO.getNom()
-                    + " (ID de membre : "
-                    + membreDTO.getIdMembre()
-                    + ")");
-            }
             if(getReservationDAO().findByLivre(unLivreDTO) != null) {
                 throw new ServiceException("Le livre "
                     + unLivreDTO.getTitre()
                     + " (ID de livre : "
                     + unLivreDTO.getIdLivre()
                     + ") a des réservations");
+            }
+            if(getPretDAO().findByLivre(unLivreDTO) != null) {
+                throw new ServiceException("Le livre "
+                    + unLivreDTO.getTitre()
+                    + " (ID de livre : "
+                    + unLivreDTO.getIdLivre()
+                    + ") a des prêts");
             }
             delete(unLivreDTO);
         } catch(DAOException daoException) {
