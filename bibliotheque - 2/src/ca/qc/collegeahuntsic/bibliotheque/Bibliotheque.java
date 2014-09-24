@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.StringTokenizer;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
 
 /**
@@ -38,7 +39,7 @@ import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
  *   transaction
  * </pre>
  */
-public class Biblio {
+public class Bibliotheque {
 
     private static boolean lectureAuClavier = true;
 
@@ -55,30 +56,17 @@ public class Biblio {
             return;
         }
         //test
-        try {
-            // ouverture du fichier de transactions
-            // s'il est spécifié comme argument
-            InputStream sourceTransaction;
+        try(
+            InputStream sourceTransaction = (argv.length > 4 ? new FileInputStream(argv[4]) : System.in);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction));) {
             if(argv.length > 4) {
-                sourceTransaction = new FileInputStream(argv[4]);
                 lectureAuClavier = false;
             } else {
                 lectureAuClavier = true;
-                sourceTransaction = System.in;
             }
-            BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction));
-
-            gestionBiblio = new GestionBibliotheque(argv[0],
-                argv[1],
-                argv[2],
-                argv[3]);
             traiterTransactions(reader);
-            sourceTransaction.close();
-            reader.close();
         } catch(Exception e) {
             e.printStackTrace(System.out);
-        } finally {
-            gestionBiblio.fermer();
         }
     }
 
@@ -115,7 +103,7 @@ public class Biblio {
     /**
      * Décodage et traitement d'une transaction
      */
-    static void executerTransaction(StringTokenizer tokenizer) throws Exception {
+    static void executerTransaction(StringTokenizer tokenizer) throws BibliothequeException {
         try {
             String command = tokenizer.nextToken();
 
@@ -167,9 +155,8 @@ public class Biblio {
             } else {
                 System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
             }
-        } catch(BiblioException e) {
-            System.out.println("** "
-                + e.toString());
+        } catch(Exception e) {
+            throw new BibliothequeException();
         }
     }
 
@@ -228,66 +215,66 @@ public class Biblio {
     }
 
     /** lecture d'une chaine de caractères de la transaction entrée à l'écran */
-    static String readString(StringTokenizer tokenizer) throws BiblioException {
+    static String readString(StringTokenizer tokenizer) throws BibliothequeException {
         if(tokenizer.hasMoreElements()) {
             return tokenizer.nextToken();
         }
-        throw new BiblioException("autre paramètre attendu");
+        throw new BibliothequeException("autre paramètre attendu");
 
     }
 
     /**
      * lecture d'un int java de la transaction entrée à l'écran
      */
-    static int readInt(StringTokenizer tokenizer) throws BiblioException {
+    static int readInt(StringTokenizer tokenizer) throws BibliothequeException {
         if(tokenizer.hasMoreElements()) {
             String token = tokenizer.nextToken();
             try {
                 return Integer.valueOf(token).intValue();
             } catch(NumberFormatException e) {
-                throw new BiblioException("Nombre attendu à la place de \""
+                throw new BibliothequeException("Nombre attendu à la place de \""
                     + token
                     + "\"");
             }
         }
-        throw new BiblioException("autre paramètre attendu");
+        throw new BibliothequeException("autre paramètre attendu");
 
     }
 
     /**
      * lecture d'un long java de la transaction entrée à l'écran
      */
-    static long readLong(StringTokenizer tokenizer) throws BiblioException {
+    static long readLong(StringTokenizer tokenizer) throws BibliothequeException {
         if(tokenizer.hasMoreElements()) {
             String token = tokenizer.nextToken();
             try {
                 return Long.valueOf(token).longValue();
             } catch(NumberFormatException e) {
-                throw new BiblioException("Nombre attendu à la place de \""
+                throw new BibliothequeException("Nombre attendu à la place de \""
                     + token
                     + "\"");
             }
         }
-        throw new BiblioException("autre paramètre attendu");
+        throw new BibliothequeException("autre paramètre attendu");
 
     }
 
     /**
      * lecture d'une date en format YYYY-MM-DD
      */
-    static String readDate(StringTokenizer tokenizer) throws BiblioException {
+    static String readDate(StringTokenizer tokenizer) throws BibliothequeException {
         if(tokenizer.hasMoreElements()) {
             String token = tokenizer.nextToken();
             try {
                 FormatteurDate.convertirDate(token);
                 return token;
             } catch(ParseException e) {
-                throw new BiblioException("Date en format YYYY-MM-DD attendue à la place  de \""
+                throw new BibliothequeException("Date en format YYYY-MM-DD attendue à la place  de \""
                     + token
                     + "\"");
             }
         }
-        throw new BiblioException("autre paramètre attendu");
+        throw new BibliothequeException("autre paramètre attendu");
 
     }
 }//class
