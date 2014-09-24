@@ -2,7 +2,7 @@
 package ca.qc.collegeahuntsic.bibliotheque.db;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
+//import java.sql.DatabaseMetaData;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -25,6 +25,26 @@ public class Connexion {
 
     private Connection conn;
 
+    private final static String LOCAL = "local";
+
+    private final static String LOCAL_DRIVER = "com.mysql.jdbc.Driver";
+
+    private final static String LOCAL_URL = "jdbc:mysql://localhost:3306/";
+
+    private final static String DISTANT = "distant";
+
+    private final static String DISTANT_DRIVER = "oracle.jdbc.driver.OracleDriver";
+
+    private final static String DISTANT_URL = "jdbc:oracle:thin:@localhost:1521:";
+
+    private final static String POSTGRES = "postgres";
+
+    private final static String POSTGRES_DRIVER = "org.postgresql.Driver";
+
+    private final static String POSTGRES_URL = "jdbc:postgresql:";
+
+    private final static String ACCESS_URL = "jdbc:odbc:";
+
     /**
      * Ouverture d'une connexion en mode autocommit false et sérialisable (si supporté)
      * @param serveur serveur SQL de la BD
@@ -38,32 +58,32 @@ public class Connexion {
         String pass) throws SQLException {
         Driver d;
         try {
-            if(serveur.equals("local")) {
-                d = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
+            if(serveur.equals(LOCAL)) {
+                d = (Driver) Class.forName(LOCAL_DRIVER).newInstance();
                 DriverManager.registerDriver(d);
-                this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/"
+                this.conn = DriverManager.getConnection(LOCAL_URL
                     + bd,
                     user,
                     pass);
-            } else if(serveur.equals("distant")) {
-                d = (Driver) Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
+            } else if(serveur.equals(DISTANT)) {
+                d = (Driver) Class.forName(DISTANT_DRIVER).newInstance();
                 DriverManager.registerDriver(d);
-                this.conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:"
+                this.conn = DriverManager.getConnection(DISTANT_URL
                     + bd,
                     user,
                     pass);
-            } else if(serveur.equals("postgres")) {
-                d = (Driver) Class.forName("org.postgresql.Driver").newInstance();
+            } else if(serveur.equals(POSTGRES)) {
+                d = (Driver) Class.forName(POSTGRES_DRIVER).newInstance();
                 DriverManager.registerDriver(d);
-                this.conn = DriverManager.getConnection("jdbc:postgresql:"
+                this.conn = DriverManager.getConnection(POSTGRES_URL
                     + bd,
                     user,
                     pass);
             } else // access
             {
-                d = (Driver) Class.forName("org.postgresql.Driver").newInstance();
+                d = (Driver) Class.forName(POSTGRES_DRIVER).newInstance();
                 DriverManager.registerDriver(new sun.jdbc.odbc.JdbcOdbcDriver());
-                this.conn = DriverManager.getConnection("jdbc:odbc:"
+                this.conn = DriverManager.getConnection(ACCESS_URL
                     + bd,
                     "",
                     "");
@@ -74,21 +94,21 @@ public class Connexion {
 
             // mettre en mode s�rialisable si possible
             // (plus haut niveau d'integrit� l'acc�s concurrent aux donn�es)
-            DatabaseMetaData dbmd = this.conn.getMetaData();
-            if(dbmd.supportsTransactionIsolationLevel(Connection.TRANSACTION_SERIALIZABLE)) {
-                this.conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-                System.out.println("Ouverture de la connexion en mode sérialisable :\n"
-                    + "Estampille "
-                    + System.currentTimeMillis()
-                    + " "
-                    + this.conn);
-            } else {
-                System.out.println("Ouverture de la connexion en mode read committed (default) :\n"
-                    + "Heure "
-                    + System.currentTimeMillis()
-                    + " "
-                    + this.conn);
-            }
+            //            DatabaseMetaData dbmd = this.conn.getMetaData();
+            //            if(dbmd.supportsTransactionIsolationLevel(Connection.TRANSACTION_SERIALIZABLE)) {
+            //                this.conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+            //                System.out.println("Ouverture de la connexion en mode sérialisable :\n"
+            //                    + "Estampille "
+            //                    + System.currentTimeMillis()
+            //                    + " "
+            //                    + this.conn);
+            //            } else {
+            //                System.out.println("Ouverture de la connexion en mode read committed (default) :\n"
+            //                    + "Heure "
+            //                    + System.currentTimeMillis()
+            //                    + " "
+            //                    + this.conn);
+            //            }
         }// try
 
         catch(SQLException e) {
