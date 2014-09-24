@@ -2,6 +2,8 @@
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
 import java.sql.Timestamp;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * Permet de représenter un tuple de la table membre.
@@ -52,6 +54,39 @@ public class ReservationDTO extends DTO {
     public void setDateReservation(Timestamp dateReservation) {
         this.dateReservation = dateReservation;
     }
+
     //EndRegion
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        boolean equals = this == obj;
+        if(!equals) {
+            equals = obj != null
+                && obj instanceof ReservationDTO;
+            if(equals) {
+                ReservationDTO reservationDTO = (ReservationDTO) obj;
+                EqualsBuilder equalsBuilder = new EqualsBuilder();
+                equalsBuilder.appendSuper(super.equals(reservationDTO));
+                equalsBuilder.append(getIdReservation(),
+                    reservationDTO.getIdReservation());
+                equals = equalsBuilder.isEquals();
+            }
+        }
+        return equals;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(25,
+            15);
+        hashCodeBuilder.appendSuper(super.hashCode());
+        hashCodeBuilder.append(getIdReservation());
+        return hashCodeBuilder.toHashCode();
+    }
 }

@@ -2,6 +2,7 @@
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
 import java.sql.Timestamp;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * DTO de la table <code>livre</code>.
@@ -18,15 +19,11 @@ public class LivreDTO extends DTO {
 
     private Timestamp dateAcquisition;
 
-    private int idMembre;
-
-    private Timestamp datePret;
-
     /**
-     * Getter de la variable d'instance <code>this.idLivre</code>.
-     *
-     * @return La variable d'instance <code>this.idLivre</code>
-     */
+    * Getter de la variable d'instance <code>this.idLivre</code>.
+    *
+    * @return La variable d'instance <code>this.idLivre</code>
+    */
     public int getIdLivre() {
         return this.idLivre;
     }
@@ -94,39 +91,12 @@ public class LivreDTO extends DTO {
         this.dateAcquisition = dateAcquisition;
     }
 
-    /**
-     * Getter de la variable d'instance <code>this.idMembre</code>.
-     *
-     * @return La variable d'instance <code>this.idMembre</code>
-     */
-    public int getIdMembre() {
-        return this.idMembre;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.idMembre</code>.
-     *
-     * @param idMembre La valeur à utiliser pour la variable d'instance <code>this.idMembre</code>
-     */
-    public void setIdMembre(int idMembre) {
-        this.idMembre = idMembre;
-    }
-
-    /**
-     * Getter de la variable d'instance <code>this.datePret</code>.
-     *
-     * @return La variable d'instance <code>this.datePret</code>
-     */
-    public Timestamp getDatePret() {
-        return this.datePret;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.datePret</code>.
-     *
-     * @param datePret La valeur à utiliser pour la variable d'instance <code>this.datePret</code>
-     */
-    public void setDatePret(Timestamp datePret) {
-        this.datePret = datePret;
+    @Override
+    public int hashCode() {
+        HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(459,
+            449);
+        hashCodeBuilder.appendSuper(super.hashCode());
+        hashCodeBuilder.append(getIdLivre());
+        return hashCodeBuilder.toHashCode();
     }
 }
