@@ -35,7 +35,7 @@ class BDCreateur {
                 Statement stmt = cx.getConnection().createStatement();) {
 
                 stmt.executeUpdate("DROP TABLE membre CASCADE CONSTRAINTS");
-                stmt.executeUpdate("CREATE TABLE membre (idMembre   NUMBER(3)    CHECK (idMembre > 0), "
+                stmt.executeUpdate("CREATE TABLE membre (idMembre   NUMBER    CHECK (idMembre > 0), "
                     + " nom        VARCHAR(100) NOT NULL,"
                     + " telephone  NUMBER(10),"
                     + "limitePret NUMBER(2)    CHECK (limitePret > 0 AND limitePret <= 10),"
@@ -52,8 +52,8 @@ class BDCreateur {
 
                 stmt.executeUpdate("DROP TABLE livre CASCADE CONSTRAINTS");
                 stmt.executeUpdate("CREATE TABLE pret (idPret     NUMBER(3)  CHECK (idPret > 0),"
-                    + "idMembre   NUMBER(3)  CHECK (idMembre > 0),"
-                    + "idLivre    NUMBER(3)  CHECK (idLivre > 0),"
+                    + "idMembre   NUMBER  CHECK (idMembre > 0),"
+                    + "idLivre    NUMBER  CHECK (idLivre > 0),"
                     + "datePret   TIMESTAMP,"
                     + "dateRetour TIMESTAMP,"
                     + "CONSTRAINT clePrimairePret PRIMARY KEY (idPret),"
@@ -62,14 +62,17 @@ class BDCreateur {
 
                 stmt.executeUpdate("DROP TABLE reservation CASCADE CONSTRAINTS");
                 stmt.executeUpdate("CREATE TABLE reservation (idReservation   NUMBER(3)  CHECK (idReservation > 0),"
-                    + " idMembre        NUMBER(3)  CHECK (idMembre > 0),"
-                    + "idLivre         NUMBER(3)  CHECK (idLivre > 0),"
+                    + " idMembre        NUMBER  CHECK (idMembre > 0),"
+                    + "idLivre         NUMBER  CHECK (idLivre > 0),"
                     + "dateReservation TIMESTAMP,"
                     + " CONSTRAINT      clePrimaireReservation  PRIMARY KEY (idReservation),"
                     + " CONSTRAINT      cleEtrangereReservation UNIQUE (idMembre, idLivre),"
                     + " CONSTRAINT      refReservationMembre    FOREIGN KEY (idMembre) REFERENCES membre (idMembre) ON DELETE CASCADE,"
                     + "CONSTRAINT      refReservationLivre     FOREIGN KEY (idLivre)  REFERENCES livre (idLivre)   ON DELETE CASCADE)");
-
+                stmt.executeUpdate("CREATE SEQUENCE SEQ_ID_MEMBRE      START WITH 1 INCREMENT BY 1");
+                stmt.executeUpdate("CREATE SEQUENCE SEQ_ID_LIVRE       START WITH 1 INCREMENT BY 1");
+                stmt.executeUpdate("CREATE SEQUENCE SEQ_ID_PRET        START WITH 1 INCREMENT BY 1");
+                stmt.executeUpdate("CREATE SEQUENCE SEQ_ID_RESERVATION START WITH 1 INCREMENT BY 1");
                 cx.fermer();
             }
         } catch(SQLException sqlex) {
