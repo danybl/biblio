@@ -1,10 +1,10 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.util;
 
-import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
-import ca.qc.collegeahuntsic.bibliotheque.exception.BDCreateurException;
 import java.sql.SQLException;
 import java.sql.Statement;
+import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import ca.qc.collegeahuntsic.bibliotheque.exception.BDCreateurException;
 
 /**
  *<pre>
@@ -35,41 +35,40 @@ class BDCreateur {
                 Statement stmt = cx.getConnection().createStatement();) {
 
                 stmt.executeUpdate("DROP TABLE membre CASCADE CONSTRAINTS");
-                stmt.executeUpdate("CREATE TABLE membre ( "
-                    + "idMembre        number(3) check(idMembre > 0), "
-                    + "nom             varchar(10) NOT NULL, "
-                    + "telephone       number(10) , "
-                    + "limitePret      number(2) check(limitePret > 0 and limitePret <= 10) , "
-                    + "nbpret          number(2) default 0 check(nbpret >= 0) , "
-                    + "CONSTRAINT cleMembre PRIMARY KEY (idMembre), "
-                    + "CONSTRAINT limiteNbPret check(nbpret <= limitePret) "
-                    + ")");
+                stmt.executeUpdate("CREATE TABLE membre (idMembre   NUMBER(3)    CHECK (idMembre > 0), "
+                    + " nom        VARCHAR(100) NOT NULL,"
+                    + " telephone  NUMBER(10),"
+                    + "limitePret NUMBER(2)    CHECK (limitePret > 0 AND limitePret <= 10),"
+                    + "nbPret     NUMBER(2)    DEFAULT 0 CHECK (nbpret >= 0),"
+                    + "CONSTRAINT cleMembre    PRIMARY KEY (idMembre),"
+                    + "CONSTRAINT limiteNbPret CHECK (nbPret <= limitePret))");
 
                 stmt.executeUpdate("DROP TABLE livre CASCADE CONSTRAINTS");
-                stmt.executeUpdate("CREATE TABLE livre ( "
-                    + "idLivre         number(3) check(idLivre > 0) , "
-                    + "titre           varchar(10) NOT NULL, "
-                    + "auteur          varchar(10) NOT NULL, "
-                    + "dateAcquisition date not null, "
-                    + "idMembre        number(3) , "
-                    + "datePret        date , "
-                    + "CONSTRAINT cleLivre PRIMARY KEY (idLivre), "
-                    + "CONSTRAINT refPretMembre FOREIGN KEY (idMembre) REFERENCES membre "
-                    + ")");
+                stmt.executeUpdate("CREATE TABLE livre (idLivre         NUMBER(3)    CHECK (idLivre > 0),"
+                    + "titre           VARCHAR(100) NOT NULL,"
+                    + "auteur          VARCHAR(100) NOT NULL,"
+                    + " dateAcquisition TIMESTAMP    NOT NULL,"
+                    + " CONSTRAINT      cleLivre     PRIMARY KEY (idLivre))");
+
+                stmt.executeUpdate("DROP TABLE livre CASCADE CONSTRAINTS");
+                stmt.executeUpdate("CREATE TABLE pret (idPret     NUMBER(3)  CHECK (idPret > 0),"
+                    + "idMembre   NUMBER(3)  CHECK (idMembre > 0),"
+                    + "idLivre    NUMBER(3)  CHECK (idLivre > 0),"
+                    + "datePret   TIMESTAMP,"
+                    + "dateRetour TIMESTAMP,"
+                    + "CONSTRAINT clePrimairePret PRIMARY KEY (idPret),"
+                    + "CONSTRAINT refPretMembre   FOREIGN KEY (idMembre) REFERENCES membre (idMembre) ON DELETE CASCADE,"
+                    + "CONSTRAINT refPretLivre    FOREIGN KEY (idLivre)  REFERENCES livre (idLivre)   ON DELETE CASCADE)");
 
                 stmt.executeUpdate("DROP TABLE reservation CASCADE CONSTRAINTS");
-                stmt.executeUpdate("CREATE TABLE reservation ( "
-                    + "idReservation   number(3) , "
-                    + "idMembre        number(3) , "
-                    + "idLivre         number(3) , "
-                    + "dateReservation date , "
-                    + "CONSTRAINT cleReservation PRIMARY KEY (idReservation) , "
-                    + "CONSTRAINT cleCandidateReservation UNIQUE (idMembre,idLivre) , "
-                    + "CONSTRAINT refReservationMembre FOREIGN KEY (idMembre) REFERENCES membre "
-                    + "  ON DELETE CASCADE , "
-                    + "CONSTRAINT refReservationLivre FOREIGN KEY (idLivre) REFERENCES livre "
-                    + "  ON DELETE CASCADE "
-                    + ")");
+                stmt.executeUpdate("CREATE TABLE reservation (idReservation   NUMBER(3)  CHECK (idReservation > 0),"
+                    + " idMembre        NUMBER(3)  CHECK (idMembre > 0),"
+                    + "idLivre         NUMBER(3)  CHECK (idLivre > 0),"
+                    + "dateReservation TIMESTAMP,"
+                    + " CONSTRAINT      clePrimaireReservation  PRIMARY KEY (idReservation),"
+                    + " CONSTRAINT      cleEtrangereReservation UNIQUE (idMembre, idLivre),"
+                    + " CONSTRAINT      refReservationMembre    FOREIGN KEY (idMembre) REFERENCES membre (idMembre) ON DELETE CASCADE,"
+                    + "CONSTRAINT      refReservationLivre     FOREIGN KEY (idLivre)  REFERENCES livre (idLivre)   ON DELETE CASCADE)");
 
                 cx.fermer();
             }
