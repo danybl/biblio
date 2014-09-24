@@ -2,9 +2,7 @@
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
 import java.util.List;
-import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
@@ -17,12 +15,8 @@ public class MembreService extends Service {
 
     private MembreDAO membreDAO;
 
-    private LivreDAO livreDAO;
-
-    private ReservationDAO reservationDAO;
-
-    public MembreService() {
-
+    public MembreService(MembreDAO membreDAO) {
+        setMembreDAO(membreDAO);
     }
 
     public MembreDAO getMembreDAO() {
@@ -31,22 +25,6 @@ public class MembreService extends Service {
 
     public void setMembreDAO(MembreDAO membreDAO) {
         this.membreDAO = membreDAO;
-    }
-
-    public LivreDAO getLivreDAO() {
-        return this.livreDAO;
-    }
-
-    public void setLivreDAO(LivreDAO livreDAO) {
-        this.livreDAO = livreDAO;
-    }
-
-    public ReservationDAO getReservationDAO() {
-        return this.reservationDAO;
-    }
-
-    public void setReservationDAO(ReservationDAO reservationDAO) {
-        this.reservationDAO = reservationDAO;
     }
 
     //ajout d'un membre
