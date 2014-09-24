@@ -43,7 +43,7 @@ public class LivreService extends Service {
      *
      * @return La variable d'instance <code>this.livreDAO</code>
      */
-    private LivreDAO getLivreDAO() {
+    public LivreDAO getLivreDAO() {
         return this.livreDAO;
     }
 
