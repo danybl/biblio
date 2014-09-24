@@ -6,11 +6,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.ParseException;
 import java.util.StringTokenizer;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
-import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
+import ca.qc.collegeahuntsic.bibliotheque.util.BibliothequeCreateur;
 
 /**
  *
@@ -45,6 +45,8 @@ public class Bibliotheque {
 
     private static Connexion connexion;
 
+    private static BibliothequeCreateur bibliohequeCreateur;
+
     /**
      * Ouverture de la BD,
      * traitement des transactions et
@@ -70,6 +72,7 @@ public class Bibliotheque {
                 argv[1],
                 argv[2],
                 argv[3]);
+            bibliohequeCreateur = new BibliothequeCreateur(connexion);
             traiterTransactions(reader);
         } catch(Exception e) {
             e.printStackTrace(System.out);
@@ -110,6 +113,7 @@ public class Bibliotheque {
      * Décodage et traitement d'une transaction
      */
     static void executerTransaction(StringTokenizer tokenizer) throws BibliothequeException {
+        LivreDTO livreTemp;// = new LivreDTO();
         try {
             String command = tokenizer.nextToken();
 
@@ -119,12 +123,20 @@ public class Bibliotheque {
             if("aide".startsWith(command)) {
                 afficherAide();
             } else if("acquerir".startsWith(command)) {
-                gestionBiblio.gestionLivre.acquerir(readInt(tokenizer) /* idLivre */,
-                    readString(tokenizer) /* titre */,
-                    readString(tokenizer) /* auteur */,
-                    readDate(tokenizer) /* dateAcquisition */);
+                livreTemp = new LivreDTO();
+                livreTemp.setTitre(readString(tokenizer)); /* titre */
+                livreTemp.setAuteur(readString(tokenizer)); /* auteur */
+                //livreTemp.setIdLivre(readInt(tokenizer)); /* idLivre */
+                bibliohequeCreateur.getLivreService().acquerir(livreTemp);
+
+                // livreTemp.setDateAcquisition(readDate(tokenizer)); /* dateAcquisition */                
+
             } else if("vendre".startsWith(command)) {
-                gestionBiblio.gestionLivre.vendre(readInt(tokenizer) /* idLivre */);
+                livreTemp = new LivreDTO();
+                bibliohequeCreateur.getLivreService().vendre(livreTemp);
+
+                //  readInt(tokenizer) /* idLivre */);
+
             } else if("preter".startsWith(command)) {
                 gestionBiblio.gestionPret.preter(readInt(tokenizer) /* idLivre */,
                     readInt(tokenizer) /* idMembre */,
@@ -268,19 +280,19 @@ public class Bibliotheque {
     /**
      * lecture d'une date en format YYYY-MM-DD
      */
-    static String readDate(StringTokenizer tokenizer) throws BibliothequeException {
-        if(tokenizer.hasMoreElements()) {
-            String token = tokenizer.nextToken();
-            try {
-                FormatteurDate.convertirDate(token);
-                return token;
-            } catch(ParseException e) {
-                throw new BibliothequeException("Date en format YYYY-MM-DD attendue à la place  de \""
-                    + token
-                    + "\"");
-            }
-        }
-        throw new BibliothequeException("autre paramètre attendu");
-
-    }
+    //    static Timestamp readDate(StringTokenizer tokenizer) throws BibliothequeException {
+    //        if(tokenizer.hasMoreElements()) {
+    //            String token = tokenizer.nextToken();
+    //            try {
+    //                FormatteurDate.convertirDate(token);
+    //                return token;
+    //            } catch(ParseException e) {
+    //                throw new BibliothequeException("Date en format YYYY-MM-DD attendue à la place  de \""
+    //                    + token
+    //                    + "\"");
+    //            }
+    //        }
+    //        throw new BibliothequeException("autre paramètre attendu");
+    //
+    //    }
 }//class
