@@ -23,6 +23,8 @@ public class ReservationService extends Service {
         LivreDAO livreDAO) {
         super();
         setReservationDAO(reservationDAO);
+        setMembreDAO(membreDAO);
+        setLivreDAO(livreDAO);
 
     }
 
