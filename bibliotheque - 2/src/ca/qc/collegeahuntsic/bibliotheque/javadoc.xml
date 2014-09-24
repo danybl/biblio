@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="javadoc">
-    <target name="javadoc">
-        <javadoc access="public" additionalparam="-encoding UTF-8 -docencoding UTF-8 -charset UTF-8 " author="true" classpath="ojdbc7.jar" destdir="javadoc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" source="1.7" sourcefiles="GestionInterrogation.java,BiblioException.java,FormatDate.java,TupleMembre.java,GestionReservation.java,GestionPret.java,Membre.java,Livre.java,TupleReservation.java,GestionLivre.java,CreerBD.java,GestionMembre.java,Connexion.java,GestionBibliotheque.java,TupleLivre.java,Reservation.java,Biblio.java" sourcepath="." splitindex="true" use="true" version="true"/>
-    </target>
-</project>
