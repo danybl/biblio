@@ -74,7 +74,7 @@ class BDCreateur {
                 cx.fermer();
             }
         } catch(SQLException sqlex) {
-            throw new BDCreateurException();
+            throw new BDCreateurException(sqlex);
         }
 
     }
