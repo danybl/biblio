@@ -141,8 +141,7 @@ public class PretService extends Service {
     }
 
     public void emprunter(MembreDTO membreDTO,
-        LivreDTO livreDTO,
-        PretDTO pretDTO) throws ServiceException {
+        LivreDTO livreDTO) throws ServiceException {
         try {
             MembreDTO unMembreDTO = getMembreDAO().read(membreDTO.getIdMembre());
             if(unMembreDTO == null) {
@@ -180,12 +179,13 @@ public class PretService extends Service {
                     + unLivreDTO.getIdLivre()
                     + ") a des prets");
             }
-            // Problème de la date de prêt
-            // On voit également le manque de la table prêt simulée en ce moment par les deux tables
-            // unLivreDTO.setIdMembre(unMembreDTO.getIdMembre());
-            // getLivreDAO().emprunter(unLivreDTO);
-            //getMembreDAO().emprunter(unMembreDTO);
-            getPretDAO().add(pretDTO);
+
+            //            PretDTO nouveauPretDTO;
+            //            nouveauPretDTO.setLivreDTO(livreDTO);
+            //            nouveauPretDTO.setMembreDTO(membreDTO);
+            //            nouveauPretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
+            //            
+            //            add(nouveauPretDTO);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
@@ -234,14 +234,7 @@ public class PretService extends Service {
                     + ") a des réservations");
             }
 
-            // Cas éliminé en utilisant la date de prêt comme étant la date système de la base de données
-
-            /* Verifier si date renouvellement >= datePret */
-            //          if(Date.valueOf(datePret).before(tupleLivre.getDatePret())) {
-            //              throw new BibliothequeException("Date de renouvellement inférieure à la date de prêt");
-            //          }
-
-            getPretDAO().update(pretDTO);
+            update(pretDTO);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
@@ -274,17 +267,6 @@ public class PretService extends Service {
                     + unLivreDTO.getIdLivre()
                     + ") n'est pas encore prêté");
             }
-
-            // Cas éliminé en utilisant la date de prêt comme étant la date système de la base de données
-
-            /* Verifier si date retour >= datePret */
-            //          if(Date.valueOf(dateRetour).before(tupleLivre.getDatePret())) {
-            //              throw new BibliothequeException("Date de retour inférieure à la date de prêt");
-            //          }
-
-            // On voit le manque de la table prêt simulée en ce moment par les deux tables
-            // getLivreDAO().retourner(unLivreDTO);
-            // getMembreDAO().retourner(unMembreDTO);
 
             getPretDAO().delete(pretDTO);
 
