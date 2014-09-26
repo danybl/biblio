@@ -44,7 +44,7 @@ public class ReservationDAO extends DAO {
 	private static final String FIND_BY_DATE_RESERVATION = "SELECT idReservation, idLivre, idMembre, dateReservation "
 			+ "FROM reservation " + "WHERE dateReservation = ? ";
 
-	static final String CREATE_PRIMARY_KEY = "SELECT nom_sequence.NEXTVAL from DUAL";
+	private static final String CREATE_PRIMARY_KEY = "SELECT nom_sequence.NEXTVAL from DUAL";
 
 	// EndRegion
 	public ReservationDAO(Connexion connexion) {
