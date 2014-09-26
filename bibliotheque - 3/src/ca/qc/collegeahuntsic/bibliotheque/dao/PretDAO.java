@@ -56,10 +56,6 @@ public class PretDAO extends DAO {
         + "FROM pret"
         + "WHERE dateRetour = ? ";
 
-    private static final String EMPRUNT_REQUEST = "UPDATE livre "
-        + "SET titre = ?, auteur = ?, dateAcquisition = ?, idMembre = ?, datePret = SYSTIMESTAMP "
-        + "WHERE idLivre = ?";
-
     public PretDAO(Connexion connexion) {
         super(connexion);
     }
@@ -190,26 +186,6 @@ public class PretDAO extends DAO {
             throw new DAOException(sqlException);
         }
         return prets;
-    }
-
-    public void emprunter(LivreDTO livreDTO,
-        MembreDTO membreDTO) throws DAOException {
-        try(
-            PreparedStatement updatePreparedStatement = getConnection().prepareStatement(PretDAO.EMPRUNT_REQUEST)) {
-            updatePreparedStatement.setString(1,
-                livreDTO.getTitre());
-            updatePreparedStatement.setString(2,
-                livreDTO.getAuteur());
-            updatePreparedStatement.setTimestamp(3,
-                livreDTO.getDateAcquisition());
-            updatePreparedStatement.setInt(4,
-                membreDTO.getIdMembre());
-            updatePreparedStatement.setInt(5,
-                livreDTO.getIdLivre());
-            updatePreparedStatement.executeUpdate();
-        } catch(SQLException sqlException) {
-            throw new DAOException(sqlException);
-        }
     }
 
     public PretDTO findByLivre(LivreDTO livreDTO) throws DAOException {
