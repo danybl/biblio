@@ -2,7 +2,9 @@
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
 import java.util.List;
+import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
@@ -15,7 +17,9 @@ public class MembreService extends Service {
 
     private MembreDAO membreDAO;
 
-    public MembreService(MembreDAO membreDAO) {
+    public MembreService(MembreDAO membreDAO,
+        LivreDAO livreDAO,
+        ReservationDAO reservationDAO) {
         setMembreDAO(membreDAO);
     }
 
@@ -94,5 +98,10 @@ public class MembreService extends Service {
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
+    }
+
+    public void desincrire(MembreDTO membreDTO) {
+        // TODO Auto-generated method stub
+
     }
 }

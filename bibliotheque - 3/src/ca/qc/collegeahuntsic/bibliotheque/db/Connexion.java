@@ -2,10 +2,11 @@
 package ca.qc.collegeahuntsic.bibliotheque.db;
 
 import java.sql.Connection;
-//import java.sql.DatabaseMetaData;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
+
+//import java.sql.DatabaseMetaData;
 
 /**
  * Gestionnaire d'une connexion avec une BD relationnelle via JDBC.
@@ -23,27 +24,33 @@ import java.sql.SQLException;
  */
 public class Connexion {
 
-    private Connection conn;
+    private Connection connection;
 
-    private final static String LOCAL = "local";
+    private static final String TYPE_SERVEUR_LOCAL = "local";
 
-    private final static String LOCAL_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String TYPE_SERVEUR_DISTANT = "distant";
 
-    private final static String LOCAL_URL = "jdbc:mysql://localhost:3306/";
+    private static final String TYPE_SERVEUR_POSTGRES = "postgres";
 
-    private final static String DISTANT = "distant";
+    private static final String TYPE_SERVEUR_ACCESS = "access";
 
-    private final static String DISTANT_DRIVER = "oracle.jdbc.driver.OracleDriver";
+    private static final String SERVEUR_LOCAL_CLASS = "com.mysql.jdbc.Driver";
 
-    private final static String DISTANT_URL = "jdbc:oracle:thin:@localhost:1521:";
+    private static final String SERVEUR_DISTANT_CLASS = "oracle.jdbc.driver.OracleDriver";
 
-    private final static String POSTGRES = "postgres";
+    private static final String SERVEUR_POSTGRES_CLASS = "org.postgresql.Driver";
 
-    private final static String POSTGRES_DRIVER = "org.postgresql.Driver";
+    private static final String SERVEUR_ACCESS_CLASS = "org.postgresql.Driver";
 
-    private final static String POSTGRES_URL = "jdbc:postgresql:";
+    private static final String SERVEUR_LOCAL_URL = "jdbc:mysql://localhost:3306/";
 
-    private final static String ACCESS_URL = "jdbc:odbc:";
+    private static final String SERVEUR_DISTANT_URL = "jdbc:oracle:thin:@localhost:1521:";
+
+    //  private static final String SERVEUR_DISTANT_URL = "jdbc:oracle:thin:@collegeahunstic.info:1521:";
+
+    private static final String SERVEUR_POSTGRES_URL = "jdbc:postgresql:";
+
+    private static final String SERVEUR_ACCESS_URL = "jdbc:postgresql:";
 
     /**
      * Ouverture d'une connexion en mode autocommit false et sérialisable (si supporté)
@@ -52,103 +59,95 @@ public class Connexion {
      * @user userid sur le serveur SQL
      * @pass mot de passe sur le serveur SQL
      */
-    public Connexion(String serveur,
-        String bd,
-        String user,
-        String pass) throws SQLException {
-        Driver d;
+    public Connexion(String typeServeur,
+        String schema,
+        String nomUtilisateur,
+        String motPasse) throws ConnexionException {
+        String urlBD = null;
+
         try {
-            if(serveur.equals(LOCAL)) {
-                d = (Driver) Class.forName(LOCAL_DRIVER).newInstance();
-                DriverManager.registerDriver(d);
-                this.conn = DriverManager.getConnection(LOCAL_URL
-                    + bd,
-                    user,
-                    pass);
-            } else if(serveur.equals(DISTANT)) {
-                d = (Driver) Class.forName(DISTANT_DRIVER).newInstance();
-                DriverManager.registerDriver(d);
-                this.conn = DriverManager.getConnection(DISTANT_URL
-                    + bd,
-                    user,
-                    pass);
-            } else if(serveur.equals(POSTGRES)) {
-                d = (Driver) Class.forName(POSTGRES_DRIVER).newInstance();
-                DriverManager.registerDriver(d);
-                this.conn = DriverManager.getConnection(POSTGRES_URL
-                    + bd,
-                    user,
-                    pass);
-            } else // access
-            {
-                d = (Driver) Class.forName(POSTGRES_DRIVER).newInstance();
-                DriverManager.registerDriver(new sun.jdbc.odbc.JdbcOdbcDriver());
-                this.conn = DriverManager.getConnection(ACCESS_URL
-                    + bd,
-                    "",
-                    "");
+            if(typeServeur.equals(Connexion.TYPE_SERVEUR_LOCAL)) {
+                Class.forName(Connexion.SERVEUR_LOCAL_CLASS);
+                urlBD = Connexion.SERVEUR_LOCAL_URL
+                    + schema;
+            } else if(typeServeur.equals(Connexion.TYPE_SERVEUR_DISTANT)) {
+                Class.forName(Connexion.SERVEUR_DISTANT_CLASS);
+                urlBD = Connexion.SERVEUR_DISTANT_URL
+                    + schema;
+            } else if(typeServeur.equals(Connexion.TYPE_SERVEUR_POSTGRES)) {
+                Class.forName(Connexion.SERVEUR_POSTGRES_CLASS);
+                urlBD = Connexion.SERVEUR_POSTGRES_URL
+                    + schema;
+            } else if(typeServeur.equals(Connexion.TYPE_SERVEUR_ACCESS)) {
+                Class.forName(Connexion.SERVEUR_ACCESS_CLASS);
+                urlBD = Connexion.SERVEUR_ACCESS_URL
+                    + schema;
+            } else {
+                throw new IllegalArgumentException("Type de serveur "
+                    + typeServeur
+                    + "n'est pas valide.");
             }
+            setConnection(DriverManager.getConnection(urlBD,
+                nomUtilisateur,
+                motPasse));
 
-            // mettre en mode de commit manuel
-            this.conn.setAutoCommit(false);
+            // Mettre en mode de commit manuel
+            getConnection().setAutoCommit(false);
 
-            // mettre en mode s�rialisable si possible
-            // (plus haut niveau d'integrit� l'acc�s concurrent aux donn�es)
-            //            DatabaseMetaData dbmd = this.conn.getMetaData();
-            //            if(dbmd.supportsTransactionIsolationLevel(Connection.TRANSACTION_SERIALIZABLE)) {
-            //                this.conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            //                System.out.println("Ouverture de la connexion en mode sérialisable :\n"
-            //                    + "Estampille "
-            //                    + System.currentTimeMillis()
-            //                    + " "
-            //                    + this.conn);
-            //            } else {
-            //                System.out.println("Ouverture de la connexion en mode read committed (default) :\n"
-            //                    + "Heure "
-            //                    + System.currentTimeMillis()
-            //                    + " "
-            //                    + this.conn);
-            //            }
-        }// try
-
-        catch(SQLException e) {
-            throw e;
-        } catch(Exception e) {
-            e.printStackTrace(System.out);
-            throw new SQLException("JDBC Driver non instancié");
+            System.out.println("Ouverture de la connexion en mode read committed (default) :\n"
+                + "Heure "
+                + System.currentTimeMillis()
+                + " "
+                + getConnection());
+        } catch(ClassNotFoundException classNotFoundException) {
+            throw new ConnexionException(classNotFoundException);
+        } catch(SQLException sqlException) {
+            throw new ConnexionException(sqlException);
+        } catch(IllegalArgumentException illegalArgumentException) {
+            throw new ConnexionException(illegalArgumentException);
         }
+    }
+
+    private void setConnection(Connection connection2) {
+        this.connection = connection2;
     }
 
     /**
      *fermeture d'une connexion
      */
     public void fermer() throws SQLException {
-        this.conn.rollback();
-        this.conn.close();
+        this.connection.rollback();
+        this.connection.close();
         System.out.println("Connexion fermée"
             + " "
-            + this.conn);
+            + this.connection);
     }
 
     /**
      *commit
      */
     public void commit() throws SQLException {
-        this.conn.commit();
+        this.connection.commit();
     }
 
     /**
      *rollback
      */
     public void rollback() throws SQLException {
-        this.conn.rollback();
+        this.connection.rollback();
     }
 
     /**
      *retourne la Connection jdbc
      */
     public Connection getConnection() {
-        return this.conn;
+        return this.connection;
+    }
+
+    public void close() throws Exception {
+        getConnection().close();
+        System.out.println("\nConnexion fermée "
+            + getConnection());
     }
 
     /**

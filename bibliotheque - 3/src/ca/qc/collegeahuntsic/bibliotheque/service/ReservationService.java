@@ -21,8 +21,8 @@ public class ReservationService extends Service {
     private ReservationDAO reservationDAO;
 
     public ReservationService(ReservationDAO reservationDAO,
-        MembreDAO membreDAO,
-        LivreDAO livreDAO) {
+        LivreDAO livreDAO,
+        MembreDAO membreDAO) {
         super();
         setReservationDAO(reservationDAO);
         setMembreDAO(membreDAO);
@@ -130,4 +130,12 @@ public class ReservationService extends Service {
             throw new ServiceException(daoException);
         }
     }
+
+    public void utiliser(ReservationDTO reservationDTO,
+        MembreDTO membreDTO,
+        LivreDTO livreDTO) {
+        // TODO Auto-generated method stub
+
+    }
+
 }

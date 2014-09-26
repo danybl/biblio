@@ -1,6 +1,7 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.util;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,22 +12,37 @@ import java.util.Date;
  *
  */
 public class FormatteurDate {
-    private static SimpleDateFormat formatAMJ;
+    private static final String FORMAT_DATE = "yyyy-MM-dd";
+
+    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat(FormatteurDate.FORMAT_DATE);
+
     static {
-        formatAMJ = new SimpleDateFormat("yyyy-MM-dd");
-        formatAMJ.setLenient(false);
+        FormatteurDate.SIMPLE_DATE_FORMAT.setLenient(false);
     }
 
     /**
-     * Convertit une String du format YYYY-MM-DD en un objet de la classe Date.
+     * Convertit une chaîne de caractères en {@link java.sql.Timestamp} selon le format <code>yyyy-MM-dd</code>.
+     *
+     * @param date La chaîne de caractères
+     * @return Le {@link java.sql.Timestamp} issu de la conversion
+     * @throws ParseException Si la chaîne de caractères n'est pas formatée correctement
      */
-    public static Date convertirDate(String dateString) throws ParseException {
-        return formatAMJ.parse(dateString);
+    public static Timestamp timestampValue(String date) throws ParseException {
+        Date dateFormatee = FormatteurDate.SIMPLE_DATE_FORMAT.parse(date);
+        Timestamp timestamp = new Timestamp(dateFormatee.getTime());
+        return timestamp;
     }
 
-    public static String toString(Date date) {
-        return formatAMJ.format(date);
+    /**
+     * Convertit un {@link java.sql.Timestamp} en une chaîne de caractères selon le format <code>yyyy-MM-dd</code>.
+     *
+     * @param timestamp Le {@link java.sql.Timestamp}
+     * @return La chaîne de caractères issue de la conversion
+     * @throws ParseException Si le {@link java.sql.Timestamp} n'est pas formaté correctement
+     */
+    public static String stringValue(Timestamp timestamp) {
+        Date date = new Date(timestamp.getTime());
+        String dateFormatee = FormatteurDate.SIMPLE_DATE_FORMAT.format(date);
+        return dateFormatee;
     }
-
-    //public static Timestamp timestampValue (String date)
 }
