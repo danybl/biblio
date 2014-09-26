@@ -3,6 +3,7 @@ package ca.qc.collegeahuntsic.bibliotheque.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +44,8 @@ public class ReservationDAO extends DAO {
 	private static final String FIND_BY_DATE_RESERVATION = "SELECT idReservation, idLivre, idMembre, dateReservation "
 			+ "FROM reservation " + "WHERE dateReservation = ? ";
 
+	static final String CREATE_PRIMARY_KEY = "SELECT nom_sequence.NEXTVAL from DUAL";
+
 	// EndRegion
 	public ReservationDAO(Connexion connexion) {
 		super(connexion);
@@ -51,7 +54,7 @@ public class ReservationDAO extends DAO {
 	public void add(ReservationDTO reservationDTO) throws DAOException {
 		try (PreparedStatement addPreparedStatement = getConnection()
 				.prepareStatement(ReservationDAO.ADD_REQUEST)) {
-			addPreparedStatement.setInt(1, reservationDTO.getIdReservation());
+			addPreparedStatement.setInt(1, getPrimaryKey());
 			addPreparedStatement.setInt(2, reservationDTO.getLivreDTO()
 					.getIdLivre());
 			addPreparedStatement.setInt(3, reservationDTO.getMembreDTO()
@@ -90,8 +93,7 @@ public class ReservationDAO extends DAO {
 	public void update(ReservationDTO reservationDTO) throws DAOException {
 		try (PreparedStatement updatePreparedStatement = getConnection()
 				.prepareStatement(ReservationDAO.UPDATE_REQUEST)) {
-			updatePreparedStatement
-					.setInt(1, reservationDTO.getIdReservation());
+			updatePreparedStatement.setInt(1, getPrimaryKey());
 			updatePreparedStatement.setInt(2, reservationDTO.getLivreDTO()
 					.getIdLivre());
 			updatePreparedStatement.setInt(3, reservationDTO.getMembreDTO()
@@ -214,5 +216,21 @@ public class ReservationDAO extends DAO {
 			throw new DAOException(sqlException);
 		}
 		return reservationDTO;
-	}// FinFindByDateReservation
+	}
+
+	public int getPrimaryKey() throws DAOException {
+		Integer primaryKey = null;
+		try (Statement createPrimaryKeyStatement = getConnection()
+				.createStatement();
+				ResultSet resultSet = createPrimaryKeyStatement
+						.executeQuery(ReservationDAO.CREATE_PRIMARY_KEY);) {
+			if (resultSet.next()) {
+				primaryKey = (Integer) resultSet.getObject(1);
+
+			}
+			return primaryKey.intValue();
+		} catch (SQLException sqlException) {
+			throw new DAOException(sqlException);
+		}
+	}
 }
