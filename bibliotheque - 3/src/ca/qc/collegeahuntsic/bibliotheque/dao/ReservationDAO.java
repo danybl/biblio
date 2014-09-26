@@ -10,6 +10,7 @@ import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 
@@ -57,9 +58,9 @@ public class ReservationDAO extends DAO {
             addPreparedStatement.setInt(1,
                 reservationDTO.getIdReservation());
             addPreparedStatement.setInt(2,
-                reservationDTO.getIdLivre());
+                reservationDTO.getLivreDTO().getIdLivre());
             addPreparedStatement.setInt(3,
-                reservationDTO.getIdMembre());
+                reservationDTO.getMembreDTO().getIdMembre());
             addPreparedStatement.setTimestamp(4,
                 reservationDTO.getDateReservation());
             addPreparedStatement.executeUpdate();
@@ -79,8 +80,8 @@ public class ReservationDAO extends DAO {
                 if(resultSet.next()) {
                     reservationDTO = new ReservationDTO();
                     reservationDTO.setIdReservation(resultSet.getInt(1));
-                    reservationDTO.setIdLivre(resultSet.getInt(2));
-                    reservationDTO.setIdMembre(resultSet.getInt(3));
+                    reservationDTO.getLivreDTO().setIdLivre(resultSet.getInt(2));
+                    reservationDTO.getMembreDTO().setIdMembre(resultSet.getInt(3));
                     reservationDTO.setDateReservation(resultSet.getTimestamp(4));
                 }
             }
@@ -96,9 +97,9 @@ public class ReservationDAO extends DAO {
             updatePreparedStatement.setInt(1,
                 reservationDTO.getIdReservation());
             updatePreparedStatement.setInt(2,
-                reservationDTO.getIdLivre());
+                reservationDTO.getLivreDTO().getIdLivre());
             updatePreparedStatement.setInt(3,
-                reservationDTO.getIdMembre());
+                reservationDTO.getMembreDTO().getIdMembre());
             updatePreparedStatement.setTimestamp(4,
                 reservationDTO.getDateReservation());
             updatePreparedStatement.executeUpdate();
@@ -130,8 +131,8 @@ public class ReservationDAO extends DAO {
                     do {
                         reservationDTO = new ReservationDTO();
                         reservationDTO.setIdReservation(resultSet.getInt(1));
-                        reservationDTO.setIdLivre(resultSet.getInt(2));
-                        reservationDTO.setIdMembre(resultSet.getInt(3));
+                        reservationDTO.getLivreDTO().setIdLivre(resultSet.getInt(2));
+                        reservationDTO.getMembreDTO().setIdMembre(resultSet.getInt(3));
                         reservationDTO.setDateReservation(resultSet.getTimestamp(4));
                         reservations.add(reservationDTO);
                     } while(resultSet.next());
@@ -154,8 +155,8 @@ public class ReservationDAO extends DAO {
                 if(resultSet.next()) {
                     reservationDTO = new ReservationDTO();
                     reservationDTO.setIdReservation(resultSet.getInt(1));
-                    reservationDTO.setIdLivre(resultSet.getInt(2));
-                    reservationDTO.setIdMembre(resultSet.getInt(3));
+                    reservationDTO.getLivreDTO().setIdLivre(resultSet.getInt(2));
+                    reservationDTO.getMembreDTO().setIdMembre(resultSet.getInt(3));
                     reservationDTO.setDateReservation(resultSet.getTimestamp(4));
                 }
             }
@@ -176,8 +177,8 @@ public class ReservationDAO extends DAO {
                 if(resultSet.next()) {
                     reservationDTO = new ReservationDTO();
                     reservationDTO.setIdReservation(resultSet.getInt(1));
-                    reservationDTO.setIdLivre(resultSet.getInt(2));
-                    reservationDTO.setIdMembre(resultSet.getInt(3));
+                    reservationDTO.getLivreDTO().setIdLivre(resultSet.getInt(2));
+                    reservationDTO.getMembreDTO().setIdMembre(resultSet.getInt(3));
                     reservationDTO.setDateReservation(resultSet.getTimestamp(4));
                 }
             }
@@ -187,19 +188,19 @@ public class ReservationDAO extends DAO {
         return reservationDTO;
     }//FinFindByIDMembre
 
-    public ReservationDTO findByDateReservation(LivreDTO livreDTO) throws DAOException {
+    public ReservationDTO findByDateReservation(PretDTO pretDTO) throws DAOException {
         ReservationDTO reservationDTO = null;
         try(
             PreparedStatement findByDateReservationPreparedStatement = getConnection().prepareStatement(ReservationDAO.FIND_BY_DATE_RESERVATION)) {
             findByDateReservationPreparedStatement.setTimestamp(1,
-                livreDTO.getDatePret());
+                pretDTO.getDatePret());
             try(
                 ResultSet resultSet = findByDateReservationPreparedStatement.executeQuery()) {
                 if(resultSet.next()) {
                     reservationDTO = new ReservationDTO();
                     reservationDTO.setIdReservation(resultSet.getInt(1));
-                    reservationDTO.setIdLivre(resultSet.getInt(2));
-                    reservationDTO.setIdMembre(resultSet.getInt(3));
+                    reservationDTO.getLivreDTO().setIdLivre(resultSet.getInt(2));
+                    reservationDTO.getMembreDTO().setIdMembre(resultSet.getInt(3));
                     reservationDTO.setDateReservation(resultSet.getTimestamp(4));
                 }
             }
