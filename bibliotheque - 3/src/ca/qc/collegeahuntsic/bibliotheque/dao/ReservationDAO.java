@@ -34,11 +34,11 @@ public class ReservationDAO extends DAO {
     private static final String GET_ALL_REQUEST = "SELECT idReservation, idLivre, idMembre, dateReservation "
         + "FROM reservation";
 
-    private static final String FIND_LIVRE_BY_ID = "SELECT idReservation, idLivre, idMembre, dateReservation "
+    private static final String FIND_BY_ID_LIVRE = "SELECT idReservation, idLivre, idMembre, dateReservation "
         + "FROM reservation "
         + "WHERE idLivre = ? ";
 
-    private static final String FIND_RESERVATION_BY_ID_MEBRE = "SELECT idReservation, idLivre, idMembre, dateReservation "
+    private static final String FIND_BY_ID_MEMBRE = "SELECT idReservation, idLivre, idMembre, dateReservation "
         + "FROM reservation "
         + "WHERE idMembre = ? ";
 
@@ -146,7 +146,7 @@ public class ReservationDAO extends DAO {
     public ReservationDTO findByLivre(LivreDTO livreDTO) throws DAOException {
         ReservationDTO reservationDTO = null;
         try(
-            PreparedStatement findByIDLivrePreparedStatement = getConnection().prepareStatement(ReservationDAO.FIND_LIVRE_BY_ID)) {
+            PreparedStatement findByIDLivrePreparedStatement = getConnection().prepareStatement(ReservationDAO.FIND_BY_ID_LIVRE)) {
             findByIDLivrePreparedStatement.setInt(1,
                 livreDTO.getIdLivre());
             try(
@@ -168,7 +168,7 @@ public class ReservationDAO extends DAO {
     public ReservationDTO findByMembre(MembreDTO membreDTO) throws DAOException {
         ReservationDTO reservationDTO = null;
         try(
-            PreparedStatement findByIDMembrePreparedStatement = getConnection().prepareStatement(ReservationDAO.FIND_RESERVATION_BY_ID_MEBRE)) {
+            PreparedStatement findByIDMembrePreparedStatement = getConnection().prepareStatement(ReservationDAO.FIND_BY_ID_MEMBRE)) {
             findByIDMembrePreparedStatement.setInt(1,
                 membreDTO.getIdMembre());
             try(

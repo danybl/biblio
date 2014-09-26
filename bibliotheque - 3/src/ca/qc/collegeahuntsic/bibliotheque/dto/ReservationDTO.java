@@ -11,46 +11,84 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 
 public class ReservationDTO extends DTO {
-
     private static final long serialVersionUID = 1L;
 
     private int idReservation;
 
-    private int idLivre;
+    private MembreDTO membreDTO;
 
-    private int idMembre;
+    private LivreDTO livreDTO;
 
     private Timestamp dateReservation;
 
-    //Region get/set
+    /**
+     * Getter de la variable d'instance <code>this.idReservation</code>.
+     *
+     * @return La variable d'instance <code>this.idReservation</code>
+     */
     public int getIdReservation() {
         return this.idReservation;
     }
 
-    public int getIdLivre() {
-        return this.idLivre;
-    }
-
-    public int getIdMembre() {
-        return this.idMembre;
-    }
-
-    public Timestamp getDateReservation() {
-        return this.dateReservation;
-    }
-
+    /**
+     * Setter de la variable d'instance <code>this.idReservation</code>.
+     *
+     * @param idReservation La valeur à utiliser pour la variable d'instance <code>this.idReservation</code>
+     */
     public void setIdReservation(int idReservation) {
         this.idReservation = idReservation;
     }
 
-    public void setIdLivre(int idLivre) {
-        this.idLivre = idLivre;
+    /**
+     * Getter de la variable d'instance <code>this.membreDTO</code>.
+     *
+     * @return La variable d'instance <code>this.membreDTO</code>
+     */
+    public MembreDTO getMembreDTO() {
+        return this.membreDTO;
     }
 
-    public void setIdMembre(int idMembre) {
-        this.idMembre = idMembre;
+    /**
+     * Setter de la variable d'instance <code>this.membreDTO</code>.
+     *
+     * @param membreDTO La valeur à utiliser pour la variable d'instance <code>this.membreDTO</code>
+     */
+    public void setMembreDTO(MembreDTO membreDTO) {
+        this.membreDTO = membreDTO;
     }
 
+    /**
+     * Getter de la variable d'instance <code>this.livreDTO</code>.
+     *
+     * @return La variable d'instance <code>this.livreDTO</code>
+     */
+    public LivreDTO getLivreDTO() {
+        return this.livreDTO;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.livreDTO</code>.
+     *
+     * @param livreDTO La valeur à utiliser pour la variable d'instance <code>this.livreDTO</code>
+     */
+    public void setLivreDTO(LivreDTO livreDTO) {
+        this.livreDTO = livreDTO;
+    }
+
+    /**
+     * Getter de la variable d'instance <code>this.dateReservation</code>.
+     *
+     * @return La variable d'instance <code>this.dateReservation</code>
+     */
+    public Timestamp getDateReservation() {
+        return this.dateReservation;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.dateReservation</code>.
+     *
+     * @param dateReservation La valeur à utiliser pour la variable d'instance <code>this.dateReservation</code>
+     */
     public void setDateReservation(Timestamp dateReservation) {
         this.dateReservation = dateReservation;
     }

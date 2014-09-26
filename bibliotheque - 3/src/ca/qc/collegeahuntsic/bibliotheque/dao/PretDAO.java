@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 
@@ -37,21 +39,19 @@ public class PretDAO extends DAO {
     private static final String GET_ALL_REQUEST = "SELECT idPret, idMembre, idLivre, datePret, dateRetour "
         + "FROM pret";
 
-    /**
-                      * Crée un DAO à partir d'une connexion à la base de données.
-                       *
-                       * @param connexion La connexion à utiliser
-                        */
+    private static final String FIND_BY_ID_LIVRE = "SELECT idReservation, idLivre, idMembre, dateReservation "
+        + "FROM reservation "
+        + "WHERE idLivre = ? ";
 
     public PretDAO(Connexion connexion) {
         super(connexion);
     }
 
     /**
-    * Ajoute un nouveau livre.
-    *
-    * @param Ajouter un Pret
-    * @throws DAOException S'il y a une erreur avec la base de données
+     * Ajoute un nouveau livre.
+     *
+     * @param Ajouter un Pret
+     * @throws DAOException S'il y a une erreur avec la base de données
      */
     public void add(PretDTO pretDTO) throws DAOException {
         try(
@@ -69,11 +69,11 @@ public class PretDAO extends DAO {
     }
 
     /**
-    * Lit un pret.
-    *
-    * @param idPret L'ID du pret
-    * @throws DAOException S'il y a une erreur avec la base de données
-    */
+     * Lit un pret.
+     *
+     * @param idPret L'ID du pret
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public PretDTO read(int idPret) throws DAOException {
         PretDTO pretDTO = null;
         try(
@@ -96,11 +96,11 @@ public class PretDAO extends DAO {
     }
 
     /**
-    * Met à jour un pret.
-    *
-    * @param pretDTO Le pret à mettre à jour
-    * @throws DAOException S'il y a une erreur avec la base de données
-    */
+     * Met à jour un pret.
+     *
+     * @param pretDTO Le pret à mettre à jour
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public void update(PretDTO pretDTO) throws DAOException {
         try(
             PreparedStatement updatePreparedStatement = getConnection().prepareStatement(PretDAO.UPDATE_REQUEST)) {
@@ -117,11 +117,11 @@ public class PretDAO extends DAO {
     }
 
     /**
-    * Supprime un pret.
-    *
-    * @param pretDTO Le pret à supprimer
-    * @throws DAOException S'il y a une erreur avec la base de données
-    */
+     * Supprime un pret.
+     *
+     * @param pretDTO Le pret à supprimer
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public void delete(PretDTO pretDTO) throws DAOException {
         try(
             PreparedStatement deletePreparedStatement = getConnection().prepareStatement(PretDAO.DELETE_REQUEST)) {
@@ -134,11 +134,11 @@ public class PretDAO extends DAO {
     }
 
     /**
-    * Trouve tous les prets.
-    *
-    * @return La liste des prets ; une liste vide sinon
-    * @throws DAOException S'il y a une erreur avec la base de données
-    */
+     * Trouve tous les prets.
+     *
+     * @return La liste des prets ; une liste vide sinon
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public List<PretDTO> getAll() throws DAOException {
         List<PretDTO> prets = Collections.EMPTY_LIST;
         try(
@@ -162,4 +162,33 @@ public class PretDAO extends DAO {
         }
         return prets;
     }
+
+    public PretDTO findByLivre(LivreDTO livreDTO) throws DAOException {
+        PretDTO pretDTO = null;
+        try(
+            PreparedStatement findByIDLivrePreparedStatement = getConnection().prepareStatement(PretDAO.FIND_BY_ID_LIVRE)) {
+            findByIDLivrePreparedStatement.setInt(1,
+                livreDTO.getIdLivre());
+            try(
+                ResultSet resultSet = findByIDLivrePreparedStatement.executeQuery()) {
+                if(resultSet.next()) {
+                    pretDTO = new PretDTO();
+                    pretDTO.setIdPret(resultSet.getInt(1));
+                    pretDTO.setIdLivre(resultSet.getInt(2));
+                    pretDTO.setIdMembre(resultSet.getInt(3));
+                    pretDTO.setDateReservation(resultSet.getTimestamp(4));
+                }
+            }
+        } catch(SQLException sqlException) {
+            throw new DAOException(sqlException);
+        }
+        return pretDTO;
+    }//FinFindByIDLivre
+
+    public void emprunter(LivreDTO livreDTO,
+        MembreDTO membreDTO) {
+        // TODO Auto-generated method stub
+
+    }
+
 }

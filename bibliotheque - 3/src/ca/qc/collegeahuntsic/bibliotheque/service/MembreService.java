@@ -4,6 +4,7 @@ package ca.qc.collegeahuntsic.bibliotheque.service;
 import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.PretDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
@@ -17,10 +18,20 @@ public class MembreService extends Service {
 
     private MembreDAO membreDAO;
 
+    private LivreDAO livreDAO;
+
+    private ReservationDAO reservationDAO;
+
+    private PretDAO pretDAO;
+
     public MembreService(MembreDAO membreDAO,
         LivreDAO livreDAO,
-        ReservationDAO reservationDAO) {
+        ReservationDAO reservationDAO,
+        PretDAO pretDAO) {
         setMembreDAO(membreDAO);
+        setLivreDAO(livreDAO);
+        setReservationDAO(reservationDAO);
+        setPretDAO(pretDAO);
     }
 
     public MembreDAO getMembreDAO() {
@@ -29,6 +40,26 @@ public class MembreService extends Service {
 
     public void setMembreDAO(MembreDAO membreDAO) {
         this.membreDAO = membreDAO;
+    }
+
+    private void setLivreDAO(LivreDAO livreDAO) {
+        this.livreDAO = livreDAO;
+    }
+
+    private ReservationDAO getReservationDAO() {
+        return this.reservationDAO;
+    }
+
+    private void setReservationDAO(ReservationDAO reservationDAO) {
+        this.reservationDAO = reservationDAO;
+    }
+
+    private PretDAO getPretDAO() {
+        return this.pretDAO;
+    }
+
+    private void setPretDAO(PretDAO pretDAO) {
+        this.pretDAO = pretDAO;
     }
 
     //ajout d'un membre
@@ -100,8 +131,38 @@ public class MembreService extends Service {
         }
     }
 
-    public void desincrire(MembreDTO membreDTO) {
-        // TODO Auto-generated method stub
-
+    public void desincrire(MembreDTO membreDTO) throws ServiceException {
+        try {
+            MembreDTO unMembreDTO = read(membreDTO.getIdMembre());
+            if(unMembreDTO == null) {
+                throw new ServiceException("Le membre "
+                    + membreDTO.getIdMembre()
+                    + " n'existe pas");
+            }
+            if(unMembreDTO.getNbPret() > 0) {
+                throw new ServiceException("Le membre "
+                    + unMembreDTO.getNom()
+                    + " (ID de membre : "
+                    + unMembreDTO.getIdMembre()
+                    + ") a encore des prêts");
+            }
+            if(getReservationDAO().findByMembre(unMembreDTO) != null) {
+                throw new ServiceException("Le membre "
+                    + unMembreDTO.getNom()
+                    + " (ID de membre : "
+                    + unMembreDTO.getIdMembre()
+                    + ") a des réservations");
+            }
+            if(getPretDAO().findByMembre(unMembreDTO) != null) {
+                throw new ServiceException("Le membre "
+                    + unMembreDTO.getNom()
+                    + " (ID de membre : "
+                    + unMembreDTO.getIdMembre()
+                    + ") a des prêts");
+            }
+            delete(unMembreDTO);
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
+        }
     }
 }

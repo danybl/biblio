@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BDCreateurException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
 
 /**
  *<pre>
@@ -18,7 +19,8 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.BDCreateurException;
  *</pre>
  */
 class BDCreateur {
-    public static void main(String args[]) throws BDCreateurException {
+    public static void main(String args[]) throws BDCreateurException,
+        ConnexionException {
 
         try {
             if(args.length < 3) {
@@ -50,7 +52,7 @@ class BDCreateur {
                     + " dateAcquisition TIMESTAMP    NOT NULL,"
                     + " CONSTRAINT      cleLivre     PRIMARY KEY (idLivre))");
 
-                stmt.executeUpdate("DROP TABLE livre CASCADE CONSTRAINTS");
+                stmt.executeUpdate("DROP TABLE pret CASCADE CONSTRAINTS");
                 stmt.executeUpdate("CREATE TABLE pret (idPret     NUMBER(3)  CHECK (idPret > 0),"
                     + "idMembre   NUMBER  CHECK (idMembre > 0),"
                     + "idLivre    NUMBER  CHECK (idLivre > 0),"

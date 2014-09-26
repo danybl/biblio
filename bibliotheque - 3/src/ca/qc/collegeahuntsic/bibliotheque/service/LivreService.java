@@ -4,6 +4,7 @@ package ca.qc.collegeahuntsic.bibliotheque.service;
 import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.PretDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
@@ -22,6 +23,8 @@ public class LivreService extends Service {
 
     private ReservationDAO reservationDAO;
 
+    private PretDAO pretDAO;
+
     /**
      * Crée un service à partir des DAOs de livre, member et réservation
      *
@@ -31,11 +34,13 @@ public class LivreService extends Service {
      */
     public LivreService(LivreDAO livreDAO,
         MembreDAO membreDAO,
-        ReservationDAO reservationDAO) {
+        ReservationDAO reservationDAO,
+        PretDAO pretDAO) {
         super();
         setLivreDAO(livreDAO);
         setMembreDAO(membreDAO);
         setReservationDAO(reservationDAO);
+        setPretDAO(pretDAO);
     }
 
     /**
@@ -61,9 +66,6 @@ public class LivreService extends Service {
      *
      * @param membreDAO La valeur à utiliser pour la variable d'instance <code>this.membreDAO</code>
      */
-    private void setMembreDAO(MembreDAO membreDAO) {
-        this.membreDAO = membreDAO;
-    }
 
     /**
      * Getter de la variable d'instance <code>this.reservationDAO</code>.
@@ -81,6 +83,23 @@ public class LivreService extends Service {
      */
     private void setReservationDAO(ReservationDAO reservationDAO) {
         this.reservationDAO = reservationDAO;
+    }
+
+    public PretDAO getPretDAO() {
+        return this.pretDAO;
+    }
+
+    private void setPretDAO(PretDAO pretDAO) {
+        this.pretDAO = pretDAO;
+
+    }
+
+    public MembreDAO getMembreDAO() {
+        return this.membreDAO;
+    }
+
+    public void setMembreDAO(MembreDAO membreDAO) {
+        this.membreDAO = membreDAO;
     }
 
     /**
@@ -232,4 +251,5 @@ public class LivreService extends Service {
             throw new ServiceException(daoException);
         }
     }
+
 }
