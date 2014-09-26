@@ -52,7 +52,6 @@ public class BibliothequeCreateur {
                 reservationDAO,
                 pretDAO));
             setMembreService(new MembreService(membreDAO,
-                livreDAO,
                 reservationDAO,
                 pretDAO));
             setPretService(new PretService(pretDAO,

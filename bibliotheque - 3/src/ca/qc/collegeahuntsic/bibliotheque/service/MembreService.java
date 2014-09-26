@@ -2,7 +2,6 @@
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
 import java.util.List;
-import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.PretDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
@@ -18,18 +17,14 @@ public class MembreService extends Service {
 
     private MembreDAO membreDAO;
 
-    private LivreDAO livreDAO;
-
     private ReservationDAO reservationDAO;
 
     private PretDAO pretDAO;
 
     public MembreService(MembreDAO membreDAO,
-        LivreDAO livreDAO,
         ReservationDAO reservationDAO,
         PretDAO pretDAO) {
         setMembreDAO(membreDAO);
-        setLivreDAO(livreDAO);
         setReservationDAO(reservationDAO);
         setPretDAO(pretDAO);
     }
@@ -40,10 +35,6 @@ public class MembreService extends Service {
 
     public void setMembreDAO(MembreDAO membreDAO) {
         this.membreDAO = membreDAO;
-    }
-
-    private void setLivreDAO(LivreDAO livreDAO) {
-        this.livreDAO = livreDAO;
     }
 
     private ReservationDAO getReservationDAO() {
@@ -63,24 +54,18 @@ public class MembreService extends Service {
     }
 
     //ajout d'un membre
-    public void ajouter(int idMembre,
-        String nom,
-        long telephone,
-        int limitePret) throws ServiceException {
+    public void add(MembreDTO membreDTO) throws ServiceException {
         try {
-            getMembreDAO().ajouter(idMembre,
-                nom,
-                telephone,
-                limitePret);
+            getMembreDAO().add(membreDTO);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
     }
 
     //lecture d'un membre
-    public MembreDTO read(int idMembre) throws ServiceException {
+    public MembreDTO read(int id) throws ServiceException {
         try {
-            return getMembreDAO().read(idMembre);
+            return getMembreDAO().read(id);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
@@ -129,6 +114,17 @@ public class MembreService extends Service {
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
+    }
+
+    public void incrire(MembreDTO membreDTO) throws ServiceException {
+
+        MembreDTO unMembreDTO = read(membreDTO.getIdMembre());
+        if(unMembreDTO != null) {
+            throw new ServiceException("Le membre "
+                + membreDTO.getIdMembre()
+                + " existe déjà");
+        }
+        add(membreDTO);
     }
 
     public void desincrire(MembreDTO membreDTO) throws ServiceException {

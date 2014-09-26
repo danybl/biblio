@@ -15,7 +15,7 @@ public class MembreDAO extends DAO {
 
     private static final long serialVersionUID = 1L;
 
-    private static final String ADD_REQUEST = "INSERT INTO membre (idMembre, nom, telephone, limitePret, nbpret)"
+    private static final String ADD_REQUEST = "INSERT INTO membre (nom, telephone, limitePret, nbpret)"
         + "VALUES (?,?,?,?,?)";
 
     private static final String READ_REQUEST = "SELECT idMembre, nom, telephone, limitePret, nbpret FROM membre"
@@ -39,39 +39,36 @@ public class MembreDAO extends DAO {
         + "FROM membre"
         + "where telephone = ?";
 
+    //private static String CREATE_PRIMARY_KEY = "SELECT nom_sequence.NEXTVAL from DUAL";
+
     public MembreDAO(Connexion connexion) {
         super(connexion);
     }
 
-    public void ajouter(int idMembre,
-        String nom,
-        long telephone,
-        int limitePret) throws DAOException {
+    public void add(MembreDTO membreDTO) throws DAOException {
         /* Ajout du membre. */
 
         try(
             PreparedStatement preparedAjout = getConnection().prepareStatement(ADD_REQUEST);) {
 
-            preparedAjout.setInt(1,
-                idMembre);
-            preparedAjout.setString(2,
-                nom);
-            preparedAjout.setLong(3,
-                telephone);
-            preparedAjout.setInt(4,
-                limitePret);
+            preparedAjout.setString(1,
+                membreDTO.getNom());
+            preparedAjout.setLong(2,
+                membreDTO.getTelephone());
+            preparedAjout.setInt(3,
+                membreDTO.getLimitePret());
             preparedAjout.executeUpdate();
         } catch(SQLException sqlException) {
             throw new DAOException();
         }
     }
 
-    public MembreDTO read(int idMembre) throws DAOException {
+    public MembreDTO read(int id) throws DAOException {
         MembreDTO membreDTO = null;
         try(
             PreparedStatement readPreparedStatement = getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
             readPreparedStatement.setInt(1,
-                idMembre);
+                id);
             try(
                 ResultSet resultSet = readPreparedStatement.executeQuery()) {
                 if(resultSet.next()) {
@@ -189,4 +186,5 @@ public class MembreDAO extends DAO {
         }
         return membreDTO;
     }
+
 }
