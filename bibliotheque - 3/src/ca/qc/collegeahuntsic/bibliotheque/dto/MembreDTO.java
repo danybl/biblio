@@ -22,6 +22,18 @@ public class MembreDTO extends DTO {
 
     private int nbPret;
 
+    MembreDTO(int idMembre,
+        String nom,
+        int telephone,
+        int limitePret,
+        int nbPret) {
+        this.idMembre = idMembre;
+        this.nom = nom;
+        this.telephone = telephone;
+        this.limitePret = limitePret;
+        this.nbPret = nbPret;
+    }
+
     //Region get/set
     /**
      * Getter de la variable d'instance <code>this.idMembre</code>.
