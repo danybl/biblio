@@ -4,6 +4,7 @@ package ca.qc.collegeahuntsic.bibliotheque.service;
 import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.PretDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
@@ -19,6 +20,12 @@ public class ReservationService extends Service {
     private static final long serialVersionUID = 1L;
 
     private ReservationDAO reservationDAO;
+
+    private LivreDAO livreDAO;
+
+    private MembreDAO membreDAO;
+
+    private PretDAO pretDAO;
 
     public ReservationService(ReservationDAO reservationDAO,
         LivreDAO livreDAO,
@@ -41,6 +48,30 @@ public class ReservationService extends Service {
 
     public void setReservationDAO(ReservationDAO reservationDAO) {
         this.reservationDAO = reservationDAO;
+    }
+
+    public LivreDAO getLivreDAO() {
+        return this.livreDAO;
+    }
+
+    public void setLivreDAO(LivreDAO livreDAO) {
+        this.livreDAO = livreDAO;
+    }
+
+    public MembreDAO getMembreDAO() {
+        return this.membreDAO;
+    }
+
+    public void setMembreDAO(MembreDAO membreDAO) {
+        this.membreDAO = membreDAO;
+    }
+
+    public PretDAO getPretDAO() {
+        return this.pretDAO;
+    }
+
+    public void setPretDAO(PretDAO pretDAO) {
+        this.pretDAO = pretDAO;
     }
 
     /**
@@ -133,9 +164,30 @@ public class ReservationService extends Service {
 
     public void utiliser(ReservationDTO reservationDTO,
         MembreDTO membreDTO,
-        LivreDTO livreDTO) {
-        // TODO Auto-generated method stub
-
+        LivreDTO livreDTO) throws ServiceException {
+        try {
+            MembreDTO unMembreDTO = getMembreDAO().read(membreDTO.getIdMembre());
+            if(unMembreDTO == null) {
+                throw new ServiceException("Le membre "
+                    + membreDTO.getIdMembre()
+                    + " n'existe pas");
+            }
+            LivreDTO unLivreDTO = getLivreDAO().read(livreDTO.getIdLivre());
+            if(unLivreDTO == null) {
+                throw new ServiceException("Le livre "
+                    + livreDTO.getIdLivre()
+                    + " n'existe pas");
+            }
+            if(getPretDAO().findByLivre(unLivreDTO) != null) {
+                throw new ServiceException("Le livre "
+                    + unLivreDTO.getTitre()
+                    + " (ID de livre : "
+                    + unLivreDTO.getIdLivre()
+                    + ") a des prêts");
+            }
+            add(reservationDTO);
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
+        }
     }
-
 }
