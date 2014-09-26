@@ -1,18 +1,18 @@
 
 package ca.qc.collegeahuntsic.bibliotheque;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.util.BibliothequeCreateur;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -74,7 +74,7 @@ public class Bibliotheque {
                 argv[1],
                 argv[2],
                 argv[3]);
-            bibliohequeCreateur = new BibliothequeCreateur(connexion);
+            bibliothequeCreateur = new BibliothequeCreateur(connexion);
             traiterTransactions(reader);
         } catch(Exception e) {
             e.printStackTrace(System.out);
@@ -129,7 +129,7 @@ public class Bibliotheque {
                 livreDTO.setIdLivre(readInt(tokenizer));
                 livreDTO.setTitre(readString(tokenizer));
                 livreDTO.setAuteur(readString(tokenizer));
-                livreDTO.setDateAcquisition(readDate(tokenizer));
+                livreDTO.setDateAcquisition(readInt(tokenizer));
                 bibliothequeCreateur.getLivreService().acquerir(livreDTO);
                 bibliothequeCreateur.commit();
             } else if("vendre".startsWith(command)) {
@@ -142,7 +142,7 @@ public class Bibliotheque {
                 membreDTO.setIdMembre(readInt(tokenizer));
                 LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(readInt(tokenizer));
-                bibliothequeCreateur.getMembreService().emprunter(membreDTO,
+                bibliothequeCreateur.getPretService().emprunter(membreDTO,
                     livreDTO);
                 bibliothequeCreateur.commit();
             } else if("renouveler".startsWith(command)) {
@@ -150,22 +150,24 @@ public class Bibliotheque {
                 membreDTO.setIdMembre(readInt(tokenizer));
                 LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(readInt(tokenizer));
-                bibliothequeCreateur.getMembreService().renouveler(membreDTO,
-                    livreDTO);
+                bibliothequeCreateur.getPretService().renouveler(membreDTO,
+                    livreDTO,
+                    pretDTO);
                 bibliothequeCreateur.commit();
             } else if("retourner".startsWith(command)) {
                 MembreDTO membreDTO = new MembreDTO();
                 membreDTO.setIdMembre(readInt(tokenizer));
                 LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(readInt(tokenizer));
-                bibliothequeCreateur.getMembreService().retourner(membreDTO,
-                    livreDTO);
+                bibliothequeCreateur.getPretService().retourner(membreDTO,
+                    livreDTO,
+                    pretDTO);
                 bibliothequeCreateur.commit();
             } else if("inscrire".startsWith(command)) {
                 MembreDTO membreDTO = new MembreDTO();
                 membreDTO.setIdMembre(readInt(tokenizer));
                 membreDTO.setNom(readString(tokenizer));
-                membreDTO.setTelephone(readLong(tokenizer));
+                membreDTO.setTelephone(readInt(tokenizer));
                 membreDTO.setLimitePret(readInt(tokenizer));
                 bibliothequeCreateur.getMembreService().inscrire(membreDTO);
                 bibliothequeCreateur.commit();
@@ -179,13 +181,13 @@ public class Bibliotheque {
                 Thread.sleep(1);
                 ReservationDTO reservationDTO = new ReservationDTO();
                 reservationDTO.setIdReservation(readInt(tokenizer));
-                reservationDTO.setIdMembre(readInt(tokenizer));
-                reservationDTO.setIdLivre(readInt(tokenizer));
+                reservationDTO.setIdMembre(/*readInt(tokenizer)*/);
+                reservationDTO.setIdLivre(/*readInt(tokenizer)*/);
                 MembreDTO membreDTO = new MembreDTO();
-                membreDTO.setIdMembre(reservationDTO.getIdMembre());
+                membreDTO.setIdMembre(reservationDTO.getMembreDTO().getIdMembre());
                 LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(reservationDTO.getIdLivre());
-                bibliothequeCreateur.getReservationService().reserver(reservationDTO,
+                livreDTO.setIdLivre(reservationDTO.getLivreDTO().getIdLivre());
+                bibliothequeCreateur.getReservationService().utiliser(reservationDTO,
                     membreDTO,
                     livreDTO);
                 bibliothequeCreateur.commit();
@@ -196,7 +198,7 @@ public class Bibliotheque {
                 membreDTO.setIdMembre(readInt(tokenizer));
                 LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(readInt(tokenizer));
-                bibliothequeCreateur.getReservationService().utiliser(reservationDTO,
+                bibliothequeCreateur.getReservationService().utiliser(reservationDTO, //methode reserver()
                     membreDTO,
                     livreDTO);
                 bibliothequeCreateur.commit();
