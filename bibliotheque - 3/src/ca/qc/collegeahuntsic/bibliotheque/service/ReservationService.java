@@ -145,9 +145,9 @@ public class ReservationService extends Service {
     }
 
     //findByDateReservation
-    public ReservationDTO findByDateReservation(LivreDTO livreDTO) throws ServiceException {
+    public ReservationDTO findByDateReservation(java.sql.Timestamp dateReservation) throws ServiceException {
         try {
-            return getReservationDAO().findByDateReservation(livreDTO);
+            return getReservationDAO().findByDateReservation(dateReservation);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
