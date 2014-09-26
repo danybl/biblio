@@ -4,6 +4,7 @@ package ca.qc.collegeahuntsic.bibliotheque.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,6 +57,8 @@ public class PretDAO extends DAO {
         + "FROM pret"
         + "WHERE dateRetour = ? ";
 
+    private static final String CREATE_PRIMARY_KEY = "SELECT nom_sequence.NEXTVAL from DUAL";
+
     public PretDAO(Connexion connexion) {
         super(connexion);
     }
@@ -70,7 +73,7 @@ public class PretDAO extends DAO {
         try(
             PreparedStatement addPreparedStatement = getConnection().prepareStatement(PretDAO.ADD_REQUEST)) {
             addPreparedStatement.setInt(1,
-                pretDTO.getIdPret());
+                getPrimaryKey());
             addPreparedStatement.setInt(2,
                 pretDTO.getLivreDTO().getIdLivre());
             addPreparedStatement.setInt(3,
@@ -278,5 +281,20 @@ public class PretDAO extends DAO {
             throw new DAOException(sqlException);
         }
         return pretDTO;
+    }
+
+    public int getPrimaryKey() throws DAOException {
+        Integer primaryKey = null;
+        try(
+            Statement createPrimaryKeyStatement = getConnection().createStatement();
+            ResultSet resultSet = createPrimaryKeyStatement.executeQuery(PretDAO.CREATE_PRIMARY_KEY);) {
+            if(resultSet.next()) {
+                primaryKey = (Integer) resultSet.getObject(1);
+
+            }
+            return primaryKey.intValue();
+        } catch(SQLException sqlException) {
+            throw new DAOException(sqlException);
+        }
     }
 }
