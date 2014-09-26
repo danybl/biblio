@@ -1,7 +1,6 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
-import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.PretDAO;
@@ -11,6 +10,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
+import java.util.List;
 
 /**
  * Service de la table <code>reservation</code>.
@@ -189,5 +189,9 @@ public class ReservationService extends Service {
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
+    }
+
+    public void annuler(ReservationDTO reservationDTO) throws ServiceException {
+        delete(reservationDTO);
     }
 }
