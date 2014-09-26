@@ -4,6 +4,7 @@ package ca.qc.collegeahuntsic.bibliotheque.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,30 +21,32 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 public class LivreDAO extends DAO {
     private static final long serialVersionUID = 1L;
 
-    private static final String ADD_REQUEST = "INSERT INTO livre (idLivre, titre, auteur, dateAcquisition, idMembre, datePret) "
+    private static final String ADD_REQUEST = "INSERT INTO livre (idLivre, titre, auteur, dateAcquisition) "
         + "VALUES (?, ?, ?, ?, NULL, NULL)";
 
-    private static final String READ_REQUEST = "SELECT idLivre, titre, auteur, dateAcquisition, idMembre, datePret "
+    private static final String READ_REQUEST = "SELECT idLivre, titre, auteur, dateAcquisition "
         + "FROM livre "
         + "WHERE idLivre = ?";
 
     private static final String UPDATE_REQUEST = "UPDATE livre "
-        + "SET titre = ?, auteur = ?, dateAcquisition = ?, idMembre = ?, datePret = ? "
+        + "SET titre = ?, auteur = ?, dateAcquisition = ? "
         + "WHERE idLivre = ?";
 
     private static final String DELETE_REQUEST = "DELETE FROM livre "
         + "WHERE idLivre = ?";
 
-    private static final String GET_ALL_REQUEST = "SELECT idLivre, titre, auteur, dateAcquisition, idMembre, datePret "
+    private static final String GET_ALL_REQUEST = "SELECT idLivre, titre, auteur, dateAcquisition "
         + "FROM livre";
 
-    private static final String FIND_BY_TITRE = "SELECT idLivre, titre, auteur, dateAcquisition, idMembre, datePret "
+    private static final String FIND_BY_TITRE = "SELECT idLivre, titre, auteur, dateAcquisition "
         + "FROM livre "
         + "WHERE LOWER(titre) like %?%";
 
-    private static final String FIND_BY_MEMBRE = "SELECT idLivre, titre, auteur, dateAcquisition, idMembre, datePret "
+    private static final String FIND_BY_MEMBRE = "SELECT idLivre, titre, auteur, dateAcquisition "
         + "FROM livre "
         + "WHERE idMembre = ?";
+
+    private static final String CREATE_PRIMARY_KEY = "SELECT nom_sequence.NEXTVAL from DUAL";
 
     //
     //    private static final String EMPRUNT_REQUEST = "UPDATE livre "
@@ -73,7 +76,7 @@ public class LivreDAO extends DAO {
         try(
             PreparedStatement addPreparedStatement = getConnection().prepareStatement(LivreDAO.ADD_REQUEST)) {
             addPreparedStatement.setInt(1,
-                livreDTO.getIdLivre());
+                getPrimaryKey());
             addPreparedStatement.setString(2,
                 livreDTO.getTitre());
             addPreparedStatement.setString(3,
@@ -246,6 +249,21 @@ public class LivreDAO extends DAO {
             throw new DAOException(sqlException);
         }
         return livreDTO;
+    }
+
+    public int getPrimaryKey() throws DAOException {
+        Integer primaryKey = null;
+        try(
+            Statement createPrimaryKeyStatement = getConnection().createStatement();
+            ResultSet resultSet = createPrimaryKeyStatement.executeQuery(LivreDAO.CREATE_PRIMARY_KEY);) {
+            if(resultSet.next()) {
+                primaryKey = (Integer) resultSet.getObject(1);
+
+            }
+            return primaryKey.intValue();
+        } catch(SQLException sqlException) {
+            throw new DAOException(sqlException);
+        }
     }
 
     /**
