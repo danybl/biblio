@@ -3,6 +3,7 @@ package ca.qc.collegeahuntsic.bibliotheque.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -189,8 +190,8 @@ public class ReservationDAO extends DAO {
 		return reservationDTO;
 	}// FinFindByIDMembre
 
-	public ReservationDTO findByDateReservation(
-			java.sql.Timestamp dateReservation) throws DAOException {
+	public ReservationDTO findByDateReservation(Timestamp dateReservation)
+			throws DAOException {
 		ReservationDTO reservationDTO = null;
 		try (PreparedStatement findByDateReservationPreparedStatement = getConnection()
 				.prepareStatement(ReservationDAO.FIND_BY_DATE_RESERVATION)) {
