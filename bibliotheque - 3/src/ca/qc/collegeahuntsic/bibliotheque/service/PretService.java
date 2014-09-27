@@ -179,13 +179,23 @@ public class PretService extends Service {
                     + unLivreDTO.getIdLivre()
                     + ") a des prets");
             }
+            long deuxSemaines = 14
+                * 24
+                * 60
+                * 60
+                * 1000;
+            java.sql.Timestamp datePret = new Timestamp(System.currentTimeMillis());
+            java.sql.Timestamp dateRetour = new java.sql.Timestamp(datePret.getTime()
+                + deuxSemaines);
 
-            //            PretDTO nouveauPretDTO;
-            //            nouveauPretDTO.setLivreDTO(livreDTO);
-            //            nouveauPretDTO.setMembreDTO(membreDTO);
-            //            nouveauPretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
-            //            
-            //            add(nouveauPretDTO);
+            PretDTO nouveauPretDTO = new PretDTO();
+            nouveauPretDTO.setMembreDTO(membreDTO);
+            nouveauPretDTO.setLivreDTO(livreDTO);
+            nouveauPretDTO.setDatePret(datePret);
+            nouveauPretDTO.setDateRetour(dateRetour);
+
+            add(nouveauPretDTO);
+
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
@@ -200,8 +210,7 @@ public class PretService extends Service {
      *         prêté à quelqu'un d'autre, si le livre a été réservé ou s'il y a une erreur avec la base de données
      */
     public void renouveler(MembreDTO membreDTO,
-        LivreDTO livreDTO,
-        PretDTO pretDTO) throws ServiceException {
+        LivreDTO livreDTO) throws ServiceException {
         try {
             MembreDTO unMembreDTO = getMembreDAO().read(membreDTO.getIdMembre());
             if(unMembreDTO == null) {
@@ -234,7 +243,23 @@ public class PretService extends Service {
                     + ") a des réservations");
             }
 
-            update(pretDTO);
+            long deuxSemaines = 14
+                * 24
+                * 60
+                * 60
+                * 1000;
+            java.sql.Timestamp datePret = new Timestamp(System.currentTimeMillis());
+            java.sql.Timestamp dateRetour = new java.sql.Timestamp(datePret.getTime()
+                + deuxSemaines);
+
+            PretDTO nouveauPretDTO = new PretDTO();
+            nouveauPretDTO.setMembreDTO(membreDTO);
+            nouveauPretDTO.setLivreDTO(livreDTO);
+            nouveauPretDTO.setDatePret(datePret);
+            nouveauPretDTO.setDateRetour(dateRetour);
+
+            update(nouveauPretDTO);
+
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
@@ -268,7 +293,10 @@ public class PretService extends Service {
                     + ") n'est pas encore prêté");
             }
 
-            getPretDAO().delete(pretDTO);
+            PretDTO nouveauPretDTO = new PretDTO();
+            nouveauPretDTO.setLivreDTO(livreDTO);
+
+            delete(nouveauPretDTO);
 
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
