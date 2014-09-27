@@ -116,7 +116,7 @@ public class MembreService extends Service {
         }
     }
 
-    public void incrire(MembreDTO membreDTO) throws ServiceException {
+    public void inscrire(MembreDTO membreDTO) throws ServiceException {
 
         MembreDTO unMembreDTO = read(membreDTO.getIdMembre());
         if(unMembreDTO != null) {
