@@ -1,18 +1,19 @@
 
 package ca.qc.collegeahuntsic.bibliotheque;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.Timestamp;
+import java.util.StringTokenizer;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.util.BibliothequeCreateur;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
 /**
  *
@@ -45,8 +46,6 @@ public class Bibliotheque {
 
     private static boolean lectureAuClavier = true;
 
-    private static Connexion connexion;
-
     private static BibliothequeCreateur bibliothequeCreateur;
 
     /**
@@ -70,11 +69,10 @@ public class Bibliotheque {
             } else {
                 lectureAuClavier = true;
             }
-            connexion = new Connexion(argv[0],
+            bibliothequeCreateur = new BibliothequeCreateur(argv[0],
                 argv[1],
                 argv[2],
                 argv[3]);
-            bibliothequeCreateur = new BibliothequeCreateur(connexion);
             traiterTransactions(reader);
         } catch(Exception e) {
             e.printStackTrace(System.out);
@@ -129,7 +127,7 @@ public class Bibliotheque {
                 livreDTO.setIdLivre(readInt(tokenizer));
                 livreDTO.setTitre(readString(tokenizer));
                 livreDTO.setAuteur(readString(tokenizer));
-                livreDTO.setDateAcquisition(readInt(tokenizer));
+                livreDTO.setDateAcquisition(new Timestamp(readLong(tokenizer)));
                 bibliothequeCreateur.getLivreService().acquerir(livreDTO);
                 bibliothequeCreateur.commit();
             } else if("vendre".startsWith(command)) {
@@ -155,17 +153,13 @@ public class Bibliotheque {
                     pretDTO);
                 bibliothequeCreateur.commit();
             } else if("retourner".startsWith(command)) {
-                MembreDTO membreDTO = new MembreDTO();
-                membreDTO.setIdMembre(readInt(tokenizer));
                 LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(readInt(tokenizer));
-                bibliothequeCreateur.getPretService().retourner(membreDTO,
-                    livreDTO,
-                    pretDTO);
+                bibliothequeCreateur.getPretService().retourner(livreDTO);
                 bibliothequeCreateur.commit();
             } else if("inscrire".startsWith(command)) {
                 MembreDTO membreDTO = new MembreDTO();
-                membreDTO.setIdMembre(readInt(tokenizer));
+                //membreDTO.setIdMembre(readInt(tokenizer));
                 membreDTO.setNom(readString(tokenizer));
                 membreDTO.setTelephone(readInt(tokenizer));
                 membreDTO.setLimitePret(readInt(tokenizer));
@@ -180,9 +174,9 @@ public class Bibliotheque {
                 // Juste pour éviter deux dates de réservation strictement identiques
                 Thread.sleep(1);
                 ReservationDTO reservationDTO = new ReservationDTO();
-                reservationDTO.setIdReservation(readInt(tokenizer));
-                reservationDTO.setIdMembre(/*readInt(tokenizer)*/);
-                reservationDTO.setIdLivre(/*readInt(tokenizer)*/);
+                //reservationDTO.setIdReservation(readInt(tokenizer));
+                reservationDTO.getMembreDTO().setIdMembre(readInt(tokenizer));
+                reservationDTO.getLivreDTO().setIdLivre(readInt(tokenizer));
                 MembreDTO membreDTO = new MembreDTO();
                 membreDTO.setIdMembre(reservationDTO.getMembreDTO().getIdMembre());
                 LivreDTO livreDTO = new LivreDTO();

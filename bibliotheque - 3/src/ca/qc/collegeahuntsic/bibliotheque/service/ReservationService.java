@@ -182,17 +182,16 @@ public class ReservationService extends Service {
      *         été prêté, si le livre est déjà prêté au membre, si le membre a déjà réservé ce livre ou s'il y a une erreur avec la base de
      *         données
      */
-    public void reserver(ReservationDTO reservationDTO,
-        MembreDTO membreDTO,
+    public void reserver(MembreDTO membreDTO,
         LivreDTO livreDTO,
         PretDTO pretDTO) throws ServiceException {
         try {
-            ReservationDTO uneReservationDTO = read(reservationDTO.getIdReservation());
-            if(uneReservationDTO != null) {
-                throw new ServiceException("La réservation "
-                    + reservationDTO.getIdReservation()
-                    + " existe déjà");
-            }
+            //            ReservationDTO uneReservationDTO = read(reservationDTO.getIdReservation());
+            //            if(uneReservationDTO != null) {
+            //                throw new ServiceException("La réservation "
+            //                    + reservationDTO.getIdReservation()
+            //                    + " existe déjà");
+            //            }
             MembreDTO unMembreDTO = getMembreDAO().read(membreDTO.getIdMembre());
             if(unMembreDTO == null) {
                 throw new ServiceException("Le membre "

@@ -141,15 +141,14 @@ public class PretService extends Service {
     }
 
     public void emprunter(MembreDTO membreDTO,
-        LivreDTO livreDTO,
-        PretDTO pretDTO) throws ServiceException {
+        LivreDTO livreDTO) throws ServiceException {
         try {
-            PretDTO unPretDTO = read(pretDTO.getIdPret());
-            if(unPretDTO != null) {
-                throw new ServiceException("Le prêt "
-                    + pretDTO.getIdPret()
-                    + " existe déjà");
-            }
+            //            PretDTO unPretDTO = read(pretDTO.getIdPret());
+            //            if(unPretDTO != null) {
+            //                throw new ServiceException("Le prêt "
+            //                    + pretDTO.getIdPret()
+            //                    + " existe déjà");
+            //            }
             MembreDTO unMembreDTO = getMembreDAO().read(membreDTO.getIdMembre());
             if(unMembreDTO == null) {
                 throw new ServiceException("Le membre "
