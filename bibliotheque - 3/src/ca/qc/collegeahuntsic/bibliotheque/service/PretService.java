@@ -108,41 +108,48 @@ public class PretService extends Service {
         }
     }
 
-    public void findByMembre(MembreDTO membreDTO) throws ServiceException {
+    public List<PretDTO> findByMembre(MembreDTO membreDTO) throws ServiceException {
         try {
-            getPretDAO().findByMembre(membreDTO);
+            return getPretDAO().findByMembre(membreDTO);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
     }
 
-    public void findByLivre(LivreDTO livreDTO) throws ServiceException {
+    public List<PretDTO> findByLivre(LivreDTO livreDTO) throws ServiceException {
         try {
-            getPretDAO().findByLivre(livreDTO);
+            return getPretDAO().findByLivre(livreDTO);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
     }
 
-    public void findByDatePret(Timestamp datePret) throws ServiceException {
+    public List<PretDTO> findByDatePret(Timestamp datePret) throws ServiceException {
         try {
-            getPretDAO().findByDatePret(datePret);
+            return getPretDAO().findByDatePret(datePret);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
     }
 
-    public void findByDateRetour(Timestamp dateRetour) throws ServiceException {
+    public List<PretDTO> findByDateRetour(Timestamp dateRetour) throws ServiceException {
         try {
-            getPretDAO().findByDateRetour(dateRetour);
+            return getPretDAO().findByDateRetour(dateRetour);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
     }
 
     public void emprunter(MembreDTO membreDTO,
-        LivreDTO livreDTO) throws ServiceException {
+        LivreDTO livreDTO,
+        PretDTO pretDTO) throws ServiceException {
         try {
+            PretDTO unPretDTO = read(pretDTO.getIdPret());
+            if(unPretDTO != null) {
+                throw new ServiceException("Le prêt "
+                    + pretDTO.getIdPret()
+                    + " existe déjà");
+            }
             MembreDTO unMembreDTO = getMembreDAO().read(membreDTO.getIdMembre());
             if(unMembreDTO == null) {
                 throw new ServiceException("Le membre "
@@ -189,6 +196,7 @@ public class PretService extends Service {
                 + deuxSemaines);
 
             PretDTO nouveauPretDTO = new PretDTO();
+            nouveauPretDTO.setIdPret(getPretDAO().getPrimaryKey());
             nouveauPretDTO.setMembreDTO(membreDTO);
             nouveauPretDTO.setLivreDTO(livreDTO);
             nouveauPretDTO.setDatePret(datePret);
@@ -253,6 +261,7 @@ public class PretService extends Service {
                 + deuxSemaines);
 
             PretDTO nouveauPretDTO = new PretDTO();
+            nouveauPretDTO.setIdPret(getPretDAO().getPrimaryKey());
             nouveauPretDTO.setMembreDTO(membreDTO);
             nouveauPretDTO.setLivreDTO(livreDTO);
             nouveauPretDTO.setDatePret(datePret);
