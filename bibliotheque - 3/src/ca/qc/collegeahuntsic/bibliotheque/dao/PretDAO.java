@@ -191,96 +191,116 @@ public class PretDAO extends DAO {
         return prets;
     }
 
-    public PretDTO findByLivre(LivreDTO livreDTO) throws DAOException {
-        PretDTO pretDTO = null;
+    public List<PretDTO> findByLivre(LivreDTO livreDTO) throws DAOException {
+        List<PretDTO> prets = Collections.EMPTY_LIST;
         try(
             PreparedStatement findByIDLivrePreparedStatement = getConnection().prepareStatement(PretDAO.FIND_BY_ID_LIVRE)) {
             findByIDLivrePreparedStatement.setInt(1,
                 livreDTO.getIdLivre());
             try(
                 ResultSet resultSet = findByIDLivrePreparedStatement.executeQuery()) {
+                PretDTO pretDTO = null;
                 if(resultSet.next()) {
-                    pretDTO = new PretDTO();
-                    pretDTO.setIdPret(resultSet.getInt(1));
-                    pretDTO.getLivreDTO().setIdLivre(resultSet.getInt(2));
-                    pretDTO.getMembreDTO().setIdMembre(resultSet.getInt(3));
-                    pretDTO.setDatePret(resultSet.getTimestamp(4));
-                    pretDTO.setDateRetour(resultSet.getTimestamp(5));
+                    prets = new ArrayList<>();
+                    do {
+                        pretDTO = new PretDTO();
+                        pretDTO.setIdPret(resultSet.getInt(1));
+                        pretDTO.getLivreDTO().setIdLivre(resultSet.getInt(2));
+                        pretDTO.getMembreDTO().setIdMembre(resultSet.getInt(3));
+                        pretDTO.setDatePret(resultSet.getTimestamp(4));
+                        pretDTO.setDateRetour(resultSet.getTimestamp(5));
+                        prets.add(pretDTO);
+                    } while(resultSet.next());
                 }
             }
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }
-        return pretDTO;
+        return prets;
     }
 
-    public PretDTO findByMembre(MembreDTO membreDTO) throws DAOException {
-        PretDTO pretDTO = null;
+    public List<PretDTO> findByMembre(MembreDTO membreDTO) throws DAOException {
+        List<PretDTO> prets = Collections.EMPTY_LIST;
         try(
             PreparedStatement findByIDMembrePreparedStatement = getConnection().prepareStatement(PretDAO.FIND_BY_ID_MEMBRE)) {
             findByIDMembrePreparedStatement.setInt(1,
                 membreDTO.getIdMembre());
             try(
                 ResultSet resultSet = findByIDMembrePreparedStatement.executeQuery()) {
+                PretDTO pretDTO = null;
                 if(resultSet.next()) {
-                    pretDTO = new PretDTO();
-                    pretDTO.setIdPret(resultSet.getInt(1));
-                    pretDTO.getLivreDTO().setIdLivre(resultSet.getInt(2));
-                    pretDTO.getMembreDTO().setIdMembre(resultSet.getInt(3));
-                    pretDTO.setDatePret(resultSet.getTimestamp(4));
-                    pretDTO.setDateRetour(resultSet.getTimestamp(5));
+                    prets = new ArrayList<>();
+                    do {
+                        pretDTO = new PretDTO();
+                        pretDTO.setIdPret(resultSet.getInt(1));
+                        pretDTO.getLivreDTO().setIdLivre(resultSet.getInt(2));
+                        pretDTO.getMembreDTO().setIdMembre(resultSet.getInt(3));
+                        pretDTO.setDatePret(resultSet.getTimestamp(4));
+                        pretDTO.setDateRetour(resultSet.getTimestamp(5));
+                        prets.add(pretDTO);
+                    } while(resultSet.next());
                 }
             }
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }
-        return pretDTO;
+        return prets;
     }
 
-    public PretDTO findByDatePret(Timestamp datePret) throws DAOException {
-        PretDTO pretDTO = null;
+    public List<PretDTO> findByDatePret(Timestamp datePret) throws DAOException {
+        List<PretDTO> prets = Collections.EMPTY_LIST;
         try(
             PreparedStatement findByIDMembrePreparedStatement = getConnection().prepareStatement(PretDAO.FIND_BY_DATE_PRET)) {
             findByIDMembrePreparedStatement.setTimestamp(1,
                 datePret);
             try(
                 ResultSet resultSet = findByIDMembrePreparedStatement.executeQuery()) {
+                PretDTO pretDTO = null;
                 if(resultSet.next()) {
-                    pretDTO = new PretDTO();
-                    pretDTO.setIdPret(resultSet.getInt(1));
-                    pretDTO.getLivreDTO().setIdLivre(resultSet.getInt(2));
-                    pretDTO.getMembreDTO().setIdMembre(resultSet.getInt(3));
-                    pretDTO.setDatePret(resultSet.getTimestamp(4));
-                    pretDTO.setDateRetour(resultSet.getTimestamp(5));
+                    prets = new ArrayList<>();
+                    do {
+                        pretDTO = new PretDTO();
+                        pretDTO.setIdPret(resultSet.getInt(1));
+                        pretDTO.getLivreDTO().setIdLivre(resultSet.getInt(2));
+                        pretDTO.getMembreDTO().setIdMembre(resultSet.getInt(3));
+                        pretDTO.setDatePret(resultSet.getTimestamp(4));
+                        pretDTO.setDateRetour(resultSet.getTimestamp(5));
+                        prets.add(pretDTO);
+                    } while(resultSet.next());
                 }
             }
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }
-        return pretDTO;
+        return prets;
     }
 
-    public PretDTO findByDateRetour(Timestamp dateRetour) throws DAOException {
-        PretDTO pretDTO = null;
+    public List<PretDTO> findByDateRetour(Timestamp dateRetour) throws DAOException {
+        List<PretDTO> prets = Collections.EMPTY_LIST;
         try(
             PreparedStatement findByIDMembrePreparedStatement = getConnection().prepareStatement(PretDAO.FIND_BY_DATE_RETOUR)) {
             findByIDMembrePreparedStatement.setTimestamp(1,
                 dateRetour);
             try(
                 ResultSet resultSet = findByIDMembrePreparedStatement.executeQuery()) {
+                PretDTO pretDTO = null;
                 if(resultSet.next()) {
-                    pretDTO = new PretDTO();
-                    pretDTO.setIdPret(resultSet.getInt(1));
-                    pretDTO.getLivreDTO().setIdLivre(resultSet.getInt(2));
-                    pretDTO.getMembreDTO().setIdMembre(resultSet.getInt(3));
-                    pretDTO.setDatePret(resultSet.getTimestamp(4));
-                    pretDTO.setDateRetour(resultSet.getTimestamp(5));
+                    prets = new ArrayList<>();
+                    do {
+                        pretDTO = new PretDTO();
+                        pretDTO.setIdPret(resultSet.getInt(1));
+                        pretDTO.getLivreDTO().setIdLivre(resultSet.getInt(2));
+                        pretDTO.getMembreDTO().setIdMembre(resultSet.getInt(3));
+                        pretDTO.setDatePret(resultSet.getTimestamp(4));
+                        pretDTO.setDateRetour(resultSet.getTimestamp(5));
+                        prets.add(pretDTO);
+                    } while(resultSet.next());
                 }
             }
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }
-        return pretDTO;
+        return prets;
     }
 
     public int getPrimaryKey() throws DAOException {
