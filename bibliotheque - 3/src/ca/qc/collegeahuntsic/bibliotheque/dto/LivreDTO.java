@@ -24,6 +24,11 @@ public class LivreDTO extends DTO {
      *
      * @return La variable d'instance <code>this.idLivre</code>
      */
+
+    public LivreDTO() {
+        super();
+    }
+
     public int getIdLivre() {
         return this.idLivre;
     }

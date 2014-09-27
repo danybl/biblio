@@ -28,6 +28,11 @@ public class MembreDTO extends DTO {
      *
      * @return La variable d'instance <code>this.idMembre</code>
      */
+
+    public MembreDTO() {
+        super();
+    }
+
     public int getIdMembre() {
         return this.idMembre;
     }

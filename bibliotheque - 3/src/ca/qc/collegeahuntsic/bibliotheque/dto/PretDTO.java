@@ -22,6 +22,10 @@ public class PretDTO extends DTO {
 
     private Timestamp dateRetour;
 
+    public PretDTO() {
+        super();
+    }
+
     PretDTO(int idPret,
         MembreDTO membreDTO,
         LivreDTO livreDTO,
@@ -36,7 +40,7 @@ public class PretDTO extends DTO {
 
     /**
      * Getter de la variable d'instance <code>this.idPret</code>.
-     * 
+     *
      * @return La variable d'instance <code>this.idPret</code>
      */
     public int getIdPret() {
@@ -45,7 +49,7 @@ public class PretDTO extends DTO {
 
     /**
      * Setter de la variable d'instance <code>this.idPret</code>.
-     * 
+     *
      * @param idPret
      *            La valeur à utiliser pour la variable d'instance
      *            <code>this.idPret</code>
@@ -56,7 +60,7 @@ public class PretDTO extends DTO {
 
     /**
      * Getter de la variable d'instance <code>this.membreDTO</code>.
-     * 
+     *
      * @return La variable d'instance <code>this.membreDTO</code>
      */
     public MembreDTO getMembreDTO() {
@@ -65,7 +69,7 @@ public class PretDTO extends DTO {
 
     /**
      * Setter de la variable d'instance <code>this.membreDTO</code>.
-     * 
+     *
      * @param membreDTO
      *            La valeur à utiliser pour la variable d'instance
      *            <code>this.membreDTO</code>
@@ -76,7 +80,7 @@ public class PretDTO extends DTO {
 
     /**
      * Getter de la variable d'instance <code>this.livreDTO</code>.
-     * 
+     *
      * @return La variable d'instance <code>this.livreDTO</code>
      */
     public LivreDTO getLivreDTO() {
@@ -85,7 +89,7 @@ public class PretDTO extends DTO {
 
     /**
      * Setter de la variable d'instance <code>this.livreDTO</code>.
-     * 
+     *
      * @param livreDTO
      *            La valeur à utiliser pour la variable d'instance
      *            <code>this.livreDTO</code>
@@ -96,7 +100,7 @@ public class PretDTO extends DTO {
 
     /**
      * Getter de la variable d'instance <code>this.datePret</code>.
-     * 
+     *
      * @return La variable d'instance <code>this.datePret</code>
      */
     public Timestamp getDatePret() {
@@ -105,7 +109,7 @@ public class PretDTO extends DTO {
 
     /**
      * Setter de la variable d'instance <code>this.datePret</code>.
-     * 
+     *
      * @param datePret
      *            La valeur à utiliser pour la variable d'instance
      *            <code>this.datePret</code>
@@ -116,7 +120,7 @@ public class PretDTO extends DTO {
 
     /**
      * Getter de la variable d'instance <code>this.dateRetour</code>.
-     * 
+     *
      * @return La variable d'instance <code>this.dateRetour</code>
      */
     public Timestamp getDateRetour() {
@@ -125,7 +129,7 @@ public class PretDTO extends DTO {
 
     /**
      * Setter de la variable d'instance <code>this.dateRetour</code>.
-     * 
+     *
      * @param dateRetour
      *            La valeur à utiliser pour la variable d'instance
      *            <code>this.dateRetour</code>
