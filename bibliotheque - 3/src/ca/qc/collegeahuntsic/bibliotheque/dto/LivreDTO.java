@@ -19,16 +19,6 @@ public class LivreDTO extends DTO {
 
     private Timestamp dateAcquisition;
 
-    LivreDTO(int idLivre,
-        String titre,
-        String auteur,
-        Timestamp dateAcquisition) {
-        this.idLivre = idLivre;
-        this.titre = titre;
-        this.auteur = auteur;
-        this.dateAcquisition = dateAcquisition;
-    }
-
     /**
      * Getter de la variable d'instance <code>this.idLivre</code>.
      *

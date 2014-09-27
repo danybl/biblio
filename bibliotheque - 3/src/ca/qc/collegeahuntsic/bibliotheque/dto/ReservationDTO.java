@@ -21,16 +21,6 @@ public class ReservationDTO extends DTO {
 
     private Timestamp dateReservation;
 
-    public ReservationDTO(int idReservation,
-        MembreDTO membreDTO,
-        LivreDTO livreDTO,
-        Timestamp dateReservation) {
-        this.idReservation = idReservation;
-        this.membreDTO = membreDTO;
-        this.livreDTO = livreDTO;
-        this.dateReservation = dateReservation;
-    }
-
     /**
      * Getter de la variable d'instance <code>this.idReservation</code>.
      *
