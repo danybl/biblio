@@ -216,30 +216,13 @@ public class PretService extends Service {
      * @throws ServiceException Si le membre n'existe pas, si le livre n'existe pas, si le livre n'a pas encore été prêté, si le livre a été
      *         prêté à quelqu'un d'autre, si le livre a été réservé ou s'il y a une erreur avec la base de données
      */
-    public void renouveler(MembreDTO membreDTO,
-        LivreDTO livreDTO) throws ServiceException {
+    public void renouveler(LivreDTO livreDTO) throws ServiceException {
         try {
-            MembreDTO unMembreDTO = getMembreDAO().read(membreDTO.getIdMembre());
-            if(unMembreDTO == null) {
-                throw new ServiceException("Le membre "
-                    + membreDTO.getIdMembre()
-                    + " n'existe pas");
-            }
             LivreDTO unLivreDTO = getLivreDAO().read(livreDTO.getIdLivre());
             if(unLivreDTO == null) {
                 throw new ServiceException("Le livre "
                     + livreDTO.getIdLivre()
                     + " n'existe pas");
-            }
-
-            if(unMembreDTO.getNbPret() == unMembreDTO.getLimitePret()) {
-                throw new ServiceException("Le membre "
-                    + unMembreDTO.getNom()
-                    + " (ID de membre : "
-                    + unMembreDTO.getIdMembre()
-                    + ") a atteint sa limite de prêt ("
-                    + unMembreDTO.getLimitePret()
-                    + " emprunt(s) maximum)");
             }
 
             if(getReservationDAO().findByLivre(unLivreDTO) != null) {
@@ -259,10 +242,7 @@ public class PretService extends Service {
             java.sql.Timestamp dateRetour = new java.sql.Timestamp(datePret.getTime()
                 + deuxSemaines);
 
-            PretDTO nouveauPretDTO = new PretDTO();
-            nouveauPretDTO.setIdPret(getPretDAO().getPrimaryKey());
-            nouveauPretDTO.setMembreDTO(membreDTO);
-            nouveauPretDTO.setLivreDTO(livreDTO);
+            PretDTO nouveauPretDTO = findByLivre(livreDTO);
             nouveauPretDTO.setDatePret(datePret);
             nouveauPretDTO.setDateRetour(dateRetour);
 

@@ -113,7 +113,6 @@ public class Bibliotheque {
      * Décodage et traitement d'une transaction
      */
     static void executerTransaction(StringTokenizer tokenizer) throws BibliothequeException {
-        LivreDTO livreTemp;// = new LivreDTO();
         try {
             String command = tokenizer.nextToken();
 
@@ -148,9 +147,7 @@ public class Bibliotheque {
                 membreDTO.setIdMembre(readInt(tokenizer));
                 LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(readInt(tokenizer));
-                bibliothequeCreateur.getPretService().renouveler(membreDTO,
-                    livreDTO,
-                    pretDTO);
+                bibliothequeCreateur.getPretService().renouveler(livreDTO);
                 bibliothequeCreateur.commit();
             } else if("retourner".startsWith(command)) {
                 LivreDTO livreDTO = new LivreDTO();
@@ -181,8 +178,7 @@ public class Bibliotheque {
                 membreDTO.setIdMembre(reservationDTO.getMembreDTO().getIdMembre());
                 LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(reservationDTO.getLivreDTO().getIdLivre());
-                bibliothequeCreateur.getReservationService().reserver(reservationDTO,
-                    membreDTO,
+                bibliothequeCreateur.getReservationService().reserver(membreDTO,
                     livreDTO);
                 bibliothequeCreateur.commit();
             } else if("utiliser".startsWith(command)) {
@@ -192,9 +188,7 @@ public class Bibliotheque {
                 membreDTO.setIdMembre(readInt(tokenizer));
                 LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(readInt(tokenizer));
-                bibliothequeCreateur.getReservationService().utiliser(reservationDTO, //methode reserver()
-                    membreDTO,
-                    livreDTO);
+                bibliothequeCreateur.getReservationService().utiliser(reservationDTO);
                 bibliothequeCreateur.commit();
             } else if("annuler".startsWith(command)) {
                 ReservationDTO reservationDTO = new ReservationDTO();
