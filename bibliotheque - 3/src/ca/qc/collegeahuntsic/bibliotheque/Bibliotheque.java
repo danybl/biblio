@@ -181,7 +181,7 @@ public class Bibliotheque {
                 membreDTO.setIdMembre(reservationDTO.getMembreDTO().getIdMembre());
                 LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(reservationDTO.getLivreDTO().getIdLivre());
-                bibliothequeCreateur.getReservationService().utiliser(reservationDTO,
+                bibliothequeCreateur.getReservationService().reserver(reservationDTO,
                     membreDTO,
                     livreDTO);
                 bibliothequeCreateur.commit();
