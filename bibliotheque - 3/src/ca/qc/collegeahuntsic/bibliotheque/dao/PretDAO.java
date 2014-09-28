@@ -208,7 +208,6 @@ public class PretDAO extends DAO {
                     pretDTO.getMembreDTO().setIdMembre(resultSet.getInt(3));
                     pretDTO.setDatePret(resultSet.getTimestamp(4));
                     pretDTO.setDateRetour(resultSet.getTimestamp(5));
-
                 }
             }
         } catch(SQLException sqlException) {
