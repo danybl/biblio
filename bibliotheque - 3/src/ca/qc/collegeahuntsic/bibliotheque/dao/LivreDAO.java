@@ -18,9 +18,14 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
  *
  *
  */
+
 public class LivreDAO extends DAO {
     private static final long serialVersionUID = 1L;
 
+    /*
+     * Les chaines de caractères String pour effectuer des insertions, des lectures, des mis à jour,
+     * des suppressions et de la création de la clé primaire dans la table livre*/
+    //region
     private static final String ADD_REQUEST = "INSERT INTO livre (idLivre, titre, auteur, dateAcquisition) "
         + "VALUES (?, ?, ?, ?, NULL, NULL)";
 
@@ -48,6 +53,8 @@ public class LivreDAO extends DAO {
 
     private static final String CREATE_PRIMARY_KEY = "SELECT nom_sequence.NEXTVAL from DUAL";
 
+    //endregion
+
     //
     //    private static final String EMPRUNT_REQUEST = "UPDATE livre "
     //        + "SET titre = ?, auteur = ?, dateAcquisition = ?, idMembre = ?, datePret = SYSTIMESTAMP "
@@ -72,6 +79,11 @@ public class LivreDAO extends DAO {
      * @param livreDTO Le livre à ajouter
      * @throws DAOException S'il y a une erreur avec la base de données
      */
+    /*
+     * Addition d'un livre dans la table Livre avec un PreparedStatement
+     * qui recoit un String d'addition ADD_REQUEST en paramètre et
+     * la gestion de toutes les exceptions possibles
+     * */
     public void add(LivreDTO livreDTO) throws DAOException {
         try(
             PreparedStatement addPreparedStatement = getConnection().prepareStatement(LivreDAO.ADD_REQUEST)) {
@@ -95,6 +107,11 @@ public class LivreDAO extends DAO {
      * @param idLivre L'ID du livre à lire
      * @throws DAOException S'il y a une erreur avec la base de données
      */
+    /*
+     * Lecture d'un livre à partir de la table Livre avec un PreparedStatement
+     * qui recoit un String de lecture READ_REQUEST en paramètre
+     * et la gestion de toutes les exceptions possibles
+     * */
     public LivreDTO read(int idLivre) throws DAOException {
         LivreDTO livreDTO = null;
         try(
@@ -123,6 +140,11 @@ public class LivreDAO extends DAO {
      * @param livreDTO Le livre à mettre à jour
      * @throws DAOException S'il y a une erreur avec la base de données
      */
+    /*
+     * Mis à jour d'un livre dans la table Livre avec un PreparedStatement
+     * qui recoit un String de mis à jour UPDATE_REQUEST en paramètre
+     * et la gestion de toutes les exceptions possibles
+     * */
     public void update(LivreDTO livreDTO) throws DAOException {
         try(
             PreparedStatement updatePreparedStatement = getConnection().prepareStatement(LivreDAO.UPDATE_REQUEST)) {
@@ -146,6 +168,11 @@ public class LivreDAO extends DAO {
      * @param livreDTO Le livre à supprimer
      * @throws DAOException S'il y a une erreur avec la base de données
      */
+    /*
+     * Suppression d'un livre dans la table Livre avec un PreparedStatement
+     * qui recoit un String de suppression DELETE_REQUEST en paramètre et la
+     * gestion de toutes les exceptions possibles
+     * */
     public void delete(LivreDTO livreDTO) throws DAOException {
         try(
             PreparedStatement deletePreparedStatement = getConnection().prepareStatement(LivreDAO.DELETE_REQUEST)) {
@@ -163,6 +190,11 @@ public class LivreDAO extends DAO {
      * @return La liste des livres ; une liste vide sinon
      * @throws DAOException S'il y a une erreur avec la base de données
      */
+    /*
+     * Recherche de tous les livres dans la table Livre avec un PreparedStatement
+     * qui recoit un String de lecture générale GET_ALL_REQUEST en paramètre et
+     * la gestion de toutes les exceptions possibles
+     * */
     public List<LivreDTO> getAll() throws DAOException {
         List<LivreDTO> livres = Collections.EMPTY_LIST;
         try(
@@ -195,6 +227,11 @@ public class LivreDAO extends DAO {
      * @return La liste des livres correspondants ; une liste vide sinon
      * @throws DAOException S'il y a une erreur avec la base de données
      */
+    /*
+     * Recherche d'un livre dans la table Livre par son titre avec un PreparedStatement
+     * qui recoit un String de recherche FIND_BY_TITRE en paramètre et la
+     * gestion de toutes les exceptions possibles
+     * */
     public List<LivreDTO> findByTitre(String titre) throws DAOException {
         List<LivreDTO> livres = Collections.EMPTY_LIST;
         try(
@@ -229,6 +266,11 @@ public class LivreDAO extends DAO {
      * @return Le livre correspondant ; null sinon
      * @throws DAOException S'il y a une erreur avec la base de données
      */
+    /*
+     * Recherche d'un livre dans la table Livre par membre avec un PreparedStatement
+     * qui recoit un String de recherche FIND_BY_MEMBRE en paramètre et la
+     * gestion de toutes les exceptions possibles
+     * */
     public LivreDTO findByMembre(MembreDTO membreDTO) throws DAOException {
         LivreDTO livreDTO = null;
         try(
@@ -251,6 +293,9 @@ public class LivreDAO extends DAO {
         return livreDTO;
     }
 
+    /*
+     * Méthode de génération de la clé primaire d'un livre donné à l'aide d'un Statement
+     * qui recoit en paramètre un String de création de la clé primaire CREAT_PRIMARY_KEY*/
     public int getPrimaryKey() throws DAOException {
         Integer primaryKey = null;
         try(
