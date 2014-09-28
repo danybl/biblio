@@ -27,10 +27,14 @@ annuler 2
 --
 -- *** Livres ***
 --
+-- livre existe déjà
+-- a faire
 --
 --
 -- *** Membres ***
 --
+-- membre existe déjà
+-- a faire
 --
 --
 -- *** Prêts ***
@@ -79,6 +83,8 @@ preter 2 3
 -- erreur : membre inexistant
 reserver 998 2
 --
+-- erreur : no réservation existant
+-- a faire
 --
 -- erreur : livre réservé
 utiliser 4
