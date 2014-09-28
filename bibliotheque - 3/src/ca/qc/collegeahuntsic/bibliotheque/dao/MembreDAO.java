@@ -27,7 +27,7 @@ public class MembreDAO extends DAO {
      * des suppressions et de la création de la clé primaire dans la table membre*/
     //region
 
-    private static final String ADD_REQUEST = "INSERT INTO membre (nom, telephone, limitePret, nbpret)"
+    private static final String ADD_REQUEST = "INSERT INTO membre (idMembre, nom, telephone, limitePret, nbpret)"
         + "VALUES (?,?,?,?,?)";
 
     private static final String READ_REQUEST = "SELECT idMembre, nom, telephone, limitePret, nbpret FROM membre"
@@ -80,11 +80,13 @@ public class MembreDAO extends DAO {
         try(
             PreparedStatement preparedAjout = getConnection().prepareStatement(ADD_REQUEST);) {
 
-            preparedAjout.setString(1,
+            preparedAjout.setInt(1,
+                getPrimaryKey());
+            preparedAjout.setString(2,
                 membreDTO.getNom());
-            preparedAjout.setLong(2,
+            preparedAjout.setLong(3,
                 membreDTO.getTelephone());
-            preparedAjout.setInt(3,
+            preparedAjout.setInt(4,
                 membreDTO.getLimitePret());
             preparedAjout.executeUpdate();
         } catch(SQLException sqlException) {
