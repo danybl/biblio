@@ -24,6 +24,12 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 public class PretDAO extends DAO {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Déclaration des final String
+     *
+     * Les String contiennent du code sql pour effectuer des insertions, des lectures, des mis à jour,
+     * des suppressions et de la création de la clé primaire dans la table Pret
+     * */
     private static final String ADD_REQUEST = "INSERT INTO pret (idPret, idMembre, idLivre, datePret, dateRetour) "
         + "VALUES (?, ?, ?, NULL, NULL)";
 
@@ -57,16 +63,16 @@ public class PretDAO extends DAO {
         + "FROM pret"
         + "WHERE dateRetour = ? ";
 
-    private static final String CREATE_PRIMARY_KEY = "SELECT nom_sequence.NEXTVAL from DUAL";
+    private static final String CREATE_PRIMARY_KEY = "SELECT SEQ_ID_PRET.NEXTVAL from DUAL";
 
     public PretDAO(Connexion connexion) {
         super(connexion);
     }
 
     /**
-     * Ajoute un nouveau livre.
+     * Ajoute un nouveau prêt.
      *
-     * @param Ajouter un Pret
+     * @param pretDTO Le pret à ajouter
      * @throws DAOException S'il y a une erreur avec la base de données
      */
     public void add(PretDTO pretDTO) throws DAOException {
@@ -191,6 +197,13 @@ public class PretDAO extends DAO {
         return prets;
     }
 
+    /**
+     * Trouve les prêts à partir d'un livre.
+     *
+     * @param livreDTO Le livre à utiliser
+     * @return Les prêts correspondant ; null sinon
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public PretDTO findByLivre(LivreDTO livreDTO) throws DAOException {
         PretDTO pretDTO = null;
         try(
@@ -216,6 +229,13 @@ public class PretDAO extends DAO {
         return pretDTO;
     }
 
+    /**
+     * Trouve les prêts à partir d'un membre.
+     *
+     * @param membreDTO Le membre à utiliser
+     * @return Les prêts correspondant ; null sinon
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public List<PretDTO> findByMembre(MembreDTO membreDTO) throws DAOException {
         List<PretDTO> prets = Collections.EMPTY_LIST;
         try(
@@ -244,6 +264,13 @@ public class PretDAO extends DAO {
         return prets;
     }
 
+    /**
+     * Trouve les prêts à partir de la date.
+     *
+     * @param datePret La date à utiliser
+     * @return Les prêts correspondant ; null sinon
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public List<PretDTO> findByDatePret(Timestamp datePret) throws DAOException {
         List<PretDTO> prets = Collections.EMPTY_LIST;
         try(
@@ -272,6 +299,13 @@ public class PretDAO extends DAO {
         return prets;
     }
 
+    /**
+     * Trouve les prêts à partir de la date de retour.
+     *
+     * @param dateRetour La date à utiliser
+     * @return Les prêts correspondant ; null sinon
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public List<PretDTO> findByDateRetour(Timestamp dateRetour) throws DAOException {
         List<PretDTO> prets = Collections.EMPTY_LIST;
         try(
@@ -300,6 +334,12 @@ public class PretDAO extends DAO {
         return prets;
     }
 
+    /**
+     * Génère la clé primaire
+     *
+     * @return La clé primaire généré
+     * @throws DAOException S'il y a une erreur avec la base de données
+     * */
     public int getPrimaryKey() throws DAOException {
         Integer primaryKey = null;
         try(

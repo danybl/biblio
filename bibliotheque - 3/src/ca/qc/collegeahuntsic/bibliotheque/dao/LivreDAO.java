@@ -24,7 +24,7 @@ public class LivreDAO extends DAO {
      * Déclaration des final String
      *
      * Les String contiennent du code sql pour effectuer des insertions, des lectures, des mis à jour,
-     * des suppressions et de la création de la clé primaire dans la table livre
+     * des suppressions et de la création de la clé primaire dans la table Livre
      * */
 
     private static final String ADD_REQUEST = "INSERT INTO livre (idLivre, titre, auteur, dateAcquisition) "
@@ -52,7 +52,7 @@ public class LivreDAO extends DAO {
         + "FROM livre "
         + "WHERE idMembre = ?";
 
-    private static final String CREATE_PRIMARY_KEY = "SELECT nom_sequence.NEXTVAL from DUAL";
+    private static final String CREATE_PRIMARY_KEY = "SELECT SEQ_ID_LIVRE.NEXTVAL from DUAL";
 
     /**
      * Crée un DAO à partir d'une connexion à la base de données.

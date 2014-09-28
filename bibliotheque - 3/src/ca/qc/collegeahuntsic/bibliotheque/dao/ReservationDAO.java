@@ -18,7 +18,12 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 public class ReservationDAO extends DAO {
     private static final long serialVersionUID = 1L;
 
-    // Region String SQL
+    /**
+     * Déclaration des final String
+     *
+     * Les String contiennent du code sql pour effectuer des insertions, des lectures, des mis à jour,
+     * des suppressions et de la création de la clé primaire dans la table Reservation
+     * */
     private static final String ADD_REQUEST = "INSERT INTO reservation (idReservation, idlivre, idMembre, dateReservation) "
         + "VALUES (?,?,?,TO_DATE(?,'YYYY-MM-DD'))";
 
@@ -48,13 +53,19 @@ public class ReservationDAO extends DAO {
         + "FROM reservation "
         + "WHERE dateReservation = ? ";
 
-    private static final String CREATE_PRIMARY_KEY = "SELECT nom_sequence.NEXTVAL from DUAL";
+    private static final String CREATE_PRIMARY_KEY = "SELECT SEQ_ID_RESERVATION.NEXTVAL from DUAL";
 
     // EndRegion
     public ReservationDAO(Connexion connexion) {
         super(connexion);
     }
 
+    /**
+     * Ajoute une nouvelle resérvation
+     *
+     * @param idReservation La resérvation à ajouter
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public void add(ReservationDTO reservationDTO) throws DAOException {
         try(
             PreparedStatement addPreparedStatement = getConnection().prepareStatement(ReservationDAO.ADD_REQUEST)) {
@@ -72,6 +83,12 @@ public class ReservationDAO extends DAO {
         }
     }// FinAdd
 
+    /**
+     * Lit une resérvation.
+     *
+     * @param idReservation L'ID de la resérvation
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public ReservationDTO read(int idReservation) throws DAOException {
         ReservationDTO reservationDTO = null;
         try(
@@ -94,6 +111,12 @@ public class ReservationDAO extends DAO {
         return reservationDTO;
     }// FinRead
 
+    /**
+     * Met à jour d'une resérvation.
+     *
+     * @param reservationDTO La resérvation à mettre à jour
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public void update(ReservationDTO reservationDTO) throws DAOException {
         try(
             PreparedStatement updatePreparedStatement = getConnection().prepareStatement(ReservationDAO.UPDATE_REQUEST)) {
@@ -111,6 +134,12 @@ public class ReservationDAO extends DAO {
         }
     }// FinUpdate
 
+    /**
+     * Supprime une resérvation.
+     *
+     * @param reservationDTO La resérvation à supprimer
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public void delete(ReservationDTO reservationDTO) throws DAOException {
         try(
             PreparedStatement deletePreparedStatement = getConnection().prepareStatement(ReservationDAO.DELETE_REQUEST)) {
@@ -122,6 +151,12 @@ public class ReservationDAO extends DAO {
         }
     }// FinDelete
 
+    /**
+     * Trouve toutes les resérvations.
+     *
+     * @return La liste des resérvations ; une liste vide sinon
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public List<ReservationDTO> getAll() throws DAOException {
         List<ReservationDTO> reservations = Collections.EMPTY_LIST;
         try(
@@ -147,6 +182,13 @@ public class ReservationDAO extends DAO {
         return reservations;
     }// FinGetAll
 
+    /**
+     * Trouve les reservations à partir d'un livre.
+     *
+     * @param livreDTO Le livre à utiliser
+     * @return Les reservations correspondant ; null sinon
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public List<ReservationDTO> findByLivre(LivreDTO livreDTO) throws DAOException {
         List<ReservationDTO> reservations = Collections.EMPTY_LIST;
         try(
@@ -174,6 +216,13 @@ public class ReservationDAO extends DAO {
         return reservations;
     }// FinFindByIDLivre
 
+    /**
+     * Trouve les reservations à partir d'un membre.
+     *
+     * @param membreDTO Le membre à utiliser
+     * @return Les prêts correspondant ; null sinon
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public List<ReservationDTO> findByMembre(MembreDTO membreDTO) throws DAOException {
         List<ReservationDTO> reservations = Collections.EMPTY_LIST;
         try(
@@ -201,6 +250,13 @@ public class ReservationDAO extends DAO {
         return reservations;
     }// FinFindByIDMembre
 
+    /**
+     * Trouve les reservations à partir de la date de reservation.
+     *
+     * @param dateReservation La date à utiliser
+     * @return Les reservations correspondant ; null sinon
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
     public List<ReservationDTO> findByDateReservation(Timestamp dateReservation) throws DAOException {
         List<ReservationDTO> reservations = Collections.EMPTY_LIST;
         try(
@@ -228,6 +284,12 @@ public class ReservationDAO extends DAO {
         return reservations;
     }
 
+    /**
+     * Génère la clé primaire
+     *
+     * @return La clé primaire généré
+     * @throws DAOException S'il y a une erreur avec la base de données
+     * */
     public int getPrimaryKey() throws DAOException {
         Integer primaryKey = null;
         try(
