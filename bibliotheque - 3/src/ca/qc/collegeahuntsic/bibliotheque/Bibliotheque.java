@@ -231,9 +231,9 @@ public class Bibliotheque {
         System.out.println("  reserver <idReservation> <idLivre> <idMembre> <dateReservation>");
         System.out.println("  prendreRes <idReservation> <dateEmprunt>");
         System.out.println("  annulerRes <idReservation>");
-        System.out.println("  listerLivresRetard <dateCourante>");
-        System.out.println("  listerLivresTitre <mot>");
-        System.out.println("  listerLivres");
+        // System.out.println("  listerLivresRetard <dateCourante>");
+        //System.out.println("  listerLivresTitre <mot>");
+        //System.out.println("  listerLivres");
     }
 
     /**
