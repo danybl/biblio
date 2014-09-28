@@ -1,3 +1,4 @@
+// Fichier Connexion.java
 
 package ca.qc.collegeahuntsic.bibliotheque.db;
 
@@ -58,6 +59,8 @@ public class Connexion {
      * @bd nom de la base de données
      * @user userid sur le serveur SQL
      * @pass mot de passe sur le serveur SQL
+     * @throws ConnexionException Si le driver n'existe pas, S'il y a une erreur avec la base de données ou si <code>typeServeur</code>
+     *         n'est pas valide
      */
     public Connexion(String typeServeur,
         String schema,
@@ -108,6 +111,21 @@ public class Connexion {
         }
     }
 
+    // Region Getters and Setters
+    /**
+     * Getter de la variable d'instance <code>this.connection</code>.
+     *
+     * @return La variable d'instance <code>this.connection</code>
+     */
+    public Connection getConnection() {
+        return this.connection;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.connection</code>.
+     *
+     * @param connection La valeur à utiliser pour la variable d'instance <code>this.connection</code>
+     */
     private void setConnection(Connection connection2) {
         this.connection = connection2;
     }
@@ -124,26 +142,24 @@ public class Connexion {
     }
 
     /**
-     *commit
+     * Effectue un commit sur la {@link java.sql.Connection} JDBC.
+     *
+     * @throws {@link java.sql.SQLException SQLException} S'il y a une erreur avec la base de données
      */
     public void commit() throws SQLException {
         this.connection.commit();
     }
 
     /**
-     *rollback
+     * Effectue un rollback sur la {@link java.sql.Connection} JDBC.
+     *
+     * @throws {@link java.sql.SQLException SQLException} S'il y a une erreur avec la base de données
      */
     public void rollback() throws SQLException {
         this.connection.rollback();
     }
 
-    /**
-     *retourne la Connection jdbc
-     */
-    public Connection getConnection() {
-        return this.connection;
-    }
-
+    // EndRegion Getters and Setters
     public void close() throws Exception {
         getConnection().close();
         System.out.println("\nConnexion fermée "
@@ -151,7 +167,14 @@ public class Connexion {
     }
 
     /**
-     * Retourne la liste des serveurs supportés par ce gestionnaire de connexions
+     * Retourne la liste des serveurs supportés par ce gestionnaire de connexion :<br /><br />
+     * 
+     * <code>local</code> :  MySQL installé localement<br />
+     * <code>distant</code> : Oracle installé au Département d'Informatique du Collège Ahuntsic<br />
+     * <code>postgres</code> : Postgres installé localement<br />
+     * <code>access</code> : Microsoft Access installé localement et inscrit dans ODBC
+     * 
+     * @return La liste des serveurs supportés par ce gestionnaire de connexion
      */
     public static String serveursSupportes() {
         return "local : MySQL installé localement\n"
