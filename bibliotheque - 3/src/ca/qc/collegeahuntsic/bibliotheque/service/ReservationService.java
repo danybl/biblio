@@ -183,8 +183,8 @@ public class ReservationService extends Service {
      *         données
      */
     public void reserver(MembreDTO membreDTO,
-        LivreDTO livreDTO,
-        PretDTO pretDTO) throws ServiceException {
+        LivreDTO livreDTO/*,
+                         PretDTO pretDTO*/) throws ServiceException {
         try {
             //            ReservationDTO uneReservationDTO = read(reservationDTO.getIdReservation());
             //            if(uneReservationDTO != null) {
@@ -204,14 +204,14 @@ public class ReservationService extends Service {
                     + livreDTO.getIdLivre()
                     + " n'existe pas");
             }
-            MembreDTO emprunteur = getPretDAO().read(pretDTO.getIdPret()).getMembreDTO();
-            if(emprunteur == null) {
-                throw new ServiceException("Le livre "
-                    + unLivreDTO.getTitre()
-                    + " (ID de livre : "
-                    + unLivreDTO.getIdLivre()
-                    + ") n'est pas encore prêté");
-            }
+            MembreDTO emprunteur = getPretDAO().findByLivre(livreDTO);//getPretDAO().read(pretDTO.getIdPret()).getMembreDTO();
+            //            if(emprunteur == null) {
+            //                throw new ServiceException("Le livre "
+            //                    + unLivreDTO.getTitre()
+            //                    + " (ID de livre : "
+            //                    + unLivreDTO.getIdLivre()
+            //                    + ") n'est pas encore prêté");
+            //            }
             if(unMembreDTO.getIdMembre() == emprunteur.getIdMembre()) {
                 throw new ServiceException("Le livre "
                     + unLivreDTO.getTitre()
