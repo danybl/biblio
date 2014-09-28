@@ -116,7 +116,7 @@ public class PretService extends Service {
         }
     }
 
-    public List<PretDTO> findByLivre(LivreDTO livreDTO) throws ServiceException {
+    public PretDTO findByLivre(LivreDTO livreDTO) throws ServiceException {
         try {
             return getPretDAO().findByLivre(livreDTO);
         } catch(DAOException daoException) {
@@ -281,8 +281,7 @@ public class PretService extends Service {
      * @throws ServiceException Si le membre n'existe pas, si le livre n'existe pas, si le livre n'a pas encore été prêté, si le livre a été
      *         prêté à quelqu'un d'autre ou s'il y a une erreur avec la base de données
      */
-    public void retourner(LivreDTO livreDTO,
-        PretDTO pretDTO) throws ServiceException {
+    public void retourner(LivreDTO livreDTO) throws ServiceException {
         try {
 
             LivreDTO unLivreDTO = getLivreDAO().read(livreDTO.getIdLivre());
@@ -292,7 +291,7 @@ public class PretService extends Service {
                     + " n'existe pas");
             }
 
-            MembreDTO emprunteur = read(pretDTO.getIdPret()).getMembreDTO();
+            MembreDTO emprunteur = findByLivre(livreDTO).getMembreDTO();
             if(emprunteur == null) {
                 throw new ServiceException("Le livre "
                     + unLivreDTO.getTitre()
@@ -310,5 +309,4 @@ public class PretService extends Service {
             throw new ServiceException(daoException);
         }
     }
-
 }
