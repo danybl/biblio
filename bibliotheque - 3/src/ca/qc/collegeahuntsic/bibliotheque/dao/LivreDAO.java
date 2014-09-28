@@ -295,7 +295,7 @@ public class LivreDAO extends DAO {
 
     /*
      * Méthode de génération de la clé primaire d'un livre donné à l'aide d'un Statement
-     * qui recoit en paramètre un String de création de la clé primaire CREAT_PRIMARY_KEY*/
+     * qui recoit en paramètre un String de création de la clé primaire CREATE_PRIMARY_KEY*/
     public int getPrimaryKey() throws DAOException {
         Integer primaryKey = null;
         try(
