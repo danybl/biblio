@@ -250,21 +250,11 @@ public class ReservationService extends Service {
                     + " n'existe pas");
             }
 
-            MembreDTO unMembreDTO = getPretDAO().find(livreDTO).getMembreDTO();
-            if(unMembreDTO == null) {
-                throw new ServiceException("Le membre "
-                    + getMembreDAO().getIdMembre()
-                    + " n'existe pas");
-            }
-
-            LivreDTO unLivreDTO = getLivreDAO().read(livreDTO.getIdLivre());
-            if(unLivreDTO == null) {
-                throw new ServiceException("Le livre "
-                    + livreDTO.getIdLivre()
-                    + " n'existe pas");
-            }
+            MembreDTO unMembreDTO = reservationDTO.getMembreDTO();
+            LivreDTO unLivreDTO = reservationDTO.getLivreDTO();
 
             List<ReservationDTO> reservations = findByLivre(unLivreDTO);
+
             if(!reservations.isEmpty()) {
                 uneReservationDTO = reservations.get(0);
                 if(uneReservationDTO.getMembreDTO().getIdMembre() != unMembreDTO.getIdMembre()) {
@@ -280,7 +270,8 @@ public class ReservationService extends Service {
                         + ")");
                 }
             }
-            MembreDTO emprunteur = getPretDAO().read(pretDTO.getIdPret()).getMembreDTO();
+
+            MembreDTO emprunteur = getPretDAO().findByLivre(unLivreDTO).getMembreDTO();
             if(emprunteur != null) {
                 throw new ServiceException("Le livre "
                     + unLivreDTO.getTitre()
@@ -309,7 +300,7 @@ public class ReservationService extends Service {
             ReservationDTO nouveauReservationDTO = new ReservationDTO();
             nouveauReservationDTO.setIdReservation(getReservationDAO().getPrimaryKey());
             nouveauReservationDTO.setMembreDTO(unMembreDTO);
-            nouveauReservationDTO.setLivreDTO(livreDTO);
+            nouveauReservationDTO.setLivreDTO(unLivreDTO);
             nouveauReservationDTO.setDateReservation(dateReservation);
 
             update(nouveauReservationDTO);
