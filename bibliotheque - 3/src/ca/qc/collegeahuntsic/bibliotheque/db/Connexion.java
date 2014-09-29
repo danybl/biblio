@@ -168,15 +168,15 @@ public class Connexion {
 
     /**
      * Retourne la liste des serveurs supportés par ce gestionnaire de connexion :<br /><br />
-     * 
+     *
      * <code>local</code> :  MySQL installé localement<br />
      * <code>distant</code> : Oracle installé au Département d'Informatique du Collège Ahuntsic<br />
      * <code>postgres</code> : Postgres installé localement<br />
      * <code>access</code> : Microsoft Access installé localement et inscrit dans ODBC
-     * 
+     *
      * @return La liste des serveurs supportés par ce gestionnaire de connexion
      */
-    public static String serveursSupportes() {
+    public static String getServeursSupportes() {
         return "local : MySQL installé localement\n"
             + "distant : Oracle installé au Département d'Informatique du Collège Ahuntsic\n"
             + "postgres : Postgres installé localement\n"
