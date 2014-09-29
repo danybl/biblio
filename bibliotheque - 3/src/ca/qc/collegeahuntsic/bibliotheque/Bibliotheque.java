@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.StringTokenizer;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
@@ -13,6 +14,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.util.BibliothequeCreateur;
+import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
 
 /**
  *
@@ -129,7 +131,7 @@ public class Bibliotheque {
                 livreDTO.setIdLivre(readInt(tokenizer));
                 livreDTO.setTitre(readString(tokenizer));
                 livreDTO.setAuteur(readString(tokenizer));
-                livreDTO.setDateAcquisition(new Timestamp(readLong(tokenizer)));
+                livreDTO.setDateAcquisition(readDate(tokenizer));
                 bibliothequeCreateur.getLivreService().acquerir(livreDTO);
                 bibliothequeCreateur.commit();
             } else if("vendre".startsWith(command)) {
@@ -137,7 +139,7 @@ public class Bibliotheque {
                 livreDTO.setIdLivre(readInt(tokenizer));
                 bibliothequeCreateur.getLivreService().vendre(livreDTO);
                 bibliothequeCreateur.commit();
-            } else if("preter".startsWith(command)) {
+            } else if("emprunter".startsWith(command)) {
                 MembreDTO membreDTO = new MembreDTO();
                 membreDTO.setIdMembre(readInt(tokenizer));
                 LivreDTO livreDTO = new LivreDTO();
@@ -225,14 +227,14 @@ public class Bibliotheque {
         System.out.println("  aide");
         System.out.println("  exit");
         System.out.println("  acquerir <idLivre> <titre> <auteur> <dateAcquisition>");
-        System.out.println("  preter <idLivre> <idMembre> <dateEmprunt>");
-        System.out.println("  renouveler <idLivre> <dateRenouvellement>");
-        System.out.println("  retourner <idLivre> <dateRetour>");
+        System.out.println("  emprunter <idLivre> <idMembre>");
+        System.out.println("  renouveler <idLivre>");
+        System.out.println("  retourner <idLivre>");
         System.out.println("  vendre <idLivre>");
-        System.out.println("  inscrire <idMembre> <nom> <telephone> <limitePret>");
+        System.out.println("  inscrire <nom> <telephone> <limitePret>");
         System.out.println("  desinscrire <idMembre>");
-        System.out.println("  reserver <idReservation> <idLivre> <idMembre> <dateReservation>");
-        System.out.println("  prendreRes <idReservation> <dateEmprunt>");
+        System.out.println("  reserver <idLivre> <idMembre>");
+        System.out.println("  utiliser <idReservation>");
         System.out.println("  annulerRes <idReservation>");
         // System.out.println("  listerLivresRetard <dateCourante>");
         //System.out.println("  listerLivresTitre <mot>");
@@ -310,25 +312,22 @@ public class Bibliotheque {
             }
         }
         throw new BibliothequeException("autre paramètre attendu");
-
     }
 
     /**
      * lecture d'une date en format YYYY-MM-DD
      */
-    //    static Timestamp readDate(StringTokenizer tokenizer) throws BibliothequeException {
-    //        if(tokenizer.hasMoreElements()) {
-    //            String token = tokenizer.nextToken();
-    //            try {
-    //                FormatteurDate.convertirDate(token);
-    //                return token;
-    //            } catch(ParseException e) {
-    //                throw new BibliothequeException("Date en format YYYY-MM-DD attendue à la place  de \""
-    //                    + token
-    //                    + "\"");
-    //            }
-    //        }
-    //        throw new BibliothequeException("autre paramètre attendu");
-    //
-    //    }
+    static Timestamp readDate(StringTokenizer tokenizer) throws BibliothequeException {
+        if(tokenizer.hasMoreElements()) {
+            String token = tokenizer.nextToken();
+            try {
+                return FormatteurDate.timestampValue(token);
+            } catch(ParseException e) {
+                throw new BibliothequeException("Date en format YYYY-MM-DD attendue à la place  de \""
+                    + token
+                    + "\"");
+            }
+        }
+        throw new BibliothequeException("autre paramètre attendu");
+    }
 }//class

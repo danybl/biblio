@@ -29,7 +29,7 @@ public class MembreDAO extends DAO {
      * des suppressions et de la création de la clé primaire dans la table Membre
      * */
 
-    private static final String ADD_REQUEST = "INSERT INTO membre (idMembre, nom, telephone, limitePret, nbpret)"
+    private static final String ADD_REQUEST = "INSERT INTO membre (idMembre, nom, telephone, limitePret)"
         + "VALUES (?,?,?,?,?)";
 
     private static final String READ_REQUEST = "SELECT idMembre, nom, telephone, limitePret, nbpret FROM membre"

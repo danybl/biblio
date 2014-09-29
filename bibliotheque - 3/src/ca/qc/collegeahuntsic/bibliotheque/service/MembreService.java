@@ -117,13 +117,6 @@ public class MembreService extends Service {
     }
 
     public void inscrire(MembreDTO membreDTO) throws ServiceException {
-
-        MembreDTO unMembreDTO = read(membreDTO.getIdMembre());
-        if(unMembreDTO != null) {
-            throw new ServiceException("Le membre "
-                + membreDTO.getIdMembre()
-                + " existe déjà");
-        }
         add(membreDTO);
     }
 
