@@ -262,9 +262,7 @@ public class MembreDAO extends DAO {
             Statement createPrimaryKeyStatement = getConnection().createStatement();
             ResultSet resultSet = createPrimaryKeyStatement.executeQuery(MembreDAO.CREATE_PRIMARY_KEY);) {
             if(resultSet.next()) {
-                primaryKey = (Long) resultSet.getObject(1);
-                System.out.println("cle : "
-                    + primaryKey);
+                primaryKey = Long.getLong(resultSet.getObject(1).toString());
 
             }
             System.out.println("cle : "

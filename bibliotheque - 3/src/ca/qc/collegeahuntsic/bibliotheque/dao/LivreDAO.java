@@ -260,7 +260,7 @@ public class LivreDAO extends DAO {
             Statement createPrimaryKeyStatement = getConnection().createStatement();
             ResultSet resultSet = createPrimaryKeyStatement.executeQuery(LivreDAO.CREATE_PRIMARY_KEY);) {
             if(resultSet.next()) {
-                primaryKey = (Long) resultSet.getObject(1);
+                primaryKey = Long.getLong(resultSet.getObject(1).toString());
 
             }
             return primaryKey.intValue();
