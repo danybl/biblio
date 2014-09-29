@@ -16,7 +16,7 @@ public class MembreDTO extends DTO {
 
     private String nom;
 
-    private int telephone;
+    private long telephone;
 
     private int limitePret;
 
@@ -69,7 +69,7 @@ public class MembreDTO extends DTO {
      *
      * @return La variable d'instance <code>this.telephone</code>
      */
-    public int getTelephone() {
+    public long getTelephone() {
         return this.telephone;
     }
 
@@ -78,7 +78,7 @@ public class MembreDTO extends DTO {
      *
      * @param telephone La valeur à utiliser pour la variable d'instance <code>this.telephone</code>
      */
-    public void setTelephone(int telephone) {
+    public void setTelephone(long telephone) {
         this.telephone = telephone;
     }
 

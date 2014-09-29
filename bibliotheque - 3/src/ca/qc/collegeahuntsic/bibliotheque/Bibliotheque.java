@@ -158,7 +158,7 @@ public class Bibliotheque {
                 MembreDTO membreDTO = new MembreDTO();
                 //membreDTO.setIdMembre(readInt(tokenizer));
                 membreDTO.setNom(readString(tokenizer));
-                membreDTO.setTelephone(readInt(tokenizer));
+                membreDTO.setTelephone(readLong(tokenizer));
                 membreDTO.setLimitePret(readInt(tokenizer));
                 bibliothequeCreateur.getMembreService().inscrire(membreDTO);
                 bibliothequeCreateur.commit();
