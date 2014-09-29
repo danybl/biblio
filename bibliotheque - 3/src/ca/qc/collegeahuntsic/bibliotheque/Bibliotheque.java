@@ -2,6 +2,7 @@
 package ca.qc.collegeahuntsic.bibliotheque;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -59,25 +60,22 @@ public class Bibliotheque {
             System.out.println(Connexion.getServeursSupportes());
             return;
         }
-
-        try {
-            // ouverture du fichier de transactions
-            InputStream sourceTransaction = Bibliotheque.class.getResourceAsStream("/"
-                + argv[4]);
-            try(
-                BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction))) {
-
-                bibliothequeCreateur = new BibliothequeCreateur(argv[0],
-                    argv[1],
-                    argv[2],
-                    argv[3]);
-                traiterTransactions(reader);
+        //test
+        try(
+            InputStream sourceTransaction = (argv.length > 4 ? new FileInputStream(argv[4]) : System.in);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction));) {
+            if(argv.length > 4) {
+                lectureAuClavier = false;
+            } else {
+                lectureAuClavier = true;
             }
+            bibliothequeCreateur = new BibliothequeCreateur(argv[0],
+                argv[1],
+                argv[2],
+                argv[3]);
+            traiterTransactions(reader);
         } catch(Exception e) {
-            bibliothequeCreateur.rollback();
             e.printStackTrace(System.out);
-        } finally {
-            bibliothequeCreateur.close();
         }
     }
 
