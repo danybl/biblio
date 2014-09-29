@@ -95,17 +95,17 @@ public class MembreDAO extends DAO {
      * @param idMembre L'ID du membre à lire
      * @throws DAOException S'il y a une erreur avec la base de données
      */
-    public MembreDTO read(int id) throws DAOException {
+    public MembreDTO read(long id) throws DAOException {
         MembreDTO membreDTO = null;
         try(
             PreparedStatement readPreparedStatement = getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
-            readPreparedStatement.setInt(1,
+            readPreparedStatement.setLong(1,
                 id);
             try(
                 ResultSet resultSet = readPreparedStatement.executeQuery()) {
                 if(resultSet.next()) {
                     membreDTO = new MembreDTO();
-                    membreDTO.setIdMembre(resultSet.getInt(1));
+                    membreDTO.setIdMembre(resultSet.getLong(1));
                     membreDTO.setNom(resultSet.getString(2));
                     membreDTO.setTelephone(resultSet.getLong(3));
                     membreDTO.setLimitePret(resultSet.getInt(4));
@@ -148,7 +148,7 @@ public class MembreDAO extends DAO {
     public void delete(MembreDTO MembreDTO) throws DAOException {
         try(
             PreparedStatement deletePreparedStatement = getConnection().prepareStatement(MembreDAO.DELETE_REQUEST)) {
-            deletePreparedStatement.setInt(1,
+            deletePreparedStatement.setLong(1,
                 MembreDTO.getIdMembre());
             deletePreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
@@ -257,12 +257,14 @@ public class MembreDAO extends DAO {
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
     public int getPrimaryKey() throws DAOException {
-        Integer primaryKey = null;
+        Long primaryKey = null;
         try(
             Statement createPrimaryKeyStatement = getConnection().createStatement();
             ResultSet resultSet = createPrimaryKeyStatement.executeQuery(MembreDAO.CREATE_PRIMARY_KEY);) {
             if(resultSet.next()) {
-                primaryKey = (Integer) resultSet.getObject(1);
+                primaryKey = (Long) resultSet.getObject(1);
+                System.out.println("cle : "
+                    + primaryKey);
 
             }
             System.out.println("cle : "

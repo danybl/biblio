@@ -13,7 +13,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class ReservationDTO extends DTO {
     private static final long serialVersionUID = 1L;
 
-    private int idReservation;
+    private long idReservation;
 
     private MembreDTO membreDTO;
 
@@ -30,7 +30,7 @@ public class ReservationDTO extends DTO {
      *
      * @return La variable d'instance <code>this.idReservation</code>
      */
-    public int getIdReservation() {
+    public long getIdReservation() {
         return this.idReservation;
     }
 
@@ -39,7 +39,7 @@ public class ReservationDTO extends DTO {
      *
      * @param idReservation La valeur à utiliser pour la variable d'instance <code>this.idReservation</code>
      */
-    public void setIdReservation(int idReservation) {
+    public void setIdReservation(long idReservation) {
         this.idReservation = idReservation;
     }
 

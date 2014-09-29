@@ -12,7 +12,7 @@ public class MembreDTO extends DTO {
 
     private static final long serialVersionUID = 1L;
 
-    private int idMembre;
+    private long idMembre;
 
     private String nom;
 
@@ -33,7 +33,7 @@ public class MembreDTO extends DTO {
         super();
     }
 
-    public int getIdMembre() {
+    public long getIdMembre() {
         return this.idMembre;
     }
 
@@ -42,7 +42,7 @@ public class MembreDTO extends DTO {
      *
      * @param idMembre La valeur à utiliser pour la variable d'instance <code>this.idMembre</code>
      */
-    public void setIdMembre(int idMembre) {
+    public void setIdMembre(long idMembre) {
         this.idMembre = idMembre;
     }
 

@@ -95,7 +95,7 @@ public class ReservationService extends Service {
      * @param idReservation L'ID de la reservation
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    public ReservationDTO read(int idReservation) throws ServiceException {
+    public ReservationDTO read(long idReservation) throws ServiceException {
         try {
             return getReservationDAO().read(idReservation);
         } catch(DAOException daoException) {

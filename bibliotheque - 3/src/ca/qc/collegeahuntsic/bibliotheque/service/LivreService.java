@@ -122,7 +122,7 @@ public class LivreService extends Service {
      * @param idLivre L'ID du livre à lire
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    public LivreDTO read(int idLivre) throws ServiceException {
+    public LivreDTO read(long idLivre) throws ServiceException {
         try {
             return getLivreDAO().read(idLivre);
         } catch(DAOException daoException) {

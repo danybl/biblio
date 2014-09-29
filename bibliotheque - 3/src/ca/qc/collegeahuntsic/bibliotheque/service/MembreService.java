@@ -63,7 +63,7 @@ public class MembreService extends Service {
     }
 
     //lecture d'un membre
-    public MembreDTO read(int id) throws ServiceException {
+    public MembreDTO read(long id) throws ServiceException {
         try {
             return getMembreDAO().read(id);
         } catch(DAOException daoException) {

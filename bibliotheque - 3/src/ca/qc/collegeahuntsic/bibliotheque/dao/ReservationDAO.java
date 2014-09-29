@@ -69,11 +69,11 @@ public class ReservationDAO extends DAO {
     public void add(ReservationDTO reservationDTO) throws DAOException {
         try(
             PreparedStatement addPreparedStatement = getConnection().prepareStatement(ReservationDAO.ADD_REQUEST)) {
-            addPreparedStatement.setInt(1,
+            addPreparedStatement.setLong(1,
                 getPrimaryKey());
-            addPreparedStatement.setInt(2,
+            addPreparedStatement.setLong(2,
                 reservationDTO.getLivreDTO().getIdLivre());
-            addPreparedStatement.setInt(3,
+            addPreparedStatement.setLong(3,
                 reservationDTO.getMembreDTO().getIdMembre());
             addPreparedStatement.setTimestamp(4,
                 reservationDTO.getDateReservation());
@@ -89,19 +89,19 @@ public class ReservationDAO extends DAO {
      * @param idReservation L'ID de la resérvation
      * @throws DAOException S'il y a une erreur avec la base de données
      */
-    public ReservationDTO read(int idReservation) throws DAOException {
+    public ReservationDTO read(long idReservation) throws DAOException {
         ReservationDTO reservationDTO = null;
         try(
             PreparedStatement readPreparedStatement = getConnection().prepareStatement(ReservationDAO.READ_REQUEST)) {
-            readPreparedStatement.setInt(1,
+            readPreparedStatement.setLong(1,
                 idReservation);
             try(
                 ResultSet resultSet = readPreparedStatement.executeQuery()) {
                 if(resultSet.next()) {
                     reservationDTO = new ReservationDTO();
-                    reservationDTO.setIdReservation(resultSet.getInt(1));
-                    reservationDTO.getLivreDTO().setIdLivre(resultSet.getInt(2));
-                    reservationDTO.getMembreDTO().setIdMembre(resultSet.getInt(3));
+                    reservationDTO.setIdReservation(resultSet.getLong(1));
+                    reservationDTO.getLivreDTO().setIdLivre(resultSet.getLong(2));
+                    reservationDTO.getMembreDTO().setIdMembre(resultSet.getLong(3));
                     reservationDTO.setDateReservation(resultSet.getTimestamp(4));
                 }
             }
@@ -120,11 +120,11 @@ public class ReservationDAO extends DAO {
     public void update(ReservationDTO reservationDTO) throws DAOException {
         try(
             PreparedStatement updatePreparedStatement = getConnection().prepareStatement(ReservationDAO.UPDATE_REQUEST)) {
-            updatePreparedStatement.setInt(1,
+            updatePreparedStatement.setLong(1,
                 getPrimaryKey());
-            updatePreparedStatement.setInt(2,
+            updatePreparedStatement.setLong(2,
                 reservationDTO.getLivreDTO().getIdLivre());
-            updatePreparedStatement.setInt(3,
+            updatePreparedStatement.setLong(3,
                 reservationDTO.getMembreDTO().getIdMembre());
             updatePreparedStatement.setTimestamp(4,
                 reservationDTO.getDateReservation());
@@ -143,7 +143,7 @@ public class ReservationDAO extends DAO {
     public void delete(ReservationDTO reservationDTO) throws DAOException {
         try(
             PreparedStatement deletePreparedStatement = getConnection().prepareStatement(ReservationDAO.DELETE_REQUEST)) {
-            deletePreparedStatement.setInt(1,
+            deletePreparedStatement.setLong(1,
                 reservationDTO.getIdReservation());
             deletePreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
@@ -193,7 +193,7 @@ public class ReservationDAO extends DAO {
         List<ReservationDTO> reservations = Collections.EMPTY_LIST;
         try(
             PreparedStatement findByLivrePreparedStatement = getConnection().prepareStatement(ReservationDAO.FIND_BY_ID_LIVRE)) {
-            findByLivrePreparedStatement.setInt(1,
+            findByLivrePreparedStatement.setLong(1,
                 livreDTO.getIdLivre());
             try(
                 ResultSet resultSet = findByLivrePreparedStatement.executeQuery()) {
@@ -227,7 +227,7 @@ public class ReservationDAO extends DAO {
         List<ReservationDTO> reservations = Collections.EMPTY_LIST;
         try(
             PreparedStatement findByMembrePreparedStatement = getConnection().prepareStatement(ReservationDAO.FIND_BY_ID_MEMBRE)) {
-            findByMembrePreparedStatement.setInt(1,
+            findByMembrePreparedStatement.setLong(1,
                 membreDTO.getIdMembre());
             try(
                 ResultSet resultSet = findByMembrePreparedStatement.executeQuery()) {
@@ -291,12 +291,12 @@ public class ReservationDAO extends DAO {
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
     public int getPrimaryKey() throws DAOException {
-        Integer primaryKey = null;
+        Long primaryKey = null;
         try(
             Statement createPrimaryKeyStatement = getConnection().createStatement();
             ResultSet resultSet = createPrimaryKeyStatement.executeQuery(ReservationDAO.CREATE_PRIMARY_KEY);) {
             if(resultSet.next()) {
-                primaryKey = (Integer) resultSet.getObject(1);
+                primaryKey = (Long) resultSet.getObject(1);
 
             }
             return primaryKey.intValue();
