@@ -129,7 +129,7 @@ public class MembreDAO extends DAO {
             PreparedStatement updatePreparedStatement = getConnection().prepareStatement(MembreDAO.UPDATE_REQUEST)) {
             updatePreparedStatement.setString(1,
                 MembreDTO.getNom());
-            updatePreparedStatement.setInt(2,
+            updatePreparedStatement.setLong(2,
                 MembreDTO.getTelephone());
             updatePreparedStatement.setInt(3,
                 MembreDTO.getNbPret());
