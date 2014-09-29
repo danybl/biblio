@@ -54,7 +54,7 @@ public class Bibliotheque {
      */
     public static void main(String argv[]) throws Exception {
         // validation du nombre de paramètres
-        if(argv.length < 5) {
+        if(argv.length < 4) {
             System.out.println("Usage: java Biblio <serveur> <bd> <user> <password> [<fichier-transactions>]");
             System.out.println(Connexion.getServeursSupportes());
             return;
