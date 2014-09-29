@@ -107,7 +107,7 @@ public class MembreDAO extends DAO {
                     membreDTO = new MembreDTO();
                     membreDTO.setIdMembre(resultSet.getInt(1));
                     membreDTO.setNom(resultSet.getString(2));
-                    membreDTO.setTelephone(resultSet.getInt(3));
+                    membreDTO.setTelephone(resultSet.getLong(3));
                     membreDTO.setLimitePret(resultSet.getInt(4));
                     membreDTO.setNbPret(resultSet.getInt(6));
                 }
@@ -265,6 +265,8 @@ public class MembreDAO extends DAO {
                 primaryKey = (Integer) resultSet.getObject(1);
 
             }
+            System.out.println("cle : "
+                + primaryKey.intValue());
             return primaryKey.intValue();
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);

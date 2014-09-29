@@ -75,7 +75,10 @@ public class Bibliotheque {
                 argv[3]);
             traiterTransactions(reader);
         } catch(Exception e) {
+            bibliothequeCreateur.rollback();
             e.printStackTrace(System.out);
+        } finally {
+            bibliothequeCreateur.close();
         }
     }
 
