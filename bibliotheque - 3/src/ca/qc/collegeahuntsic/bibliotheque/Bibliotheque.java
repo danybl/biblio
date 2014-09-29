@@ -2,7 +2,6 @@
 package ca.qc.collegeahuntsic.bibliotheque;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -62,7 +61,8 @@ public class Bibliotheque {
         }
         //test
         try(
-            InputStream sourceTransaction = (argv.length > 4 ? new FileInputStream(argv[4]) : System.in);
+            InputStream sourceTransaction = (argv.length > 4 ? Bibliotheque.class.getResourceAsStream("/"
+                + argv[4]) : System.in);
             BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction));) {
             if(argv.length > 4) {
                 lectureAuClavier = false;
