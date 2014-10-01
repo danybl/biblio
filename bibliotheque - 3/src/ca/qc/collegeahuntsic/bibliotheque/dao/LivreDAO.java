@@ -1,16 +1,17 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.dao;
 
+import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
-import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
-import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
-import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 
 /**
  * DAO pour effectuer des CRUDs avec la table <code>livre</code>.
@@ -71,7 +72,7 @@ public class LivreDAO extends DAO {
     public void add(LivreDTO livreDTO) throws DAOException {
         try(
             PreparedStatement addPreparedStatement = getConnection().prepareStatement(LivreDAO.ADD_REQUEST)) {
-            addPreparedStatement.setLong(1,
+            addPreparedStatement.setBigDecimal(1,
                 getPrimaryKey());
             addPreparedStatement.setString(2,
                 livreDTO.getTitre());
@@ -91,17 +92,17 @@ public class LivreDAO extends DAO {
      * @param idLivre L'ID du livre à lire
      * @throws DAOException S'il y a une erreur avec la base de données
      */
-    public LivreDTO read(long idLivre) throws DAOException {
+    public LivreDTO read(String idLivre) throws DAOException {
         LivreDTO livreDTO = null;
         try(
             PreparedStatement readPreparedStatement = getConnection().prepareStatement(LivreDAO.READ_REQUEST)) {
-            readPreparedStatement.setLong(1,
+            readPreparedStatement.setString(1,
                 idLivre);
             try(
                 ResultSet resultSet = readPreparedStatement.executeQuery()) {
                 if(resultSet.next()) {
                     livreDTO = new LivreDTO();
-                    livreDTO.setIdLivre(resultSet.getLong(1));
+                    livreDTO.setIdLivre(resultSet.getString(1));
                     livreDTO.setTitre(resultSet.getString(2));
                     livreDTO.setAuteur(resultSet.getString(3));
                     livreDTO.setDateAcquisition(resultSet.getTimestamp(4));
@@ -128,7 +129,7 @@ public class LivreDAO extends DAO {
                 livreDTO.getAuteur());
             updatePreparedStatement.setTimestamp(3,
                 livreDTO.getDateAcquisition());
-            updatePreparedStatement.setLong(6,
+            updatePreparedStatement.setString(6,
                 livreDTO.getIdLivre());
             updatePreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
@@ -145,7 +146,7 @@ public class LivreDAO extends DAO {
     public void delete(LivreDTO livreDTO) throws DAOException {
         try(
             PreparedStatement deletePreparedStatement = getConnection().prepareStatement(LivreDAO.DELETE_REQUEST)) {
-            deletePreparedStatement.setLong(1,
+            deletePreparedStatement.setString(1,
                 livreDTO.getIdLivre());
             deletePreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
@@ -170,7 +171,7 @@ public class LivreDAO extends DAO {
                     livres = new ArrayList<>();
                     do {
                         livreDTO = new LivreDTO();
-                        livreDTO.setIdLivre(resultSet.getInt(1));
+                        livreDTO.setIdLivre(resultSet.getString(1));
                         livreDTO.setTitre(resultSet.getString(2));
                         livreDTO.setAuteur(resultSet.getString(3));
                         livreDTO.setDateAcquisition(resultSet.getTimestamp(4));
@@ -204,7 +205,7 @@ public class LivreDAO extends DAO {
                     livres = new ArrayList<>();
                     do {
                         livreDTO = new LivreDTO();
-                        livreDTO.setIdLivre(resultSet.getInt(1));
+                        livreDTO.setIdLivre(resultSet.getString(1));
                         livreDTO.setTitre(resultSet.getString(2));
                         livreDTO.setAuteur(resultSet.getString(3));
                         livreDTO.setDateAcquisition(resultSet.getTimestamp(4));
@@ -229,13 +230,13 @@ public class LivreDAO extends DAO {
         LivreDTO livreDTO = null;
         try(
             PreparedStatement findByMembrePreparedStatement = getConnection().prepareStatement(LivreDAO.FIND_BY_MEMBRE)) {
-            findByMembrePreparedStatement.setLong(1,
+            findByMembrePreparedStatement.setString(1,
                 membreDTO.getIdMembre());
             try(
                 ResultSet resultSet = findByMembrePreparedStatement.executeQuery()) {
                 if(resultSet.next()) {
                     livreDTO = new LivreDTO();
-                    livreDTO.setIdLivre(resultSet.getInt(1));
+                    livreDTO.setIdLivre(resultSet.getString(1));
                     livreDTO.setTitre(resultSet.getString(2));
                     livreDTO.setAuteur(resultSet.getString(3));
                     livreDTO.setDateAcquisition(resultSet.getTimestamp(4));
@@ -253,7 +254,7 @@ public class LivreDAO extends DAO {
      * @return La clé primaire généré
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
-    private long getPrimaryKey() throws DAOException {
+    private BigDecimal getPrimaryKey() throws DAOException {
         return getPrimaryKey(LivreDAO.CREATE_PRIMARY_KEY);
     }
 }

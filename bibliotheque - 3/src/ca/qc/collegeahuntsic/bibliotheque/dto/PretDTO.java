@@ -12,7 +12,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class PretDTO extends DTO {
     private static final long serialVersionUID = 1L;
 
-    private long idPret;
+    private String idPret;
 
     private MembreDTO membreDTO;
 
@@ -26,7 +26,7 @@ public class PretDTO extends DTO {
         super();
     }
 
-    PretDTO(int idPret,
+    PretDTO(String idPret,
         MembreDTO membreDTO,
         LivreDTO livreDTO,
         Timestamp datePret,
@@ -43,7 +43,7 @@ public class PretDTO extends DTO {
      *
      * @return La variable d'instance <code>this.idPret</code>
      */
-    public long getIdPret() {
+    public String getIdPret() {
         return this.idPret;
     }
 
@@ -54,7 +54,7 @@ public class PretDTO extends DTO {
      *            La valeur à utiliser pour la variable d'instance
      *            <code>this.idPret</code>
      */
-    public void setIdPret(long idPret) {
+    public void setIdPret(String idPret) {
         this.idPret = idPret;
     }
 

@@ -1,7 +1,6 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
-import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.PretDAO;
@@ -10,6 +9,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
+import java.util.List;
 
 /**
  * Service de la table <code>livre</code>.
@@ -122,7 +122,7 @@ public class LivreService extends Service {
      * @param idLivre L'ID du livre à lire
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    public LivreDTO read(long idLivre) throws ServiceException {
+    public LivreDTO read(String idLivre) throws ServiceException {
         try {
             return getLivreDAO().read(idLivre);
         } catch(DAOException daoException) {

@@ -1,13 +1,14 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.dao;
 
+import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
-import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 
 public class DAO implements Serializable {
 
@@ -32,13 +33,13 @@ public class DAO implements Serializable {
         this.connexion = connexion;
     }
 
-    protected long getPrimaryKey(String createPrimaryKeyRequest) throws DAOException {
+    protected BigDecimal getPrimaryKey(String createPrimaryKeyRequest) throws DAOException {
         try(
             PreparedStatement createPreparedStatement = getConnection().prepareStatement(createPrimaryKeyRequest)) {
             try(
                 ResultSet resultSet = createPreparedStatement.executeQuery()) {
                 if(resultSet.next()) {
-                    return resultSet.getLong(1);
+                    return resultSet.getBigDecimal(1);
                 }
                 throw new DAOException("Impossible de lire la séquence");
             }

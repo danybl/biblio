@@ -1,15 +1,16 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.dao;
 
+import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
-import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
-import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 
 /**
  * DAO pour effectuer des CRUDs avec la table <code>membre</code>.
@@ -74,7 +75,7 @@ public class MembreDAO extends DAO {
         try(
             PreparedStatement preparedAjout = getConnection().prepareStatement(ADD_REQUEST);) {
 
-            preparedAjout.setLong(1,
+            preparedAjout.setBigDecimal(1,
                 getPrimaryKey());
             preparedAjout.setString(2,
                 membreDTO.getNom());
@@ -94,17 +95,17 @@ public class MembreDAO extends DAO {
      * @param idMembre L'ID du membre à lire
      * @throws DAOException S'il y a une erreur avec la base de données
      */
-    public MembreDTO read(long id) throws DAOException {
+    public MembreDTO read(String id) throws DAOException {
         MembreDTO membreDTO = null;
         try(
             PreparedStatement readPreparedStatement = getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
-            readPreparedStatement.setLong(1,
+            readPreparedStatement.setString(1,
                 id);
             try(
                 ResultSet resultSet = readPreparedStatement.executeQuery()) {
                 if(resultSet.next()) {
                     membreDTO = new MembreDTO();
-                    membreDTO.setIdMembre(resultSet.getLong(1));
+                    membreDTO.setIdMembre(resultSet.getString(1));
                     membreDTO.setNom(resultSet.getString(2));
                     membreDTO.setTelephone(resultSet.getLong(3));
                     membreDTO.setLimitePret(resultSet.getInt(4));
@@ -147,7 +148,7 @@ public class MembreDAO extends DAO {
     public void delete(MembreDTO MembreDTO) throws DAOException {
         try(
             PreparedStatement deletePreparedStatement = getConnection().prepareStatement(MembreDAO.DELETE_REQUEST)) {
-            deletePreparedStatement.setLong(1,
+            deletePreparedStatement.setString(1,
                 MembreDTO.getIdMembre());
             deletePreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
@@ -172,7 +173,7 @@ public class MembreDAO extends DAO {
                     membre = new ArrayList<>();
                     do {
                         MembreDTO = new MembreDTO();
-                        MembreDTO.setIdMembre(resultSet.getInt(1));
+                        MembreDTO.setIdMembre(resultSet.getString(1));
                         MembreDTO.setNom(resultSet.getString(2));
                         MembreDTO.setTelephone(resultSet.getInt(3));
                         MembreDTO.setLimitePret(resultSet.getInt(4));
@@ -204,7 +205,7 @@ public class MembreDAO extends DAO {
                     membre = new ArrayList<>();
                     do {
                         MembreDTO = new MembreDTO();
-                        MembreDTO.setIdMembre(resultSet.getInt(1));
+                        MembreDTO.setIdMembre(resultSet.getString(1));
                         MembreDTO.setNom(resultSet.getString(2));
                         MembreDTO.setTelephone(resultSet.getInt(3));
                         MembreDTO.setLimitePret(resultSet.getInt(4));
@@ -236,7 +237,7 @@ public class MembreDAO extends DAO {
                 ResultSet resultSet = readPreparedStatement.executeQuery()) {
                 if(resultSet.next()) {
                     membreDTO = new MembreDTO();
-                    membreDTO.setIdMembre(resultSet.getInt(1));
+                    membreDTO.setIdMembre(resultSet.getString(1));
                     membreDTO.setNom(resultSet.getString(2));
                     membreDTO.setTelephone(resultSet.getInt(3));
                     membreDTO.setLimitePret(resultSet.getInt(4));
@@ -255,7 +256,7 @@ public class MembreDAO extends DAO {
      * @return La clé primaire généré
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
-    private long getPrimaryKey() throws DAOException {
+    private BigDecimal getPrimaryKey() throws DAOException {
         return getPrimaryKey(MembreDAO.CREATE_PRIMARY_KEY);
     }
 }

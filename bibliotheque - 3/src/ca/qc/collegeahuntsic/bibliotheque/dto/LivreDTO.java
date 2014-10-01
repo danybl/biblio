@@ -11,7 +11,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class LivreDTO extends DTO {
     private static final long serialVersionUID = 1L;
 
-    private long idLivre;
+    private String idLivre;
 
     private String titre;
 
@@ -29,17 +29,18 @@ public class LivreDTO extends DTO {
         super();
     }
 
-    public long getIdLivre() {
+    public String getIdLivre() {
         return this.idLivre;
     }
 
     /**
      * Setter de la variable d'instance <code>this.idLivre</code>.
      *
-     * @param idLivre La valeur à utiliser pour la variable d'instance <code>this.idLivre</code>
+     * @param string La valeur à utiliser pour la variable d'instance <code>this.idLivre</code>
      */
-    public void setIdLivre(long idLivre) {
-        this.idLivre = idLivre;
+    public void setIdLivre(String string) {
+        this.idLivre = string;
+        //return this.idLivre;
     }
 
     /**

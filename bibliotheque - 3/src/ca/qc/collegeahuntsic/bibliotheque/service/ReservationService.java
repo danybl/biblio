@@ -1,8 +1,6 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
-import java.sql.Timestamp;
-import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.PretDAO;
@@ -12,6 +10,8 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
+import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Service de la table <code>reservation</code>.
@@ -95,7 +95,7 @@ public class ReservationService extends Service {
      * @param idReservation L'ID de la reservation
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    public ReservationDTO read(long idReservation) throws ServiceException {
+    public ReservationDTO read(String idReservation) throws ServiceException {
         try {
             return getReservationDAO().read(idReservation);
         } catch(DAOException daoException) {

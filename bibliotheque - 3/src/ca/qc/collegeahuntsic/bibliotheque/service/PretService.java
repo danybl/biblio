@@ -1,8 +1,6 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
-import java.sql.Timestamp;
-import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.PretDAO;
@@ -12,6 +10,8 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
+import java.sql.Timestamp;
+import java.util.List;
 
 public class PretService extends Service {
 
@@ -76,7 +76,7 @@ public class PretService extends Service {
         }
     }
 
-    public PretDTO read(int idPret) throws ServiceException {
+    public PretDTO read(String idPret) throws ServiceException {
         try {
             return getPretDAO().read(idPret);
         } catch(DAOException daoException) {
