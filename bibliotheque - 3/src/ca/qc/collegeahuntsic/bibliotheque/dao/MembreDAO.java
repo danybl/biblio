@@ -74,7 +74,7 @@ public class MembreDAO extends DAO {
         try(
             PreparedStatement preparedAjout = getConnection().prepareStatement(ADD_REQUEST);) {
 
-            preparedAjout.setInt(1,
+            preparedAjout.setLong(1,
                 getPrimaryKey());
             preparedAjout.setString(2,
                 membreDTO.getNom());
@@ -255,7 +255,7 @@ public class MembreDAO extends DAO {
      * @return La clé primaire généré
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
-    private int getPrimaryKey() throws DAOException {
+    private long getPrimaryKey() throws DAOException {
         return getPrimaryKey(MembreDAO.CREATE_PRIMARY_KEY);
     }
 }

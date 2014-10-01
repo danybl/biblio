@@ -289,7 +289,7 @@ public class ReservationDAO extends DAO {
      * @return La clé primaire généré
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
-    private int getPrimaryKey() throws DAOException {
+    private long getPrimaryKey() throws DAOException {
         return getPrimaryKey(ReservationDAO.CREATE_PRIMARY_KEY);
     }
 }

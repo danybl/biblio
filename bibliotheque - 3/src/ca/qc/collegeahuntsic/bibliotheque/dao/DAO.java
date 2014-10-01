@@ -32,13 +32,13 @@ public class DAO implements Serializable {
         this.connexion = connexion;
     }
 
-    protected int getPrimaryKey(String createPrimaryKeyRequest) throws DAOException {
+    protected long getPrimaryKey(String createPrimaryKeyRequest) throws DAOException {
         try(
             PreparedStatement createPreparedStatement = getConnection().prepareStatement(createPrimaryKeyRequest)) {
             try(
                 ResultSet resultSet = createPreparedStatement.executeQuery()) {
                 if(resultSet.next()) {
-                    return resultSet.getInt(1);
+                    return resultSet.getLong(1);
                 }
                 throw new DAOException("Impossible de lire la séquence");
             }
