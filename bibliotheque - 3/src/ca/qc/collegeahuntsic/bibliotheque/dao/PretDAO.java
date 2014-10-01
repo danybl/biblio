@@ -4,7 +4,6 @@ package ca.qc.collegeahuntsic.bibliotheque.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -340,18 +339,7 @@ public class PretDAO extends DAO {
      * @return La clé primaire généré
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
-    public int getPrimaryKey() throws DAOException {
-        Long primaryKey = null;
-        try(
-            Statement createPrimaryKeyStatement = getConnection().createStatement();
-            ResultSet resultSet = createPrimaryKeyStatement.executeQuery(PretDAO.CREATE_PRIMARY_KEY);) {
-            if(resultSet.next()) {
-                primaryKey = Long.getLong(resultSet.getObject(1).toString());
-
-            }
-            return primaryKey.intValue();
-        } catch(SQLException sqlException) {
-            throw new DAOException(sqlException);
-        }
+    private int getPrimaryKey() throws DAOException {
+        return getPrimaryKey(PretDAO.CREATE_PRIMARY_KEY);
     }
 }

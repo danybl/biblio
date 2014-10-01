@@ -4,7 +4,6 @@ package ca.qc.collegeahuntsic.bibliotheque.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -256,20 +255,7 @@ public class MembreDAO extends DAO {
      * @return La clé primaire généré
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
-    public int getPrimaryKey() throws DAOException {
-        Long primaryKey = null;
-        try(
-            Statement createPrimaryKeyStatement = getConnection().createStatement();
-            ResultSet resultSet = createPrimaryKeyStatement.executeQuery(MembreDAO.CREATE_PRIMARY_KEY);) {
-            if(resultSet.next()) {
-                primaryKey = Long.getLong(resultSet.getObject(1).toString());
-
-            }
-            System.out.println("cle : "
-                + primaryKey.intValue());
-            return primaryKey.intValue();
-        } catch(SQLException sqlException) {
-            throw new DAOException(sqlException);
-        }
+    private int getPrimaryKey() throws DAOException {
+        return getPrimaryKey(MembreDAO.CREATE_PRIMARY_KEY);
     }
 }

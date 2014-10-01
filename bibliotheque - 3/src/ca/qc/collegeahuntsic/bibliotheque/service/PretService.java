@@ -195,7 +195,7 @@ public class PretService extends Service {
                 + deuxSemaines);
 
             PretDTO nouveauPretDTO = new PretDTO();
-            nouveauPretDTO.setIdPret(getPretDAO().getPrimaryKey());
+            //nouveauPretDTO.setIdPret(getPretDAO().getPrimaryKey());
             nouveauPretDTO.setMembreDTO(membreDTO);
             nouveauPretDTO.setLivreDTO(livreDTO);
             nouveauPretDTO.setDatePret(datePret);

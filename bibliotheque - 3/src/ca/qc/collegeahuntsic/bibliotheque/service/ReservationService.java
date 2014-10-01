@@ -229,7 +229,7 @@ public class ReservationService extends Service {
             java.sql.Timestamp dateReservation = new Timestamp(System.currentTimeMillis());
 
             ReservationDTO nouveauReservationDTO = new ReservationDTO();
-            nouveauReservationDTO.setIdReservation(getReservationDAO().getPrimaryKey());
+            //nouveauReservationDTO.setIdReservation(getReservationDAO().getPrimaryKey());
             nouveauReservationDTO.setMembreDTO(membreDTO);
             nouveauReservationDTO.setLivreDTO(livreDTO);
             nouveauReservationDTO.setDateReservation(dateReservation);
@@ -241,6 +241,7 @@ public class ReservationService extends Service {
         }
     }
 
+    //méthode à changer
     public void utiliser(ReservationDTO reservationDTO) throws ServiceException {
         try {
             ReservationDTO uneReservationDTO = read(reservationDTO.getIdReservation());
@@ -298,7 +299,7 @@ public class ReservationService extends Service {
             java.sql.Timestamp dateReservation = new Timestamp(System.currentTimeMillis());
 
             ReservationDTO nouveauReservationDTO = new ReservationDTO();
-            nouveauReservationDTO.setIdReservation(getReservationDAO().getPrimaryKey());
+            //nouveauReservationDTO.setIdReservation(getReservationDAO().getPrimaryKey());
             nouveauReservationDTO.setMembreDTO(unMembreDTO);
             nouveauReservationDTO.setLivreDTO(unLivreDTO);
             nouveauReservationDTO.setDateReservation(dateReservation);
