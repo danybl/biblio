@@ -1,6 +1,4 @@
 // Fichier IFacade.java
-// Auteur : Gilles Bénichou
-// Date de création : 2014-09-01
 
 package ca.qc.collegeahuntsic.bibliotheque.facade.interfaces;
 
