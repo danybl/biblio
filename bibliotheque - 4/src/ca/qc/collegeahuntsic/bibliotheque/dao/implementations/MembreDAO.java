@@ -1,6 +1,13 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.dao.implementations;
 
+import java.io.Serializable;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.DTO;
@@ -13,13 +20,6 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyRequest
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
-import java.io.Serializable;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * DAO pour effectuer des CRUDs avec la table <code>membre</code>.
@@ -60,7 +60,7 @@ public class MembreDAO extends DAO implements IMembreDAO {
 
     private static final String CREATE_PRIMARY_KEY = "SELECT SEQ_ID_MEMBRE.NEXTVAL from DUAL";
 
-    protected MembreDAO(Class<MembreDTO> memebreDTOClass) throws InvalidDTOClassException {
+    public MembreDAO(Class<MembreDTO> memebreDTOClass) throws InvalidDTOClassException {
         super(memebreDTOClass);
         // TODO Auto-generated constructor stub
     }
@@ -72,8 +72,8 @@ public class MembreDAO extends DAO implements IMembreDAO {
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
     private static String getPrimaryKey(Connexion connexion) throws InvalidHibernateSessionException,
-    InvalidPrimaryKeyRequestException,
-    DAOException {
+        InvalidPrimaryKeyRequestException,
+        DAOException {
         return DAO.getPrimaryKey(connexion,
             MembreDAO.CREATE_PRIMARY_KEY);
 
