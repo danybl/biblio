@@ -12,14 +12,14 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import ca.qc.collegeahuntsic.bibliotheque.Constants;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import ca.qc.collegeahuntsic.bibliotheque.Constants;
 
 public class DTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public DTO() {
+    protected DTO() {
         super();
     }
 
@@ -44,6 +44,7 @@ public class DTO implements Serializable {
      * @return <code>true</code> if this object is the same as the obj argument; <code>false</code> otherwise
      */
     @Override
+    //A utiliser plus tard
     public boolean equals(Object obj) {
         boolean equals = this == obj;
         if(!equals) {

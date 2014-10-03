@@ -9,7 +9,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * DTO de la table Pret<code>pret</code>.
  *
  */
-public class PretDTO extends DTO {
+public final class PretDTO extends DTO {
+
     private static final long serialVersionUID = 1L;
 
     private long idPret;
@@ -21,6 +22,16 @@ public class PretDTO extends DTO {
     private Timestamp datePret;
 
     private Timestamp dateRetour;
+
+    public static final String ID_PRET_COLUMN_NAME = "idPret";
+
+    public static final String ID_MEMBRE_COLUMN_NAME = "idMembre";
+
+    public static final String ID_LIVRE_COLUMN_NAME = "idLivre";
+
+    public static final String DATE_PRET_COLUMN_NAME = "datePret";
+
+    public static final String DATE_RETOUR_COLUMN_NAME = "dateRetour";
 
     public PretDTO() {
         super();

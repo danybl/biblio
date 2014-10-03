@@ -2,13 +2,15 @@
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
 import java.sql.Timestamp;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * DTO de la table <code>livre</code>.
  *
  */
-public class LivreDTO extends DTO {
+public final class LivreDTO extends DTO {
+
     private static final long serialVersionUID = 1L;
 
     private long idLivre;
@@ -18,6 +20,14 @@ public class LivreDTO extends DTO {
     private String auteur;
 
     private Timestamp dateAcquisition;
+
+    public static final String ID_LIVRE_COLUMN_NAME = "idLivre";
+
+    public static final String TITRE_COLUMN_NAME = "titre";
+
+    public static final String AUTEUR_COLUMN_NAME = "auteur";
+
+    public static final String DATE_ACQUISITION_COLUMN_NAME = "dateAcquisition";
 
     /**
      * Getter de la variable d'instance <code>this.idLivre</code>.
@@ -103,5 +113,24 @@ public class LivreDTO extends DTO {
         hashCodeBuilder.appendSuper(super.hashCode());
         hashCodeBuilder.append(getIdLivre());
         return hashCodeBuilder.toHashCode();
+    }
+
+    @Override
+    //A utiliser plus tard
+    public boolean equals(Object obj) {
+        boolean equals = this == obj;
+        if(!equals) {
+            equals = obj != null
+                && obj instanceof LivreDTO;
+            if(equals) {
+                LivreDTO livreDTO = (LivreDTO) obj;
+                EqualsBuilder equalsBuilder = new EqualsBuilder();
+                equalsBuilder.appendSuper(super.equals(livreDTO));
+                equalsBuilder.append(getIdLivre(),
+                    livreDTO.getIdLivre());
+                equals = equalsBuilder.isEquals();
+            }
+        }
+        return equals;
     }
 }

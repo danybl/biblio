@@ -2,13 +2,14 @@
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * Permet de représenter un tuple de la table membre.
  *
  */
 
-public class MembreDTO extends DTO {
+public final class MembreDTO extends DTO {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,6 +22,16 @@ public class MembreDTO extends DTO {
     private int limitePret;
 
     private int nbPret;
+
+    public static final String ID_MEMBRE_COLUMN_NAME = "idMembre";
+
+    public static final String NOM_COLUMN_NAME = "nom";
+
+    public static final String TELEPHONE_COLUMN_NAME = "telephone";
+
+    public static final String LIMITE_PRET_COLUMN_NAME = "limitePret";
+
+    public static final String NB_PRET_COLUMN_NAME = "nbPret";
 
     //Region get/set
     /**
@@ -139,5 +150,14 @@ public class MembreDTO extends DTO {
             }
         }
         return equals;
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(461,
+            451);
+        hashCodeBuilder.appendSuper(super.hashCode());
+        hashCodeBuilder.append(getIdMembre());
+        return hashCodeBuilder.toHashCode();
     }
 }
