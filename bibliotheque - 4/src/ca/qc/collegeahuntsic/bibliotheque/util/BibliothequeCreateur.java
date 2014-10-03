@@ -1,17 +1,24 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.util;
 
-import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.PretDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.implementations.LivreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.implementations.MembreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.implementations.PretDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.implementations.ReservationDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.ILivreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IPretDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.db.ConnexionException;
-import ca.qc.collegeahuntsic.bibliotheque.service.LivreService;
-import ca.qc.collegeahuntsic.bibliotheque.service.MembreService;
-import ca.qc.collegeahuntsic.bibliotheque.service.PretService;
-import ca.qc.collegeahuntsic.bibliotheque.service.ReservationService;
+import ca.qc.collegeahuntsic.bibliotheque.service.implementations.LivreService;
+import ca.qc.collegeahuntsic.bibliotheque.service.implementations.MembreService;
+import ca.qc.collegeahuntsic.bibliotheque.service.implementations.ReservationService;
 
 public class BibliothequeCreateur {
     private Connexion connexion;
@@ -33,7 +40,6 @@ public class BibliothequeCreateur {
      * @param motPasse Mot de passe sur le serveur SQL
      * @throws BibliothequeException S'il y a une erreur avec la base de données
      */
-    //@SuppressWarnings("resource")
     public BibliothequeCreateur(String typeServeur,
         String schema,
         String nomUtilisateur,
@@ -43,24 +49,26 @@ public class BibliothequeCreateur {
                 schema,
                 nomUtilisateur,
                 motPasse));
-            LivreDAO livreDAO = new LivreDAO(getConnexion());
-            MembreDAO membreDAO = new MembreDAO(getConnexion());
-            ReservationDAO reservationDAO = new ReservationDAO(getConnexion());
-            PretDAO pretDAO = new PretDAO(getConnexion());
+            ILivreDAO livreDAO = new LivreDAO(LivreDTO.class);
+            IMembreDAO membreDAO = new MembreDAO(MembreDTO.class);
+            IReservationDAO reservationDAO = new ReservationDAO(ReservationDTO.class);
+            IPretDAO pretDAO = new PretDAO(PretDTO.class);
             setLivreService(new LivreService(livreDAO,
                 membreDAO,
-                reservationDAO,
-                pretDAO));
+                pretDAO,
+                reservationDAO));
             setMembreService(new MembreService(membreDAO,
-                reservationDAO,
-                pretDAO));
+                livreDAO,
+                pretDAO,
+                reservationDAO));
             setPretService(new PretService(pretDAO,
                 membreDAO,
                 livreDAO,
                 reservationDAO));
             setReservationService(new ReservationService(reservationDAO,
+                membreDAO,
                 livreDAO,
-                membreDAO));
+                pretDAO));
         } catch(ConnexionException connexionException) {
             throw new BibliothequeException(connexionException);
         }
