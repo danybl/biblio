@@ -1,5 +1,5 @@
 
-package ca.qc.collegeahuntsic.bibliotheque.facade;
+package ca.qc.collegeahuntsic.bibliotheque.facade.implementations;
 
 import java.io.Serializable;
 
