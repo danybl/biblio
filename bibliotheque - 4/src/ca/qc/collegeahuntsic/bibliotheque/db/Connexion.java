@@ -5,7 +5,7 @@ package ca.qc.collegeahuntsic.bibliotheque.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.db.ConnexionException;
 
 //import java.sql.DatabaseMetaData;
 

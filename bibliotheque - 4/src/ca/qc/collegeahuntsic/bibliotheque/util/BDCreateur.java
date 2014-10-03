@@ -4,8 +4,8 @@ package ca.qc.collegeahuntsic.bibliotheque.util;
 import java.sql.SQLException;
 import java.sql.Statement;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
-import ca.qc.collegeahuntsic.bibliotheque.exception.BDCreateurException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.db.ConnexionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.util.BDCreateurException;
 
 /**
  *<pre>
@@ -20,7 +20,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
  */
 class BDCreateur {
     public static void main(String args[]) throws BDCreateurException,
-    ConnexionException {
+        ConnexionException {
 
         try {
             if(args.length < 3) {
