@@ -139,7 +139,7 @@ public class PretDAO extends DAO implements IPretDAO {
      * @throws DAOException S'il y a une erreur avec la base de données
      */
     @Override
-    public PretDTO read(Connexion connexion,
+    public PretDTO get(Connexion connexion,
         Serializable primaryKey) throws InvalidHibernateSessionException,
         InvalidPrimaryKeyException,
         DAOException {

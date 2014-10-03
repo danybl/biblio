@@ -126,7 +126,7 @@ public class ReservationDAO extends DAO implements IReservationDAO {
      * {@inheritDoc}
      */
     @Override
-    public ReservationDTO read(Connexion connexion,
+    public ReservationDTO get(Connexion connexion,
         Serializable primaryKey) throws InvalidHibernateSessionException,
         InvalidPrimaryKeyException,
         DAOException {

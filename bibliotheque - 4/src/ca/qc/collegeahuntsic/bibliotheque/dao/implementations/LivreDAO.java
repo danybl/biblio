@@ -119,7 +119,7 @@ public class LivreDAO extends DAO implements ILivreDAO {
      * {@inheritDoc}
      */
     @Override
-    public LivreDTO read(Connexion connexion,
+    public LivreDTO get(Connexion connexion,
         Serializable primaryKey) throws InvalidHibernateSessionException,
         InvalidPrimaryKeyException,
         DAOException {

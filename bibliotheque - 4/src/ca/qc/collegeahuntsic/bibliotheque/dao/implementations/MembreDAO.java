@@ -128,7 +128,7 @@ public class MembreDAO extends DAO implements IMembreDAO {
      * @throws DAOException S'il y a une erreur avec la base de données
      */
     @Override
-    public MembreDTO read(Connexion connexion,
+    public MembreDTO get(Connexion connexion,
         Serializable primaryKey) throws InvalidHibernateSessionException,
         InvalidPrimaryKeyException,
         DAOException {
