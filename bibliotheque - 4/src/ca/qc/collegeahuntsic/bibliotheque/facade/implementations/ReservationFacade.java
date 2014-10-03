@@ -34,7 +34,7 @@ public class ReservationFacade extends Facade implements IReservationFacade {
 
     /**
      * Crée la façade de la table <code>reservation</code>.
-     * 
+     *
      * @param reservationService Le service de la table <code>reservation</code>
      * @throws InvalidServiceException Si le service de réservations est <code>null</code>
      */
@@ -135,4 +135,6 @@ public class ReservationFacade extends Facade implements IReservationFacade {
             throw new FacadeException(serviceException);
         }
     }
+
+    //TODO ajouterGetAll
 }

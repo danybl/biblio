@@ -1,5 +1,4 @@
 // Fichier LivreFacade.java
-// Auteur : Gilles Bénichou
 // Date de création : 2014-09-01
 
 package ca.qc.collegeahuntsic.bibliotheque.facade.implementations;
@@ -25,14 +24,13 @@ import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.ILivreService;
 /**
  * Facade pour interagir avec le service de livres.
  *
- * @author Gilles Benichou
  */
 public class LivreFacade extends Facade implements ILivreFacade {
     private ILivreService livreService;
 
     /**
      * Crée la façade de la table <code>livre</code>.
-     * 
+     *
      * @param livreService Le service de la table <code>livre</code>
      * @throws InvalidServiceException Si le service de livres est <code>null</code>
      */
@@ -105,4 +103,6 @@ public class LivreFacade extends Facade implements ILivreFacade {
             throw new FacadeException(serviceException);
         }
     }
+
+    //TODO ajouter getAll
 }

@@ -16,8 +16,11 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.db.ConnexionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidDAOException;
 import ca.qc.collegeahuntsic.bibliotheque.service.implementations.LivreService;
 import ca.qc.collegeahuntsic.bibliotheque.service.implementations.MembreService;
+import ca.qc.collegeahuntsic.bibliotheque.service.implementations.PretService;
 import ca.qc.collegeahuntsic.bibliotheque.service.implementations.ReservationService;
 
 public class BibliothequeCreateur {
@@ -39,11 +42,15 @@ public class BibliothequeCreateur {
      * @param nomUtilisateur Nom d'utilisateur sur le serveur SQL
      * @param motPasse Mot de passe sur le serveur SQL
      * @throws BibliothequeException S'il y a une erreur avec la base de données
+     * @throws InvalidDTOClassException
+     * @throws InvalidDAOException
      */
     public BibliothequeCreateur(String typeServeur,
         String schema,
         String nomUtilisateur,
-        String motPasse) throws BibliothequeException {
+        String motPasse) throws BibliothequeException,
+        InvalidDTOClassException,
+        InvalidDAOException {
         try {
             setConnexion(new Connexion(typeServeur,
                 schema,
