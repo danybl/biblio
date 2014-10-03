@@ -395,7 +395,8 @@ public class PretDAO extends DAO implements IPretDAO {
      * @return Les prêts correspondant ; null sinon
      * @throws DAOException S'il y a une erreur avec la base de données
      */
-    public static List<PretDTO> findByDatePret(Connexion connexion,
+    @Override
+    public List<PretDTO> findByDatePret(Connexion connexion,
         Timestamp datePret,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
@@ -444,7 +445,8 @@ public class PretDAO extends DAO implements IPretDAO {
      * @return Les prêts correspondant ; null sinon
      * @throws DAOException S'il y a une erreur avec la base de données
      */
-    public static List<PretDTO> findByDateRetour(Connexion connexion,
+    @Override
+    public List<PretDTO> findByDateRetour(Connexion connexion,
         Timestamp dateRetour,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
