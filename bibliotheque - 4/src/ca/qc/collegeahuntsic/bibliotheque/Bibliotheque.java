@@ -1,13 +1,6 @@
 
 package ca.qc.collegeahuntsic.bibliotheque;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.util.StringTokenizer;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
@@ -15,6 +8,13 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.util.BibliothequeCreateur;
 import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -128,7 +128,7 @@ public class Bibliotheque {
                 afficherAide();
             } else if("acquerir".startsWith(command)) {
                 LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(readInt(tokenizer));
+                livreDTO.setIdLivre(readString(tokenizer));
                 livreDTO.setTitre(readString(tokenizer));
                 livreDTO.setAuteur(readString(tokenizer));
                 livreDTO.setDateAcquisition(readDate(tokenizer));
@@ -136,27 +136,27 @@ public class Bibliotheque {
                 bibliothequeCreateur.commit();
             } else if("vendre".startsWith(command)) {
                 LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(readInt(tokenizer));
+                livreDTO.setIdLivre(readString(tokenizer));
                 bibliothequeCreateur.getLivreService().vendre(livreDTO);
                 bibliothequeCreateur.commit();
             } else if("emprunter".startsWith(command)) {
                 MembreDTO membreDTO = new MembreDTO();
-                membreDTO.setIdMembre(readInt(tokenizer));
+                membreDTO.setIdMembre(readString(tokenizer));
                 LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(readInt(tokenizer));
+                livreDTO.setIdLivre(readString(tokenizer));
                 bibliothequeCreateur.getPretService().emprunter(membreDTO,
                     livreDTO);
                 bibliothequeCreateur.commit();
             } else if("renouveler".startsWith(command)) {
                 MembreDTO membreDTO = new MembreDTO();
-                membreDTO.setIdMembre(readInt(tokenizer));
+                membreDTO.setIdMembre(readString(tokenizer));
                 LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(readInt(tokenizer));
+                livreDTO.setIdLivre(readString(tokenizer));
                 bibliothequeCreateur.getPretService().renouveler(livreDTO);
                 bibliothequeCreateur.commit();
             } else if("retourner".startsWith(command)) {
                 LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(readInt(tokenizer));
+                livreDTO.setIdLivre(readString(tokenizer));
                 bibliothequeCreateur.getPretService().retourner(livreDTO);
                 bibliothequeCreateur.commit();
             } else if("inscrire".startsWith(command)) {
@@ -169,7 +169,7 @@ public class Bibliotheque {
                 bibliothequeCreateur.commit();
             } else if("desinscrire".startsWith(command)) {
                 MembreDTO membreDTO = new MembreDTO();
-                membreDTO.setIdMembre(readInt(tokenizer));
+                membreDTO.setIdMembre(readString(tokenizer));
                 bibliothequeCreateur.getMembreService().desincrire(membreDTO);
                 bibliothequeCreateur.commit();
             } else if("reserver".startsWith(command)) {
@@ -177,27 +177,27 @@ public class Bibliotheque {
                 Thread.sleep(1);
                 ReservationDTO reservationDTO = new ReservationDTO();
                 //reservationDTO.setIdReservation(readInt(tokenizer));
-                reservationDTO.getMembreDTO().setIdMembre(readInt(tokenizer));
-                reservationDTO.getLivreDTO().setIdLivre(readInt(tokenizer));
+                reservationDTO.getMembreDTO().setIdMembre(readString(tokenizer));
+                reservationDTO.getLivreDTO().setIdLivre(readString(tokenizer));
                 MembreDTO membreDTO = new MembreDTO();
                 membreDTO.setIdMembre(reservationDTO.getMembreDTO().getIdMembre());
                 LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(reservationDTO.getLivreDTO().getIdLivre());
-                bibliothequeCreateur.getReservationService().reserver(membreDTO,
+                bibliothequeCreateur.getReservationService().placer(membreDTO,
                     livreDTO);
                 bibliothequeCreateur.commit();
             } else if("utiliser".startsWith(command)) {
                 ReservationDTO reservationDTO = new ReservationDTO();
-                reservationDTO.setIdReservation(readInt(tokenizer));
+                reservationDTO.setIdReservation(readString(tokenizer));
                 MembreDTO membreDTO = new MembreDTO();
-                membreDTO.setIdMembre(readInt(tokenizer));
+                membreDTO.setIdMembre(readString(tokenizer));
                 LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(readInt(tokenizer));
+                livreDTO.setIdLivre(readString(tokenizer));
                 bibliothequeCreateur.getReservationService().utiliser(reservationDTO);
                 bibliothequeCreateur.commit();
             } else if("annuler".startsWith(command)) {
                 ReservationDTO reservationDTO = new ReservationDTO();
-                reservationDTO.setIdReservation(readInt(tokenizer));
+                reservationDTO.setIdReservation(readString(tokenizer));
                 bibliothequeCreateur.getReservationService().annuler(reservationDTO);
                 bibliothequeCreateur.commit();
                 //          } else if("listerLivres".startsWith(command)) {
