@@ -46,7 +46,7 @@ public interface IMembreDAO extends IDAO {
      */
 
     List<MembreDTO> findByTel(Connexion connexion,
-        String numTel,
+        int numTel,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
         InvalidSortByPropertyException,

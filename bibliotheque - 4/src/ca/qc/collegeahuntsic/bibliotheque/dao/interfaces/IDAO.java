@@ -50,7 +50,7 @@ public interface IDAO {
      * @throws InvalidPrimaryKeyException Si la clef primaire du DTO est <code>null</code>
      * @throws DAOException S'il y a une erreur avec la base de données
      */
-    DTO get(Connexion connexion,
+    DTO read(Connexion connexion,
         Serializable primaryKey) throws InvalidHibernateSessionException,
         InvalidPrimaryKeyException,
         DAOException;
