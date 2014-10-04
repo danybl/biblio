@@ -17,7 +17,12 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.db.ConnexionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.facade.InvalidServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidDAOException;
+import ca.qc.collegeahuntsic.bibliotheque.facade.implementations.LivreFacade;
+import ca.qc.collegeahuntsic.bibliotheque.facade.implementations.MembreFacade;
+import ca.qc.collegeahuntsic.bibliotheque.facade.implementations.PretFacade;
+import ca.qc.collegeahuntsic.bibliotheque.facade.implementations.ReservationFacade;
 import ca.qc.collegeahuntsic.bibliotheque.service.implementations.LivreService;
 import ca.qc.collegeahuntsic.bibliotheque.service.implementations.MembreService;
 import ca.qc.collegeahuntsic.bibliotheque.service.implementations.PretService;
@@ -34,6 +39,14 @@ public class BibliothequeCreateur {
 
     private ReservationService reservationService;
 
+    private LivreFacade livreFacade;
+
+    private MembreFacade membreFacade;
+
+    private ReservationFacade reservationFacade;
+
+    private PretFacade pretFacade;
+
     /**
      * Crée les services nécessaires à l'application bibliothèque.
      *
@@ -44,13 +57,15 @@ public class BibliothequeCreateur {
      * @throws BibliothequeException S'il y a une erreur avec la base de données
      * @throws InvalidDTOClassException
      * @throws InvalidDAOException
+     * @throws InvalidServiceException
      */
     public BibliothequeCreateur(String typeServeur,
         String schema,
         String nomUtilisateur,
         String motPasse) throws BibliothequeException,
         InvalidDTOClassException,
-        InvalidDAOException {
+        InvalidDAOException,
+        InvalidServiceException {
         try {
             setConnexion(new Connexion(typeServeur,
                 schema,
@@ -76,6 +91,11 @@ public class BibliothequeCreateur {
                 membreDAO,
                 livreDAO,
                 pretDAO));
+            setLivreFacade(new LivreFacade(getLivreService()));
+            setMembreFacade(new MembreFacade(getMembreService()));
+            setReservationFacade(new ReservationFacade(getReservationService()));
+            setPretFacade(new PretFacade(getPretService()));
+
         } catch(ConnexionException connexionException) {
             throw new BibliothequeException(connexionException);
         }
@@ -87,7 +107,7 @@ public class BibliothequeCreateur {
      *
      * @return La variable d'instance <code>this.connexion</code>
      */
-    private Connexion getConnexion() {
+    public Connexion getConnexion() {
         return this.connexion;
     }
 
@@ -173,6 +193,38 @@ public class BibliothequeCreateur {
     }
 
     // EndRegion Getters and Setters
+
+    public LivreFacade getLivreFacade() {
+        return this.livreFacade;
+    }
+
+    private void setLivreFacade(LivreFacade livreFacade) {
+        this.livreFacade = livreFacade;
+    }
+
+    public MembreFacade getMembreFacade() {
+        return this.membreFacade;
+    }
+
+    private void setMembreFacade(MembreFacade membreFacade) {
+        this.membreFacade = membreFacade;
+    }
+
+    public ReservationFacade getReservationFacade() {
+        return this.reservationFacade;
+    }
+
+    private void setReservationFacade(ReservationFacade reservationFacade) {
+        this.reservationFacade = reservationFacade;
+    }
+
+    public PretFacade getPretFacade() {
+        return this.pretFacade;
+    }
+
+    private void setPretFacade(PretFacade pretFacade) {
+        this.pretFacade = pretFacade;
+    }
 
     /**
      * Effectue un commit sur la connexion.
