@@ -8,6 +8,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionE
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyRequestException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dto.DuplicateDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
@@ -82,12 +83,10 @@ public class MembreFacade {
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
-        ExistingReservationException,
-        ExistingLoanException,
-        InvalidLoanLimitException,
         InvalidDTOClassException,
         InvalidPrimaryKeyRequestException,
-        FacadeException {
+        FacadeException,
+        DuplicateDTOException {
         try {
             getMembreService().inscrire(connexion,
                 membreDTO);

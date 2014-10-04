@@ -72,8 +72,8 @@ public class MembreDAO extends DAO implements IMembreDAO {
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
     private static String getPrimaryKey(Connexion connexion) throws InvalidHibernateSessionException,
-    InvalidPrimaryKeyRequestException,
-    DAOException {
+        InvalidPrimaryKeyRequestException,
+        DAOException {
         return DAO.getPrimaryKey(connexion,
             MembreDAO.CREATE_PRIMARY_KEY);
 
@@ -333,7 +333,7 @@ public class MembreDAO extends DAO implements IMembreDAO {
      */
     @Override
     public List<MembreDTO> findByTel(Connexion connexion,
-        int numTel,
+        String numTel,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
@@ -341,7 +341,8 @@ public class MembreDAO extends DAO implements IMembreDAO {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
-        if(numTel < 0) {
+        if(numTel != null
+            && !numTel.equals("")) {
             throw new InvalidCriterionException("Le numero de telephone ne peut être null");
         }
         if(sortByPropertyName == null) {
@@ -350,7 +351,7 @@ public class MembreDAO extends DAO implements IMembreDAO {
         List<MembreDTO> membres = Collections.EMPTY_LIST;
         try(
             PreparedStatement readPreparedStatement = connexion.getConnection().prepareStatement(MembreDAO.FIND_BY_TEL)) {
-            readPreparedStatement.setInt(1,
+            readPreparedStatement.setString(1,
                 numTel);
             try(
                 ResultSet resultSet = readPreparedStatement.executeQuery()) {

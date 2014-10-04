@@ -106,7 +106,12 @@ public class MembreService implements IMembreService {
         InvalidDTOClassException,
         InvalidPrimaryKeyRequestException,
         ServiceException {
-        // TODO Auto-generated method stub
+        try {
+            getMembreDAO().add(connexion,
+                membreDTO);
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
+        }
 
     }
 
@@ -115,8 +120,12 @@ public class MembreService implements IMembreService {
         String idMembre) throws InvalidHibernateSessionException,
         InvalidPrimaryKeyException,
         ServiceException {
-        // TODO Auto-generated method stub
-        return null;
+        try {
+            return (MembreDTO) getMembreDAO().get(connexion,
+                idMembre);
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
+        }
     }
 
     @Override
@@ -125,7 +134,12 @@ public class MembreService implements IMembreService {
         InvalidDTOException,
         InvalidDTOClassException,
         ServiceException {
-        // TODO Auto-generated method stub
+        try {
+            getMembreDAO().update(connexion,
+                membreDTO);
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
+        }
 
     }
 
@@ -135,17 +149,26 @@ public class MembreService implements IMembreService {
         InvalidDTOException,
         InvalidDTOClassException,
         ServiceException {
-        // TODO Auto-generated method stub
-
+        try {
+            getMembreDAO().delete(connexion,
+                membreDTO);
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
+        }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<MembreDTO> getAll(Connexion connexion,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidSortByPropertyException,
         ServiceException {
-        // TODO Auto-generated method stub
-        return null;
+        try {
+            return (List<MembreDTO>) getMembreDAO().getAll(connexion,
+                sortByPropertyName);
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
+        }
     }
 
     @Override
@@ -155,8 +178,13 @@ public class MembreService implements IMembreService {
         InvalidCriterionException,
         InvalidSortByPropertyException,
         ServiceException {
-        // TODO Auto-generated method stub
-        return null;
+        try {
+            return getMembreDAO().findByTel(connexion,
+                numTel,
+                sortByPropertyName);
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
+        }
     }
 
     @Override
@@ -166,8 +194,24 @@ public class MembreService implements IMembreService {
         InvalidCriterionException,
         InvalidSortByPropertyException,
         ServiceException {
-        // TODO Auto-generated method stub
-        return null;
+        try {
+            return getMembreDAO().findByNom(connexion,
+                nom,
+                sortByPropertyName);
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
+        }
+    }
+
+    @Override
+    public void inscrire(Connexion connexion,
+        MembreDTO membreDTO) throws InvalidHibernateSessionException,
+        InvalidDTOException,
+        InvalidDTOClassException,
+        InvalidPrimaryKeyRequestException,
+        ServiceException {
+        add(connexion,
+            membreDTO);
     }
 
     @Override
