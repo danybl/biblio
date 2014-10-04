@@ -39,7 +39,25 @@ public interface IPretFacade extends IFacade {
         InvalidDTOException,
         InvalidPrimaryKeyException,
         MissingDTOException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
         MissingLoanException,
+        ExistingLoanException,
+        ExistingReservationException,
+        InvalidLoanLimitException,
         InvalidDTOClassException,
+        InvalidPrimaryKeyRequestException,
+        FacadeException;
+
+    void renouveler(Connexion connexion,
+        PretDTO pretDTO) throws InvalidHibernateSessionException,
+        InvalidDTOException,
+        InvalidDTOClassException,
+        InvalidPrimaryKeyException,
+        MissingDTOException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        ExistingLoanException,
+        ExistingReservationException,
         FacadeException;
 }
