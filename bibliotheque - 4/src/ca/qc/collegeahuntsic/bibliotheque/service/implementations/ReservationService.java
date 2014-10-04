@@ -1,6 +1,3 @@
-// Fichier ReservationService.java
-// Auteur : Gilles Bénichou
-// Date de création : 2014-08-24
 
 package ca.qc.collegeahuntsic.bibliotheque.service.implementations;
 
@@ -35,7 +32,6 @@ import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IReservationService
 /**
  * Service de la table <code>reservation</code>.
  *
- * @author Gilles Benichou
  */
 public class ReservationService extends Service implements IReservationService {
     private IReservationDAO reservationDAO;

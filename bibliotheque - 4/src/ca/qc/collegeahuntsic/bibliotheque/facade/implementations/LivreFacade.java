@@ -1,5 +1,3 @@
-// Fichier LivreFacade.java
-// Date de création : 2014-09-01
 
 package ca.qc.collegeahuntsic.bibliotheque.facade.implementations;
 

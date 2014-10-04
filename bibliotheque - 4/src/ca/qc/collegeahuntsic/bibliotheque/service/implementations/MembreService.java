@@ -1,5 +1,3 @@
-// Fichier MembreService.java
-// Date de création : 2014-10-03
 
 package ca.qc.collegeahuntsic.bibliotheque.service.implementations;
 

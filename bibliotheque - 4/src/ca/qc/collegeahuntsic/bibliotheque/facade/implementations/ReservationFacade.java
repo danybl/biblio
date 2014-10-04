@@ -1,6 +1,3 @@
-// Fichier ReservationFacade.java
-// Auteur : Gilles Bénichou
-// Date de création : 2014-09-01
 
 package ca.qc.collegeahuntsic.bibliotheque.facade.implementations;
 
@@ -27,7 +24,6 @@ import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IReservationService
 /**
  * Facade pour interagir avec le service de réservations.
  *
- * @author Gilles Benichou
  */
 public class ReservationFacade extends Facade implements IReservationFacade {
     private IReservationService reservationService;
