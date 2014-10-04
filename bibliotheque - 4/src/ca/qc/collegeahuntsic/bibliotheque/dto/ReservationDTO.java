@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * Permet de représenter un tuple de la table membre.
- * Je check juste si ca marche
+ *
  */
 
 public final class ReservationDTO extends DTO {
