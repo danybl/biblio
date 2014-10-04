@@ -20,7 +20,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.util.BDCreateurException;
  */
 class BDCreateur {
     public static void main(String args[]) throws BDCreateurException,
-    ConnexionException {
+        ConnexionException {
 
         try {
             if(args.length < 3) {
@@ -53,7 +53,7 @@ class BDCreateur {
                     + " CONSTRAINT      cleLivre     PRIMARY KEY (idLivre))");
 
                 // stmt.executeUpdate("DROP TABLE pret CASCADE CONSTRAINTS");
-                stmt.executeUpdate("CREATE TABLE pret (idPret     DECIMAL)  CHECK (idPret > 0),"
+                stmt.executeUpdate("CREATE TABLE pret (idPret     DECIMAL  CHECK (idPret > 0),"
                     + "idMembre   DECIMAL  CHECK (idMembre > 0),"
                     + "idLivre    DECIMAL  CHECK (idLivre > 0),"
                     + "datePret   TIMESTAMP,"
