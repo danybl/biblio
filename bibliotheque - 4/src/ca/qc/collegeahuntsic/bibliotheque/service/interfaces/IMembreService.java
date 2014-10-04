@@ -9,6 +9,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionE
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyRequestException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dto.DuplicateDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
@@ -142,6 +143,18 @@ public interface IMembreService extends IService {
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
+        ServiceException;
+
+    void inscrire(Connexion connexion,
+        MembreDTO membreDTO) throws InvalidHibernateSessionException,
+        InvalidDTOException,
+        InvalidPrimaryKeyException,
+        MissingDTOException,
+        InvalidCriterionException,
+        DuplicateDTOException,
+        InvalidSortByPropertyException,
+        InvalidDTOClassException,
+        InvalidPrimaryKeyRequestException,
         ServiceException;
 
     /**
