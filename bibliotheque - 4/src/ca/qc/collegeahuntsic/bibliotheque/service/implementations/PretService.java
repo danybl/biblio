@@ -327,9 +327,9 @@ public class PretService extends Service implements IPretService {
 					.setDatePret(new Timestamp(System.currentTimeMillis()));
 			nouveauPretDTO.setDateRetour(null);
 			getPretDAO().add(connexion, nouveauPretDTO);
-		} catch (DAOException daoException) {
+		} 
+		}catch (DAOException daoException) {
 			throw new ServiceException(daoException);
-		}
 	}
 
 	@Override

@@ -17,11 +17,11 @@ public final class MembreDTO extends DTO {
 
     private String nom;
 
-    private long telephone;
+    private String telephone;
 
-    private int limitePret;
+    private String limitePret;
 
-    private int nbPret;
+    private String nbPret;
 
     public static final String ID_MEMBRE_COLUMN_NAME = "idMembre";
 
@@ -80,7 +80,7 @@ public final class MembreDTO extends DTO {
      *
      * @return La variable d'instance <code>this.telephone</code>
      */
-    public long getTelephone() {
+    public String getTelephone() {
         return this.telephone;
     }
 
@@ -89,7 +89,7 @@ public final class MembreDTO extends DTO {
      *
      * @param telephone La valeur à utiliser pour la variable d'instance <code>this.telephone</code>
      */
-    public void setTelephone(long telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
@@ -98,7 +98,7 @@ public final class MembreDTO extends DTO {
      *
      * @return La variable d'instance <code>this.limitePret</code>
      */
-    public int getLimitePret() {
+    public String getLimitePret() {
         return this.limitePret;
     }
 
@@ -107,7 +107,7 @@ public final class MembreDTO extends DTO {
      *
      * @param limitePret La valeur à utiliser pour la variable d'instance <code>this.limitePret</code>
      */
-    public void setLimitePret(int limitePret) {
+    public void setLimitePret(String limitePret) {
         this.limitePret = limitePret;
     }
 
@@ -116,7 +116,7 @@ public final class MembreDTO extends DTO {
      *
      * @return La variable d'instance <code>this.nbPret</code>
      */
-    public int getNbPret() {
+    public String getNbPret() {
         return this.nbPret;
     }
 
@@ -125,7 +125,7 @@ public final class MembreDTO extends DTO {
      *
      * @param nbPret La valeur à utiliser pour la variable d'instance <code>this.nbPret</code>
      */
-    public void setNbPret(int nbPret) {
+    public void setNbPret(String nbPret) {
         this.nbPret = nbPret;
     }
 
