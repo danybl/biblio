@@ -1,4 +1,3 @@
-// Fichier DAO.java
 
 package ca.qc.collegeahuntsic.bibliotheque.dao.implementations;
 

@@ -1,4 +1,3 @@
-// Fichier ILivreDAO.java
 
 package ca.qc.collegeahuntsic.bibliotheque.dao.interfaces;
 

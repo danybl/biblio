@@ -1,4 +1,3 @@
-// Fichier LivreDAO.java
 
 package ca.qc.collegeahuntsic.bibliotheque.dao.implementations;
 
@@ -71,8 +70,8 @@ public class LivreDAO extends DAO implements ILivreDAO {
      * @throws DAOException S'il y a une erreur avec la base de données
      */
     private static String getPrimaryKey(Connexion connexion) throws InvalidHibernateSessionException,
-    InvalidPrimaryKeyRequestException,
-    DAOException {
+        InvalidPrimaryKeyRequestException,
+        DAOException {
         return DAO.getPrimaryKey(connexion,
             LivreDAO.CREATE_PRIMARY_KEY);
     }

@@ -1,4 +1,3 @@
-// Fichier IReservationDAO.java
 
 package ca.qc.collegeahuntsic.bibliotheque.dao.interfaces;
 
