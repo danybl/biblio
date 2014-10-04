@@ -12,6 +12,7 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
@@ -148,6 +149,10 @@ public class PretService extends Service implements IPretService {
      *            <code>this.reservationDAO</code>
      */
     private void setReservationDAO(IReservationDAO reservationDAO) {
+    }
+
+    private IReservationDAO getReservationDAO() {
+        return this.reservationAO;
     }
 
     // EndRegion Getters and Setters
@@ -320,6 +325,17 @@ public class PretService extends Service implements IPretService {
                     + unMembreDTO.getLimitePret()
                     + " emprunt(s) maximum)");
             }
+            List<ReservationDTO> reservations = getReservationDAO().findByLivre(connexion,
+                unLivreDTO.getIdLivre(),
+                ReservationDTO.DATE_RESERVATION_COLUMN_NAME);
+            if(!reservations.isEmpty()) {
+                throw new ExistingReservationException("Le livre "
+                    + unLivreDTO.getTitre()
+                    + " (ID de livre : "
+                    + unLivreDTO.getIdLivre()
+                    + ") a des réservations"
+                    + ")");
+            }
             List<PretDTO> prets = findByLivre(connexion,
                 unLivreDTO.getIdLivre(),
                 PretDTO.DATE_PRET_COLUMN_NAME);
@@ -385,6 +401,20 @@ public class PretService extends Service implements IPretService {
                 throw new MissingDTOException("Le livre "
                     + pretDTO.getLivreDTO().getIdLivre()
                     + " n'existe pas");
+            }
+            List<ReservationDTO> reservations = getReservationDAO().findByLivre(connexion,
+                unLivreDTO.getIdLivre(),
+                ReservationDTO.DATE_RESERVATION_COLUMN_NAME);
+            if(!reservations.isEmpty()) {
+                ReservationDTO reservationDTO = reservations.get(0);
+                getMembreDAO().get(connexion,
+                    reservationDTO.getMembreDTO().getIdMembre());
+                throw new ExistingReservationException("Le livre "
+                    + unLivreDTO.getTitre()
+                    + " (ID de livre : "
+                    + unLivreDTO.getIdLivre()
+                    + ") a des réservations"
+                    + ")");
             }
             List<PretDTO> prets = findByLivre(connexion,
                 unLivreDTO.getIdLivre(),
