@@ -285,6 +285,7 @@ public class PretService extends Service implements IPretService {
 
     /**
      * {@inheritDoc}
+     * @throws InvalidPrimaryKeyRequestException
      */
     @Override
     public void emprunter(Connexion connexion,
@@ -297,7 +298,8 @@ public class PretService extends Service implements IPretService {
         InvalidSortByPropertyException,
         ExistingLoanException,
         ExistingReservationException,
-        ServiceException {
+        ServiceException,
+        InvalidPrimaryKeyRequestException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
