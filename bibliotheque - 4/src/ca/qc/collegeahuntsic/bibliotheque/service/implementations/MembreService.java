@@ -9,9 +9,8 @@ import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IPretDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
-import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
-import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
@@ -76,7 +75,7 @@ public class MembreService implements IMembreService {
         this.membreDAO = membreDAO;
     }
 
-    public IReservationDAO getReservationDAO(){
+    public IReservationDAO getReservationDAO() {
         return this.reservationDAO;
     }
 
@@ -88,16 +87,16 @@ public class MembreService implements IMembreService {
         this.pretDAO = pretDAO;
     }
 
-    public IPretDAO getPretDAO(){
+    public IPretDAO getPretDAO() {
         return this.pretDAO;
     }
 
-    public ILivreDAO getLivreDAO(){
+    public ILivreDAO getLivreDAO() {
         return this.livreDAO;
     }
 
     private void setLivreDAO(ILivreDAO livreDAO) {
-        this.livreDAO=livreDAO;
+        this.livreDAO = livreDAO;
     }
 
     @Override
@@ -192,36 +191,43 @@ public class MembreService implements IMembreService {
             throw new InvalidDTOException("Le membre ne peut être null");
         }
         try {
-            MembreDTO unMembreDTO = read(connexion,
+            MembreDTO unMembreDTO = get(connexion,
                 membreDTO.getIdMembre());
             if(unMembreDTO == null) {
                 throw new MissingDTOException("Le livre "
                     + membreDTO.getIdMembre()
                     + " n'existe pas");
             }
-            if(unMembreDTO.getNbPret() > 0) {
+            if(unMembreDTO.getNbPret() != null) {
                 throw new ServiceException("Le membre "
                     + unMembreDTO.getNom()
                     + " (ID de membre : "
                     + unMembreDTO.getIdMembre()
                     + ") a encore des prêts");
             }
-            if(getReservationDAO().findByMembre(unMembreDTO) != null) {
+            if(getReservationDAO().findByMembre(connexion,
+                unMembreDTO.getIdMembre(),
+                MembreDTO.ID_MEMBRE_COLUMN_NAME) != null) {
                 throw new ServiceException("Le membre "
                     + unMembreDTO.getNom()
                     + " (ID de membre : "
                     + unMembreDTO.getIdMembre()
                     + ") a des réservations");
             }
-            if(getPretDAO().findByMembre(unMembreDTO) != null) {
+            if(getPretDAO().findByMembre(connexion,
+                unMembreDTO.getIdMembre(),
+                MembreDTO.ID_MEMBRE_COLUMN_NAME) != null) {
                 throw new ServiceException("Le membre "
                     + unMembreDTO.getNom()
                     + " (ID de membre : "
                     + unMembreDTO.getIdMembre()
                     + ") a des prêts");
             }
-            delete(connexion,unMembreDTO);
+            delete(connexion,
+                unMembreDTO);
 
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
         }
-
     }
+}
