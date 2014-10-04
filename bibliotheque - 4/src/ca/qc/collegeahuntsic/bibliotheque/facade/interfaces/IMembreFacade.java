@@ -14,7 +14,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanExceptio
 
 public interface IMembreFacade extends IFacade {
 
-    void ajouter(Connexion connexion,
+    void inscrire(Connexion connexion,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidPrimaryKeyException,
@@ -23,7 +23,7 @@ public interface IMembreFacade extends IFacade {
         InvalidDTOClassException,
         FacadeException;
 
-    void retirer(Connexion connexion,
+    void desinscrire(Connexion connexion,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidPrimaryKeyException,
