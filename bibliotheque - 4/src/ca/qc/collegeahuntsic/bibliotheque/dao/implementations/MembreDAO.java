@@ -72,8 +72,8 @@ public class MembreDAO extends DAO implements IMembreDAO {
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
     private static String getPrimaryKey(Connexion connexion) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyRequestException,
-        DAOException {
+    InvalidPrimaryKeyRequestException,
+    DAOException {
         return DAO.getPrimaryKey(connexion,
             MembreDAO.CREATE_PRIMARY_KEY);
 
@@ -111,9 +111,9 @@ public class MembreDAO extends DAO implements IMembreDAO {
                 membreDTO.getIdMembre());
             preparedAjout.setString(2,
                 membreDTO.getNom());
-            preparedAjout.setLong(3,
+            preparedAjout.setString(3,
                 membreDTO.getTelephone());
-            preparedAjout.setInt(4,
+            preparedAjout.setString(4,
                 membreDTO.getLimitePret());
             preparedAjout.executeUpdate();
         } catch(SQLException sqlException) {
@@ -150,9 +150,9 @@ public class MembreDAO extends DAO implements IMembreDAO {
                     membreDTO = new MembreDTO();
                     membreDTO.setIdMembre(resultSet.getString(1));
                     membreDTO.setNom(resultSet.getString(2));
-                    membreDTO.setTelephone(resultSet.getLong(3));
-                    membreDTO.setLimitePret(resultSet.getInt(4));
-                    membreDTO.setNbPret(resultSet.getInt(5));
+                    membreDTO.setTelephone(resultSet.getString(3));
+                    membreDTO.setLimitePret(resultSet.getString(4));
+                    membreDTO.setNbPret(resultSet.getString(5));
                 }
             }
         } catch(SQLException sqlException) {
@@ -188,9 +188,9 @@ public class MembreDAO extends DAO implements IMembreDAO {
             PreparedStatement updatePreparedStatement = connexion.getConnection().prepareStatement(MembreDAO.UPDATE_REQUEST)) {
             updatePreparedStatement.setString(1,
                 membreDTO.getNom());
-            updatePreparedStatement.setLong(2,
+            updatePreparedStatement.setString(2,
                 membreDTO.getTelephone());
-            updatePreparedStatement.setInt(3,
+            updatePreparedStatement.setString(3,
                 membreDTO.getNbPret());
             updatePreparedStatement.setString(4,
                 membreDTO.getIdMembre());
@@ -262,9 +262,9 @@ public class MembreDAO extends DAO implements IMembreDAO {
                         membreDTO = new MembreDTO();
                         membreDTO.setIdMembre(resultSet.getString(1));
                         membreDTO.setNom(resultSet.getString(2));
-                        membreDTO.setTelephone(resultSet.getInt(3));
-                        membreDTO.setLimitePret(resultSet.getInt(4));
-                        membreDTO.setNbPret(resultSet.getInt(6));
+                        membreDTO.setTelephone(resultSet.getString(3));
+                        membreDTO.setLimitePret(resultSet.getString(4));
+                        membreDTO.setNbPret(resultSet.getString(6));
                         membres.add(membreDTO);
                     } while(resultSet.next());
                 }
@@ -311,9 +311,9 @@ public class MembreDAO extends DAO implements IMembreDAO {
                         membreDTO = new MembreDTO();
                         membreDTO.setIdMembre(resultSet.getString(1));
                         membreDTO.setNom(resultSet.getString(2));
-                        membreDTO.setTelephone(resultSet.getInt(3));
-                        membreDTO.setLimitePret(resultSet.getInt(4));
-                        membreDTO.setNbPret(resultSet.getInt(5));
+                        membreDTO.setTelephone(resultSet.getString(3));
+                        membreDTO.setLimitePret(resultSet.getString(4));
+                        membreDTO.setNbPret(resultSet.getString(5));
                         membres.add(membreDTO);
                     } while(resultSet.next());
                 }
@@ -361,9 +361,9 @@ public class MembreDAO extends DAO implements IMembreDAO {
                         membreDTO = new MembreDTO();
                         membreDTO.setIdMembre(resultSet.getString(1));
                         membreDTO.setNom(resultSet.getString(2));
-                        membreDTO.setTelephone(resultSet.getInt(3));
-                        membreDTO.setLimitePret(resultSet.getInt(4));
-                        membreDTO.setNbPret(resultSet.getInt(5));
+                        membreDTO.setTelephone(resultSet.getString(3));
+                        membreDTO.setLimitePret(resultSet.getString(4));
+                        membreDTO.setNbPret(resultSet.getString(5));
                         membres.add(membreDTO);
                     } while(resultSet.next());
                 }
