@@ -81,17 +81,14 @@ public class PretDAO extends DAO implements IPretDAO {
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
     private static String getPrimaryKey(Connexion connexion) throws InvalidHibernateSessionException,
-    InvalidPrimaryKeyRequestException,
-    DAOException {
+        InvalidPrimaryKeyRequestException,
+        DAOException {
         return DAO.getPrimaryKey(connexion,
             PretDAO.CREATE_PRIMARY_KEY);
     }
 
     /**
-     * Ajoute un nouveau prêt.
-     *
-     * @param pretDTO Le pret à ajouter
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
     @Override
     public void add(Connexion connexion,
@@ -131,10 +128,7 @@ public class PretDAO extends DAO implements IPretDAO {
     }
 
     /**
-     * Lit un pret.
-     *
-     * @param idPret L'ID du pret
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
     @Override
     public PretDTO get(Connexion connexion,
@@ -171,10 +165,7 @@ public class PretDAO extends DAO implements IPretDAO {
     }
 
     /**
-     * Met à jour un pret.
-     *
-     * @param pretDTO Le pret à mettre à jour
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
     @Override
     public void update(Connexion connexion,
@@ -212,10 +203,7 @@ public class PretDAO extends DAO implements IPretDAO {
     }
 
     /**
-     * Supprime un pret.
-     *
-     * @param pretDTO Le pret à supprimer
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
     @Override
     public void delete(Connexion connexion,
@@ -246,10 +234,7 @@ public class PretDAO extends DAO implements IPretDAO {
     }
 
     /**
-     * Trouve tous les prets.
-     *
-     * @return La liste des prets ; une liste vide sinon
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
     @Override
     public List<PretDTO> getAll(Connexion connexion,
@@ -288,11 +273,7 @@ public class PretDAO extends DAO implements IPretDAO {
     }
 
     /**
-     * Trouve les prêts à partir d'un livre.
-     *
-     * @param livreDTO Le livre à utiliser
-     * @return Les prêts correspondant ; null sinon
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
     @Override
     public List<PretDTO> findByLivre(Connexion connexion,
@@ -338,11 +319,7 @@ public class PretDAO extends DAO implements IPretDAO {
     }
 
     /**
-     * Trouve les prêts à partir d'un membre.
-     *
-     * @param membreDTO Le membre à utiliser
-     * @return Les prêts correspondant ; null sinon
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
     @Override
     public List<PretDTO> findByMembre(Connexion connexion,
@@ -388,11 +365,7 @@ public class PretDAO extends DAO implements IPretDAO {
     }
 
     /**
-     * Trouve les prêts à partir de la date.
-     *
-     * @param datePret La date à utiliser
-     * @return Les prêts correspondant ; null sinon
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
     @Override
     public List<PretDTO> findByDatePret(Connexion connexion,
@@ -438,11 +411,7 @@ public class PretDAO extends DAO implements IPretDAO {
     }
 
     /**
-     * Trouve les prêts à partir de la date de retour.
-     *
-     * @param dateRetour La date à utiliser
-     * @return Les prêts correspondant ; null sinon
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
     @Override
     public List<PretDTO> findByDateRetour(Connexion connexion,

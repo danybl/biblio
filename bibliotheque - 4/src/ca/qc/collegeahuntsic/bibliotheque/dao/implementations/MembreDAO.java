@@ -72,8 +72,8 @@ public class MembreDAO extends DAO implements IMembreDAO {
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
     private static String getPrimaryKey(Connexion connexion) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyRequestException,
-        DAOException {
+    InvalidPrimaryKeyRequestException,
+    DAOException {
         return DAO.getPrimaryKey(connexion,
             MembreDAO.CREATE_PRIMARY_KEY);
 
@@ -84,6 +84,9 @@ public class MembreDAO extends DAO implements IMembreDAO {
      *
      * @param membreDTO Le membre à ajouter
      * @throws DAOException S'il y a une erreur avec la base de données
+     */
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void add(Connexion connexion,
@@ -122,10 +125,7 @@ public class MembreDAO extends DAO implements IMembreDAO {
     }
 
     /**
-     * Lit un membre.
-     *
-     * @param idMembre L'ID du membre à lire
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
     @Override
     public MembreDTO get(Connexion connexion,
@@ -162,10 +162,7 @@ public class MembreDAO extends DAO implements IMembreDAO {
     }
 
     /**
-     * Met à jour d'un membre.
-     *
-     * @param membreDTO Le membre à mettre à jour
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
     @Override
     public void update(Connexion connexion,
@@ -201,10 +198,7 @@ public class MembreDAO extends DAO implements IMembreDAO {
     }
 
     /**
-     * Supprime un membre.
-     *
-     * @param membreDTO Le membre à supprimer
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
     @Override
     public void delete(Connexion connexion,
@@ -234,10 +228,7 @@ public class MembreDAO extends DAO implements IMembreDAO {
     }
 
     /**
-     * Trouve tous les membres.
-     *
-     * @return La liste des membres ; une liste vide sinon
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
     @Override
     public List<MembreDTO> getAll(Connexion connexion,
@@ -276,10 +267,7 @@ public class MembreDAO extends DAO implements IMembreDAO {
     }
 
     /**
-     * Trouve les membres à partir d'un nom.
-     *
-     * @return La liste des membres ; une liste vide sinon
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
     @Override
     public List<MembreDTO> findByNom(Connexion connexion,
@@ -325,11 +313,7 @@ public class MembreDAO extends DAO implements IMembreDAO {
     }
 
     /**
-     * Trouve les membres à partir d'un numero de telephone.
-     *
-     * @param numTelephone Le numéro à utiliser
-     * @return La liste des membres ; une liste vide sinon
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
     @Override
     public List<MembreDTO> findByTel(Connexion connexion,
