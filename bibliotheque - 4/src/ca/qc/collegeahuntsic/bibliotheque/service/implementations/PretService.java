@@ -347,11 +347,11 @@ public class PretService extends Service implements IPretService {
                 if(!unMembreDTO.equals(unPretDTO.getMembreDTO())) {
                     MembreDTO booker = (MembreDTO) getMembreDAO().get(connexion,
                         unPretDTO.getMembreDTO().getIdMembre());
-                    throw new ExistingReservationException("Le livre "
+                    throw new ExistingLoanException("Le livre "
                         + unLivreDTO.getTitre()
                         + " (ID de livre : "
                         + unLivreDTO.getIdLivre()
-                        + ") est réservé pour "
+                        + ") est prété pour "
                         + booker.getNom()
                         + ")");
                 }
@@ -427,11 +427,11 @@ public class PretService extends Service implements IPretService {
                 if(!unPretDTO.equals(unPretDTO.getMembreDTO())) {
                     MembreDTO booker = (MembreDTO) getMembreDAO().get(connexion,
                         unPretDTO.getMembreDTO().getIdMembre());
-                    throw new ExistingReservationException("Le livre "
+                    throw new ExistingLoanException("Le livre "
                         + unLivreDTO.getTitre()
                         + " (ID de livre : "
                         + unLivreDTO.getIdLivre()
-                        + ") est réservé pour "
+                        + ") est prété pour "
                         + booker.getNom()
                         + ")");
                 }
