@@ -53,12 +53,40 @@ public interface IPretDAO extends IDAO {
         InvalidSortByPropertyException,
         DAOException;
 
+    /**
+     * Trouve les prêts d'un livre. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. Si aucun prêt
+     * n'est trouvé, une {@link List} vide est retournée.
+     *
+     * @param connexion La connexion à utiliser
+     * @param dateRetour La date du prêt à trouver
+     * @param sortByPropertyName The nom de la propriété à utiliser pour classer
+     * @return La liste des prêts correspondant ; une liste vide sinon
+     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidCriterionException Si l'ID du livre est <code>null</code>
+     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
+
     List<PretDTO> findByDateRetour(Connexion connexion,
         Timestamp dateRetour,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
         DAOException;
+
+    /**
+     * Trouve les prêts d'un livre. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. Si aucun prêt
+     * n'est trouvé, une {@link List} vide est retournée.
+     *
+     * @param connexion La connexion à utiliser
+     * @param datePret L'ID du prêt à trouver
+     * @param sortByPropertyName The nom de la propriété à utiliser pour classer
+     * @return La liste des prêts correspondant ; une liste vide sinon
+     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidCriterionException Si l'ID du livre est <code>null</code>
+     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
 
     List<PretDTO> findByDatePret(Connexion connexion,
         Timestamp datePret,

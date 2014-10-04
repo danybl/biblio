@@ -32,7 +32,7 @@ public interface IMembreDAO extends IDAO {
         DAOException;
 
     /**
-     * Trouve les prêts d'un livre. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. Si aucun prêt
+     * Trouve les prêts d'un livre. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. Si aucun membre
      * n'est trouvé, une {@link List} vide est retournée.
      *
      * @param connexion La connexion à utiliser
