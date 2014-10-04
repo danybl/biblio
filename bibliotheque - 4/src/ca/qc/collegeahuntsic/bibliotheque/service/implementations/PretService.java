@@ -38,8 +38,6 @@ public class PretService extends Service implements IPretService {
 
     private IPretDAO pretDAO;
 
-    private IReservationDAO reservationDAO;
-
     /**
      * Crée le service de la table <code>livre</code>.
      *
@@ -150,7 +148,6 @@ public class PretService extends Service implements IPretService {
      *            <code>this.reservationDAO</code>
      */
     private void setReservationDAO(IReservationDAO reservationDAO) {
-        this.reservationDAO = reservationDAO;
     }
 
     // EndRegion Getters and Setters
@@ -259,6 +256,9 @@ public class PretService extends Service implements IPretService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<PretDTO> findByLivre(Connexion connexion,
         String idLivre,
@@ -275,6 +275,9 @@ public class PretService extends Service implements IPretService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void emprunter(Connexion connexion,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
@@ -354,6 +357,9 @@ public class PretService extends Service implements IPretService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void renouveler(Connexion connexion,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
@@ -417,6 +423,9 @@ public class PretService extends Service implements IPretService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void retourner(Connexion connexion,
         PretDTO pretDTO) throws InvalidHibernateSessionException,

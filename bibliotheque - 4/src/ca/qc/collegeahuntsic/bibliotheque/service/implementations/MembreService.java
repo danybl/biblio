@@ -97,6 +97,9 @@ public class MembreService implements IMembreService {
         this.livreDAO = livreDAO;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void add(Connexion connexion,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
@@ -113,6 +116,9 @@ public class MembreService implements IMembreService {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public MembreDTO get(Connexion connexion,
         String idMembre) throws InvalidHibernateSessionException,
@@ -126,6 +132,9 @@ public class MembreService implements IMembreService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(Connexion connexion,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
@@ -141,6 +150,9 @@ public class MembreService implements IMembreService {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void delete(Connexion connexion,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
@@ -155,6 +167,9 @@ public class MembreService implements IMembreService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     @Override
     public List<MembreDTO> getAll(Connexion connexion,
@@ -169,6 +184,9 @@ public class MembreService implements IMembreService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<MembreDTO> findByTel(Connexion connexion,
         String numTel,
@@ -185,6 +203,9 @@ public class MembreService implements IMembreService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<MembreDTO> findByNom(Connexion connexion,
         String nom,
@@ -201,6 +222,9 @@ public class MembreService implements IMembreService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void inscrire(Connexion connexion,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
@@ -212,6 +236,9 @@ public class MembreService implements IMembreService {
             membreDTO);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void desinscrire(Connexion connexion,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,

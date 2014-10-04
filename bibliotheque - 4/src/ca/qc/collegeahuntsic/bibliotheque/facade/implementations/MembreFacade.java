@@ -55,6 +55,9 @@ public class MembreFacade {
         this.membreService = membreService;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void desinscrire(Connexion connexion,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
@@ -76,6 +79,9 @@ public class MembreFacade {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void inscrire(Connexion connexion,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,

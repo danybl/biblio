@@ -51,6 +51,9 @@ public class PretFacade extends Facade implements IPretFacade {
         this.pretService = pretService;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void emprunter(Connexion connexion,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
@@ -74,6 +77,9 @@ public class PretFacade extends Facade implements IPretFacade {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void retourner(Connexion connexion,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
@@ -96,6 +102,9 @@ public class PretFacade extends Facade implements IPretFacade {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void renouveler(Connexion connexion,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
