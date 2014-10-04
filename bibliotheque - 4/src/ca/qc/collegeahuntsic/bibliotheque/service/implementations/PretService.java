@@ -39,6 +39,8 @@ public class PretService extends Service implements IPretService {
 
     private IPretDAO pretDAO;
 
+    private IReservationDAO reservationDAO;
+
     /**
      * Crée le service de la table <code>livre</code>.
      *
@@ -149,10 +151,11 @@ public class PretService extends Service implements IPretService {
      *            <code>this.reservationDAO</code>
      */
     private void setReservationDAO(IReservationDAO reservationDAO) {
+        this.reservationDAO = reservationDAO;
     }
 
     private IReservationDAO getReservationDAO() {
-        return this.reservationAO;
+        return this.reservationDAO;
     }
 
     // EndRegion Getters and Setters
