@@ -364,13 +364,12 @@ public class PretService extends Service implements IPretService {
             java.sql.Timestamp datePret = new Timestamp(System.currentTimeMillis());
             java.sql.Timestamp dateRetour = new java.sql.Timestamp(datePret.getTime()
                 + deuxSemaines);
-            PretDTO nouveauPretDTO = new PretDTO();
-            nouveauPretDTO.setMembreDTO(unMembreDTO);
-            nouveauPretDTO.setLivreDTO(unLivreDTO);
-            nouveauPretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
-            nouveauPretDTO.setDateRetour(dateRetour);
+            pretDTO.setMembreDTO(unMembreDTO);
+            pretDTO.setLivreDTO(unLivreDTO);
+            pretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
+            pretDTO.setDateRetour(dateRetour);
             add(connexion,
-                nouveauPretDTO);
+                pretDTO);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
