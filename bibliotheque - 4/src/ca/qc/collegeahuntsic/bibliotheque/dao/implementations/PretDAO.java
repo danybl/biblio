@@ -12,6 +12,8 @@ import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IPretDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.DTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
@@ -36,7 +38,7 @@ public class PretDAO extends DAO implements IPretDAO {
      * des suppressions et de la création de la clé primaire dans la table Pret
      * */
     private static final String ADD_REQUEST = "INSERT INTO pret (idPret, idMembre, idLivre, datePret, dateRetour) "
-        + "VALUES (?, ?, ?, NULL, NULL)";
+        + "VALUES (?, ?, ?, ?, ?)";
 
     private static final String READ_REQUEST = "SELECT idPret, idMembre, idLivre, datePret, dateRetour "
         + "FROM pret "
@@ -52,12 +54,12 @@ public class PretDAO extends DAO implements IPretDAO {
     private static final String GET_ALL_REQUEST = "SELECT idPret, idMembre, idLivre, datePret, dateRetour "
         + "FROM pret";
 
-    private static final String FIND_BY_ID_LIVRE = "SELECT idReservation, idLivre, idMembre, dateReservation "
-        + "FROM reservation "
+    private static final String FIND_BY_ID_LIVRE = "SELECT idPret, idLivre, idMembre, datePret, dateRetour "
+        + "FROM pret "
         + "WHERE idLivre = ? ";
 
-    private static final String FIND_BY_ID_MEMBRE = "SELECT idReservation, idLivre, idMembre, dateReservation "
-        + "FROM reservation "
+    private static final String FIND_BY_ID_MEMBRE = "SELECT idPret, idLivre, idMembre, datePret, dateRetour "
+        + "FROM pret "
         + "WHERE idMembre = ? ";
 
     private static final String FIND_BY_DATE_PRET = "SELECT idPret, idMembre, idLivre, datePret, dateRetour "
@@ -81,8 +83,8 @@ public class PretDAO extends DAO implements IPretDAO {
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
     private static String getPrimaryKey(Connexion connexion) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyRequestException,
-        DAOException {
+    InvalidPrimaryKeyRequestException,
+    DAOException {
         return DAO.getPrimaryKey(connexion,
             PretDAO.CREATE_PRIMARY_KEY);
     }
@@ -152,8 +154,12 @@ public class PretDAO extends DAO implements IPretDAO {
                 if(resultSet.next()) {
                     pretDTO = new PretDTO();
                     pretDTO.setIdPret(resultSet.getString(1));
-                    pretDTO.getLivreDTO().setIdLivre(resultSet.getString(2));
-                    pretDTO.getMembreDTO().setIdMembre(resultSet.getString(3));
+                    MembreDTO membreDTO = new MembreDTO();
+                    LivreDTO livreDTO = new LivreDTO();
+                    livreDTO.setIdLivre(resultSet.getString(2));
+                    membreDTO.setIdMembre(resultSet.getString(3));
+                    pretDTO.setLivreDTO(livreDTO);
+                    pretDTO.setMembreDTO(membreDTO);
                     pretDTO.setDatePret(resultSet.getTimestamp(4));
                     pretDTO.setDateRetour(resultSet.getTimestamp(5));
                 }
@@ -303,9 +309,13 @@ public class PretDAO extends DAO implements IPretDAO {
                     prets = new ArrayList<>();
                     do {
                         pretDTO = new PretDTO();
+                        MembreDTO membreDTO = new MembreDTO();
+                        LivreDTO livreDTO = new LivreDTO();
                         pretDTO.setIdPret(resultSet.getString(1));
-                        pretDTO.getLivreDTO().setIdLivre(resultSet.getString(2));
-                        pretDTO.getMembreDTO().setIdMembre(resultSet.getString(3));
+                        livreDTO.setIdLivre(resultSet.getString(2));
+                        membreDTO.setIdMembre(resultSet.getString(3));
+                        pretDTO.setLivreDTO(livreDTO);
+                        pretDTO.setMembreDTO(membreDTO);
                         pretDTO.setDatePret(resultSet.getTimestamp(4));
                         pretDTO.setDateRetour(resultSet.getTimestamp(5));
                         prets.add(pretDTO);
@@ -349,9 +359,13 @@ public class PretDAO extends DAO implements IPretDAO {
                     prets = new ArrayList<>();
                     do {
                         pretDTO = new PretDTO();
+                        MembreDTO membreDTO = new MembreDTO();
+                        LivreDTO livreDTO = new LivreDTO();
                         pretDTO.setIdPret(resultSet.getString(1));
-                        pretDTO.getLivreDTO().setIdLivre(resultSet.getString(2));
-                        pretDTO.getMembreDTO().setIdMembre(resultSet.getString(3));
+                        livreDTO.setIdLivre(resultSet.getString(2));
+                        membreDTO.setIdMembre(resultSet.getString(3));
+                        pretDTO.setLivreDTO(livreDTO);
+                        pretDTO.setMembreDTO(membreDTO);
                         pretDTO.setDatePret(resultSet.getTimestamp(4));
                         pretDTO.setDateRetour(resultSet.getTimestamp(5));
                         prets.add(pretDTO);
@@ -395,9 +409,13 @@ public class PretDAO extends DAO implements IPretDAO {
                     prets = new ArrayList<>();
                     do {
                         pretDTO = new PretDTO();
+                        MembreDTO membreDTO = new MembreDTO();
+                        LivreDTO livreDTO = new LivreDTO();
                         pretDTO.setIdPret(resultSet.getString(1));
-                        pretDTO.getLivreDTO().setIdLivre(resultSet.getString(2));
-                        pretDTO.getMembreDTO().setIdMembre(resultSet.getString(3));
+                        livreDTO.setIdLivre(resultSet.getString(2));
+                        membreDTO.setIdMembre(resultSet.getString(3));
+                        pretDTO.setLivreDTO(livreDTO);
+                        pretDTO.setMembreDTO(membreDTO);
                         pretDTO.setDatePret(resultSet.getTimestamp(4));
                         pretDTO.setDateRetour(resultSet.getTimestamp(5));
                         prets.add(pretDTO);
@@ -441,9 +459,13 @@ public class PretDAO extends DAO implements IPretDAO {
                     prets = new ArrayList<>();
                     do {
                         pretDTO = new PretDTO();
+                        MembreDTO membreDTO = new MembreDTO();
+                        LivreDTO livreDTO = new LivreDTO();
                         pretDTO.setIdPret(resultSet.getString(1));
-                        pretDTO.getLivreDTO().setIdLivre(resultSet.getString(2));
-                        pretDTO.getMembreDTO().setIdMembre(resultSet.getString(3));
+                        livreDTO.setIdLivre(resultSet.getString(2));
+                        membreDTO.setIdMembre(resultSet.getString(3));
+                        pretDTO.setLivreDTO(livreDTO);
+                        pretDTO.setMembreDTO(membreDTO);
                         pretDTO.setDatePret(resultSet.getTimestamp(4));
                         pretDTO.setDateRetour(resultSet.getTimestamp(5));
                         prets.add(pretDTO);

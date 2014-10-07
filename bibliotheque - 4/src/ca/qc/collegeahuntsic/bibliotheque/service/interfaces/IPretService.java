@@ -19,7 +19,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 public interface IPretService extends IService {
     /**
      * Ajoute un nouveau prêt dans la base de données.
-     * 
+     *
      * @param connexion
      *            La connexion à utiliser
      * @param pretDTO
@@ -46,7 +46,7 @@ public interface IPretService extends IService {
 
     /**
      * Lit un prêt à partir de la base de données.
-     * 
+     *
      * @param connexion
      *            La connexion à utiliser
      * @param idPret
@@ -66,7 +66,7 @@ public interface IPretService extends IService {
 
     /**
      * Met à jour un prêt dans la base de données.
-     * 
+     *
      * @param connexion
      *            La connexion à utiliser
      * @param pretDTO
@@ -89,7 +89,7 @@ public interface IPretService extends IService {
 
     /**
      * Supprime un membre de la base de données.
-     * 
+     *
      * @param connexion
      *            La connexion à utiliser
      * @param pretDTO
@@ -114,7 +114,7 @@ public interface IPretService extends IService {
      * Trouve tous les prêts de la base de données. La liste est classée par
      * ordre croissant sur <code>sortByPropertyName</code>. Si aucun prêt n'est
      * trouvé, une {@link List} vide est retournée.
-     * 
+     *
      * @param connexion
      *            La connexion à utiliser
      * @param sortByPropertyName
@@ -136,7 +136,7 @@ public interface IPretService extends IService {
      * Trouve les prêts à partir d'un meembre. La liste est classée par ordre
      * croissant sur <code>sortByPropertyName</code>. Si aucun prêt n'est
      * trouvé, une {@link List} vide est retournée.
-     * 
+     *
      * @param connexion
      *            La connexion à utiliser
      * @param idMembre
@@ -164,7 +164,7 @@ public interface IPretService extends IService {
      * Trouve les prêts à partir d'un livre. La liste est classée par ordre
      * croissant sur <code>sortByPropertyName</code>. Si aucun prêt n'est
      * trouvé, une {@link List} vide est retournée.
-     * 
+     *
      * @param connexion
      *            La connexion à utiliser
      * @param idLivre
@@ -190,7 +190,7 @@ public interface IPretService extends IService {
 
     /**
      * Emprunte un livre.
-     * 
+     *
      * @param connexion
      *            La connexion à utiliser
      * @param pretDTO
@@ -232,7 +232,7 @@ public interface IPretService extends IService {
 
     /**
      * Renouvele un prêt.
-     * 
+     *
      * @param connexion
      *            La connexion à utiliser
      * @param pretDTO
@@ -273,7 +273,7 @@ public interface IPretService extends IService {
 
     /**
      * Retourne un livre.
-     * 
+     *
      * @param connexion
      *            La connexion à utiliser
      * @param pretDTO

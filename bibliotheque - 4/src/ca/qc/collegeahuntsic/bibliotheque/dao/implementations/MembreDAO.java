@@ -34,10 +34,11 @@ public class MembreDAO extends DAO implements IMembreDAO {
      * des suppressions et de la création de la clé primaire dans la table Membre
      * */
 
-    private static final String ADD_REQUEST = "INSERT INTO membre (idMembre, nom, telephone, limitePret, nbpret)"
+    private static final String ADD_REQUEST = "INSERT INTO membre (idMembre, nom, telephone, limitePret, nbpret) "
         + "VALUES (?,?,?,?,?)";
 
-    private static final String READ_REQUEST = "SELECT idMembre, nom, telephone, limitePret, nbpret FROM membre"
+    private static final String READ_REQUEST = "SELECT idMembre, nom, telephone, limitePret, nbPret "
+        + "FROM membre "
         + "WHERE idMembre = ?";
 
     private static final String UPDATE_REQUEST = "UPDATE membre"
@@ -72,8 +73,8 @@ public class MembreDAO extends DAO implements IMembreDAO {
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
     private static String getPrimaryKey(Connexion connexion) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyRequestException,
-        DAOException {
+    InvalidPrimaryKeyRequestException,
+    DAOException {
         return DAO.getPrimaryKey(connexion,
             MembreDAO.CREATE_PRIMARY_KEY);
 

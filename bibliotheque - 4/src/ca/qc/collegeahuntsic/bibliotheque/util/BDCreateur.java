@@ -20,7 +20,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.util.BDCreateurException;
  */
 class BDCreateur {
     public static void main(String args[]) throws BDCreateurException,
-        ConnexionException {
+    ConnexionException {
 
         try {
             if(args.length < 3) {

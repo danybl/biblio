@@ -14,6 +14,21 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyRequestException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dto.DuplicateDTOException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.facade.FacadeException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidLoanLimitException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.util.BibliothequeCreateur;
 import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
 
@@ -129,7 +144,6 @@ public class Bibliotheque {
                 afficherAide();
             } else if("acquerir".startsWith(command)) {
                 LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(readString(tokenizer));
                 livreDTO.setTitre(readString(tokenizer));
                 livreDTO.setAuteur(readString(tokenizer));
                 livreDTO.setDateAcquisition(readDate(tokenizer));
@@ -143,7 +157,7 @@ public class Bibliotheque {
                     livreDTO);
 
                 bibliothequeCreateur.commit();
-            } else if("emprunter".startsWith(command)) {
+            } else if("preter".startsWith(command)) {
                 MembreDTO membreDTO = new MembreDTO();
                 membreDTO.setIdMembre(readString(tokenizer));
                 LivreDTO livreDTO = new LivreDTO();
@@ -155,13 +169,13 @@ public class Bibliotheque {
                     pretDTO);
                 bibliothequeCreateur.commit();
             } else if("renouveler".startsWith(command)) {
-                MembreDTO membreDTO = new MembreDTO();
-                membreDTO.setIdMembre(readString(tokenizer));
-                LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(readString(tokenizer));
+                //                MembreDTO membreDTO = new MembreDTO();
+                //                membreDTO.setIdMembre(readString(tokenizer));
+                //LivreDTO livreDTO = new LivreDTO();
+                //livreDTO.setIdLivre(readString(tokenizer));
                 PretDTO pretDTO = new PretDTO();
-                pretDTO.setLivreDTO(livreDTO);
-                pretDTO.setMembreDTO(membreDTO);
+                pretDTO.setIdPret(readString(tokenizer));
+                // pretDTO.setMembreDTO(membreDTO);
                 bibliothequeCreateur.getPretFacade().renouveler(bibliothequeCreateur.getConnexion(),
                     pretDTO);
                 bibliothequeCreateur.commit();
@@ -228,8 +242,60 @@ public class Bibliotheque {
             } else {
                 System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
             }
-        } catch(Exception e) {
-            throw new BibliothequeException();
+        } catch(InterruptedException interruptedException) {
+            System.out.println("** "
+                + interruptedException.toString());
+            bibliothequeCreateur.rollback();
+        } catch(ServiceException serviceException) {
+            System.out.println("** "
+                + serviceException.toString());
+            bibliothequeCreateur.rollback();
+        } catch(BibliothequeException bibliothequeException) {
+            System.out.println("** "
+                + bibliothequeException.toString());
+            bibliothequeCreateur.rollback();
+        } catch(InvalidHibernateSessionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch(InvalidDTOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch(InvalidPrimaryKeyException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch(MissingDTOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch(InvalidDTOClassException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch(InvalidCriterionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch(InvalidSortByPropertyException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch(ExistingReservationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch(ExistingLoanException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch(InvalidLoanLimitException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch(InvalidPrimaryKeyRequestException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch(MissingLoanException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch(FacadeException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch(DuplicateDTOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
