@@ -526,6 +526,7 @@ public class PretService extends Service implements IPretService {
                     + unLivreDTO.getIdLivre()
                     + ") n'a pas été prêté ");
             }
+            unPretDTO = prets.get(0);
 
             delete(connexion,
                 unPretDTO);
