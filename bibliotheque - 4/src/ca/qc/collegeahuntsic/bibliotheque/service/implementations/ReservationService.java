@@ -348,6 +348,8 @@ public class ReservationService extends Service implements IReservationService {
                         + ") est déjà réservé pour quelqu'un d'autre");
                 }
             }
+            reservationDTO.setLivreDTO(unLivreDTO);
+            reservationDTO.setMembreDTO(unMembreDTO);
             reservationDTO.setDateReservation(new Timestamp(System.currentTimeMillis()));
             add(connexion,
                 reservationDTO);
