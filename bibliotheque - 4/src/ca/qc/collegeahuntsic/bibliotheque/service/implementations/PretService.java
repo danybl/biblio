@@ -25,6 +25,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidDAOException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IPretService;
 
@@ -471,7 +472,6 @@ public class PretService extends Service implements IPretService {
             java.sql.Timestamp dateRetour = new java.sql.Timestamp(datePret.getTime()
                 + deuxSemaines);
 
-            unPretDTO = new PretDTO();
             unPretDTO.setDatePret(datePret);
             unPretDTO.setDateRetour(dateRetour);
 
@@ -497,14 +497,17 @@ public class PretService extends Service implements IPretService {
         InvalidSortByPropertyException,
         ExistingLoanException,
         ExistingReservationException,
-        ServiceException {
+        ServiceException,
+        MissingLoanException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
         if(pretDTO == null) {
             throw new InvalidDTOException("Le pret ne peut être null");
         }
+
         try {
+
             LivreDTO unLivreDTO = (LivreDTO) getLivreDAO().get(connexion,
                 pretDTO.getLivreDTO().getIdLivre());
             if(unLivreDTO == null) {
@@ -512,9 +515,20 @@ public class PretService extends Service implements IPretService {
                     + pretDTO.getLivreDTO().getIdLivre()
                     + " n'existe pas");
             }
-            PretDTO nouveauPretDTO = new PretDTO();
+            List<PretDTO> prets = getPretDAO().findByLivre(connexion,
+                unLivreDTO.getIdLivre(),
+                PretDTO.DATE_PRET_COLUMN_NAME);
+            PretDTO unPretDTO = new PretDTO();
+            if(prets.isEmpty()) {
+                throw new MissingLoanException("Le livre "
+                    + unLivreDTO.getTitre()
+                    + " (ID de livre : "
+                    + unLivreDTO.getIdLivre()
+                    + ") n'a pas été prêté ");
+            }
+
             delete(connexion,
-                nouveauPretDTO);
+                unPretDTO);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }

@@ -215,13 +215,12 @@ public class Bibliotheque {
                     reservationDTO);
                 bibliothequeCreateur.commit();
             } else if("utiliser".startsWith(command)) {
-                MembreDTO membreDTO = new MembreDTO();
-                membreDTO.setIdMembre(readString(tokenizer));
-                LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(readString(tokenizer));
+                //                MembreDTO membreDTO = new MembreDTO();
+                //                membreDTO.setIdMembre(readString(tokenizer));
+                //                LivreDTO livreDTO = new LivreDTO();
+                //                livreDTO.setIdLivre(readString(tokenizer));
                 ReservationDTO reservationDTO = new ReservationDTO();
-                reservationDTO.setLivreDTO(livreDTO);
-                reservationDTO.setMembreDTO(membreDTO);
+                reservationDTO.setIdReservation(readString(tokenizer));
                 bibliothequeCreateur.getReservationService().utiliser(bibliothequeCreateur.getConnexion(),
                     reservationDTO);
                 bibliothequeCreateur.commit();

@@ -83,8 +83,8 @@ public class PretDAO extends DAO implements IPretDAO {
      * @throws DAOException S'il y a une erreur avec la base de données
      * */
     private static String getPrimaryKey(Connexion connexion) throws InvalidHibernateSessionException,
-    InvalidPrimaryKeyRequestException,
-    DAOException {
+        InvalidPrimaryKeyRequestException,
+        DAOException {
         return DAO.getPrimaryKey(connexion,
             PretDAO.CREATE_PRIMARY_KEY);
     }
@@ -192,9 +192,9 @@ public class PretDAO extends DAO implements IPretDAO {
         PretDTO pretDTO = (PretDTO) dto;
         try(
             PreparedStatement updatePreparedStatement = connexion.getConnection().prepareStatement(PretDAO.UPDATE_REQUEST)) {
-            updatePreparedStatement.setString(2,
+            updatePreparedStatement.setString(1,
                 pretDTO.getLivreDTO().getIdLivre());
-            updatePreparedStatement.setString(3,
+            updatePreparedStatement.setString(2,
                 pretDTO.getMembreDTO().getIdMembre());
             updatePreparedStatement.setTimestamp(3,
                 pretDTO.getDatePret());

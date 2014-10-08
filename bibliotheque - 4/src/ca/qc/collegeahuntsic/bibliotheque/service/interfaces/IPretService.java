@@ -14,6 +14,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 
 public interface IPretService extends IService {
@@ -311,5 +312,6 @@ public interface IPretService extends IService {
         InvalidSortByPropertyException,
         ExistingLoanException,
         ExistingReservationException,
+        MissingLoanException,
         ServiceException;
 }
