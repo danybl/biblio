@@ -1,13 +1,6 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.dao.implementations;
 
-import java.io.Serializable;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.DTO;
@@ -20,6 +13,13 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyRequest
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
+import java.io.Serializable;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * DAO pour effectuer des CRUDs avec la table <code>membre</code>.
@@ -41,23 +41,23 @@ public class MembreDAO extends DAO implements IMembreDAO {
         + "FROM membre "
         + "WHERE idMembre = ?";
 
-    private static final String UPDATE_REQUEST = "UPDATE membre"
-        + "SET nom = ?, telephone = ?, limitePret = ? "
+    private static final String UPDATE_REQUEST = "UPDATE membre "
+        + "SET nom = ?, telephone = ?, limitePret = ?, nbPret = ? "
         + "WHERE idMembre = ?";
 
-    private static final String DELETE_REQUEST = "DELETE FROM membre"
+    private static final String DELETE_REQUEST = "DELETE FROM membre "
         + "WHERE idMembre = ?";
 
     private static final String GET_ALL_REQUEST = "SELECT idMembre, nom, telephone, limitePret, nbpret"
         + " FROM membre";
 
     private static final String FIND_BY_NOM = "SELECT idMembre, nom, telephone, limitePret, nbpret"
-        + "FROM membre"
-        + "where nom like ?";
+        + " FROM membre"
+        + " where nom like ?";
 
     private static final String FIND_BY_TEL = "SELECT idMembre, nom, telephone, limitePret, nbpret"
-        + "FROM membre"
-        + "where telephone = ?";
+        + " FROM membre"
+        + " where telephone = ?";
 
     private static final String CREATE_PRIMARY_KEY = "SELECT SEQ_ID_MEMBRE.NEXTVAL from DUAL";
 
@@ -191,8 +191,10 @@ public class MembreDAO extends DAO implements IMembreDAO {
             updatePreparedStatement.setString(2,
                 membreDTO.getTelephone());
             updatePreparedStatement.setString(3,
-                membreDTO.getNbPret());
+                membreDTO.getLimitePret());
             updatePreparedStatement.setString(4,
+                membreDTO.getNbPret());
+            updatePreparedStatement.setString(5,
                 membreDTO.getIdMembre());
             updatePreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
