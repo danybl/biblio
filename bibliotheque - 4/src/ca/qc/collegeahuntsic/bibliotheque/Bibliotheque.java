@@ -28,7 +28,6 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanExceptio
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.util.BibliothequeCreateur;
 import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
 
@@ -169,13 +168,8 @@ public class Bibliotheque {
                     pretDTO);
                 bibliothequeCreateur.commit();
             } else if("renouveler".startsWith(command)) {
-                //                MembreDTO membreDTO = new MembreDTO();
-                //                membreDTO.setIdMembre(readString(tokenizer));
-                //LivreDTO livreDTO = new LivreDTO();
-                //livreDTO.setIdLivre(readString(tokenizer));
                 PretDTO pretDTO = new PretDTO();
                 pretDTO.setIdPret(readString(tokenizer));
-                // pretDTO.setMembreDTO(membreDTO);
                 bibliothequeCreateur.getPretFacade().renouveler(bibliothequeCreateur.getConnexion(),
                     pretDTO);
                 bibliothequeCreateur.commit();
@@ -187,6 +181,9 @@ public class Bibliotheque {
                 bibliothequeCreateur.getPretFacade().retourner(bibliothequeCreateur.getConnexion(),
                     pretDTO);
                 bibliothequeCreateur.commit();
+                //La méthode du prof retourne un pret
+                //et bibliocreateur.terminer
+
             } else if("inscrire".startsWith(command)) {
                 MembreDTO membreDTO = new MembreDTO();
                 membreDTO.setNom(readString(tokenizer));
@@ -215,86 +212,44 @@ public class Bibliotheque {
                     reservationDTO);
                 bibliothequeCreateur.commit();
             } else if("utiliser".startsWith(command)) {
-                //                MembreDTO membreDTO = new MembreDTO();
-                //                membreDTO.setIdMembre(readString(tokenizer));
-                //                LivreDTO livreDTO = new LivreDTO();
-                //                livreDTO.setIdLivre(readString(tokenizer));
                 ReservationDTO reservationDTO = new ReservationDTO();
                 reservationDTO.setIdReservation(readString(tokenizer));
-                bibliothequeCreateur.getReservationService().utiliser(bibliothequeCreateur.getConnexion(),
+                bibliothequeCreateur.getReservationFacade().utiliser(bibliothequeCreateur.getConnexion(),
                     reservationDTO);
                 bibliothequeCreateur.commit();
             } else if("annuler".startsWith(command)) {
                 ReservationDTO reservationDTO = new ReservationDTO();
                 reservationDTO.setIdReservation(readString(tokenizer));
-                bibliothequeCreateur.getReservationService().annuler(bibliothequeCreateur.getConnexion(),
+                bibliothequeCreateur.getReservationFacade().annuler(bibliothequeCreateur.getConnexion(),
                     reservationDTO);
                 bibliothequeCreateur.commit();
-                //          } else if("listerLivres".startsWith(command)) {
-                //              gestionBiblio.livreDAO.listerLivres();
-                //          } else if("listerLivresRetard".startsWith(command)) {
-                //              gestionBiblio.livreDAO.listerLivresRetard(readString(tokenizer) /* date courante */);
-                //          } else if("listerLivresTitre".startsWith(command)) {
-                //              gestionBiblio.livreDAO.listerLivresTitre(readString(tokenizer) /* mot */);
             } else if("--".startsWith(command)) {
                 // ne rien faire; c'est un commentaire
             } else {
                 System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
             }
+        } catch(
+            InvalidHibernateSessionException
+            | InvalidDTOException
+            | InvalidPrimaryKeyException
+            | MissingDTOException
+            | InvalidDTOClassException
+            | InvalidCriterionException
+            | InvalidSortByPropertyException
+            | ExistingReservationException
+            | ExistingLoanException
+            | InvalidLoanLimitException
+            | InvalidPrimaryKeyRequestException
+            | MissingLoanException
+            | FacadeException
+            | DuplicateDTOException exception) {
+            System.out.println("**** "
+                + exception.getMessage());
+            bibliothequeCreateur.rollback();
         } catch(InterruptedException interruptedException) {
-            System.out.println("** "
+            System.out.println("**** "
                 + interruptedException.toString());
             bibliothequeCreateur.rollback();
-        } catch(ServiceException serviceException) {
-            System.out.println("** "
-                + serviceException.toString());
-            bibliothequeCreateur.rollback();
-        } catch(BibliothequeException bibliothequeException) {
-            System.out.println("** "
-                + bibliothequeException.toString());
-            bibliothequeCreateur.rollback();
-        } catch(InvalidHibernateSessionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch(InvalidDTOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch(InvalidPrimaryKeyException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch(MissingDTOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch(InvalidDTOClassException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch(InvalidCriterionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch(InvalidSortByPropertyException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch(ExistingReservationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch(ExistingLoanException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch(InvalidLoanLimitException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch(InvalidPrimaryKeyRequestException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch(MissingLoanException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch(FacadeException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch(DuplicateDTOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 
@@ -318,9 +273,6 @@ public class Bibliotheque {
         System.out.println("  reserver <idLivre> <idMembre>");
         System.out.println("  utiliser <idReservation>");
         System.out.println("  annulerRes <idReservation>");
-        // System.out.println("  listerLivresRetard <dateCourante>");
-        //System.out.println("  listerLivresTitre <mot>");
-        //System.out.println("  listerLivres");
     }
 
     /**
