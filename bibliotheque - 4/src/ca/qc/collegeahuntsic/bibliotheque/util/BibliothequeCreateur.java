@@ -23,29 +23,37 @@ import ca.qc.collegeahuntsic.bibliotheque.facade.implementations.LivreFacade;
 import ca.qc.collegeahuntsic.bibliotheque.facade.implementations.MembreFacade;
 import ca.qc.collegeahuntsic.bibliotheque.facade.implementations.PretFacade;
 import ca.qc.collegeahuntsic.bibliotheque.facade.implementations.ReservationFacade;
+import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.ILivreFacade;
+import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IMembreFacade;
+import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IPretFacade;
+import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IReservationFacade;
 import ca.qc.collegeahuntsic.bibliotheque.service.implementations.LivreService;
 import ca.qc.collegeahuntsic.bibliotheque.service.implementations.MembreService;
 import ca.qc.collegeahuntsic.bibliotheque.service.implementations.PretService;
 import ca.qc.collegeahuntsic.bibliotheque.service.implementations.ReservationService;
+import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.ILivreService;
+import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService;
+import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IPretService;
+import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IReservationService;
 
 public class BibliothequeCreateur {
     private Connexion connexion;
 
-    private LivreService livreService;
+    private ILivreService livreService;
 
-    private MembreService membreService;
+    private IMembreService membreService;
 
-    private PretService pretService;
+    private IPretService pretService;
 
-    private ReservationService reservationService;
+    private IReservationService reservationService;
 
-    private LivreFacade livreFacade;
+    private ILivreFacade livreFacade;
 
-    private MembreFacade membreFacade;
+    private IMembreFacade membreFacade;
 
-    private ReservationFacade reservationFacade;
+    private IReservationFacade reservationFacade;
 
-    private PretFacade pretFacade;
+    private IPretFacade pretFacade;
 
     /**
      * Crée les services nécessaires à l'application bibliothèque.
@@ -125,7 +133,7 @@ public class BibliothequeCreateur {
      *
      * @return La variable d'instance <code>this.livreService</code>
      */
-    public LivreService getLivreService() {
+    private ILivreService getLivreService() {
         return this.livreService;
     }
 
@@ -134,7 +142,7 @@ public class BibliothequeCreateur {
      *
      * @param livreService La valeur à utiliser pour la variable d'instance <code>this.livreService</code>
      */
-    private void setLivreService(LivreService livreService) {
+    private void setLivreService(ILivreService livreService) {
         this.livreService = livreService;
     }
 
@@ -143,7 +151,7 @@ public class BibliothequeCreateur {
      *
      * @return La variable d'instance <code>this.membreService</code>
      */
-    public MembreService getMembreService() {
+    private IMembreService getMembreService() {
         return this.membreService;
     }
 
@@ -152,7 +160,7 @@ public class BibliothequeCreateur {
      *
      * @param membreService La valeur à utiliser pour la variable d'instance <code>this.membreService</code>
      */
-    private void setMembreService(MembreService membreService) {
+    private void setMembreService(IMembreService membreService) {
         this.membreService = membreService;
     }
 
@@ -161,7 +169,7 @@ public class BibliothequeCreateur {
      *
      * @return La variable d'instance <code>this.pretService</code>
      */
-    public PretService getPretService() {
+    private IPretService getPretService() {
         return this.pretService;
     }
 
@@ -170,7 +178,7 @@ public class BibliothequeCreateur {
      *
      * @param pretService La valeur à utiliser pour la variable d'instance <code>this.pretService</code>
      */
-    private void setPretService(PretService pretService) {
+    private void setPretService(IPretService pretService) {
         this.pretService = pretService;
     }
 
@@ -179,7 +187,7 @@ public class BibliothequeCreateur {
      *
      * @return La variable d'instance <code>this.reservationService</code>
      */
-    public ReservationService getReservationService() {
+    private IReservationService getReservationService() {
         return this.reservationService;
     }
 
@@ -188,41 +196,41 @@ public class BibliothequeCreateur {
      *
      * @param reservationService La valeur à utiliser pour la variable d'instance <code>this.reservationService</code>
      */
-    private void setReservationService(ReservationService reservationService) {
+    private void setReservationService(IReservationService reservationService) {
         this.reservationService = reservationService;
     }
 
     // EndRegion Getters and Setters
 
-    public LivreFacade getLivreFacade() {
+    public ILivreFacade getLivreFacade() {
         return this.livreFacade;
     }
 
-    private void setLivreFacade(LivreFacade livreFacade) {
+    private void setLivreFacade(ILivreFacade livreFacade) {
         this.livreFacade = livreFacade;
     }
 
-    public MembreFacade getMembreFacade() {
+    public IMembreFacade getMembreFacade() {
         return this.membreFacade;
     }
 
-    private void setMembreFacade(MembreFacade membreFacade) {
+    private void setMembreFacade(IMembreFacade membreFacade) {
         this.membreFacade = membreFacade;
     }
 
-    public ReservationFacade getReservationFacade() {
+    public IReservationFacade getReservationFacade() {
         return this.reservationFacade;
     }
 
-    private void setReservationFacade(ReservationFacade reservationFacade) {
+    private void setReservationFacade(IReservationFacade reservationFacade) {
         this.reservationFacade = reservationFacade;
     }
 
-    public PretFacade getPretFacade() {
+    public IPretFacade getPretFacade() {
         return this.pretFacade;
     }
 
-    private void setPretFacade(PretFacade pretFacade) {
+    private void setPretFacade(IPretFacade pretFacade) {
         this.pretFacade = pretFacade;
     }
 

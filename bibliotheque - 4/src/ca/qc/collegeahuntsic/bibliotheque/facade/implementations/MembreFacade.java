@@ -18,9 +18,10 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanExceptio
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
+import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IMembreFacade;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService;
 
-public class MembreFacade {
+public class MembreFacade extends Facade implements IMembreFacade {
     private IMembreService membreService;
 
     /**
@@ -58,6 +59,7 @@ public class MembreFacade {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void desinscrire(Connexion connexion,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
@@ -82,6 +84,7 @@ public class MembreFacade {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void inscrire(Connexion connexion,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
@@ -92,7 +95,8 @@ public class MembreFacade {
         InvalidDTOClassException,
         InvalidPrimaryKeyRequestException,
         FacadeException,
-        DuplicateDTOException {
+        DuplicateDTOException,
+        FacadeException {
         try {
             getMembreService().inscrire(connexion,
                 membreDTO);
