@@ -6,8 +6,10 @@ import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import org.hibernate.Session;
 
 /**
@@ -16,16 +18,23 @@ import org.hibernate.Session;
 
 public class MembreDAO extends DAO implements IMembreDAO {
 
+    public MembreDAO(Class<MembreDTO> memebreDTOClass) throws InvalidDTOClassException {
+        super(memebreDTOClass);
+    }
+
     /**
      * {@inheritDoc}
+     * @throws InvalidCriterionValueException
      */
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<MembreDTO> findByNom(Session session,
         String nom,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
+        InvalidCriterionValueException,
         DAOException {
         return (List<MembreDTO>) super.find(session,
             MembreDTO.NOM_COLUMN_NAME,
@@ -36,12 +45,14 @@ public class MembreDAO extends DAO implements IMembreDAO {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<MembreDTO> findByTel(Session session,
         String numTel,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
+        InvalidCriterionValueException,
         DAOException {
 
         return (List<MembreDTO>) super.find(session,
