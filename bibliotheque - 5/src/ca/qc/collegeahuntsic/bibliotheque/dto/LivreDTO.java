@@ -1,6 +1,3 @@
-// Fichier LivreDTO.java
-// Auteur : Gilles Bénichou
-// Date de création : 2014-08-24
 
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
@@ -12,7 +9,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * DTO de la table <code>livre</code>.
- * 
+ *
  * @author Gilles Benichou
  */
 public final class LivreDTO extends DTO {

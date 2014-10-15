@@ -1,9 +1,7 @@
-// Fichier DTO.java
-// Auteur : Gilles Bénichou
-// Date de création : 2014-08-24
 
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
+import ca.qc.collegeahuntsic.bibliotheque.Constants;
 import java.beans.BeanInfo;
 import java.beans.IndexedPropertyDescriptor;
 import java.beans.IntrospectionException;
@@ -15,7 +13,6 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import ca.qc.collegeahuntsic.bibliotheque.Constants;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
@@ -56,7 +53,7 @@ public class DTO implements Serializable {
      * <br />
      * Note that it is generally necessary to override the hashCode method whenever this method is overridden, so as to maintain the general
      * contract for the hashCode method, which states that equal objects must have equal hash codes.
-     * 
+     *
      * @param obj The reference object with which to compare
      * @return <code>true</code> if this object is the same as the obj argument; <code>false</code> otherwise
      */
@@ -90,7 +87,7 @@ public class DTO implements Serializable {
      * As much as is reasonably practical, the hashCode method defined by class Object does return distinct integers for distinct objects (this
      * is typically implemented by converting the internal address of the object into an integer, but this implementation technique is not
      * required by the Java<small><sup>TM</sup></small> programming language).
-     * 
+     *
      * @return A hash code value for this object
      */
     @Override
@@ -109,13 +106,13 @@ public class DTO implements Serializable {
      * which the object is an instance, the at-sign character '<code>@</code>', and the unsigned hexadecimal representation of the hash code of
      * the object. In other words, this method returns a string equal to the value of:
      * <blockquote>
-     * 
+     *
      * <pre>
      * getClass().getName()
      *         + '@'
      *         + Integer.toHexString(hashCode())
      * </pre>
-     * 
+     *
      * </blockquote>
      * </p>
      * @return A string representation of the object.
@@ -148,7 +145,7 @@ public class DTO implements Serializable {
                             + Constants.SPACE.toString()
                             + getter.invoke(this,
                                 (Object) null)
-                            + Constants.COMMA.toString();
+                                + Constants.COMMA.toString();
                     } catch(NullPointerException nullPointerException) {
                         // Nothing to do.
                     } catch(IllegalAccessException illegalAccessException) {

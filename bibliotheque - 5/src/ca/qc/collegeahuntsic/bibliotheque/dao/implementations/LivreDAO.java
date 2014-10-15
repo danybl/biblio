@@ -18,7 +18,7 @@ import org.hibernate.Session;
  */
 public class LivreDAO extends DAO implements ILivreDAO {
 
-    protected LivreDAO(Class<?> dtoClass) throws InvalidDTOClassException {
+    public LivreDAO(Class<?> dtoClass) throws InvalidDTOClassException {
         super(dtoClass);
     }
 
