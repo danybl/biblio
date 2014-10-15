@@ -1,3 +1,6 @@
+// Fichier ReservationDTO.java
+// Auteur : Gilles Bénichou
+// Date de création : 2014-08-24
 
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
@@ -6,11 +9,19 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- * Permet de représenter un tuple de la table membre.
- *
+ * DTO de la table <code>reservation</code>.
+ * 
+ * @author Gilles Benichou
  */
-
 public final class ReservationDTO extends DTO {
+    public static final String ID_RESERVATION_COLUMN_NAME = "idReservation";
+
+    public static final String ID_MEMBRE_COLUMN_NAME = "idMembre";
+
+    public static final String ID_LIVRE_COLUMN_NAME = "idLivre";
+
+    public static final String DATE_RESERVATION_COLUMN_NAME = "dateReservation";
+
     private static final long serialVersionUID = 1L;
 
     private String idReservation;
@@ -21,18 +32,14 @@ public final class ReservationDTO extends DTO {
 
     private Timestamp dateReservation;
 
-    public static final String ID_RESERVATION_COLUMN_NAME = "idReservation";
-
-    public static final String ID_MEMBRE_COLUMN_NAME = "idMembre";
-
-    public static final String ID_LIVRE_COLUMN_NAME = "idLivre";
-
-    public static final String DATE_RESERVATION_COLUMN_NAME = "dateReservation";
-
+    /**
+     * Crée un DTO de la table <code>reservation</code>.
+     */
     public ReservationDTO() {
         super();
     }
 
+    // Region Getters and Setters
     /**
      * Getter de la variable d'instance <code>this.idReservation</code>.
      *
@@ -105,7 +112,7 @@ public final class ReservationDTO extends DTO {
         this.dateReservation = dateReservation;
     }
 
-    //EndRegion
+    // EndRegion Getters and Setters
 
     /**
      * {@inheritDoc}
@@ -117,8 +124,8 @@ public final class ReservationDTO extends DTO {
             equals = obj != null
                 && obj instanceof ReservationDTO;
             if(equals) {
-                ReservationDTO reservationDTO = (ReservationDTO) obj;
-                EqualsBuilder equalsBuilder = new EqualsBuilder();
+                final ReservationDTO reservationDTO = (ReservationDTO) obj;
+                final EqualsBuilder equalsBuilder = new EqualsBuilder();
                 equalsBuilder.appendSuper(super.equals(reservationDTO));
                 equalsBuilder.append(getIdReservation(),
                     reservationDTO.getIdReservation());
@@ -133,7 +140,7 @@ public final class ReservationDTO extends DTO {
      */
     @Override
     public int hashCode() {
-        HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(25,
+        final HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(25,
             15);
         hashCodeBuilder.appendSuper(super.hashCode());
         hashCodeBuilder.append(getIdReservation());

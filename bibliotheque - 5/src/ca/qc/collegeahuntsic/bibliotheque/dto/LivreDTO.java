@@ -1,15 +1,28 @@
+// Fichier LivreDTO.java
+// Auteur : Gilles Bénichou
+// Date de création : 2014-08-24
 
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
 import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.Set;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * DTO de la table <code>livre</code>.
- *
+ * 
+ * @author Gilles Benichou
  */
 public final class LivreDTO extends DTO {
+    public static final String ID_LIVRE_COLUMN_NAME = "idLivre";
+
+    public static final String TITRE_COLUMN_NAME = "titre";
+
+    public static final String AUTEUR_COLUMN_NAME = "auteur";
+
+    public static final String DATE_ACQUISITION_COLUMN_NAME = "dateAcquisition";
 
     private static final long serialVersionUID = 1L;
 
@@ -21,24 +34,25 @@ public final class LivreDTO extends DTO {
 
     private Timestamp dateAcquisition;
 
-    public static final String ID_LIVRE_COLUMN_NAME = "idLivre";
+    private Set<PretDTO> prets;
 
-    public static final String TITRE_COLUMN_NAME = "titre";
+    private Set<ReservationDTO> reservations;
 
-    public static final String AUTEUR_COLUMN_NAME = "auteur";
+    /**
+     * Crée un DTO de la table <code>livre</code>.
+     */
+    public LivreDTO() {
+        super();
+        setPrets(Collections.EMPTY_SET);
+        setReservations(Collections.EMPTY_SET);
+    }
 
-    public static final String DATE_ACQUISITION_COLUMN_NAME = "dateAcquisition";
-
+    // Region Getters and Setters
     /**
      * Getter de la variable d'instance <code>this.idLivre</code>.
      *
      * @return La variable d'instance <code>this.idLivre</code>
      */
-
-    public LivreDTO() {
-        super();
-    }
-
     public String getIdLivre() {
         return this.idLivre;
     }
@@ -106,25 +120,56 @@ public final class LivreDTO extends DTO {
         this.dateAcquisition = dateAcquisition;
     }
 
-    @Override
-    public int hashCode() {
-        HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(459,
-            449);
-        hashCodeBuilder.appendSuper(super.hashCode());
-        hashCodeBuilder.append(getIdLivre());
-        return hashCodeBuilder.toHashCode();
+    /**
+     * Getter de la variable d'instance <code>this.prets</code>.
+     *
+     * @return La variable d'instance <code>this.prets</code>
+     */
+    public Set<PretDTO> getPrets() {
+        return this.prets;
     }
 
+    /**
+     * Setter de la variable d'instance <code>this.prets</code>.
+     *
+     * @param prets La valeur à utiliser pour la variable d'instance <code>this.prets</code>
+     */
+    public void setPrets(Set<PretDTO> prets) {
+        this.prets = prets;
+    }
+
+    /**
+     * Getter de la variable d'instance <code>this.reservations</code>.
+     *
+     * @return La variable d'instance <code>this.reservations</code>
+     */
+    public Set<ReservationDTO> getReservations() {
+        return this.reservations;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.reservations</code>.
+     *
+     * @param reservations La valeur à utiliser pour la variable d'instance <code>this.reservations</code>
+     */
+    public void setReservations(Set<ReservationDTO> reservations) {
+        this.reservations = reservations;
+    }
+
+    // EndRegion Getters and Setters
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    //A utiliser plus tard
     public boolean equals(Object obj) {
         boolean equals = this == obj;
         if(!equals) {
             equals = obj != null
                 && obj instanceof LivreDTO;
             if(equals) {
-                LivreDTO livreDTO = (LivreDTO) obj;
-                EqualsBuilder equalsBuilder = new EqualsBuilder();
+                final LivreDTO livreDTO = (LivreDTO) obj;
+                final EqualsBuilder equalsBuilder = new EqualsBuilder();
                 equalsBuilder.appendSuper(super.equals(livreDTO));
                 equalsBuilder.append(getIdLivre(),
                     livreDTO.getIdLivre());
@@ -132,5 +177,17 @@ public final class LivreDTO extends DTO {
             }
         }
         return equals;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        final HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(459,
+            449);
+        hashCodeBuilder.appendSuper(super.hashCode());
+        hashCodeBuilder.append(getIdLivre());
+        return hashCodeBuilder.toHashCode();
     }
 }
