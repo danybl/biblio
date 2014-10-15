@@ -22,9 +22,6 @@ public class LivreDAO extends DAO implements ILivreDAO {
         super(dtoClass);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
     /**
      * {@inheritDoc}
