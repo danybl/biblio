@@ -18,8 +18,8 @@ import org.hibernate.Session;
  */
 public class LivreDAO extends DAO implements ILivreDAO {
 
-    public LivreDAO(Class<?> dtoClass) throws InvalidDTOClassException {
-        super(dtoClass);
+    public LivreDAO(Class<LivreDTO> livreDTOClass) throws InvalidDTOClassException {
+        super(livreDTOClass);
     }
 
     @SuppressWarnings("unchecked")
