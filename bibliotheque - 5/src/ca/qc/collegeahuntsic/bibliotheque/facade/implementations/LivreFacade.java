@@ -1,9 +1,9 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.facade.implementations;
 
-import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyRequestException;
@@ -18,6 +18,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationE
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.ILivreFacade;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.ILivreService;
+import org.hibernate.Session;
 
 /**
  * Facade pour interagir avec le service de livres.
@@ -65,14 +66,14 @@ public class LivreFacade extends Facade implements ILivreFacade {
      * {@inheritDoc}
      */
     @Override
-    public void acquerir(Connexion connexion,
+    public void acquerir(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
         InvalidPrimaryKeyRequestException,
         FacadeException {
         try {
-            getLivreService().acquerir(connexion,
+            getLivreService().acquerir(session,
                 livreDTO);
         } catch(ServiceException serviceException) {
             throw new FacadeException(serviceException);
@@ -83,19 +84,20 @@ public class LivreFacade extends Facade implements ILivreFacade {
      * {@inheritDoc}
      */
     @Override
-    public void vendre(Connexion connexion,
+    public void vendre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
         InvalidPrimaryKeyException,
         MissingDTOException,
         InvalidCriterionException,
+        InvalidCriterionValueException,
         InvalidSortByPropertyException,
         ExistingLoanException,
         ExistingReservationException,
         FacadeException {
         try {
-            getLivreService().vendre(connexion,
+            getLivreService().vendre(session,
                 livreDTO);
         } catch(ServiceException serviceException) {
             throw new FacadeException(serviceException);

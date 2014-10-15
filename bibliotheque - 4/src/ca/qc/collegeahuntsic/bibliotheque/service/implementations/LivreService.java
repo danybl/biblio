@@ -219,7 +219,7 @@ public class LivreService extends Service implements ILivreService {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
+
     @Override
     public List<LivreDTO> getAll(Connexion connexion,
         String sortByPropertyName) throws InvalidHibernateSessionException,
