@@ -14,8 +14,6 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyRequestException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
@@ -156,7 +154,6 @@ public class LivreService extends Service implements ILivreService {
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
-        InvalidPrimaryKeyRequestException,
         ServiceException {
         try {
             getLivreDAO().add(session,
@@ -172,7 +169,6 @@ public class LivreService extends Service implements ILivreService {
     @Override
     public LivreDTO get(Session session,
         String idLivre) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyException,
         ServiceException {
         try {
             return (LivreDTO) getLivreDAO().get(session,
@@ -261,7 +257,6 @@ public class LivreService extends Service implements ILivreService {
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
-        InvalidPrimaryKeyRequestException,
         ServiceException {
         add(session,
             livreDTO);
@@ -275,7 +270,6 @@ public class LivreService extends Service implements ILivreService {
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
-        InvalidPrimaryKeyException,
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,

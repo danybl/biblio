@@ -11,7 +11,6 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
@@ -93,13 +92,9 @@ public class DAO implements IDAO {
     @Override
     public DTO get(Session session,
         Serializable primaryKey) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyException,
         DAOException {
         if(session == null) {
             throw new InvalidHibernateSessionException("La session Hibernate ne peut être null");
-        }
-        if(primaryKey == null) {
-            throw new InvalidPrimaryKeyException("La clef primaire ne peut être null");
         }
         try {
             DTO dto = (DTO) session.get(getDtoClass(),

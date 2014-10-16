@@ -6,7 +6,6 @@ import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dto.DTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
 import org.hibernate.Session;
@@ -39,12 +38,10 @@ public interface IDAO {
      * @param primaryKey La clef primaire du DTO à lire
      * @return Le livre
      * @throws InvalidHibernateSessionException Si la session Hibernate est <code>null</code>
-     * @throws InvalidPrimaryKeyException Si la clef primaire du DTO est <code>null</code>
      * @throws DAOException S'il y a une erreur avec la base de données
      */
     DTO get(Session session,
         Serializable primaryKey) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyException,
         DAOException;
 
     /**
