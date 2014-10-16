@@ -1,7 +1,7 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.facade.interfaces;
 
-import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import org.hibernate.Session;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
@@ -19,7 +19,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidLoanLimitExce
 
 public interface IMembreFacade extends IFacade {
 
-    void inscrire(Connexion connexion,
+    void inscrire(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidPrimaryKeyException,
@@ -34,7 +34,7 @@ public interface IMembreFacade extends IFacade {
         DuplicateDTOException,
         FacadeException;
 
-    void desinscrire(Connexion connexion,
+    void desinscrire(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidPrimaryKeyException,
