@@ -1,7 +1,6 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.facade.implementations;
 
-import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
@@ -20,6 +19,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IPretFacade;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IPretService;
+import org.hibernate.Session;
 
 public class PretFacade extends Facade implements IPretFacade {
     private IPretService pretService;
@@ -55,7 +55,7 @@ public class PretFacade extends Facade implements IPretFacade {
      * {@inheritDoc}
      */
     @Override
-    public void emprunter(Connexion connexion,
+    public void emprunter(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidPrimaryKeyException,
@@ -70,7 +70,7 @@ public class PretFacade extends Facade implements IPretFacade {
         InvalidPrimaryKeyRequestException,
         FacadeException {
         try {
-            getPretService().emprunter(connexion,
+            getPretService().emprunter(session,
                 pretDTO);
         } catch(ServiceException serviceException) {
             throw new FacadeException(serviceException);
@@ -81,20 +81,22 @@ public class PretFacade extends Facade implements IPretFacade {
      * {@inheritDoc}
      */
     @Override
-    public void retourner(Connexion connexion,
+    public void retourner(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidPrimaryKeyException,
         MissingDTOException,
-        MissingLoanException,
-        InvalidDTOClassException,
-        FacadeException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
+        MissingLoanException,
         ExistingLoanException,
-        ExistingReservationException {
+        ExistingReservationException,
+        InvalidLoanLimitException,
+        InvalidDTOClassException,
+        InvalidPrimaryKeyRequestException,
+        FacadeException {
         try {
-            getPretService().retourner(connexion,
+            getPretService().retourner(session,
                 pretDTO);
         } catch(ServiceException serviceException) {
             throw new FacadeException(serviceException);
@@ -106,7 +108,7 @@ public class PretFacade extends Facade implements IPretFacade {
      * {@inheritDoc}
      */
     @Override
-    public void renouveler(Connexion connexion,
+    public void renouveler(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
@@ -118,7 +120,7 @@ public class PretFacade extends Facade implements IPretFacade {
         ExistingReservationException,
         FacadeException {
         try {
-            getPretService().renouveler(connexion,
+            getPretService().renouveler(session,
                 pretDTO);
         } catch(ServiceException serviceException) {
             throw new FacadeException(serviceException);

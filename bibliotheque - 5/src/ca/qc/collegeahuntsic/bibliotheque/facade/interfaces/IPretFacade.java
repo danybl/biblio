@@ -1,7 +1,6 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.facade.interfaces;
 
-import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
@@ -16,10 +15,11 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanExceptio
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException;
+import org.hibernate.Session;
 
 public interface IPretFacade extends IFacade {
 
-    void emprunter(Connexion connexion,
+    void emprunter(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidPrimaryKeyException,
@@ -34,7 +34,7 @@ public interface IPretFacade extends IFacade {
         InvalidPrimaryKeyRequestException,
         FacadeException;
 
-    void retourner(Connexion connexion,
+    void retourner(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidPrimaryKeyException,
@@ -49,7 +49,7 @@ public interface IPretFacade extends IFacade {
         InvalidPrimaryKeyRequestException,
         FacadeException;
 
-    void renouveler(Connexion connexion,
+    void renouveler(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
