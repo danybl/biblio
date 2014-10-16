@@ -40,13 +40,13 @@ public final class PretDTO extends DTO {
     PretDTO(String idPret,
         MembreDTO membreDTO,
         LivreDTO livreDTO,
-        Timestamp datePret,
-        Timestamp dateRetour) {
+        Timestamp datePret) {
         this.idPret = idPret;
         this.membreDTO = membreDTO;
         this.livreDTO = livreDTO;
         this.datePret = datePret;
-        this.dateRetour = dateRetour;
+        this.dateRetour = null;
+
     }
 
     /**
