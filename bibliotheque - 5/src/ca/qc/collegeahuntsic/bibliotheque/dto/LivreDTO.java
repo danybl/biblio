@@ -10,7 +10,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * DTO de la table <code>livre</code>.
  *
- * @author Gilles Benichou
  */
 public final class LivreDTO extends DTO {
     public static final String ID_LIVRE_COLUMN_NAME = "idLivre";
