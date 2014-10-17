@@ -1,14 +1,11 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.facade.implementations;
 
-import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import org.hibernate.Session;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyRequestException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dto.DuplicateDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
@@ -21,6 +18,10 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IMembreFacade;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService;
 
+/**
+ * Facade pour interagir avec le service des membres.
+ *
+ */
 public class MembreFacade extends Facade implements IMembreFacade {
     private IMembreService membreService;
 
@@ -60,10 +61,9 @@ public class MembreFacade extends Facade implements IMembreFacade {
      * {@inheritDoc}
      */
     @Override
-    public void desinscrire(Connexion connexion,
+    public void desinscrire(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidPrimaryKeyException,
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
@@ -71,10 +71,9 @@ public class MembreFacade extends Facade implements IMembreFacade {
         ExistingLoanException,
         InvalidLoanLimitException,
         InvalidDTOClassException,
-        InvalidPrimaryKeyRequestException,
         FacadeException {
         try {
-            getMembreService().desinscrire(connexion,
+            getMembreService().desinscrire(session,
                 membreDTO);
         } catch(ServiceException serviceException) {
             throw new FacadeException();
@@ -85,20 +84,17 @@ public class MembreFacade extends Facade implements IMembreFacade {
      * {@inheritDoc}
      */
     @Override
-    public void inscrire(Connexion connexion,
+    public void inscrire(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidPrimaryKeyException,
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
         InvalidDTOClassException,
-        InvalidPrimaryKeyRequestException,
         FacadeException,
-        DuplicateDTOException,
         FacadeException {
         try {
-            getMembreService().inscrire(connexion,
+            getMembreService().inscrire(session,
                 membreDTO);
         } catch(ServiceException serviceException) {
             throw new FacadeException();

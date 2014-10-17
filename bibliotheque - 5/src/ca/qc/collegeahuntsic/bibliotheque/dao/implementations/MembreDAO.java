@@ -2,6 +2,7 @@
 package ca.qc.collegeahuntsic.bibliotheque.dao.implementations;
 
 import java.util.List;
+import org.hibernate.Session;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
@@ -10,7 +11,6 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueExc
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
-import org.hibernate.Session;
 
 /**
  * DAO pour effectuer des CRUDs avec la table <code>membre</code>.
@@ -18,13 +18,12 @@ import org.hibernate.Session;
 
 public class MembreDAO extends DAO implements IMembreDAO {
 
-    public MembreDAO(Class<MembreDTO> memebreDTOClass) throws InvalidDTOClassException {
-        super(memebreDTOClass);
+    public MembreDAO(Class<MembreDTO> membreDTOClass) throws InvalidDTOClassException {
+        super(membreDTOClass);
     }
 
     /**
      * {@inheritDoc}
-     * @throws InvalidCriterionValueException
      */
 
     @SuppressWarnings("unchecked")
