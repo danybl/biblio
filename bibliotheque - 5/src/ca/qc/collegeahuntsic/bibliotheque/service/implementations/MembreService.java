@@ -270,18 +270,8 @@ public class MembreService implements IMembreService {
                     + unMembreDTO.getIdMembre()
                     + ") a encore des prêts");
             }
-            if(!getPretDAO().findByMembre(session,
-                unMembreDTO.getIdMembre(),
-                MembreDTO.ID_MEMBRE_COLUMN_NAME).isEmpty()) {
-                throw new ServiceException("Le membre "
-                    + unMembreDTO.getNom()
-                    + " (ID de membre : "
-                    + unMembreDTO.getIdMembre()
-                    + ") a des prêts");
-            }
             deleteMembre(session,
                 unMembreDTO);
-
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
