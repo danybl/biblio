@@ -293,9 +293,7 @@ public class ReservationService extends Service implements IReservationService {
                     + unMembreDTO.getIdMembre()
                     + ")");
             }
-            List<ReservationDTO> reservations = findByMembre(session,
-                unMembreDTO.getIdMembre(),
-                MembreDTO.ID_MEMBRE_COLUMN_NAME);
+            List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
             for(ReservationDTO uneAutreReservationDTO : reservations) {
                 if(unLivreDTO.equals(uneAutreReservationDTO.getLivreDTO())) {
                     throw new ExistingReservationException("Le livre "
@@ -359,9 +357,7 @@ public class ReservationService extends Service implements IReservationService {
                     + uneReservationDTO.getLivreDTO().getIdLivre()
                     + " n'existe pas");
             }
-            List<ReservationDTO> reservations = findByLivre(session,
-                unLivreDTO.getIdLivre(),
-                ReservationDTO.DATE_RESERVATION_COLUMN_NAME);
+            List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
             if(!reservations.isEmpty()) {
                 uneReservationDTO = reservations.get(0);
                 if(!unMembreDTO.equals(uneReservationDTO.getMembreDTO())) {
