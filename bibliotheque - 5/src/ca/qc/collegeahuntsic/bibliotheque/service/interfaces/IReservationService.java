@@ -7,6 +7,7 @@ package ca.qc.collegeahuntsic.bibliotheque.service.interfaces;
 import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
@@ -39,7 +40,6 @@ public interface IReservationService extends IService {
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
-        InvalidPrimaryKeyRequestException,
         ServiceException;
 
     /**
@@ -54,7 +54,6 @@ public interface IReservationService extends IService {
      */
     ReservationDTO getReservation(Session session,
         String idReservation) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyException,
         ServiceException;
 
     /**
@@ -195,6 +194,7 @@ public interface IReservationService extends IService {
         InvalidDTOException,
         MissingDTOException,
         InvalidCriterionException,
+        InvalidCriterionValueException,
         InvalidSortByPropertyException,
         ExistingReservationException,
         ExistingLoanException,
