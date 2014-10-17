@@ -225,7 +225,6 @@ public class PretService extends Service implements IPretService {
 
     /**
      * {@inheritDoc}
-     * @throws InvalidPrimaryKeyRequestException
      */
     @Override
     public void emprunter(Session session,

@@ -120,6 +120,8 @@ public interface IPretService extends IService {
     /**
      * Emprunte un livre.
      *
+     * @param session
+     *            la session à utiliser
      * @param pretDTO
      *            Le prêt à emprunter
      * @throws InvalidHibernateSessionException
@@ -135,7 +137,6 @@ public interface IPretService extends IService {
      *             Si l'ID du membre est <code>null</code>
      * @throws InvalidSortByPropertyException
      *             Si la propriété à utiliser pour classer est <code>null</code>
-     * @throws InvalidPrimaryKeyException Si la clef primaire du DTO est <code>null</code>
      * @throws ExistingLoanException
      *             Si le livre a été prêté
      * @throws ExistingReservationException
@@ -157,6 +158,8 @@ public interface IPretService extends IService {
     /**
      * Renouvele un prêt.
      *
+     * @param session
+     *            la session à utiliser
      * @param pretDTO
      *            Le prêt à renouveler
      * @throws InvalidHibernateSessionException
@@ -172,7 +175,6 @@ public interface IPretService extends IService {
      *             Si l'ID du membre est <code>null</code>
      * @throws InvalidSortByPropertyException
      *             Si la propriété à utiliser pour classer est <code>null</code>
-     * @throws InvalidPrimaryKeyException Si la clef primaire du DTO est <code>null</code>
      * @throws ExistingLoanException
      *             Si le livre a été prêté
      * @throws ExistingReservationException
@@ -194,6 +196,8 @@ public interface IPretService extends IService {
     /**
      * Retourne un livre.
      *
+     * @param session
+     *            la session à utiliser
      * @param pretDTO
      *            Le prêt du livre à retourner
      * @throws InvalidHibernateSessionException
@@ -209,7 +213,6 @@ public interface IPretService extends IService {
      *             Si l'ID du membre est <code>null</code>
      * @throws InvalidSortByPropertyException
      *             Si la propriété à utiliser pour classer est <code>null</code>
-     * @throws InvalidPrimaryKeyException Si la clef primaire du DTO est <code>null</code>
      * @throws ExistingLoanException
      *             Si le livre a été prêté
      * @throws ExistingReservationException

@@ -44,6 +44,10 @@ public class PretDAO extends DAO implements IPretDAO {
             sortByPropertyName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @SuppressWarnings("unchecked")
     @Override
     public List<PretDTO> findByDatePret(Session session,
