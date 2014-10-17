@@ -1,6 +1,7 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
+import java.util.Set;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -22,6 +23,10 @@ public final class MembreDTO extends DTO {
     private String limitePret;
 
     private String nbPret;
+
+    private Set<PretDTO> prets;
+
+    private Set<ReservationDTO> reservations;
 
     public static final String ID_MEMBRE_COLUMN_NAME = "idMembre";
 
@@ -127,6 +132,22 @@ public final class MembreDTO extends DTO {
      */
     public void setNbPret(String nbPret) {
         this.nbPret = nbPret;
+    }
+
+    public Set<PretDTO> getPrets() {
+        return this.prets;
+    }
+
+    public void setPrets(Set<PretDTO> prets) {
+        this.prets = prets;
+    }
+
+    public Set<ReservationDTO> getReservations() {
+        return this.reservations;
+    }
+
+    public void setReservations(Set<ReservationDTO> reservations) {
+        this.reservations = reservations;
     }
 
     //EndRegion
