@@ -105,48 +105,6 @@ public interface IReservationService extends IService {
         ServiceException;
 
     /**
-     * Trouve les réservations à partir d'un membre. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. Si aucune
-     * réservation n'est trouvée, une {@link List} vide est retournée.
-     *
-     * @param connexion La connexion à utiliser
-     * @param idMembre L'ID du membre à trouver
-     * @param sortByPropertyName The nom de la propriété à utiliser pour classer
-     * @return La liste des réservations correspondantes ; une liste vide sinon
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
-     * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
-     * @throws ServiceException S'il y a une erreur avec la base de données
-     */
-    List<ReservationDTO> findByMembre(Session session,
-        String idMembre,
-        String sortByPropertyName) throws InvalidHibernateSessionException,
-        InvalidCriterionException,
-        InvalidCriterionValueException,
-        InvalidSortByPropertyException,
-        ServiceException;
-
-    /**
-     * Trouve les réservations à partir d'un livre. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. Si aucune
-     * réservation n'est trouvée, une {@link List} vide est retournée.
-     *
-     * @param connexion La connexion à utiliser
-     * @param idLivre L'ID du livre à trouver
-     * @param sortByPropertyName The nom de la propriété à utiliser pour classer
-     * @return La liste des réservations correspondantes ; une liste vide sinon
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
-     * @throws InvalidCriterionException Si l'ID du livre est <code>null</code>
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
-     * @throws ServiceException S'il y a une erreur avec la base de données
-     */
-    List<ReservationDTO> findByLivre(Session session,
-        String idLivre,
-        String sortByPropertyName) throws InvalidHibernateSessionException,
-        InvalidCriterionException,
-        InvalidCriterionValueException,
-        InvalidSortByPropertyException,
-        ServiceException;
-
-    /**
      * Place une réservation.
      *
      * @param connexion La connexion à utiliser
