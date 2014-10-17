@@ -24,7 +24,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService;
 
 /**
- * TODO Auto-generated class javadoc
+ * Service de la table <code>membre</code>.
  *
  */
 public class MembreService implements IMembreService {
@@ -38,8 +38,21 @@ public class MembreService implements IMembreService {
     private IReservationDAO reservationDAO;
 
     /**
-     * TODO Auto-generated constructor javadoc
+     * Crée le service de la table <code>membre</code>.
      *
+     * @param livreDAO
+     *            Le DAO de la table <code>livre</code>
+     * @param membreDAO
+     *            Le DAO de la table <code>membre</code>
+     * @param pretDAO
+     *            Le DAO de la table <code>pret</code>
+     * @param reservationDAO
+     *            Le DAO de la table <code>reservation</code>
+     * @throws InvalidDAOException
+     *             Si le DAO de membre est <code>null</code>, si le DAO de livre
+     *             est <code>null</code>, si le DAO de prêt est
+     *             <code>null</code> ou si le DAO de réservation est
+     *             <code>null</code>
      */
     public MembreService(IMembreDAO membreDAO, // TODO: Change to package when switching to Spring
         ILivreDAO livreDAO,
@@ -64,34 +77,82 @@ public class MembreService implements IMembreService {
         setReservationDAO(reservationDAO);
     }
 
+    /**
+     * Getter de la variable d'instance <code>this.membreDAO</code>.
+     *
+     * @return La variable d'instance <code>this.membreDAO</code>
+     */
     public IMembreDAO getMembreDAO() {
         return this.membreDAO;
     }
 
+    /**
+     * Setter de la variable d'instance <code>this.membreDAO</code>.
+     *
+     * @param membreDAO
+     *            La valeur à utiliser pour la variable d'instance
+     *            <code>this.membreDAO</code>
+     */
     public void setMembreDAO(IMembreDAO membreDAO) {
         this.membreDAO = membreDAO;
     }
 
+    /**
+     * Getter de la variable d'instance <code>this.reservationDAO</code>.
+     *
+     * @return La variable d'instance <code>this.reservationDAO</code>
+     */
     public IReservationDAO getReservationDAO() {
         return this.reservationDAO;
     }
 
+    /**
+     * Setter de la variable d'instance <code>this.reservationDAO</code>.
+     *
+     * @param reservationDAO
+     *            La valeur à utiliser pour la variable d'instance
+     *            <code>this.reservationDAO</code>
+     */
     private void setReservationDAO(IReservationDAO reservationDAO) {
         this.reservationDAO = reservationDAO;
     }
 
+    /**
+     * Setter de la variable d'instance <code>this.pretDAO</code>.
+     *
+     * @param pretDAO
+     *            La valeur à utiliser pour la variable d'instance
+     *            <code>this.pretDAO</code>
+     */
     private void setPretDAO(IPretDAO pretDAO) {
         this.pretDAO = pretDAO;
     }
 
+    /**
+     * Getter de la variable d'instance <code>this.pretDAO</code>.
+     *
+     * @return La variable d'instance <code>this.pretDAO</code>
+     */
     public IPretDAO getPretDAO() {
         return this.pretDAO;
     }
 
+    /**
+     * Getter de la variable d'instance <code>this.livreDAO</code>.
+     *
+     * @return La variable d'instance <code>this.livreDAO</code>
+     */
     public ILivreDAO getLivreDAO() {
         return this.livreDAO;
     }
 
+    /**
+     * Setter de la variable d'instance <code>this.livreDAO</code>.
+     *
+     * @param livreDAO
+     *            La valeur à utiliser pour la variable d'instance
+     *            <code>this.livreDAO</code>
+     */
     private void setLivreDAO(ILivreDAO livreDAO) {
         this.livreDAO = livreDAO;
     }
