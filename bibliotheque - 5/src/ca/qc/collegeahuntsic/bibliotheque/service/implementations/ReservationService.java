@@ -52,7 +52,7 @@ public class ReservationService extends Service implements IReservationService {
      * @throws InvalidDAOException Si le DAO de réservation est <code>null</code>, si le DAO de membre est <code>null</code>, si le DAO de livre
      *         est <code>null</code> ou si le DAO de prêt est <code>null</code>
      */
-    public ReservationService(IReservationDAO reservationDAO, // TODO: Change to package when switching to Spring
+    public ReservationService(IReservationDAO reservationDAO,
         IMembreDAO membreDAO,
         ILivreDAO livreDAO,
         IPretDAO pretDAO) throws InvalidDAOException {
