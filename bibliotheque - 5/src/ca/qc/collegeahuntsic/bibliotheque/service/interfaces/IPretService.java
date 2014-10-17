@@ -4,7 +4,6 @@ package ca.qc.collegeahuntsic.bibliotheque.service.interfaces;
 import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
@@ -54,7 +53,6 @@ public interface IPretService extends IService {
      */
     PretDTO getPret(Session session,
         String idPret) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyException,
         ServiceException;
 
     /**
@@ -204,7 +202,6 @@ public interface IPretService extends IService {
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
-        InvalidPrimaryKeyException,
         ExistingLoanException,
         ExistingReservationException,
         ServiceException;
@@ -242,7 +239,6 @@ public interface IPretService extends IService {
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
-        InvalidPrimaryKeyException,
         ExistingLoanException,
         ExistingReservationException,
         ServiceException;
@@ -281,7 +277,6 @@ public interface IPretService extends IService {
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
-        InvalidPrimaryKeyException,
         ExistingLoanException,
         ExistingReservationException,
         MissingLoanException,

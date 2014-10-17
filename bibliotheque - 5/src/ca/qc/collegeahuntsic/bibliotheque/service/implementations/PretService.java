@@ -13,8 +13,6 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyRequestException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
@@ -165,7 +163,6 @@ public class PretService extends Service implements IPretService {
     @Override
     public PretDTO getPret(Session session,
         String idPret) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyException,
         ServiceException {
         try {
             return (PretDTO) getPretDAO().get(session,
@@ -266,7 +263,6 @@ public class PretService extends Service implements IPretService {
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
-        InvalidPrimaryKeyException,
         ExistingLoanException,
         ExistingReservationException,
         ServiceException {
@@ -347,7 +343,6 @@ public class PretService extends Service implements IPretService {
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
-        InvalidPrimaryKeyException,
         ExistingLoanException,
         ExistingReservationException,
         ServiceException {
@@ -385,13 +380,15 @@ public class PretService extends Service implements IPretService {
             List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
             if(!reservations.isEmpty()) {
                 ReservationDTO reservationDTO = reservations.get(0);
-                getMembreDAO().get(session,
+                MembreDTO unMembre = (MembreDTO) getMembreDAO().get(session,
                     reservationDTO.getMembreDTO().getIdMembre());
                 throw new ExistingReservationException("Le livre "
                     + unLivreDTO.getTitre()
                     + " (ID de livre : "
                     + unLivreDTO.getIdLivre()
-                    + ") a des réservations"
+                    + ") a des réservations "
+                    + "au membre "
+                    + unMembre.getNom()
                     + ")");
             }
             Set<PretDTO> prets = unLivreDTO.getPrets();
@@ -402,11 +399,22 @@ public class PretService extends Service implements IPretService {
                     + unLivreDTO.getIdLivre()
                     + ") n'est pas encore prêté");
             }
-            boolean aEteEmprunteParMembre = false;
-            for(PretDTO unAutrePretDTO : prets) {
-                aEteEmprunteParMembre = unMembreDTO.equals(unAutrePretDTO.getMembreDTO());
-            }
-            if(!aEteEmprunteParMembre) {
+            //            boolean aEteEmprunteParMembre = false;
+            //            for(PretDTO unAutrePretDTO : prets) {
+            //                aEteEmprunteParMembre = unMembreDTO.equals(unAutrePretDTO.getMembreDTO());
+            //            }
+            //            if(!aEteEmprunteParMembre) {
+            //                throw new ServiceException("Le livre "
+            //                    + unLivreDTO.getTitre()
+            //                    + " (ID de livre : "
+            //                    + unLivreDTO.getIdLivre()
+            //                    + ") n'a pas été prêté à "
+            //                    + unMembreDTO.getNom()
+            //                    + " (ID de membre : "
+            //                    + unMembreDTO.getIdMembre()
+            //                    + ")");
+            //            }
+            if(unMembreDTO.getPrets().isEmpty()) {
                 throw new ServiceException("Le livre "
                     + unLivreDTO.getTitre()
                     + " (ID de livre : "
@@ -438,7 +446,6 @@ public class PretService extends Service implements IPretService {
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
-        InvalidPrimaryKeyException,
         ExistingLoanException,
         ExistingReservationException,
         MissingLoanException,
@@ -470,8 +477,8 @@ public class PretService extends Service implements IPretService {
             }
             unPretDTO = prets.get(0);
             unPretDTO.setDateRetour(new Timestamp(System.currentTimeMillis()));//TODO à revoir
-            deletePret(session,
-                unPretDTO);
+            //            deletePret(session,
+            //                unPretDTO);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }

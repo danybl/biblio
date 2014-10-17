@@ -4,8 +4,6 @@ package ca.qc.collegeahuntsic.bibliotheque.facade.implementations;
 import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyRequestException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
@@ -58,7 +56,6 @@ public class PretFacade extends Facade implements IPretFacade {
     public void emprunter(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidPrimaryKeyException,
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
@@ -67,7 +64,6 @@ public class PretFacade extends Facade implements IPretFacade {
         ExistingReservationException,
         InvalidLoanLimitException,
         InvalidDTOClassException,
-        InvalidPrimaryKeyRequestException,
         FacadeException {
         try {
             getPretService().emprunter(session,
@@ -84,7 +80,6 @@ public class PretFacade extends Facade implements IPretFacade {
     public void retourner(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidPrimaryKeyException,
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
@@ -93,7 +88,6 @@ public class PretFacade extends Facade implements IPretFacade {
         ExistingReservationException,
         InvalidLoanLimitException,
         InvalidDTOClassException,
-        InvalidPrimaryKeyRequestException,
         FacadeException {
         try {
             getPretService().retourner(session,
@@ -112,7 +106,6 @@ public class PretFacade extends Facade implements IPretFacade {
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
-        InvalidPrimaryKeyException,
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
