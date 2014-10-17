@@ -118,58 +118,6 @@ public interface IPretService extends IService {
         ServiceException;
 
     /**
-     * Trouve les prêts à partir d'un meembre. La liste est classée par ordre
-     * croissant sur <code>sortByPropertyName</code>. Si aucun prêt n'est
-     * trouvé, une {@link List} vide est retournée.
-     *
-     * @param idMembre
-     *            L,id du membre à trouver
-     * @param sortByPropertyName
-     *            The nom de la propriété à utiliser pour classer
-     * @return La liste des réservations correspondantes ; une liste vide sinon
-     * @throws InvalidHibernateSessionException
-     *             Si la session est <code>null</code>
-     * @throws InvalidCriterionException
-     *             Si l'ID du livre est <code>null</code>
-     * @throws InvalidSortByPropertyException
-     *             Si la propriété à utiliser pour classer est <code>null</code>
-     * @throws ServiceException
-     *             S'il y a une erreur avec la base de données
-     */
-    List<PretDTO> findByMembre(Session session,
-        String idMembre,
-        String sortByPropertyName) throws InvalidHibernateSessionException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
-        ServiceException;
-
-    /**
-     * Trouve les prêts à partir d'un livre. La liste est classée par ordre
-     * croissant sur <code>sortByPropertyName</code>. Si aucun prêt n'est
-     * trouvé, une {@link List} vide est retournée.
-     *
-     * @param idLivre
-     *            L'id du livre à trouver
-     * @param sortByPropertyName
-     *            The nom de la propriété à utiliser pour classer
-     * @return La liste des réservations correspondantes ; une liste vide sinon
-     * @throws InvalidHibernateSessionException
-     *             Si la session est <code>null</code>
-     * @throws InvalidCriterionException
-     *             Si l'ID du livre est <code>null</code>
-     * @throws InvalidSortByPropertyException
-     *             Si la propriété à utiliser pour classer est <code>null</code>
-     * @throws ServiceException
-     *             S'il y a une erreur avec la base de données
-     */
-    List<PretDTO> findByLivre(Session session,
-        String idLivre,
-        String sortByPropertyName) throws InvalidHibernateSessionException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
-        ServiceException;
-
-    /**
      * Emprunte un livre.
      *
      * @param pretDTO

@@ -225,34 +225,6 @@ public class PretService extends Service implements IPretService {
 
     /**
      * {@inheritDoc}
-     */
-    @Override
-    public List<PretDTO> findByMembre(Session session,
-        String idMembre,
-        String sortByPropertyName) throws InvalidHibernateSessionException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
-        ServiceException {
-        return getAll(session,
-            MembreDTO.ID_MEMBRE_COLUMN_NAME);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<PretDTO> findByLivre(Session session,
-        String idLivre,
-        String sortByPropertyName) throws InvalidHibernateSessionException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
-        ServiceException {
-        return getAll(session,
-            LivreDTO.ID_LIVRE_COLUMN_NAME);
-    }
-
-    /**
-     * {@inheritDoc}
      * @throws InvalidPrimaryKeyRequestException
      */
     @Override
