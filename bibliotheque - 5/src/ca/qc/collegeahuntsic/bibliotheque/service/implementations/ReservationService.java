@@ -158,7 +158,6 @@ public class ReservationService extends Service implements IReservationService {
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
-        InvalidPrimaryKeyRequestException,
         ServiceException {
         try {
             getReservationDAO().add(session,
@@ -174,7 +173,6 @@ public class ReservationService extends Service implements IReservationService {
     @Override
     public ReservationDTO getReservation(Session session,
         String idReservation) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyException,
         ServiceException {
         try {
             return (ReservationDTO) getReservationDAO().get(session,
@@ -280,7 +278,6 @@ public class ReservationService extends Service implements IReservationService {
     public void placer(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidPrimaryKeyException,
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
@@ -288,7 +285,6 @@ public class ReservationService extends Service implements IReservationService {
         ExistingLoanException,
         ExistingReservationException,
         InvalidDTOClassException,
-        InvalidPrimaryKeyRequestException,
         ServiceException {
         if(session == null) {
             throw new InvalidHibernateSessionException("La session ne peut être null");
@@ -351,7 +347,7 @@ public class ReservationService extends Service implements IReservationService {
             reservationDTO.setLivreDTO(unLivreDTO);
             reservationDTO.setMembreDTO(unMembreDTO);
             reservationDTO.setDateReservation(new Timestamp(System.currentTimeMillis()));
-            add(session,
+            addReservation(session,
                 reservationDTO);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
@@ -365,7 +361,6 @@ public class ReservationService extends Service implements IReservationService {
     public void utiliser(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidPrimaryKeyException,
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
@@ -373,7 +368,6 @@ public class ReservationService extends Service implements IReservationService {
         ExistingLoanException,
         InvalidLoanLimitException,
         InvalidDTOClassException,
-        InvalidPrimaryKeyRequestException,
         ServiceException {
         if(session == null) {
             throw new InvalidHibernateSessionException("La session ne peut être null");
@@ -382,7 +376,7 @@ public class ReservationService extends Service implements IReservationService {
             throw new InvalidDTOException("La réservation ne peut être null");
         }
         try {
-            ReservationDTO uneReservationDTO = get(session,
+            ReservationDTO uneReservationDTO = getReservation(session,
                 reservationDTO.getIdReservation());
             if(uneReservationDTO == null) {
                 throw new MissingDTOException("La réservation "
@@ -472,7 +466,6 @@ public class ReservationService extends Service implements IReservationService {
     public void annuler(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidPrimaryKeyException,
         MissingDTOException,
         InvalidDTOClassException,
         ServiceException {
@@ -482,14 +475,14 @@ public class ReservationService extends Service implements IReservationService {
         if(reservationDTO == null) {
             throw new InvalidDTOException("La réservation ne peut être null");
         }
-        ReservationDTO uneReservationDTO = get(session,
+        ReservationDTO uneReservationDTO = getReservation(session,
             reservationDTO.getIdReservation());
         if(uneReservationDTO == null) {
             throw new MissingDTOException("La réservation "
                 + reservationDTO.getIdReservation()
                 + " n'existe pas");
         }
-        delete(session,
+        deleteReservation(session,
             uneReservationDTO);
     }
 }
