@@ -1,9 +1,6 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.service.implementations;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.ILivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IPretDAO;
@@ -27,6 +24,9 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidLoanLimitExce
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IReservationService;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import org.hibernate.Session;
 
 /**
@@ -282,7 +282,7 @@ public class ReservationService extends Service implements IReservationService {
             for(PretDTO pretDTO : prets) {
                 aEteEmprunteParMembre = unMembreDTO.equals(pretDTO.getMembreDTO());
             }
-            if(aEteEmprunteParMembre) {
+            if(aEteEmprunteParMembre) { //TODO  on peut utiliser la methode unMembreDTO.getPrets().isEmpty() pour voir si le membre a prete ce livre.
                 throw new ExistingLoanException("Le livre "
                     + unLivreDTO.getTitre()
                     + " (ID de livre : "
