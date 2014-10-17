@@ -121,6 +121,7 @@ public interface IReservationService extends IService {
         String idMembre,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
+        InvalidCriterionValueException,
         InvalidSortByPropertyException,
         ServiceException;
 
@@ -141,6 +142,7 @@ public interface IReservationService extends IService {
         String idLivre,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
+        InvalidCriterionValueException,
         InvalidSortByPropertyException,
         ServiceException;
 
@@ -165,6 +167,7 @@ public interface IReservationService extends IService {
         InvalidDTOException,
         MissingDTOException,
         InvalidCriterionException,
+        InvalidCriterionValueException,
         InvalidSortByPropertyException,
         MissingLoanException,
         ExistingLoanException,

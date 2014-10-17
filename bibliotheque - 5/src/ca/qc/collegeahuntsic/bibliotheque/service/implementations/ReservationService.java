@@ -241,6 +241,7 @@ public class ReservationService extends Service implements IReservationService {
         String idMembre,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
+        InvalidCriterionValueException,
         InvalidSortByPropertyException,
         ServiceException {
         try {
@@ -260,6 +261,7 @@ public class ReservationService extends Service implements IReservationService {
         String idLivre,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
+        InvalidCriterionValueException,
         InvalidSortByPropertyException,
         ServiceException {
         try {
@@ -280,6 +282,7 @@ public class ReservationService extends Service implements IReservationService {
         InvalidDTOException,
         MissingDTOException,
         InvalidCriterionException,
+        InvalidCriterionValueException,
         InvalidSortByPropertyException,
         MissingLoanException,
         ExistingLoanException,
