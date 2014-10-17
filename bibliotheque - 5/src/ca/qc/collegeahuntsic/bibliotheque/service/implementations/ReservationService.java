@@ -2,6 +2,7 @@
 package ca.qc.collegeahuntsic.bibliotheque.service.implementations;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.ILivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
@@ -14,8 +15,6 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyRequestException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
@@ -307,9 +306,7 @@ public class ReservationService extends Service implements IReservationService {
                     + reservationDTO.getLivreDTO().getIdLivre()
                     + " n'existe pas");
             }
-            List<PretDTO> prets = getPretDAO().findByLivre(session,
-                unLivreDTO.getIdLivre(),
-                PretDTO.DATE_PRET_COLUMN_NAME);
+            List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
             if(prets.isEmpty()) {
                 throw new MissingLoanException("Le livre "
                     + unLivreDTO.getTitre()
@@ -416,9 +413,7 @@ public class ReservationService extends Service implements IReservationService {
                         + ")");
                 }
             }
-            List<PretDTO> prets = getPretDAO().findByLivre(Session session,
-                unLivreDTO.getIdLivre(),
-                PretDTO.DATE_PRET_COLUMN_NAME);
+            List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
             if(!prets.isEmpty()) {
                 PretDTO unPretDTO = prets.get(0);
                 MembreDTO emprunteur = (MembreDTO) getMembreDAO().get(session,

@@ -36,6 +36,17 @@ public final class ReservationDTO extends DTO {
         super();
     }
 
+    ReservationDTO(String idReservation,
+        MembreDTO membreDTO,
+        LivreDTO livreDTO,
+        Timestamp datePret) {
+        this.idReservation = idReservation;
+        this.membreDTO = membreDTO;
+        this.livreDTO = livreDTO;
+        this.dateReservation = datePret;
+
+    }
+
     // Region Getters and Setters
     /**
      * Getter de la variable d'instance <code>this.idReservation</code>.
