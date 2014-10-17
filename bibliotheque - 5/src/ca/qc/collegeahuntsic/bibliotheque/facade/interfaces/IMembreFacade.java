@@ -36,7 +36,7 @@ public interface IMembreFacade extends IFacade {
      * @throws InvalidDTOClassException Si la classe du membre n'est pas celle que prend en charge le DAO
      * @throws FacadeException S'il y a une erreur avec la base de données
      */
-    void inscrire(Session session,
+    void inscrireMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         MissingDTOException,
@@ -65,7 +65,7 @@ public interface IMembreFacade extends IFacade {
      *         celle que prend en charge le DAO
      * @throws FacadeException S'il y a une erreur avec la base de données
      */
-    void desinscrire(Session session,
+    void desinscrireMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         MissingDTOException,

@@ -61,7 +61,7 @@ public class MembreFacade extends Facade implements IMembreFacade {
      * {@inheritDoc}
      */
     @Override
-    public void desinscrire(Session session,
+    public void desinscrireMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         MissingDTOException,
@@ -73,7 +73,7 @@ public class MembreFacade extends Facade implements IMembreFacade {
         InvalidDTOClassException,
         FacadeException {
         try {
-            getMembreService().desinscrire(session,
+            getMembreService().desinscrireMembre(session,
                 membreDTO);
         } catch(ServiceException serviceException) {
             throw new FacadeException();
@@ -84,7 +84,7 @@ public class MembreFacade extends Facade implements IMembreFacade {
      * {@inheritDoc}
      */
     @Override
-    public void inscrire(Session session,
+    public void inscrireMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         MissingDTOException,
@@ -94,7 +94,7 @@ public class MembreFacade extends Facade implements IMembreFacade {
         FacadeException,
         FacadeException {
         try {
-            getMembreService().inscrire(session,
+            getMembreService().inscrireMembre(session,
                 membreDTO);
         } catch(ServiceException serviceException) {
             throw new FacadeException();

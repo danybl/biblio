@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
@@ -32,7 +33,7 @@ public interface IMembreService extends IService {
      * @throws InvalidDTOClassException Si la classe du membre n'est pas celle que prend en charge le DAO
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    void add(Session session,
+    void addMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
@@ -47,7 +48,7 @@ public interface IMembreService extends IService {
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    MembreDTO get(Session session,
+    MembreDTO getMembre(Session session,
         String idMembre) throws InvalidHibernateSessionException,
         ServiceException;
 
@@ -61,7 +62,7 @@ public interface IMembreService extends IService {
      * @throws InvalidDTOClassException Si la classe du membre n'est pas celle que prend en charge le DAO
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    void update(Session session,
+    void updateMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
@@ -77,7 +78,7 @@ public interface IMembreService extends IService {
      * @throws InvalidDTOClassException Si la classe du membre n'est pas celle que prend en charge le DAO
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    void delete(Session session,
+    void deleteMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
@@ -94,7 +95,7 @@ public interface IMembreService extends IService {
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    List<MembreDTO> getAll(Session session,
+    List<MembreDTO> getAllMembre(Session session,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidSortByPropertyException,
         ServiceException;
@@ -116,6 +117,7 @@ public interface IMembreService extends IService {
         String numTel,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
+        InvalidCriterionValueException,
         InvalidSortByPropertyException,
         ServiceException;
 
@@ -136,6 +138,7 @@ public interface IMembreService extends IService {
         String nom,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
+        InvalidCriterionValueException,
         InvalidSortByPropertyException,
         ServiceException;
 
@@ -153,7 +156,7 @@ public interface IMembreService extends IService {
      *         celle que prend en charge le DAO
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    void inscrire(Session session,
+    void inscrireMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         MissingDTOException,
@@ -179,7 +182,7 @@ public interface IMembreService extends IService {
      *         celle que prend en charge le DAO
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    void desinscrire(Session session,
+    void desinscrireMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         MissingDTOException,
