@@ -6,6 +6,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
@@ -28,40 +29,40 @@ public class ReservationDAO extends DAO implements IReservationDAO {
     }
 
     /**
-     * Crée une nouvelle clef primaire pour la table <code>reservation</code>.
-     *
-     * @param session La session à utiliser
-     * @return La nouvelle clef primaire
-     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
-     * @throws InvalidPrimaryKeyRequestException Si la requête de la clef primaire du livre est <code>null</code>
-     * @throws DAOException S'il y a une erreur avec la base de données
-
-
-    /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<ReservationDTO> findByMembre(Session session,
         String idMembre,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
+        InvalidCriterionValueException,
         InvalidSortByPropertyException,
         DAOException {
 
-        return null;//TODO
+        return (List<ReservationDTO>) super.find(session,
+            ReservationDTO.ID_MEMBRE_COLUMN_NAME,
+            idMembre,
+            sortByPropertyName);
     }
 
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<ReservationDTO> findByLivre(Session session,
         String idLivre,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
+        InvalidCriterionValueException,
         InvalidSortByPropertyException,
         DAOException {
 
-        return null;//TODO
+        return (List<ReservationDTO>) super.find(session,
+            ReservationDTO.ID_LIVRE_COLUMN_NAME,
+            idLivre,
+            sortByPropertyName);
     }
 }
