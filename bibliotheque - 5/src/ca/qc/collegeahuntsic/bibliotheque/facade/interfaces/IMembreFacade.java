@@ -24,7 +24,7 @@ public interface IMembreFacade extends IFacade {
     /**
      * Inscrit un membre.
      *
-     * @param sesssion La sesssion à utiliser
+     * @param sesssion La session à utiliser
      * @param membreDTO Le membre à inscrire
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si le membre est <code>null</code>
