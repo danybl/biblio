@@ -117,7 +117,7 @@ public class LivreService extends Service implements ILivreService {
     /* private void setPretDAO(IPretDAO pretDAO) {
          this.pretDAO = pretDAO;
      }
-    */
+     */
     /**
      * Setter de la variable d'instance <code>this.reservationDAO</code>.
      *
@@ -126,14 +126,14 @@ public class LivreService extends Service implements ILivreService {
     /* private void setReservationDAO(IReservationDAO reservationDAO) {
          this.reservationDAO = reservationDAO;
      }
-    */
+     */
     // EndRegion Getters and Setters
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void add(Session session,
+    public void addLivre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
@@ -150,7 +150,7 @@ public class LivreService extends Service implements ILivreService {
      * {@inheritDoc}
      */
     @Override
-    public LivreDTO get(Session session,
+    public LivreDTO getLivre(Session session,
         String idLivre) throws InvalidHibernateSessionException,
         ServiceException {
         try {
@@ -165,7 +165,7 @@ public class LivreService extends Service implements ILivreService {
      * {@inheritDoc}
      */
     @Override
-    public void update(Session session,
+    public void updateLivre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
@@ -182,7 +182,7 @@ public class LivreService extends Service implements ILivreService {
      * {@inheritDoc}
      */
     @Override
-    public void delete(Session session,
+    public void deleteLivre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
@@ -200,7 +200,7 @@ public class LivreService extends Service implements ILivreService {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public List<LivreDTO> getAll(Session session,
+    public List<LivreDTO> getAllLivres(Session session,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidSortByPropertyException,
         ServiceException {
@@ -241,7 +241,7 @@ public class LivreService extends Service implements ILivreService {
         InvalidDTOException,
         InvalidDTOClassException,
         ServiceException {
-        add(session,
+        addLivre(session,
             livreDTO);
     }
 
@@ -266,7 +266,7 @@ public class LivreService extends Service implements ILivreService {
             throw new InvalidDTOException("Le livre ne peut être null");
         }
         try {
-            LivreDTO unLivreDTO = get(session,
+            LivreDTO unLivreDTO = getLivre(session,
                 livreDTO.getIdLivre());
             if(unLivreDTO == null) {
                 throw new MissingDTOException("Le livre "
@@ -312,7 +312,7 @@ public class LivreService extends Service implements ILivreService {
                     + booker.getIdMembre()
                     + ")");
             }
-            delete(session,
+            deleteLivre(session,
                 unLivreDTO);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);

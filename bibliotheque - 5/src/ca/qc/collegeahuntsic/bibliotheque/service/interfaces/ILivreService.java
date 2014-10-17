@@ -32,7 +32,7 @@ public interface ILivreService extends IService {
      * @throws InvalidDTOClassException Si la classe du livre n'est pas celle que prend en charge le DAO
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    void add(Session session,
+    void addLivre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
@@ -47,7 +47,7 @@ public interface ILivreService extends IService {
      * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    LivreDTO get(Session session,
+    LivreDTO getLivre(Session session,
         String idLivre) throws InvalidHibernateSessionException,
         ServiceException;
 
@@ -61,7 +61,7 @@ public interface ILivreService extends IService {
      * @throws InvalidDTOClassException Si la classe du livre n'est pas celle que prend en charge le DAO
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    void update(Session session,
+    void updateLivre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
@@ -77,7 +77,7 @@ public interface ILivreService extends IService {
      * @throws InvalidDTOClassException Si la classe du livre n'est pas celle que prend en charge le DAO
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    void delete(Session session,
+    void deleteLivre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
@@ -94,7 +94,7 @@ public interface ILivreService extends IService {
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    List<LivreDTO> getAll(Session session,
+    List<LivreDTO> getAllLivres(Session session,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidSortByPropertyException,
         ServiceException;
