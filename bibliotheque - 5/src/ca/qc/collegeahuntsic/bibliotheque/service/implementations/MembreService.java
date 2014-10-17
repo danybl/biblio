@@ -255,25 +255,5 @@ public class MembreService implements IMembreService {
         if(membreDTO == null) {
             throw new InvalidDTOException("Le membre ne peut être null");
         }
-        try {
-            MembreDTO unMembreDTO = getMembre(session,
-                membreDTO.getIdMembre());
-            if(unMembreDTO == null) {
-                throw new MissingDTOException("Le livre "
-                    + membreDTO.getIdMembre()
-                    + " n'existe pas");
-            }
-            if(unMembreDTO.getNbPret() != null) {
-                throw new ServiceException("Le membre "
-                    + unMembreDTO.getNom()
-                    + " (ID de membre : "
-                    + unMembreDTO.getIdMembre()
-                    + ") a encore des prêts");
-            }
-            deleteMembre(session,
-                unMembreDTO);
-        } catch(DAOException daoException) {
-            throw new ServiceException(daoException);
-        }
     }
 }
