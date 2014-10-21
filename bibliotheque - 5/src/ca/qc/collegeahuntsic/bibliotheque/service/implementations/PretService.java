@@ -2,6 +2,10 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.service.implementations;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.ILivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IPretDAO;
@@ -23,10 +27,6 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidDAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IPretService;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import org.hibernate.Session;
 
 /**
@@ -57,7 +57,7 @@ public class PretService extends Service implements IPretService {
      *             <code>null</code> ou si le DAO de réservation est
      *             <code>null</code>
      */
-    public PretService(IPretDAO pretDAO, // TODO: Change to package when switching to
+    PretService(IPretDAO pretDAO,
         // Spring
         IMembreDAO membreDAO,
         ILivreDAO livreDAO,

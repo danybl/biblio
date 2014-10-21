@@ -49,7 +49,7 @@ public class LivreService extends Service implements ILivreService {
      * @throws InvalidDAOException Si le DAO de livre est <code>null</code>, si le DAO de membre est <code>null</code>, si le DAO de prêt est
      *         <code>null</code> ou si le DAO de réservation est <code>null</code>
      */
-    public LivreService(ILivreDAO livreDAO, // TODO: Change to package when switching to Spring
+    LivreService(ILivreDAO livreDAO,
         IMembreDAO membreDAO,
         IPretDAO pretDAO,
         IReservationDAO reservationDAO) throws InvalidDAOException {

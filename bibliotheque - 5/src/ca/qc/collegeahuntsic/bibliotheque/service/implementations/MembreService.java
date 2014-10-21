@@ -2,7 +2,6 @@
 package ca.qc.collegeahuntsic.bibliotheque.service.implementations;
 
 import java.util.List;
-import org.hibernate.Session;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.ILivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IPretDAO;
@@ -22,6 +21,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidDAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService;
+import org.hibernate.Session;
 
 /**
  * Service de la table <code>membre</code>.
@@ -54,7 +54,7 @@ public class MembreService implements IMembreService {
      *             <code>null</code> ou si le DAO de réservation est
      *             <code>null</code>
      */
-    public MembreService(IMembreDAO membreDAO, // TODO: Change to package when switching to Spring
+    MembreService(IMembreDAO membreDAO,
         ILivreDAO livreDAO,
         IPretDAO pretDAO,
         IReservationDAO reservationDAO) throws InvalidDAOException {

@@ -22,7 +22,7 @@ import org.hibernate.Session;
 public class PretFacade extends Facade implements IPretFacade {
     private IPretService pretService;
 
-    public PretFacade(IPretService pretService) throws InvalidServiceException { // TODO: Change to package when switching to Spring
+    PretFacade(IPretService pretService) throws InvalidServiceException {
         super();
         if(pretService == null) {
             throw new InvalidServiceException("Le service de réservations ne peut être null");
