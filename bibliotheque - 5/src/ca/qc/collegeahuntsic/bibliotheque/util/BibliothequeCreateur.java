@@ -1,51 +1,55 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.util;
 
-import ca.qc.collegeahuntsic.bibliotheque.dao.implementations.LivreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.implementations.MembreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.implementations.PretDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.implementations.ReservationDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.ILivreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IPretDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IReservationDAO;
-import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
-import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
-import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
-import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
-import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.db.ConnexionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.facade.InvalidServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidDAOException;
-import ca.qc.collegeahuntsic.bibliotheque.facade.implementations.LivreFacade;
-import ca.qc.collegeahuntsic.bibliotheque.facade.implementations.MembreFacade;
-import ca.qc.collegeahuntsic.bibliotheque.facade.implementations.PretFacade;
-import ca.qc.collegeahuntsic.bibliotheque.facade.implementations.ReservationFacade;
 import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.ILivreFacade;
 import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IMembreFacade;
 import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IPretFacade;
 import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IReservationFacade;
-import ca.qc.collegeahuntsic.bibliotheque.service.implementations.LivreService;
-import ca.qc.collegeahuntsic.bibliotheque.service.implementations.MembreService;
-import ca.qc.collegeahuntsic.bibliotheque.service.implementations.PretService;
-import ca.qc.collegeahuntsic.bibliotheque.service.implementations.ReservationService;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.ILivreService;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IPretService;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IReservationService;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class BibliothequeCreateur {
-    private Connexion connexion;
+    private static final String SPRING_CONFIGURATION_FILE_NAME = "applicationContext.xml";
 
-    private ILivreService livreService;
+    private static final String SESSION_FACTORY_NAME = "sessionFactory";
 
-    private IMembreService membreService;
+    private static final String LIVRE_DAO_NAME = "livreDAO";
 
-    private IPretService pretService;
+    private static final String MEMBRE_DAO_NAME = "membreDAO";
 
-    private IReservationService reservationService;
+    private static final String RESERVATION_DAO_NAME = "reservationDAO";
+
+    private static final String PRET_DAO_NAME = "pretDAO";
+
+    private static final String LIVRE_SERVICE_NAME = "livreService";
+
+    private static final String MEMBRE_SERVICE_NAME = "membreService";
+
+    private static final String PRET_SERVICE_NAME = "pretService";
+
+    private static final String RESERVATION_SERVICE_NAME = "reservationService";
+
+    private static final String MEMBRE_FACADE_NAME = "membreFacade";
+
+    private static final String LIVRE_FACADE_NAME = "livreFacade";
+
+    private static final String PRET_FACADE_NAME = "pretFacade";
+
+    private static final String RESERVATION_FACADE_NAME = "reservationFacade";
+
+    private static final ApplicationContext APPLICATION_CONTEXT = new ClassPathXmlApplicationContext(BibliothequeCreateur.SPRING_CONFIGURATION_FILE_NAME);
+
+    private SessionFactory sessionFactory;
 
     private ILivreFacade livreFacade;
 
@@ -54,6 +58,14 @@ public class BibliothequeCreateur {
     private IReservationFacade reservationFacade;
 
     private IPretFacade pretFacade;
+    
+    private ILivreService livreService;
+    
+    private IMembreService membreService;
+    
+    private IReservationService reservationService;
+    
+    private IPretService pretService;
 
     /**
      * Crée les services nécessaires à l'application bibliothèque.
@@ -67,65 +79,51 @@ public class BibliothequeCreateur {
      * @throws InvalidDAOException
      * @throws InvalidServiceException
      */
-    public BibliothequeCreateur(String typeServeur,
-        String schema,
-        String nomUtilisateur,
-        String motPasse) throws BibliothequeException,
-        InvalidDTOClassException,
-        InvalidDAOException,
-        InvalidServiceException {
+    public BibliothequeCreateur() throws BibliothequeException {
+        super();
         try {
-            setConnexion(new Connexion(typeServeur,
-                schema,
-                nomUtilisateur,
-                motPasse));
-            ILivreDAO livreDAO = new LivreDAO(LivreDTO.class);
-            IMembreDAO membreDAO = new MembreDAO(MembreDTO.class);
-            IReservationDAO reservationDAO = new ReservationDAO(ReservationDTO.class);
-            IPretDAO pretDAO = new PretDAO(PretDTO.class);
-            setLivreService(new LivreService(livreDAO,
-                membreDAO,
-                pretDAO,
-                reservationDAO));
-            setMembreService(new MembreService(membreDAO,
-                livreDAO,
-                pretDAO,
-                reservationDAO));
-            setPretService(new PretService(pretDAO,
-                membreDAO,
-                livreDAO,
-                reservationDAO));
-            setReservationService(new ReservationService(reservationDAO,
-                membreDAO,
-                livreDAO,
-                pretDAO));
-            setLivreFacade(new LivreFacade(getLivreService()));
-            setMembreFacade(new MembreFacade(getMembreService()));
-            setReservationFacade(new ReservationFacade(getReservationService()));
-            setPretFacade(new PretFacade(getPretService()));
+            setSessionFactory((SessionFactory) BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.SESSION_FACTORY_NAME));
 
-        } catch(ConnexionException connexionException) {
-            throw new BibliothequeException(connexionException);
+            //session.open
         }
+
+        catch(Exception e) {
+            throw new BibliothequeException();
+        }
+        BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.LIVRE_DAO_NAME);
+        BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.MEMBRE_DAO_NAME);
+        BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.RESERVATION_DAO_NAME);
+        BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.PRET_DAO_NAME);
+        setLivreService((ILivreService) BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.LIVRE_SERVICE_NAME));
+        setMembreService((IMembreService) BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.MEMBRE_SERVICE_NAME));
+        setReservationService((IReservationService) BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.RESERVATION_SERVICE_NAME));
+        setPretService((IPretService) BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.PRET_SERVICE_NAME));
+        setLivreFacade((ILivreFacade) BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.LIVRE_FACADE_NAME));
+        setMembreFacade((IMembreFacade) BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.MEMBRE_FACADE_NAME));
+        setReservationFacade((IReservationFacade) BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.RESERVATION_FACADE_NAME));
+        setPretFacade((IPretFacade) BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.PRET_FACADE_NAME));
+
+        //        } catch(ConnexionException sessionException) {
+        //            throw new BibliothequeException(sessionException);
+        //        }
+    }
+
+    private SessionFactory getSessionFactory() {
+        return this.sessionFactory;
+    }
+
+    private void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     // Region Getters and Setters
     /**
-     * Getter de la variable d'instance <code>this.connexion</code>.
+     * Getter de la variable d'instance <code>this.session</code>.
      *
-     * @return La variable d'instance <code>this.connexion</code>
+     * @return La variable d'instance <code>this.session</code>
      */
-    public Connexion getConnexion() {
-        return this.connexion;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.connexion</code>.
-     *
-     * @param connexion La valeur à utiliser pour la variable d'instance <code>this.connexion</code>
-     */
-    private void setConnexion(Connexion connexion) {
-        this.connexion = connexion;
+    public Session getSession() {
+        return getSessionFactory().getCurrentSession();
     }
 
     /**
@@ -133,9 +131,9 @@ public class BibliothequeCreateur {
      *
      * @return La variable d'instance <code>this.livreService</code>
      */
-    private ILivreService getLivreService() {
-        return this.livreService;
-    }
+    //    private ILivreService getLivreService() {
+    //        return this.livreService;
+    //    }
 
     /**
      * Setter de la variable d'instance <code>this.livreService</code>.
@@ -143,7 +141,7 @@ public class BibliothequeCreateur {
      * @param livreService La valeur à utiliser pour la variable d'instance <code>this.livreService</code>
      */
     private void setLivreService(ILivreService livreService) {
-        this.livreService = livreService;
+        this.livreService=livreService;
     }
 
     /**
@@ -151,9 +149,9 @@ public class BibliothequeCreateur {
      *
      * @return La variable d'instance <code>this.membreService</code>
      */
-    private IMembreService getMembreService() {
-        return this.membreService;
-    }
+    //    private IMembreService getMembreService() {
+    //        return this.membreService;
+    //    }
 
     /**
      * Setter de la variable d'instance <code>this.membreService</code>.
@@ -161,7 +159,7 @@ public class BibliothequeCreateur {
      * @param membreService La valeur à utiliser pour la variable d'instance <code>this.membreService</code>
      */
     private void setMembreService(IMembreService membreService) {
-        this.membreService = membreService;
+        this.membreService=membreService;
     }
 
     /**
@@ -169,9 +167,9 @@ public class BibliothequeCreateur {
      *
      * @return La variable d'instance <code>this.pretService</code>
      */
-    private IPretService getPretService() {
-        return this.pretService;
-    }
+    //    private IPretService getPretService() {
+    //        return this.pretService;
+    //    }
 
     /**
      * Setter de la variable d'instance <code>this.pretService</code>.
@@ -187,9 +185,9 @@ public class BibliothequeCreateur {
      *
      * @return La variable d'instance <code>this.reservationService</code>
      */
-    private IReservationService getReservationService() {
-        return this.reservationService;
-    }
+    //    private IReservationService getReservationService() {
+    //        return this.reservationService;
+    //    }
 
     /**
      * Setter de la variable d'instance <code>this.reservationService</code>.
@@ -234,40 +232,52 @@ public class BibliothequeCreateur {
         this.pretFacade = pretFacade;
     }
 
+    //    private void setSession(Session session){
+    //        this.sessionFactory.
+    //    }
+    //private void getSession
+
+    //    public void beginTransaction() throws BibliothequeException
+    //    {
+    //        try{
+    //            setSession()
+    //        }
+    //    }
+
     /**
-     * Effectue un commit sur la connexion.
+     * Effectue un commit sur la session.
      *
      * @throws BibliothequeException S'il y a une erreur avec la base de données
      */
-    public void commit() throws BibliothequeException {
+    public void commitTransaction() throws BibliothequeException {
         try {
-            getConnexion().commit();
+            getSession().getTransaction().commit();
         } catch(Exception exception) {
             throw new BibliothequeException(exception);
         }
     }
 
     /**
-     * Effectue un rollback sur la connexion.
+     * Effectue un rollback sur la session.
      *
      * @throws BibliothequeException S'il y a une erreur avec la base de données
      */
-    public void rollback() throws BibliothequeException {
+    public void rollbackTransaction() throws BibliothequeException {
         try {
-            getConnexion().rollback();
+            getSession().getTransaction().rollback();
         } catch(Exception exception) {
             throw new BibliothequeException(exception);
         }
     }
 
     /**
-     * Ferme la connexion.
+     * Ferme la session.
      *
      * @throws BibliothequeException S'il y a une erreur avec la base de données
      */
-    public void close() throws BibliothequeException {
+    public void closeSession() throws BibliothequeException {
         try {
-            getConnexion().close();
+            getSession().close();
         } catch(Exception exception) {
             throw new BibliothequeException(exception);
         }
