@@ -8,18 +8,15 @@ import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.StringTokenizer;
-import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyRequestException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dto.DuplicateDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
@@ -30,6 +27,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidLoanLimitExce
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.util.BibliothequeCreateur;
 import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -60,9 +58,9 @@ import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
  */
 public class Bibliotheque {
 
-    private static boolean lectureAuClavier = true;
-
     private static BibliothequeCreateur bibliothequeCreateur;
+
+    private final static Logger LOGGER = Logger.getLogger(bibliothequeCreateur.getClass());
 
     /**
      * Ouverture de la BD,
@@ -71,31 +69,26 @@ public class Bibliotheque {
      */
     public static void main(String argv[]) throws Exception {
         // validation du nombre de paramètres
-        if(argv.length < 4) {
+        if(argv.length < 1) {
             System.out.println("Usage: java Biblio <serveur> <bd> <user> <password> [<fichier-transactions>]");
-            System.out.println(Connexion.getServeursSupportes());
             return;
         }
-        //test
-        try(
-            InputStream sourceTransaction = (argv.length > 4 ? Bibliotheque.class.getResourceAsStream("/"
-                + argv[4]) : System.in);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction));) {
-            if(argv.length > 4) {
-                lectureAuClavier = false;
-            } else {
-                lectureAuClavier = true;
+
+        try {
+            // ouverture du fichier de transactions
+            InputStream sourceTransaction = Bibliotheque.class.getResourceAsStream("/"
+                + argv[4]);
+            try(
+                BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction))) {
+
+                bibliothequeCreateur = new BibliothequeCreateur();
+                traiterTransactions(reader);
             }
-            bibliothequeCreateur = new BibliothequeCreateur(argv[0],
-                argv[1],
-                argv[2],
-                argv[3]);
-            traiterTransactions(reader);
         } catch(Exception e) {
-            bibliothequeCreateur.rollback();
+            bibliothequeCreateur.rollbackTransaction();
             e.printStackTrace(System.out);
         } finally {
-            bibliothequeCreateur.close();
+            bibliothequeCreateur.closeSession();
         }
     }
 
@@ -104,6 +97,7 @@ public class Bibliotheque {
      */
     static void traiterTransactions(BufferedReader reader) throws Exception {
         afficherAide();
+        System.out.println("\n\n\n");
         String transaction = lireTransaction(reader);
         while(!finTransaction(transaction)) {
             /* découpage de la transaction en mots*/
@@ -120,12 +114,11 @@ public class Bibliotheque {
      * Lecture d'une transaction
      */
     static String lireTransaction(BufferedReader reader) throws IOException {
-        System.out.print("> ");
         String transaction = reader.readLine();
-        /* echo si lecture dans un fichier */
-        if(!lectureAuClavier) {
+        if(transaction != null) {
             System.out.println(transaction);
         }
+        /* echo si lecture dans un fichier */
         return transaction;
     }
 
@@ -146,16 +139,16 @@ public class Bibliotheque {
                 livreDTO.setTitre(readString(tokenizer));
                 livreDTO.setAuteur(readString(tokenizer));
                 livreDTO.setDateAcquisition(readDate(tokenizer));
-                bibliothequeCreateur.getLivreFacade().acquerir(bibliothequeCreateur.getConnexion(),
+                bibliothequeCreateur.getLivreFacade().acquerir(bibliothequeCreateur.getSession(),
                     livreDTO);
-                bibliothequeCreateur.commit();
+                bibliothequeCreateur.commitTransaction();
             } else if("vendre".startsWith(command)) {
                 LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(readString(tokenizer));
-                bibliothequeCreateur.getLivreFacade().vendre(bibliothequeCreateur.getConnexion(),
+                bibliothequeCreateur.getLivreFacade().vendre(bibliothequeCreateur.getSession(),
                     livreDTO);
 
-                bibliothequeCreateur.commit();
+                bibliothequeCreateur.commitTransaction();
             } else if("preter".startsWith(command)) {
                 MembreDTO membreDTO = new MembreDTO();
                 membreDTO.setIdMembre(readString(tokenizer));
@@ -164,40 +157,39 @@ public class Bibliotheque {
                 PretDTO pretDTO = new PretDTO();
                 pretDTO.setLivreDTO(livreDTO);
                 pretDTO.setMembreDTO(membreDTO);
-                bibliothequeCreateur.getPretFacade().emprunter(bibliothequeCreateur.getConnexion(),
+                bibliothequeCreateur.getPretFacade().emprunter(bibliothequeCreateur.getSession(),
                     pretDTO);
-                bibliothequeCreateur.commit();
+                bibliothequeCreateur.commitTransaction();
             } else if("renouveler".startsWith(command)) {
                 PretDTO pretDTO = new PretDTO();
                 pretDTO.setIdPret(readString(tokenizer));
-                bibliothequeCreateur.getPretFacade().renouveler(bibliothequeCreateur.getConnexion(),
+                bibliothequeCreateur.getPretFacade().renouveler(bibliothequeCreateur.getSession(),
                     pretDTO);
-                bibliothequeCreateur.commit();
+                bibliothequeCreateur.commitTransaction();
             } else if("retourner".startsWith(command)) {
                 LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(readString(tokenizer));
                 PretDTO pretDTO = new PretDTO();
                 pretDTO.setLivreDTO(livreDTO);
-                bibliothequeCreateur.getPretFacade().retourner(bibliothequeCreateur.getConnexion(),
+                bibliothequeCreateur.getPretFacade().retourner(bibliothequeCreateur.getSession(),
                     pretDTO);
-                bibliothequeCreateur.commit();
                 //La méthode du prof retourne un pret
                 //et bibliocreateur.terminer
-
+                bibliothequeCreateur.commitTransaction();
             } else if("inscrire".startsWith(command)) {
                 MembreDTO membreDTO = new MembreDTO();
                 membreDTO.setNom(readString(tokenizer));
                 membreDTO.setTelephone(readString(tokenizer));
                 membreDTO.setLimitePret(readString(tokenizer));
-                bibliothequeCreateur.getMembreFacade().inscrire(bibliothequeCreateur.getConnexion(),
+                bibliothequeCreateur.getMembreFacade().inscrireMembre(bibliothequeCreateur.getSession(),
                     membreDTO);
-                bibliothequeCreateur.commit();
+                bibliothequeCreateur.commitTransaction();
             } else if("desinscrire".startsWith(command)) {
                 MembreDTO membreDTO = new MembreDTO();
                 membreDTO.setIdMembre(readString(tokenizer));
-                bibliothequeCreateur.getMembreFacade().desinscrire(bibliothequeCreateur.getConnexion(),
+                bibliothequeCreateur.getMembreFacade().desinscrireMembre(bibliothequeCreateur.getSession(),
                     membreDTO);
-                bibliothequeCreateur.commit();
+                bibliothequeCreateur.commitTransaction();
             } else if("reserver".startsWith(command)) {
                 // Juste pour éviter deux dates de réservation strictement identiques
                 Thread.sleep(1);
@@ -208,21 +200,21 @@ public class Bibliotheque {
                 ReservationDTO reservationDTO = new ReservationDTO();
                 reservationDTO.setLivreDTO(livreDTO);
                 reservationDTO.setMembreDTO(membreDTO);
-                bibliothequeCreateur.getReservationFacade().placer(bibliothequeCreateur.getConnexion(),
+                bibliothequeCreateur.getReservationFacade().placer(bibliothequeCreateur.getSession(),
                     reservationDTO);
-                bibliothequeCreateur.commit();
+                bibliothequeCreateur.commitTransaction();
             } else if("utiliser".startsWith(command)) {
                 ReservationDTO reservationDTO = new ReservationDTO();
                 reservationDTO.setIdReservation(readString(tokenizer));
-                bibliothequeCreateur.getReservationFacade().utiliser(bibliothequeCreateur.getConnexion(),
+                bibliothequeCreateur.getReservationFacade().utiliser(bibliothequeCreateur.getSession(),
                     reservationDTO);
-                bibliothequeCreateur.commit();
+                bibliothequeCreateur.commitTransaction();
             } else if("annuler".startsWith(command)) {
                 ReservationDTO reservationDTO = new ReservationDTO();
                 reservationDTO.setIdReservation(readString(tokenizer));
-                bibliothequeCreateur.getReservationFacade().annuler(bibliothequeCreateur.getConnexion(),
+                bibliothequeCreateur.getReservationFacade().annuler(bibliothequeCreateur.getSession(),
                     reservationDTO);
-                bibliothequeCreateur.commit();
+                bibliothequeCreateur.commitTransaction();
             } else if("--".startsWith(command)) {
                 // ne rien faire; c'est un commentaire
             } else {
@@ -231,7 +223,6 @@ public class Bibliotheque {
         } catch(
             InvalidHibernateSessionException
             | InvalidDTOException
-            | InvalidPrimaryKeyException
             | MissingDTOException
             | InvalidDTOClassException
             | InvalidCriterionException
@@ -239,17 +230,17 @@ public class Bibliotheque {
             | ExistingReservationException
             | ExistingLoanException
             | InvalidLoanLimitException
-            | InvalidPrimaryKeyRequestException
             | MissingLoanException
             | FacadeException
-            | DuplicateDTOException exception) {
-            System.out.println("**** "
+            | InvalidCriterionValueException
+        /*| DuplicateDTOException*/exception) {
+            Bibliotheque.LOGGER.error("**** "
                 + exception.getMessage());
-            bibliothequeCreateur.rollback();
+            bibliothequeCreateur.rollbackTransaction();
         } catch(InterruptedException interruptedException) {
-            System.out.println("**** "
+            Bibliotheque.LOGGER.error("**** "
                 + interruptedException.toString());
-            bibliothequeCreateur.rollback();
+            bibliothequeCreateur.rollbackTransaction();
         }
     }
 
