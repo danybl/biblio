@@ -27,25 +27,25 @@
                    </column>
          </property>
           <property name="telephone"
-                   type="number"
+                   type="string"
                    length="10">
                    <column name="TELEPHONE">
                    </column>
          </property>
           <property name="limitePret"
-                   type="number"
+                   type="string"
                    length="2">
                    <column name="LIMITEPRET">
                    </column>
          </property>
           <property name="nbPret"
-                   type="number"
+                   type="string"
                    length="2">
                    <column name="NBPRET">
                    </column>
          </property>
 
-		<set name = "pret"
+		<set name = "prets"
 			order-by="DATEPRET ASC"
 			cascade="all">
 			<key>
@@ -54,7 +54,7 @@
 			</key>
 			<one-to-many class="ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO"/>
 		</set>
-		<set name = "reservation"
+		<set name = "reservations"
 			order-by="DATERESERVATION ASC"
 			cascade="all">
 			<key>
