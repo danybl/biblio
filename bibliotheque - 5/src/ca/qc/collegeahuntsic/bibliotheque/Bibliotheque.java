@@ -60,7 +60,7 @@ public class Bibliotheque {
 
     private static BibliothequeCreateur bibliothequeCreateur;
 
-    private final static Logger LOGGER = Logger.getLogger(bibliothequeCreateur.getClass());
+    private final static Logger LOGGER = Logger.getLogger(Bibliotheque.class);
 
     /**
      * Ouverture de la BD,
@@ -70,7 +70,7 @@ public class Bibliotheque {
     public static void main(String argv[]) throws Exception {
         // validation du nombre de paramètres
         if(argv.length < 1) {
-            System.out.println("Usage: java Biblio <serveur> <bd> <user> <password> [<fichier-transactions>]");
+            Bibliotheque.LOGGER.info("Usage: java Biblio <serveur> <bd> <user> <password> [<fichier-transactions>]");
             return;
         }
 
@@ -254,24 +254,24 @@ public class Bibliotheque {
 
     /** Affiche le menu des transactions acceptées par le système */
     static void afficherAide() {
-        System.out.println();
-        System.out.println("Chaque transaction comporte un nom et une liste d'arguments");
-        System.out.println("separes par des espaces. La liste peut etre vide.");
-        System.out.println(" Les dates sont en format yyyy-mm-dd.");
-        System.out.println("");
-        System.out.println("Les transactions sont:");
-        System.out.println("  aide");
-        System.out.println("  exit");
-        System.out.println("  acquerir <idLivre> <titre> <auteur> <dateAcquisition>");
-        System.out.println("  emprunter <idLivre> <idMembre>");
-        System.out.println("  renouveler <idLivre>");
-        System.out.println("  retourner <idLivre>");
-        System.out.println("  vendre <idLivre>");
-        System.out.println("  inscrire <nom> <telephone> <limitePret>");
-        System.out.println("  desinscrire <idMembre>");
-        System.out.println("  reserver <idLivre> <idMembre>");
-        System.out.println("  utiliser <idReservation>");
-        System.out.println("  annulerRes <idReservation>");
+        Bibliotheque.LOGGER.info("\n");
+        Bibliotheque.LOGGER.info("Chaque transaction comporte un nom et une liste d'arguments");
+        Bibliotheque.LOGGER.info("separes par des espaces. La liste peut etre vide.");
+        Bibliotheque.LOGGER.info(" Les dates sont en format yyyy-mm-dd.");
+        Bibliotheque.LOGGER.info("");
+        Bibliotheque.LOGGER.info("Les transactions sont:");
+        Bibliotheque.LOGGER.info("  aide");
+        Bibliotheque.LOGGER.info("  exit");
+        Bibliotheque.LOGGER.info("  acquerir <idLivre> <titre> <auteur> <dateAcquisition>");
+        Bibliotheque.LOGGER.info("  emprunter <idLivre> <idMembre>");
+        Bibliotheque.LOGGER.info("  renouveler <idLivre>");
+        Bibliotheque.LOGGER.info("  retourner <idLivre>");
+        Bibliotheque.LOGGER.info("  vendre <idLivre>");
+        Bibliotheque.LOGGER.info("  inscrire <nom> <telephone> <limitePret>");
+        Bibliotheque.LOGGER.info("  desinscrire <idMembre>");
+        Bibliotheque.LOGGER.info("  reserver <idLivre> <idMembre>");
+        Bibliotheque.LOGGER.info("  utiliser <idReservation>");
+        Bibliotheque.LOGGER.info("  annulerRes <idReservation>");
     }
 
     /**
