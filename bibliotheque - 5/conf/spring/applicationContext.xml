@@ -19,7 +19,7 @@
                   <value>oracle.jdbc.driver.OracleDriver</value>
         </property>
         <property name="jdbcUrl">
-                  <value>jdbc:oracle:thin:@localhost:1521:orcl</value>
+                  <value>jdbc:oracle:thin:@localhost:1521:xe</value>
         </property>
         <property name="properties">
                   <props>
@@ -28,8 +28,8 @@
                     <prop key="c3p0.max_size">1</prop>
                     <prop key="c3p0.max_statements">0</prop>
                     <prop key="c3p0.min_size">1</prop>
-                    <prop key="user">bibliotheque</prop>
-                    <prop key="password">123456</prop>
+                    <prop key="user">biblio</prop>
+                    <prop key="password">tiger</prop>
                   </props>
         </property>
   </bean>

@@ -77,7 +77,7 @@ public class Bibliotheque {
         try {
             // ouverture du fichier de transactions
             InputStream sourceTransaction = Bibliotheque.class.getResourceAsStream("/"
-                + argv[4]);
+                + argv[0]);
             try(
                 BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction))) {
 
@@ -85,7 +85,7 @@ public class Bibliotheque {
                 traiterTransactions(reader);
             }
         } catch(Exception e) {
-            bibliothequeCreateur.rollbackTransaction();
+            //bibliothequeCreateur.rollbackTransaction();
             e.printStackTrace(System.out);
         }
     }
