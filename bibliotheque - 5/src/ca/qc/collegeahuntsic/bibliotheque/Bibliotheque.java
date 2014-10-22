@@ -87,8 +87,6 @@ public class Bibliotheque {
         } catch(Exception e) {
             bibliothequeCreateur.rollbackTransaction();
             e.printStackTrace(System.out);
-        } finally {
-            bibliothequeCreateur.closeSession();
         }
     }
 
@@ -233,7 +231,7 @@ public class Bibliotheque {
             | MissingLoanException
             | FacadeException
             | InvalidCriterionValueException
-        /*| DuplicateDTOException*/exception) {
+            /*| DuplicateDTOException*/exception) {
             Bibliotheque.LOGGER.error("**** "
                 + exception.getMessage());
             bibliothequeCreateur.rollbackTransaction();
