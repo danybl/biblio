@@ -25,9 +25,9 @@ public interface IReservationFacade extends IFacade {
     /**
      * Place une réservation.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param reservationDTO La réservation à placer
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
      * @throws MissingDTOException Si le membre n'existe pas ou si le livre n'existe pas
      * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
@@ -55,7 +55,7 @@ public interface IReservationFacade extends IFacade {
     /**
      * Utilise une réservation.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param reservationDTO La réservation à utiliser
      * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
@@ -85,7 +85,7 @@ public interface IReservationFacade extends IFacade {
     /**
      * Annule une réservation.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param reservationDTO Le reservation à annuler
      * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>

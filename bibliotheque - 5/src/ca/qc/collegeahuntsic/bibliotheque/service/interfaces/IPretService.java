@@ -40,8 +40,8 @@ public interface IPretService extends IService {
     /**
      * Lit un prêt à partir de la base de données.
      *
-     * @param connexion
-     *            La connexion à utiliser
+     * @param session
+     *            La session à utiliser
      * @param idPret
      *            L'ID du prêt à lire
      * @return Le prêt

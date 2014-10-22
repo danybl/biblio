@@ -17,7 +17,7 @@ public interface IPretDAO extends IDAO {
      * Trouve les prêts d'un livre. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. Si aucun prêt
      * n'est trouvé, une {@link List} vide est retournée.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param dateRetour La date du prêt à trouver
      * @param sortByPropertyName The nom de la propriété à utiliser pour classer
      * @return La liste des prêts correspondant ; une liste vide sinon
@@ -40,7 +40,7 @@ public interface IPretDAO extends IDAO {
      * Trouve les prêts d'un livre. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. Si aucun prêt
      * n'est trouvé, une {@link List} vide est retournée.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param datePret L'ID du prêt à trouver
      * @param sortByPropertyName The nom de la propriété à utiliser pour classer
      * @return La liste des prêts correspondant ; une liste vide sinon

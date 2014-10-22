@@ -23,7 +23,7 @@ public interface ILivreFacade extends IFacade {
     /**
      * Acquiert un livre.
      *
-     * @param sesssion La sesssion à utiliser
+     * @param session La session à utiliser
      * @param livreDTO Le livre à acquérir
      * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
@@ -40,7 +40,7 @@ public interface ILivreFacade extends IFacade {
     /**
      * Vend un livre
      *
-     * @param sesssion La sesssion à utiliser
+     * @param session La session à utiliser
      * @param livreDTO Le livre à vendre
      * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
