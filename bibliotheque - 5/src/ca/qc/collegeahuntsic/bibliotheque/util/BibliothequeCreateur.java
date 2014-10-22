@@ -15,6 +15,7 @@ import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IPretService;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IReservationService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -87,7 +88,7 @@ public class BibliothequeCreateur {
             //session.open
         }
 
-        catch(Exception e) {
+        catch(BeansException beanException) {
             throw new BibliothequeException();
         }
         BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.LIVRE_DAO_NAME);
