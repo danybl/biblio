@@ -52,14 +52,16 @@
 				<column name="IDMEMBRE">
 				</column>
 			</key>
-			<one-to-many class="ca.qc.collegeahuntsic.bibliotheque.dto.pretDTO">
+			<one-to-many class="ca.qc.collegeahuntsic.bibliotheque.dto.pretDTO"/>
 		</set>
 		<set name = "reservation"
 			order-by="DATERESERVATION ASC"
 			cascade="all">
-			</key>
+			<key>
 				<column name="IDMEMBRE">
 				</column>
 			</key>
-			<one-to-many class="ca.qc.collegeahuntsic.bibliotheque.dto.reservationDTO">
+			<one-to-many class="ca.qc.collegeahuntsic.bibliotheque.dto.reservationDTO"/>
 		</set>
+		</class>
+</hibernate-mapping>
