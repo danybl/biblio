@@ -10,7 +10,7 @@
    -
 -->
 <hibernate-mapping>
-  <class name="ca.qc.collegeahuntsic.bibliotheque.dto.membreDTO"
+  <class name="ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO"
   table="MEMBRE">
          <id name="idMembre"
              type="string">
