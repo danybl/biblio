@@ -53,25 +53,15 @@ public class ReservationService extends Service implements IReservationService {
      *         est <code>null</code> ou si le DAO de prêt est <code>null</code>
      */
     ReservationService(IReservationDAO reservationDAO,
-        IMembreDAO membreDAO,
-        ILivreDAO livreDAO,
         IPretDAO pretDAO) throws InvalidDAOException {
         super();
         if(reservationDAO == null) {
             throw new InvalidDAOException("Le DAO de réservation ne peut être null");
         }
-        if(membreDAO == null) {
-            throw new InvalidDAOException("Le DAO de membre ne peut être null");
-        }
-        if(livreDAO == null) {
-            throw new InvalidDAOException("Le DAO de livre ne peut être null");
-        }
         if(pretDAO == null) {
             throw new InvalidDAOException("Le DAO de prêt ne peut être null");
         }
         setReservationDAO(reservationDAO);
-        setMembreDAO(membreDAO);
-        setLivreDAO(livreDAO);
         setPretDAO(pretDAO);
     }
 
@@ -104,30 +94,12 @@ public class ReservationService extends Service implements IReservationService {
     }
 
     /**
-     * Setter de la variable d'instance <code>this.membreDAO</code>.
-     *
-     * @param membreDAO La valeur à utiliser pour la variable d'instance <code>this.membreDAO</code>
-     */
-    private void setMembreDAO(IMembreDAO membreDAO) {
-        this.membreDAO = membreDAO;
-    }
-
-    /**
      * Getter de la variable d'instance <code>this.livreDAO</code>.
      *
      * @return La variable d'instance <code>this.livreDAO</code>
      */
     private ILivreDAO getLivreDAO() {
         return this.livreDAO;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.livreDAO</code>.
-     *
-     * @param livreDAO La valeur à utiliser pour la variable d'instance <code>this.livreDAO</code>
-     */
-    private void setLivreDAO(ILivreDAO livreDAO) {
-        this.livreDAO = livreDAO;
     }
 
     /**

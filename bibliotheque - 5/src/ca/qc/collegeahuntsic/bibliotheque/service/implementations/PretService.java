@@ -9,7 +9,6 @@ import java.util.Set;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.ILivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IPretDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
@@ -57,23 +56,11 @@ public class PretService extends Service implements IPretService {
      *             <code>null</code> ou si le DAO de réservation est
      *             <code>null</code>
      */
-    PretService(IPretDAO pretDAO,
-        // Spring
-        IMembreDAO membreDAO,
-        ILivreDAO livreDAO,
-        IReservationDAO reservationDAO) throws InvalidDAOException {
+    PretService(IPretDAO pretDAO) throws InvalidDAOException {
         super();
-        if(livreDAO == null) {
-            throw new InvalidDAOException("Le DAO de livre ne peut être null");
-        }
-        if(membreDAO == null) {
-            throw new InvalidDAOException("Le DAO de membre ne peut être null");
-        }
         if(pretDAO == null) {
             throw new InvalidDAOException("Le DAO de prêt ne peut être null");
         }
-        setLivreDAO(livreDAO);
-        setMembreDAO(membreDAO);
         setPretDAO(pretDAO);
     }
 
@@ -88,34 +75,12 @@ public class PretService extends Service implements IPretService {
     }
 
     /**
-     * Setter de la variable d'instance <code>this.livreDAO</code>.
-     *
-     * @param livreDAO
-     *            La valeur à utiliser pour la variable d'instance
-     *            <code>this.livreDAO</code>
-     */
-    private void setLivreDAO(ILivreDAO livreDAO) {
-        this.livreDAO = livreDAO;
-    }
-
-    /**
      * Getter de la variable d'instance <code>this.membreDAO</code>.
      *
      * @return La variable d'instance <code>this.membreDAO</code>
      */
     private IMembreDAO getMembreDAO() {
         return this.membreDAO;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.membreDAO</code>.
-     *
-     * @param membreDAO
-     *            La valeur à utiliser pour la variable d'instance
-     *            <code>this.membreDAO</code>
-     */
-    private void setMembreDAO(IMembreDAO membreDAO) {
-        this.membreDAO = membreDAO;
     }
 
     /**

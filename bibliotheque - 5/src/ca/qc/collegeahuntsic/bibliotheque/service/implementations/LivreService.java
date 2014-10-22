@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.ILivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IPretDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
@@ -35,10 +33,6 @@ public class LivreService extends Service implements ILivreService {
 
     private IMembreDAO membreDAO;
 
-    // private IPretDAO pretDAO;
-
-    // private IReservationDAO reservationDAO;
-
     /**
      * Crée le service de la table <code>livre</code>.
      *
@@ -49,27 +43,12 @@ public class LivreService extends Service implements ILivreService {
      * @throws InvalidDAOException Si le DAO de livre est <code>null</code>, si le DAO de membre est <code>null</code>, si le DAO de prêt est
      *         <code>null</code> ou si le DAO de réservation est <code>null</code>
      */
-    LivreService(ILivreDAO livreDAO,
-        IMembreDAO membreDAO,
-        IPretDAO pretDAO,
-        IReservationDAO reservationDAO) throws InvalidDAOException {
+    LivreService(ILivreDAO livreDAO) throws InvalidDAOException {
         super();
         if(livreDAO == null) {
             throw new InvalidDAOException("Le DAO de livre ne peut être null");
         }
-        if(membreDAO == null) {
-            throw new InvalidDAOException("Le DAO de membre ne peut être null");
-        }
-        if(pretDAO == null) {
-            throw new InvalidDAOException("Le DAO de prêt ne peut être null");
-        }
-        if(reservationDAO == null) {
-            throw new InvalidDAOException("Le DAO de réservation ne peut être null");
-        }
         setLivreDAO(livreDAO);
-        setMembreDAO(membreDAO);
-        //  setPretDAO(pretDAO);
-        //  setReservationDAO(reservationDAO);
     }
 
     // Region Getters and Setters
@@ -98,15 +77,6 @@ public class LivreService extends Service implements ILivreService {
      */
     private IMembreDAO getMembreDAO() {
         return this.membreDAO;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.membreDAO</code>.
-     *
-     * @param membreDAO La valeur à utiliser pour la variable d'instance <code>this.membreDAO</code>
-     */
-    private void setMembreDAO(IMembreDAO membreDAO) {
-        this.membreDAO = membreDAO;
     }
 
     /**
