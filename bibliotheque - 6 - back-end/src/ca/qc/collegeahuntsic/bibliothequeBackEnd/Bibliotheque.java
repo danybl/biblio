@@ -156,8 +156,8 @@ public class Bibliotheque {
                 LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(readString(tokenizer));
                 PretDTO pretDTO = new PretDTO();
-                pretDTO.setLivreDTO(livreDTO);
                 pretDTO.setMembreDTO(membreDTO);
+                pretDTO.setLivreDTO(livreDTO);
                 bibliothequeCreateur.getPretFacade().emprunter(bibliothequeCreateur.getSession(),
                     pretDTO);
                 bibliothequeCreateur.commitTransaction();
@@ -226,7 +226,7 @@ public class Bibliotheque {
             } else if("--".startsWith(command)) {
                 // ne rien faire; c'est un commentaire
             } else {
-                System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
+                Bibliotheque.LOGGER.info("  Transactions non reconnue.  Essayer \"aide\"");
             }
         } catch(
             InvalidHibernateSessionException
@@ -240,8 +240,7 @@ public class Bibliotheque {
             | InvalidLoanLimitException
             | MissingLoanException
             | FacadeException
-            | InvalidCriterionValueException
-        /*| DuplicateDTOException*/exception) {
+            | InvalidCriterionValueException exception) {
             Bibliotheque.LOGGER.error("**** "
                 + exception.getMessage());
             bibliothequeCreateur.rollbackTransaction();
