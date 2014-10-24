@@ -6,8 +6,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.ILivreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IPretDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
@@ -33,23 +31,13 @@ import org.hibernate.Session;
  *
  */
 public class PretService extends Service implements IPretService {
-    private ILivreDAO livreDAO;
-
-    private IMembreDAO membreDAO;
-
     private IPretDAO pretDAO;
 
     /**
      * Crée le service de la table <code>livre</code>.
      *
-     * @param livreDAO
-     *            Le DAO de la table <code>livre</code>
-     * @param membreDAO
-     *            Le DAO de la table <code>membre</code>
      * @param pretDAO
      *            Le DAO de la table <code>pret</code>
-     * @param reservationDAO
-     *            Le DAO de la table <code>reservation</code>
      * @throws InvalidDAOException
      *             Si le DAO de livre est <code>null</code>, si le DAO de membre
      *             est <code>null</code>, si le DAO de prêt est
@@ -65,24 +53,6 @@ public class PretService extends Service implements IPretService {
     }
 
     // Region Getters and Setters
-    /**
-     * Getter de la variable d'instance <code>this.livreDAO</code>.
-     *
-     * @return La variable d'instance <code>this.livreDAO</code>
-     */
-    private ILivreDAO getLivreDAO() {
-        return this.livreDAO;
-    }
-
-    /**
-     * Getter de la variable d'instance <code>this.membreDAO</code>.
-     *
-     * @return La variable d'instance <code>this.membreDAO</code>
-     */
-    private IMembreDAO getMembreDAO() {
-        return this.membreDAO;
-    }
-
     /**
      * Getter de la variable d'instance <code>this.pretDAO</code>.
      *
@@ -209,45 +179,50 @@ public class PretService extends Service implements IPretService {
             throw new InvalidDTOException("Le pret ne peut être null");
         }
         try {
-            MembreDTO unMembreDTO = (MembreDTO) getMembreDAO().get(session,
-                pretDTO.getMembreDTO().getIdMembre());
-            if(unMembreDTO == null) {
-                throw new MissingDTOException("Le membre "
-                    + pretDTO.getMembreDTO().getIdMembre()
-                    + " n'existe pas");
-            }
-            LivreDTO unLivreDTO = (LivreDTO) getLivreDAO().get(session,
-                pretDTO.getLivreDTO().getIdLivre());
-            if(unLivreDTO == null) {
-                throw new MissingDTOException("Le livre "
-                    + pretDTO.getLivreDTO().getIdLivre()
-                    + " n'existe pas");
-            }
-            if(unMembreDTO.getNbPret() == unMembreDTO.getLimitePret()) {
-                throw new ServiceException("Le membre "
-                    + unMembreDTO.getNom()
-                    + " (ID de membre : "
-                    + unMembreDTO.getIdMembre()
-                    + ") a atteint sa limite de prêt ("
-                    + unMembreDTO.getLimitePret()
-                    + " emprunt(s) maximum)");
-            }
-            Set<ReservationDTO> reservations = unLivreDTO.getReservations();
-
-            if(!reservations.isEmpty()) {
-                throw new ExistingReservationException("Le livre "
-                    + unLivreDTO.getTitre()
-                    + " (ID de livre : "
-                    + unLivreDTO.getIdLivre()
-                    + ") a des réservations"
-                    + ")");
-            }
-            List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
+            List<PretDTO> prets = new ArrayList<>(pretDTO.getLivreDTO().getPrets());
             if(!prets.isEmpty()) {
+                MembreDTO unMembreDTO = null;
+                for(PretDTO unPret : prets) {
+                    unMembreDTO = unPret.getMembreDTO();
+                    if(unMembreDTO == null) {
+                        throw new MissingDTOException("Le membre "
+                            + pretDTO.getMembreDTO().getIdMembre()
+                            + " n'existe pas");
+                    }
+                }
+                LivreDTO unLivreDTO = null;
+                for(PretDTO unPret : prets) {
+                    unLivreDTO = unPret.getLivreDTO();
+                    if(unLivreDTO == null) {
+                        throw new MissingDTOException("Le livre "
+                            + pretDTO.getLivreDTO().getIdLivre()
+                            + " n'existe pas");
+                    }
+                }
+                if(unMembreDTO.getNbPret() == unMembreDTO.getLimitePret()) {
+                    throw new ServiceException("Le membre "
+                        + unMembreDTO.getNom()
+                        + " (ID de membre : "
+                        + unMembreDTO.getIdMembre()
+                        + ") a atteint sa limite de prêt ("
+                        + unMembreDTO.getLimitePret()
+                        + " emprunt(s) maximum)");
+                }
+                Set<ReservationDTO> reservations = unLivreDTO.getReservations();
+
+                if(!reservations.isEmpty()) {
+                    throw new ExistingReservationException("Le livre "
+                        + unLivreDTO.getTitre()
+                        + " (ID de livre : "
+                        + unLivreDTO.getIdLivre()
+                        + ") a des réservations"
+                        + ")");
+                }
+                //            List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
+                //            if(!prets.isEmpty()) {
                 PretDTO unPretDTO = prets.get(0);
                 if(!unMembreDTO.equals(unPretDTO.getMembreDTO())) {
-                    MembreDTO booker = (MembreDTO) getMembreDAO().get(session,
-                        unPretDTO.getMembreDTO().getIdMembre());
+                    MembreDTO booker = unPretDTO.getMembreDTO();
                     throw new ExistingLoanException("Le livre "
                         + unLivreDTO.getTitre()
                         + " (ID de livre : "
@@ -256,13 +231,14 @@ public class PretService extends Service implements IPretService {
                         + booker.getNom()
                         + ")");
                 }
-            }
+                //            }
 
-            pretDTO.setMembreDTO(unMembreDTO);
-            pretDTO.setLivreDTO(unLivreDTO);
-            pretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
-            addPret(session,
-                pretDTO);
+                pretDTO.setMembreDTO(unMembreDTO);
+                pretDTO.setLivreDTO(unLivreDTO);
+                pretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
+                addPret(session,
+                    pretDTO);
+            }
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
