@@ -4,8 +4,6 @@ package ca.qc.collegeahuntsic.bibliotheque.service.implementations;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.ILivreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IPretDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
@@ -35,10 +33,6 @@ import org.hibernate.Session;
  */
 public class ReservationService extends Service implements IReservationService {
     private IReservationDAO reservationDAO;
-
-    private IMembreDAO membreDAO;
-
-    private ILivreDAO livreDAO;
 
     private IPretDAO pretDAO;
 
@@ -82,24 +76,6 @@ public class ReservationService extends Service implements IReservationService {
      */
     private void setReservationDAO(IReservationDAO reservationDAO) {
         this.reservationDAO = reservationDAO;
-    }
-
-    /**
-     * Getter de la variable d'instance <code>this.membreDAO</code>.
-     *
-     * @return La variable d'instance <code>this.membreDAO</code>
-     */
-    private IMembreDAO getMembreDAO() {
-        return this.membreDAO;
-    }
-
-    /**
-     * Getter de la variable d'instance <code>this.livreDAO</code>.
-     *
-     * @return La variable d'instance <code>this.livreDAO</code>
-     */
-    private ILivreDAO getLivreDAO() {
-        return this.livreDAO;
     }
 
     /**
