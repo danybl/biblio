@@ -4,7 +4,6 @@ package ca.qc.collegeahuntsic.bibliotheque.service.implementations;
 import java.util.ArrayList;
 import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.ILivreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
@@ -24,14 +23,8 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.ILivreService;
 import org.hibernate.Session;
 
-/**
- * Service de la table <code>livre</code>.
- *
- */
 public class LivreService extends Service implements ILivreService {
     private ILivreDAO livreDAO;
-
-    private IMembreDAO membreDAO;
 
     /**
      * Crée le service de la table <code>livre</code>.
@@ -70,33 +63,6 @@ public class LivreService extends Service implements ILivreService {
         this.livreDAO = livreDAO;
     }
 
-    /**
-     * Getter de la variable d'instance <code>this.membreDAO</code>.
-     *
-     * @return La variable d'instance <code>this.membreDAO</code>
-     */
-    private IMembreDAO getMembreDAO() {
-        return this.membreDAO;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.pretDAO</code>.
-     *
-     * @param pretDAO La valeur à utiliser pour la variable d'instance <code>this.pretDAO</code>
-     */
-    /* private void setPretDAO(IPretDAO pretDAO) {
-         this.pretDAO = pretDAO;
-     }
-     */
-    /**
-     * Setter de la variable d'instance <code>this.reservationDAO</code>.
-     *
-     * @param reservationDAO La valeur à utiliser pour la variable d'instance <code>this.reservationDAO</code>
-     */
-    /* private void setReservationDAO(IReservationDAO reservationDAO) {
-         this.reservationDAO = reservationDAO;
-     }
-     */
     // EndRegion Getters and Setters
 
     /**
@@ -250,8 +216,7 @@ public class LivreService extends Service implements ILivreService {
             if(!prets.isEmpty()) {
                 for(PretDTO pretDTO : prets) {
                     if(pretDTO.getDateRetour() == null) {
-                        MembreDTO emprunteur = (MembreDTO) getMembreDAO().get(session,
-                            pretDTO.getMembreDTO().getIdMembre());
+                        MembreDTO emprunteur = pretDTO.getMembreDTO();
                         throw new ExistingLoanException("Le livre "
                             + unLivreDTO.getTitre()
                             + " (ID de livre : "
@@ -270,8 +235,7 @@ public class LivreService extends Service implements ILivreService {
             List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
             if(!reservations.isEmpty()) {
                 ReservationDTO reservationDTO = reservations.get(0);
-                MembreDTO booker = (MembreDTO) getMembreDAO().get(session,
-                    reservationDTO.getMembreDTO().getIdMembre());
+                MembreDTO booker = reservationDTO.getMembreDTO();
                 throw new ExistingReservationException("Le livre "
                     + unLivreDTO.getTitre()
                     + " (ID de livre : "

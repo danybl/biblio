@@ -2,10 +2,7 @@
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.service.implementations;
 
 import java.util.List;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.ILivreDAO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IMembreDAO;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IPretDAO;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IReservationDAO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
@@ -30,12 +27,6 @@ import org.hibernate.Session;
 public class MembreService implements IMembreService {
 
     private IMembreDAO membreDAO;
-
-    private ILivreDAO livreDAO;
-
-    private IPretDAO pretDAO;
-
-    private IReservationDAO reservationDAO;
 
     /**
      * Crée le service de la table <code>membre</code>.
@@ -74,33 +65,6 @@ public class MembreService implements IMembreService {
      */
     public void setMembreDAO(IMembreDAO membreDAO) {
         this.membreDAO = membreDAO;
-    }
-
-    /**
-     * Getter de la variable d'instance <code>this.reservationDAO</code>.
-     *
-     * @return La variable d'instance <code>this.reservationDAO</code>
-     */
-    public IReservationDAO getReservationDAO() {
-        return this.reservationDAO;
-    }
-
-    /**
-     * Getter de la variable d'instance <code>this.pretDAO</code>.
-     *
-     * @return La variable d'instance <code>this.pretDAO</code>
-     */
-    public IPretDAO getPretDAO() {
-        return this.pretDAO;
-    }
-
-    /**
-     * Getter de la variable d'instance <code>this.livreDAO</code>.
-     *
-     * @return La variable d'instance <code>this.livreDAO</code>
-     */
-    public ILivreDAO getLivreDAO() {
-        return this.livreDAO;
     }
 
     /**
