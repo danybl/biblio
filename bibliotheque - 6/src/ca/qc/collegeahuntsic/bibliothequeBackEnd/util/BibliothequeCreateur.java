@@ -2,10 +2,6 @@
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.util;
 
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.BibliothequeException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces.ILivreFacade;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces.IMembreFacade;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces.IPretFacade;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces.IReservationFacade;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,7 +16,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author Gilles Benichou
  */
 public class BibliothequeCreateur {
-    private static final String SPRING_CONFIGURATION_FILE_NAME = "applicationContext.xml";
+
+    private static final String APPLICATION_CONTEXT_DAO_FILENAME = "applicationContext-dao.xml";
+
+    private static final String APPLICATION_CONTEXT_DTO_FILENAME = "applicationContext-dto.xml";
+
+    private static final String APPLICATION_CONTEXT_FACADE_FILENAME = "applicationContext-facade.xml";
+
+    private static final String APPLICATION_CONTEXT_JDBC_FILENAME = "applicationContext-jdbc.xml";
+
+    private static final String APPLICATION_CONTEXT_SERVICE_FILENAME = "applicationContext-service.xml";
 
     private static final String SESSION_FACTORY_NAME = "sessionFactory";
 
@@ -32,14 +37,13 @@ public class BibliothequeCreateur {
 
     private static final String RESERVATION_FACADE_NAME = "reservationFacade";
 
-    private static final String[] APPLICATION_CONTEXT_FILENAMES = new String[] { BibliothequeCreateur
+    private static final String[] APPLICATION_CONTEXT_FILENAMES = new String[] {BibliothequeCreateur.APPLICATION_CONTEXT_JDBC_FILENAME,
         BibliothequeCreateur.APPLICATION_CONTEXT_DTO_FILENAME,
         BibliothequeCreateur.APPLICATION_CONTEXT_DAO_FILENAME,
         BibliothequeCreateur.APPLICATION_CONTEXT_SERVICE_FILENAME,
-        BibliothequeCreateur.APPLICATION_CONTEXT_FACADE_FILENAME,
-        BibliothequeCreateur.APPLICATION_CONTEXT_FILENAME};
-    
-    private static final ApplicationContext APPLICATION_CONTEXT = new ClassPathXmlApplicationContext(BibliothequeCreateur.SPRING_CONFIGURATION_FILE_NAME);
+        BibliothequeCreateur.APPLICATION_CONTEXT_FACADE_FILENAME};
+
+    private static final ApplicationContext APPLICATION_CONTEXT = new ClassPathXmlApplicationContext(BibliothequeCreateur.APPLICATION_CONTEXT_FILENAMES);
 
     private SessionFactory sessionFactory;
 
