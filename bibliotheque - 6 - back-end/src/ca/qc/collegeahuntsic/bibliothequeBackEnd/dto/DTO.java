@@ -1,7 +1,6 @@
 
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.dto;
 
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.Constants;
 import java.beans.BeanInfo;
 import java.beans.IndexedPropertyDescriptor;
 import java.beans.IntrospectionException;
@@ -13,12 +12,12 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.Constants;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * Classe de base pour tous les DTOs.
  *
- * @author Gilles Benichou
  */
 public class DTO implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -145,7 +144,7 @@ public class DTO implements Serializable {
                             + Constants.SPACE.toString()
                             + getter.invoke(this,
                                 (Object) null)
-                                + Constants.COMMA.toString();
+                            + Constants.COMMA.toString();
                     } catch(NullPointerException nullPointerException) {
                         // Nothing to do.
                     } catch(IllegalAccessException illegalAccessException) {

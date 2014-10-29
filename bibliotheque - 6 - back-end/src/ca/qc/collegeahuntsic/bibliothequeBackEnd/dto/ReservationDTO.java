@@ -8,7 +8,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * DTO de la table <code>reservation</code>.
  *
- * @author Gilles Benichou
  */
 public final class ReservationDTO extends DTO {
     public static final String ID_RESERVATION_COLUMN_NAME = "idReservation";
