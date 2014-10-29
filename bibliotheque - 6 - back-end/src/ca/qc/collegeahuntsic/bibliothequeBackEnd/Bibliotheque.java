@@ -158,7 +158,7 @@ public class Bibliotheque {
 
                 String idMembre = readString(tokenizer);
                 MembreDTO membreDTO = bibliothequeCreateur.getMembreFacade().getMembre(bibliothequeCreateur.getSession(),
-                    readString(tokenizer));
+                    idMembre);
                 if(membreDTO == null) {
                     throw new MissingDTOException("Le membre "
                         + idMembre
