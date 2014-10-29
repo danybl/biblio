@@ -14,7 +14,6 @@ import org.hibernate.Session;
  * Interface de base pour les DAOs.<br />
  * Toutes les interfaces de DAO devrait en hériter.
  *
- * @author Gilles Benichou
  */
 public interface IDAO {
     /**
