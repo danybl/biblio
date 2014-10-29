@@ -13,6 +13,7 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.MissingDTOExcepti
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import org.hibernate.Session;
 
 /**
@@ -64,5 +65,18 @@ public interface ILivreFacade extends IFacade {
         InvalidSortByPropertyException,
         ExistingLoanException,
         ExistingReservationException,
+        FacadeException;
+
+    /**
+     * Lit un livre
+     *
+     * @param session La session à utiliser
+     * @param idLivre L'ID du livre à lire
+     * @return Le livre
+     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws ServiceException S'il y a une erreur avec la base de données
+     */
+    LivreDTO getLivre(Session session,
+        String idLivre) throws InvalidHibernateSessionException,
         FacadeException;
 }

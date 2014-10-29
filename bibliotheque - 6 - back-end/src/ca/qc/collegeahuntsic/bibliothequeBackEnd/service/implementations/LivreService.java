@@ -205,55 +205,53 @@ public class LivreService extends Service implements ILivreService {
         if(livreDTO == null) {
             throw new InvalidDTOException("Le livre ne peut être null");
         }
-        try {
-            LivreDTO unLivreDTO = getLivre(session,
-                livreDTO.getIdLivre());
-            if(unLivreDTO == null) {
-                throw new MissingDTOException("Le livre "
-                    + livreDTO.getIdLivre()
-                    + " n'existe pas");
-            }
-            /*List<PretDTO> prets = getPretDAO().findByLivre(session,
-                unLivreDTO.getIdLivre(),
-                PretDTO.DATE_PRET_COLUMN_NAME);*/
-            List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
-            if(!prets.isEmpty()) {
-                for(PretDTO pretDTO : prets) {
-                    if(pretDTO.getDateRetour() == null) {
-                        MembreDTO emprunteur = pretDTO.getMembreDTO();
-                        throw new ExistingLoanException("Le livre "
-                            + unLivreDTO.getTitre()
-                            + " (ID de livre : "
-                            + unLivreDTO.getIdLivre()
-                            + ") a été prêté à "
-                            + emprunteur.getNom()
-                            + " (ID de membre : "
-                            + emprunteur.getIdMembre()
-                            + ")");
-                    }
+
+        LivreDTO unLivreDTO = getLivre(session,
+            livreDTO.getIdLivre());
+        if(unLivreDTO == null) {
+            throw new MissingDTOException("Le livre "
+                + livreDTO.getIdLivre()
+                + " n'existe pas");
+        }
+        /*List<PretDTO> prets = getPretDAO().findByLivre(session,
+            unLivreDTO.getIdLivre(),
+            PretDTO.DATE_PRET_COLUMN_NAME);*/
+        List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
+        if(!prets.isEmpty()) {
+            for(PretDTO pretDTO : prets) {
+                if(pretDTO.getDateRetour() == null) {
+                    MembreDTO emprunteur = pretDTO.getMembreDTO();
+                    throw new ExistingLoanException("Le livre "
+                        + unLivreDTO.getTitre()
+                        + " (ID de livre : "
+                        + unLivreDTO.getIdLivre()
+                        + ") a été prêté à "
+                        + emprunteur.getNom()
+                        + " (ID de membre : "
+                        + emprunteur.getIdMembre()
+                        + ")");
                 }
             }
-            /* List<ReservationDTO> reservations = getReservationDAO().findByLivre(session,
-                 unLivreDTO.getIdLivre(),
-                 ReservationDTO.DATE_RESERVATION_COLUMN_NAME);*/
-            List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
-            if(!reservations.isEmpty()) {
-                ReservationDTO reservationDTO = reservations.get(0);
-                MembreDTO booker = reservationDTO.getMembreDTO();
-                throw new ExistingReservationException("Le livre "
-                    + unLivreDTO.getTitre()
-                    + " (ID de livre : "
-                    + unLivreDTO.getIdLivre()
-                    + ") est réservé pour "
-                    + booker.getNom()
-                    + " (ID de membre : "
-                    + booker.getIdMembre()
-                    + ")");
-            }
-            deleteLivre(session,
-                unLivreDTO);
-        } catch(DAOException daoException) {
-            throw new ServiceException(daoException);
         }
+        /* List<ReservationDTO> reservations = getReservationDAO().findByLivre(session,
+             unLivreDTO.getIdLivre(),
+             ReservationDTO.DATE_RESERVATION_COLUMN_NAME);*/
+        List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
+        if(!reservations.isEmpty()) {
+            ReservationDTO reservationDTO = reservations.get(0);
+            MembreDTO booker = reservationDTO.getMembreDTO();
+            throw new ExistingReservationException("Le livre "
+                + unLivreDTO.getTitre()
+                + " (ID de livre : "
+                + unLivreDTO.getIdLivre()
+                + ") est réservé pour "
+                + booker.getNom()
+                + " (ID de membre : "
+                + booker.getIdMembre()
+                + ")");
+        }
+        deleteLivre(session,
+            unLivreDTO);
+
     }
 }

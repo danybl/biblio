@@ -100,5 +100,19 @@ public class LivreFacade extends Facade implements ILivreFacade {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public LivreDTO getLivre(Session session,
+        String idLivre) throws InvalidHibernateSessionException,
+        FacadeException {
+        try {
+            return getLivreService().getLivre(session,
+                idLivre);
+        } catch(ServiceException serviceException) {
+            throw new FacadeException();
+        }
+    }
     //TODO ajouter getAll
 }

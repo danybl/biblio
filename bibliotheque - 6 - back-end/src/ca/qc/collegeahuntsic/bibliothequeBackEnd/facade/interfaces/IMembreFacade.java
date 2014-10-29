@@ -2,7 +2,6 @@
 
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces;
 
-import org.hibernate.Session;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
@@ -14,6 +13,8 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeExceptio
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
+import org.hibernate.Session;
 
 /**
  * Interface de façade pour manipuler les membres dans la base de données.
@@ -75,5 +76,18 @@ public interface IMembreFacade extends IFacade {
         ExistingLoanException,
         InvalidLoanLimitException,
         InvalidDTOClassException,
+        FacadeException;
+
+    /**
+     * Lit un membre
+     *
+     * @param session La session à utiliser
+     * @param idMembre L'ID du membre à lire
+     * @return Le membre
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
+     * @throws ServiceException S'il y a une erreur avec la base de données
+     */
+    MembreDTO getMembre(Session session,
+        String idMembre) throws InvalidHibernateSessionException,
         FacadeException;
 }

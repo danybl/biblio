@@ -151,10 +151,27 @@ public class Bibliotheque {
                 bibliothequeCreateur.commitTransaction();
             } else if("preter".startsWith(command)) {
                 bibliothequeCreateur.beginTransaction();
-                MembreDTO membreDTO = new MembreDTO();
-                membreDTO.setIdMembre(readString(tokenizer));
-                LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(readString(tokenizer));
+                //                MembreDTO membreDTO = new MembreDTO();
+                //                membreDTO.setIdMembre(readString(tokenizer));
+                //                LivreDTO livreDTO = new LivreDTO();
+                //                livreDTO.setIdLivre(readString(tokenizer));
+
+                String idMembre = readString(tokenizer);
+                MembreDTO membreDTO = bibliothequeCreateur.getMembreFacade().getMembre(bibliothequeCreateur.getSession(),
+                    readString(tokenizer));
+                if(membreDTO == null) {
+                    throw new MissingDTOException("Le membre "
+                        + idMembre
+                        + " n'existe pas");
+                }
+                String idLivre = readString(tokenizer);
+                LivreDTO livreDTO = bibliothequeCreateur.getLivreFacade().getLivre(bibliothequeCreateur.getSession(),
+                    idLivre);
+                if(livreDTO == null) {
+                    throw new MissingDTOException("Le livre "
+                        + idLivre
+                        + " n'existe pas");
+                }
                 PretDTO pretDTO = new PretDTO();
                 pretDTO.setMembreDTO(membreDTO);
                 pretDTO.setLivreDTO(livreDTO);
@@ -199,10 +216,22 @@ public class Bibliotheque {
                 bibliothequeCreateur.beginTransaction();
                 // Juste pour éviter deux dates de réservation strictement identiques
                 Thread.sleep(1);
-                MembreDTO membreDTO = new MembreDTO();
-                membreDTO.setIdMembre(readString(tokenizer));
-                LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(readString(tokenizer));
+                String idMembre = readString(tokenizer);
+                MembreDTO membreDTO = bibliothequeCreateur.getMembreFacade().getMembre(bibliothequeCreateur.getSession(),
+                    readString(tokenizer));
+                if(membreDTO == null) {
+                    throw new MissingDTOException("Le membre "
+                        + idMembre
+                        + " n'existe pas");
+                }
+                String idLivre = readString(tokenizer);
+                LivreDTO livreDTO = bibliothequeCreateur.getLivreFacade().getLivre(bibliothequeCreateur.getSession(),
+                    idLivre);
+                if(livreDTO == null) {
+                    throw new MissingDTOException("Le livre "
+                        + idLivre
+                        + " n'existe pas");
+                }
                 ReservationDTO reservationDTO = new ReservationDTO();
                 reservationDTO.setLivreDTO(livreDTO);
                 reservationDTO.setMembreDTO(membreDTO);
