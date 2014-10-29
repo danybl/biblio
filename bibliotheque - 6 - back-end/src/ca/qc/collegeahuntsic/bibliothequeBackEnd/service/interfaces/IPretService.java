@@ -34,10 +34,10 @@ public interface IPretService extends IService {
     /**
      * Lit un prêt à partir de la base de données.
      *
-     * @param connexion, La session à utiliser
+     * @param session, La session à utiliser
      * @param idPret, L'ID du prêt à lire
      * @return Le prêt
-     * @throws InvalidHibernateSessionException, Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException, Si la session est <code>null</code>
      * @throws InvalidPrimaryKeyException Si la clef primaire du DTO est <code>null</code>
      * @throws ServiceException, S'il y a une erreur avec la base de données
      */
