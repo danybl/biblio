@@ -1,6 +1,4 @@
 // Fichier IReservationService.java
-// Auteur : Gilles Bénichou
-// Date de création : 2014-09-01
 
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces;
 
@@ -28,9 +26,9 @@ public interface IReservationService extends IService {
     /**
      * Ajoute une nouvelle réservation dans la base de données.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param reservationDTO La réservation à ajouter
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
      * @throws InvalidDTOClassException Si la classe de la réservation n'est pas celle que prend en charge le DAO
      * @throws InvalidPrimaryKeyRequestException Si la requête de la clef primaire de la réservation est <code>null</code>
@@ -45,10 +43,10 @@ public interface IReservationService extends IService {
     /**
      * Lit une réservation à partir de la base de données.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param idReservation L'ID de la réservation à lire
      * @return La réservation
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidPrimaryKeyException Si la clef primaire de la réservation est <code>null</code>
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
@@ -59,9 +57,9 @@ public interface IReservationService extends IService {
     /**
      * Met à jour une réservation dans la base de données.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param reservationDTO La réservation à mettre à jour
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
      * @throws InvalidDTOClassException Si la classe de la réservation n'est pas celle que prend en charge le DAO
      * @throws ServiceException S'il y a une erreur avec la base de données
@@ -75,9 +73,9 @@ public interface IReservationService extends IService {
     /**
      * Supprime une réservation de la base de données.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param reservationDTO La réservation à supprimer
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
      * @throws InvalidDTOClassException Si la classe de la réservation n'est pas celle que prend en charge le DAO
      * @throws ServiceException S'il y a une erreur avec la base de données
@@ -92,10 +90,10 @@ public interface IReservationService extends IService {
      * Trouve toutes les réservations de la base de données. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. Si
      * aucune réservation n'est trouvée, une {@link List} vide est retournée.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param sortByPropertyName The nom de la propriété à utiliser pour classer
      * @return La liste de toutes les réservations ; une liste vide sinon
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
@@ -107,9 +105,9 @@ public interface IReservationService extends IService {
     /**
      * Place une réservation.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param reservationDTO La réservation à placer
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
      * @throws MissingDTOException Si le membre n'existe pas ou si le livre n'existe pas
      * @throws InvalidCriterionException Si l'ID du livre est <code>null</code>
@@ -136,9 +134,9 @@ public interface IReservationService extends IService {
     /**
      * Utilise une réservation.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param reservationDTO La réservation à utiliser
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
      * @throws MissingDTOException Si la réservation n'existe pas, si le membre n'existe pas ou si le livre n'existe pas
      * @throws InvalidCriterionException Si l'ID du livre est <code>null</code>
@@ -166,9 +164,9 @@ public interface IReservationService extends IService {
     /**
      * Annule une réservation.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param reservationDTO Le reservation à annuler
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
      * @throws MissingDTOException Si la réservation n'existe pas, si le membre n'existe pas ou si le livre n'existe pas
      * @throws InvalidDTOClassException Si la classe de la réservation n'est pas celle que prend en charge le DAO
