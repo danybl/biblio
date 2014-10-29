@@ -120,4 +120,15 @@ public class PretFacade extends Facade implements IPretFacade {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PretDTO getPret(Session session,
+        String idPret) throws InvalidHibernateSessionException,
+        FacadeException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

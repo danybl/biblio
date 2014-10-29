@@ -142,4 +142,22 @@ public interface IPretFacade extends IFacade {
         ExistingLoanException,
         ExistingReservationException,
         FacadeException;
+
+    /**
+     * Lit un prêt.
+     *
+     * @param Session
+     *            La connexion à utiliser
+     * @param idPret
+     *            L'ID du prêt à lire
+     * @return Le prêt
+     * @throws InvalidHibernateSessionException
+     *             Si la connexion est <code>null</code>
+     * @throws InvalidPrimaryKeyException Si la clef primaire du DTO est <code>null</code>
+     * @throws ServiceException
+     *             S'il y a une erreur avec la base de données
+     */
+    PretDTO getPret(Session session,
+        String idPret) throws InvalidHibernateSessionException,
+        FacadeException;
 }
