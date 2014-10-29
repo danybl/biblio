@@ -26,7 +26,7 @@ public interface ILivreFacade extends IFacade {
      *
      * @param sesssion La sesssion à utiliser
      * @param livreDTO Le livre à acquérir
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la sesssion est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
      * @throws InvalidDTOClassException Si la classe du livre n'est pas celle que prend en charge le DAO
      * @throws FacadeException S'il y a une erreur avec la base de données
@@ -43,7 +43,7 @@ public interface ILivreFacade extends IFacade {
      *
      * @param sesssion La sesssion à utiliser
      * @param livreDTO Le livre à vendre
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la sesssion est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
      * @throws InvalidDTOClassException Si la classe du livre n'est pas celle que prend en charge le DAO
      * @throws MissingDTOException Si le livre n'existe pas
@@ -73,7 +73,7 @@ public interface ILivreFacade extends IFacade {
      * @param session La session à utiliser
      * @param idLivre L'ID du livre à lire
      * @return Le livre
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la sesssion est <code>null</code>
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     LivreDTO getLivre(Session session,

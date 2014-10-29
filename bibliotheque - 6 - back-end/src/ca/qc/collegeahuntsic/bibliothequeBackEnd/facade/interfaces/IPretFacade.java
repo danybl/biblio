@@ -26,29 +26,17 @@ public interface IPretFacade extends IFacade {
     /**
      * Emprunte un livre.
      *
-     * @param session
-     *            la session à utiliser
-     * @param pretDTO
-     *            Le prêt à emprunter
-     * @throws InvalidHibernateSessionException
-     *             Si la session est <code>null</code>
-     * @throws InvalidDTOException
-     *             Si le livre est <code>null</code>
-     * @throws InvalidDTOClassException
-     *             Si la classe du livre n'est pas celle que prend en charge le
-     *             DAO
-     * @throws MissingDTOException
-     *             Si le livre n'existe pas
-     * @throws InvalidCriterionException
-     *             Si l'ID du membre est <code>null</code>
-     * @throws InvalidSortByPropertyException
-     *             Si la propriété à utiliser pour classer est <code>null</code>
-     * @throws ExistingLoanException
-     *             Si le livre a été prêté
-     * @throws ExistingReservationException
-     *             Si le livre a été réservé
-     * @throws ServiceException
-     *             S'il y a une erreur avec la base de données
+     * @param session la session à utiliser
+     * @param pretDTO Le prêt à emprunter
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
+     * @throws InvalidDTOException Si le livre est <code>null</code>
+     * @throws InvalidDTOClassException Si la classe du livre n'est pas celle que prend en charge le DAO
+     * @throws MissingDTOException Si le livre n'existe pas
+     * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
+     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
+     * @throws ExistingLoanException Si le livre a été prêté
+     * @throws ExistingReservationException Si le livre a été réservé
+     * @throws ServiceException S'il y a une erreur avec la base de données
      */
 
     void emprunter(Session session,
@@ -67,29 +55,17 @@ public interface IPretFacade extends IFacade {
     /**
      * Retourne un livre.
      *
-     * @param session
-     *            la session à utiliser
-     * @param pretDTO
-     *            Le prêt du livre à retourner
-     * @throws InvalidHibernateSessionException
-     *             Si la session est <code>null</code>
-     * @throws InvalidDTOException
-     *             Si le livre est <code>null</code>
-     * @throws InvalidDTOClassException
-     *             Si la classe du livre n'est pas celle que prend en charge le
-     *             DAO
-     * @throws MissingDTOException
-     *             Si le livre n'existe pas
-     * @throws InvalidCriterionException
-     *             Si l'ID du membre est <code>null</code>
-     * @throws InvalidSortByPropertyException
-     *             Si la propriété à utiliser pour classer est <code>null</code>
-     * @throws ExistingLoanException
-     *             Si le livre a été prêté
-     * @throws ExistingReservationException
-     *             Si le livre a été réservé
-     * @throws ServiceException
-     *             S'il y a une erreur avec la base de données
+     * @param session la session à utiliser
+     * @param pretDTO Le prêt du livre à retourner
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
+     * @throws InvalidDTOException Si le livre est <code>null</code>
+     * @throws InvalidDTOClassException Si la classe du livre n'est pas celle que prend en charge le DAO
+     * @throws MissingDTOException Si le livre n'existe pas
+     * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
+     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
+     * @throws ExistingLoanException Si le livre a été prêté
+     * @throws ExistingReservationException Si le livre a été réservé
+     * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void retourner(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
@@ -107,29 +83,17 @@ public interface IPretFacade extends IFacade {
     /**
      * Renouvele un prêt.
      *
-     * @param session
-     *            la session à utiliser
-     * @param pretDTO
-     *            Le prêt à renouveler
-     * @throws InvalidHibernateSessionException
-     *             Si la session est <code>null</code>
-     * @throws InvalidDTOException
-     *             Si le livre est <code>null</code>
-     * @throws InvalidDTOClassException
-     *             Si la classe du livre n'est pas celle que prend en charge le
-     *             DAO
-     * @throws MissingDTOException
-     *             Si le livre n'existe pas
-     * @throws InvalidCriterionException
-     *             Si l'ID du membre est <code>null</code>
-     * @throws InvalidSortByPropertyException
-     *             Si la propriété à utiliser pour classer est <code>null</code>
-     * @throws ExistingLoanException
-     *             Si le livre a été prêté
-     * @throws ExistingReservationException
-     *             Si le livre a été réservé
-     * @throws ServiceException
-     *             S'il y a une erreur avec la base de données
+     * @param session la session à utiliser
+     * @param pretDTO Le prêt à renouveler
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
+     * @throws InvalidDTOException Si le livre est <code>null</code>
+     * @throws InvalidDTOClassException Si la classe du livre n'est pas celle que prend en charge le DAO
+     * @throws MissingDTOException Si le livre n'existe pas
+     * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
+     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
+     * @throws ExistingLoanException Si le livre a été prêté
+     * @throws ExistingReservationException Si le livre a été réservé
+     * @throws ServiceException S'il y a une erreur avec la base de données
      */
 
     void renouveler(Session session,
@@ -146,16 +110,12 @@ public interface IPretFacade extends IFacade {
     /**
      * Lit un prêt.
      *
-     * @param Session
-     *            La connexion à utiliser
-     * @param idPret
-     *            L'ID du prêt à lire
+     * @param Session La sesssion à utiliser
+     * @param idPret L'ID du prêt à lire
      * @return Le prêt
-     * @throws InvalidHibernateSessionException
-     *             Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la sesssion est <code>null</code>
      * @throws InvalidPrimaryKeyException Si la clef primaire du DTO est <code>null</code>
-     * @throws ServiceException
-     *             S'il y a une erreur avec la base de données
+     * @throws ServiceException S'il y a une erreur avec la base de données
      */
     PretDTO getPret(Session session,
         String idPret) throws InvalidHibernateSessionException,
