@@ -25,9 +25,9 @@ public interface IReservationFacade extends IFacade {
     /**
      * Place une réservation.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param reservationDTO La réservation à placer
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
      * @throws MissingDTOException Si le membre n'existe pas ou si le livre n'existe pas
      * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
@@ -55,9 +55,9 @@ public interface IReservationFacade extends IFacade {
     /**
      * Utilise une réservation.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param reservationDTO La réservation à utiliser
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
      * @throws MissingDTOException Si la réservation n'existe pas, si le membre n'existe pas ou si le livre n'existe pas
      * @throws InvalidCriterionException Si l'ID du livre est <code>null</code>
@@ -85,13 +85,13 @@ public interface IReservationFacade extends IFacade {
     /**
      * Annule une réservation.
      *
-     * @param connexion La connexion à utiliser
+     * @param session La session à utiliser
      * @param reservationDTO Le reservation à annuler
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
      * @throws MissingDTOException Si la réservation n'existe pas, si le membre n'existe pas ou si le livre n'existe pas
      * @throws InvalidDTOClassException Si la classe de la réservation n'est pas celle que prend en charge le DAO
-     * @throws FacadeException Si la connexion est <code>null</code>, si la réservation est <code>null</code>, si la réservation n'existe pas
+     * @throws FacadeException Si la session est <code>null</code>, si la réservation est <code>null</code>, si la réservation n'existe pas
      *         ou s'il y a une erreur avec la base de données
      */
     void annuler(Session session,
