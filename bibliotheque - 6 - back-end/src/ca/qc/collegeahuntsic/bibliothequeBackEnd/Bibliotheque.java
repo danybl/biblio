@@ -180,8 +180,14 @@ public class Bibliotheque {
                 bibliothequeCreateur.commitTransaction();
             } else if("renouveler".startsWith(command)) {
                 bibliothequeCreateur.beginTransaction();
-                PretDTO pretDTO = new PretDTO();
-                pretDTO.setIdPret(readString(tokenizer));
+                String idPret = readString(tokenizer);
+                PretDTO pretDTO = bibliothequeCreateur.getPretFacade().getPret(bibliothequeCreateur.getSession(),
+                    idPret);
+                if(pretDTO == null) {
+                    throw new MissingDTOException("Le pret "
+                        + idPret
+                        + " n'existe pas");
+                }
                 bibliothequeCreateur.getPretFacade().renouveler(bibliothequeCreateur.getSession(),
                     pretDTO);
                 bibliothequeCreateur.commitTransaction();
@@ -218,7 +224,7 @@ public class Bibliotheque {
                 Thread.sleep(1);
                 String idMembre = readString(tokenizer);
                 MembreDTO membreDTO = bibliothequeCreateur.getMembreFacade().getMembre(bibliothequeCreateur.getSession(),
-                    readString(tokenizer));
+                    idMembre);
                 if(membreDTO == null) {
                     throw new MissingDTOException("Le membre "
                         + idMembre

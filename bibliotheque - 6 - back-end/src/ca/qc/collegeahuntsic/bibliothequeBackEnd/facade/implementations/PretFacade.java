@@ -127,8 +127,12 @@ public class PretFacade extends Facade implements IPretFacade {
     public PretDTO getPret(Session session,
         String idPret) throws InvalidHibernateSessionException,
         FacadeException {
-        // TODO Auto-generated method stub
-        return null;
+        try {
+            return getPretService().getPret(session,
+                idPret);
+        } catch(ServiceException serviceException) {
+            throw new FacadeException();
+        }
     }
 
 }

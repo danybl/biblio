@@ -288,24 +288,14 @@ public class PretService extends Service implements IPretService {
         }
         try {
 
-            PretDTO unPretDTO = (PretDTO) getPretDAO().get(session,
-                pretDTO.getIdPret());
-            if(unPretDTO == null) {
-                throw new ServiceException("Le prêt "
-                    + pretDTO.getIdPret()
-                    + " n'existe pas");
-            }
-
-            MembreDTO unMembreDTO = (MembreDTO) getMembreDAO().get(session,
-                unPretDTO.getMembreDTO().getIdMembre());
+            MembreDTO unMembreDTO = pretDTO.getMembreDTO();
             if(unMembreDTO == null) {
                 throw new ServiceException("Le membre "
-                    + unPretDTO.getMembreDTO().getIdMembre()
+                    + pretDTO.getMembreDTO().getIdMembre()
                     + " n'existe pas");
             }
 
-            LivreDTO unLivreDTO = (LivreDTO) getLivreDAO().get(session,
-                unPretDTO.getLivreDTO().getIdLivre());
+            LivreDTO unLivreDTO = pretDTO.getLivreDTO();
             if(unLivreDTO == null) {
                 throw new MissingDTOException("Le livre "
                     + pretDTO.getLivreDTO().getIdLivre()
@@ -360,9 +350,9 @@ public class PretService extends Service implements IPretService {
                     + ")");
             }
 
-            unPretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
+            pretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
             updatePret(session,
-                unPretDTO);
+                pretDTO);
 
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
