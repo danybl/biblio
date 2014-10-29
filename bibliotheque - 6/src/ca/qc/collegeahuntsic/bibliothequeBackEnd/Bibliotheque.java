@@ -165,7 +165,7 @@ public class Bibliotheque {
             | MissingLoanException
             | FacadeException
             | InvalidCriterionValueException
-        /*| DuplicateDTOException*/exception) {
+            /*| DuplicateDTOException*/exception) {
             Bibliotheque.LOGGER.error("**** "
                 + exception.getMessage());
             bibliothequeCreateur.rollbackTransaction();
@@ -198,6 +198,7 @@ public class Bibliotheque {
         Bibliotheque.LOGGER.info("  annulerRes <idReservation>");
     }
 
+    /** Permet d'acquerir un livre */
     static void acquerirLivre(StringTokenizer tokenizer) {
         bibliothequeCreateur.beginTransaction();
         LivreDTO livreDTO = new LivreDTO();
@@ -209,6 +210,7 @@ public class Bibliotheque {
         bibliothequeCreateur.commitTransaction();
     }
 
+    /** Permet la vente un livre */
     static void vendreLivre(StringTokenizer tokenizer) {
         bibliothequeCreateur.beginTransaction();
         LivreDTO livreDTO = new LivreDTO();
@@ -218,6 +220,7 @@ public class Bibliotheque {
         bibliothequeCreateur.commitTransaction();
     }
 
+    /** Permet de faire le pret d'un livre */
     static void preterLivre(StringTokenizer tokenizer) {
         bibliothequeCreateur.beginTransaction();
         MembreDTO membreDTO = new MembreDTO();
@@ -232,6 +235,7 @@ public class Bibliotheque {
         bibliothequeCreateur.commitTransaction();
     }
 
+    /** Permet de renouveler le pret d'un livre */
     static void renouvelerPret(StringTokenizer tokenizer) {
         bibliothequeCreateur.beginTransaction();
         PretDTO pretDTO = new PretDTO();
@@ -241,6 +245,7 @@ public class Bibliotheque {
         bibliothequeCreateur.commitTransaction();
     }
 
+    /** Permet le retour d'un livre */
     static void retournerLivre(StringTokenizer tokenizer) {
         bibliothequeCreateur.beginTransaction();
         LivreDTO livreDTO = new LivreDTO();
@@ -254,6 +259,7 @@ public class Bibliotheque {
         bibliothequeCreateur.commitTransaction();
     }
 
+    /** Permet d'inscrire d'un membre */
     static void inscrireMembre(StringTokenizer tokenizer) {
         bibliothequeCreateur.beginTransaction();
         MembreDTO membreDTO = new MembreDTO();
@@ -265,6 +271,7 @@ public class Bibliotheque {
         bibliothequeCreateur.commitTransaction();
     }
 
+    /** Permet de desinscrire d'un membre */
     static void desinscrireMembre(StringTokenizer tokenizer) {
         bibliothequeCreateur.beginTransaction();
         MembreDTO membreDTO = new MembreDTO();
@@ -274,6 +281,7 @@ public class Bibliotheque {
         bibliothequeCreateur.commitTransaction();
     }
 
+    /** Permet de reserver d'un livre */
     static void reserverLivre(StringTokenizer tokenizer) {
         bibliothequeCreateur.beginTransaction();
         // Juste pour éviter deux dates de réservation strictement identiques
@@ -290,6 +298,7 @@ public class Bibliotheque {
         bibliothequeCreateur.commitTransaction();
     }
 
+    /** Permet de utiliser d'une reservation */
     static void utiliserReservation(StringTokenizer tokenizer) {
         bibliothequeCreateur.beginTransaction();
         ReservationDTO reservationDTO = new ReservationDTO();
@@ -299,6 +308,7 @@ public class Bibliotheque {
         bibliothequeCreateur.commitTransaction();
     }
 
+    /** Permet d'annuler une reservation */
     static void annulerReservation(StringTokenizer tokenizer) {
         bibliothequeCreateur.beginTransaction();
         ReservationDTO reservationDTO = new ReservationDTO();

@@ -13,7 +13,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * Utilitaire de création des outils de la bibliothèque.
  *
- * @author Gilles Benichou
  */
 public class BibliothequeCreateur {
 
