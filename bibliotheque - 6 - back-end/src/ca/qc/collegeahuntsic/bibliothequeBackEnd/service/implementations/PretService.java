@@ -209,15 +209,13 @@ public class PretService extends Service implements IPretService {
             throw new InvalidDTOException("Le pret ne peut être null");
         }
         try {
-            MembreDTO unMembreDTO = (MembreDTO) getMembreDAO().get(session,
-                pretDTO.getMembreDTO().getIdMembre());
+            MembreDTO unMembreDTO = pretDTO.getMembreDTO();
             if(unMembreDTO == null) {
                 throw new MissingDTOException("Le membre "
                     + pretDTO.getMembreDTO().getIdMembre()
                     + " n'existe pas");
             }
-            LivreDTO unLivreDTO = (LivreDTO) getLivreDAO().get(session,
-                pretDTO.getLivreDTO().getIdLivre());
+            LivreDTO unLivreDTO = pretDTO.getLivreDTO();
             if(unLivreDTO == null) {
                 throw new MissingDTOException("Le livre "
                     + pretDTO.getLivreDTO().getIdLivre()
