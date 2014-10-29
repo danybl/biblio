@@ -15,6 +15,7 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanE
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import org.hibernate.Session;
 
 /**
@@ -99,5 +100,19 @@ public interface IReservationFacade extends IFacade {
         InvalidDTOException,
         MissingDTOException,
         InvalidDTOClassException,
+        FacadeException;
+
+    /**
+     * Lit une reservation.
+     *
+     * @param Session La sesssion à utiliser
+     * @param idReservation L'ID de la reservation à lire
+     * @return La reservation
+     * @throws InvalidHibernateSessionException Si la sesssion est <code>null</code>
+     * @throws InvalidPrimaryKeyException Si la clef primaire du DTO est <code>null</code>
+     * @throws ServiceException S'il y a une erreur avec la base de données
+     */
+    ReservationDTO getReservation(Session session,
+        String idReservation) throws InvalidHibernateSessionException,
         FacadeException;
 }

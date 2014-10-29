@@ -127,4 +127,17 @@ public class ReservationFacade extends Facade implements IReservationFacade {
             throw new FacadeException(serviceException);
         }
     }
+
+    @Override
+    public ReservationDTO getReservation(Session session,
+        String idReservation) throws InvalidHibernateSessionException,
+        FacadeException {
+        try {
+            return getReservationService().getReservation(session,
+                idReservation);
+        } catch(ServiceException serviceException) {
+            throw new FacadeException();
+        }
+    }
+
 }
