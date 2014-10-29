@@ -17,7 +17,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * Utilitaire de création des outils de la bibliothèque.
  *
- * @author Gilles Benichou
  */
 public class BibliothequeCreateur {
     private static final String SPRING_CONFIGURATION_FILE_NAME = "applicationContext.xml";
