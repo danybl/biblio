@@ -1,6 +1,4 @@
 // Fichier Date.java
-// Auteur : Gilles Bénichou
-// Date de création : 2014-09-01
 
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.util;
 
@@ -9,8 +7,7 @@ import java.util.Date;
 
 /**
  * Un objet @{link java.util.Date} amélioré.
- * 
- * @author Gilles Benichou
+ *
  */
 public class BibliothequeDate extends Date {
     private static final long serialVersionUID = 1L;
@@ -18,7 +15,7 @@ public class BibliothequeDate extends Date {
     /**
      * Allocates a <code>BibliothequeDate</code> object and initializes it so that it represents the time at which it was allocated, measured to
      * the nearest millisecond.
-     * 
+     *
      * @see System#currentTimeMillis()
      */
     public BibliothequeDate() {
@@ -28,7 +25,7 @@ public class BibliothequeDate extends Date {
     /**
      * Allocates a <code>BibliothequeDate</code> object and initializes it to represent the specified number of milliseconds since the standard
      * base time known as "the epoch", namely January 1, 1970, 00:00:00 GMT.
-     * 
+     *
      * @param date the milliseconds since January 1, 1970, 00:00:00 GMT.
      * @see System#currentTimeMillis()
      */
@@ -38,7 +35,7 @@ public class BibliothequeDate extends Date {
 
     /**
      * Calcule la date de début d'une date (la veille).
-     * 
+     *
      * @param date La date à utiliser
      * @return La date de début
      */
@@ -60,7 +57,7 @@ public class BibliothequeDate extends Date {
 
     /**
      * Calcule la date de fin d'une date (le lendemain).
-     * 
+     *
      * @param date La date à utiliser
      * @return La date de fin
      */
