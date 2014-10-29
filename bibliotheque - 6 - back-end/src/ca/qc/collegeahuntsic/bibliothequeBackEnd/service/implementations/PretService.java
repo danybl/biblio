@@ -367,8 +367,8 @@ public class PretService extends Service implements IPretService {
         }
         unPretDTO = prets.get(0);
         unPretDTO.setDateRetour(new Timestamp(System.currentTimeMillis()));//TODO à revoir
-        //            deletePret(session,
-        //                unPretDTO);
+        updatePret(session,
+            unPretDTO);
 
     }
 }

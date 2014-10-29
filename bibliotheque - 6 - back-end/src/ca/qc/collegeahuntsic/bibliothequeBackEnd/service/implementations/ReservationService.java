@@ -335,9 +335,6 @@ public class ReservationService extends Service implements IReservationService {
             annuler(session,
                 uneReservationDTO);
             unMembreDTO.setNbPret(Integer.toString(Integer.parseInt(unMembreDTO.getNbPret()) + 1));
-            //TODO voir comment mettre à jour le membre
-            getMembreDAO().update(session,
-                unMembreDTO);
             PretDTO unPretDTO = new PretDTO();
             unPretDTO.setMembreDTO(unMembreDTO);
             unPretDTO.setLivreDTO(unLivreDTO);

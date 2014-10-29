@@ -143,8 +143,14 @@ public class Bibliotheque {
                 bibliothequeCreateur.commitTransaction();
             } else if("vendre".startsWith(command)) {
                 bibliothequeCreateur.beginTransaction();
-                LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(readString(tokenizer));
+                String idLivre = readString(tokenizer);
+                LivreDTO livreDTO = bibliothequeCreateur.getLivreFacade().getLivre(bibliothequeCreateur.getSession(),
+                    idLivre);
+                if(livreDTO == null) {
+                    throw new MissingDTOException("Le livre "
+                        + idLivre
+                        + " n'existe pas");
+                }
                 bibliothequeCreateur.getLivreFacade().vendre(bibliothequeCreateur.getSession(),
                     livreDTO);
 
@@ -218,8 +224,14 @@ public class Bibliotheque {
                 bibliothequeCreateur.commitTransaction();
             } else if("desinscrire".startsWith(command)) {
                 bibliothequeCreateur.beginTransaction();
-                MembreDTO membreDTO = new MembreDTO();
-                membreDTO.setIdMembre(readString(tokenizer));
+                String idMembre = readString(tokenizer);
+                MembreDTO membreDTO = bibliothequeCreateur.getMembreFacade().getMembre(bibliothequeCreateur.getSession(),
+                    idMembre);
+                if(membreDTO == null) {
+                    throw new MissingDTOException("Le membre "
+                        + idMembre
+                        + " n'existe pas");
+                }
                 bibliothequeCreateur.getMembreFacade().desinscrireMembre(bibliothequeCreateur.getSession(),
                     membreDTO);
                 bibliothequeCreateur.commitTransaction();
@@ -264,8 +276,14 @@ public class Bibliotheque {
                 bibliothequeCreateur.commitTransaction();
             } else if("annuler".startsWith(command)) {
                 bibliothequeCreateur.beginTransaction();
-                ReservationDTO reservationDTO = new ReservationDTO();
-                reservationDTO.setIdReservation(readString(tokenizer));
+                String idReservation = readString(tokenizer);
+                ReservationDTO reservationDTO = bibliothequeCreateur.getReservationFacade().getReservation(bibliothequeCreateur.getSession(),
+                    idReservation);
+                if(reservationDTO == null) {
+                    throw new MissingDTOException("La réservation "
+                        + idReservation
+                        + " n'existe pas");
+                }
                 bibliothequeCreateur.getReservationFacade().annuler(bibliothequeCreateur.getSession(),
                     reservationDTO);
                 bibliothequeCreateur.commitTransaction();
