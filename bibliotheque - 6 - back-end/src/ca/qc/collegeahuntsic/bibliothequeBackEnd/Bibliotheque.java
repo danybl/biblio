@@ -193,10 +193,15 @@ public class Bibliotheque {
                 bibliothequeCreateur.commitTransaction();
             } else if("retourner".startsWith(command)) {
                 bibliothequeCreateur.beginTransaction();
-                LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(readString(tokenizer));
-                PretDTO pretDTO = new PretDTO();
-                pretDTO.setLivreDTO(livreDTO);
+
+                String idPret = readString(tokenizer);
+                PretDTO pretDTO = bibliothequeCreateur.getPretFacade().getPret(bibliothequeCreateur.getSession(),
+                    idPret);
+                if(pretDTO == null) {
+                    throw new MissingDTOException("Le pret "
+                        + idPret
+                        + " n'existe pas");
+                }
                 bibliothequeCreateur.getPretFacade().retourner(bibliothequeCreateur.getSession(),
                     pretDTO);
                 //La méthode du prof retourne un pret
@@ -246,8 +251,14 @@ public class Bibliotheque {
                 bibliothequeCreateur.commitTransaction();
             } else if("utiliser".startsWith(command)) {
                 bibliothequeCreateur.beginTransaction();
-                ReservationDTO reservationDTO = new ReservationDTO();
-                reservationDTO.setIdReservation(readString(tokenizer));
+                String idReservation = readString(tokenizer);
+                ReservationDTO reservationDTO = bibliothequeCreateur.getReservationFacade().getReservation(bibliothequeCreateur.getSession(),
+                    idReservation);
+                if(reservationDTO == null) {
+                    throw new MissingDTOException("La réservation "
+                        + idReservation
+                        + " n'existe pas");
+                }
                 bibliothequeCreateur.getReservationFacade().utiliser(bibliothequeCreateur.getSession(),
                     reservationDTO);
                 bibliothequeCreateur.commitTransaction();

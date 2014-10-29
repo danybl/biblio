@@ -6,8 +6,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.ILivreDAO;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IPretDAO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.MembreDTO;
@@ -33,9 +31,6 @@ import org.hibernate.Session;
  *
  */
 public class PretService extends Service implements IPretService {
-    private ILivreDAO livreDAO;
-
-    private IMembreDAO membreDAO;
 
     private IPretDAO pretDAO;
 
@@ -65,24 +60,6 @@ public class PretService extends Service implements IPretService {
     }
 
     // Region Getters and Setters
-    /**
-     * Getter de la variable d'instance <code>this.livreDAO</code>.
-     *
-     * @return La variable d'instance <code>this.livreDAO</code>
-     */
-    private ILivreDAO getLivreDAO() {
-        return this.livreDAO;
-    }
-
-    /**
-     * Getter de la variable d'instance <code>this.membreDAO</code>.
-     *
-     * @return La variable d'instance <code>this.membreDAO</code>
-     */
-    private IMembreDAO getMembreDAO() {
-        return this.membreDAO;
-    }
-
     /**
      * Getter de la variable d'instance <code>this.pretDAO</code>.
      *
@@ -208,62 +185,59 @@ public class PretService extends Service implements IPretService {
         if(pretDTO == null) {
             throw new InvalidDTOException("Le pret ne peut être null");
         }
-        try {
-            MembreDTO unMembreDTO = pretDTO.getMembreDTO();
-            if(unMembreDTO == null) {
-                throw new MissingDTOException("Le membre "
-                    + pretDTO.getMembreDTO().getIdMembre()
-                    + " n'existe pas");
-            }
-            LivreDTO unLivreDTO = pretDTO.getLivreDTO();
-            if(unLivreDTO == null) {
-                throw new MissingDTOException("Le livre "
-                    + pretDTO.getLivreDTO().getIdLivre()
-                    + " n'existe pas");
-            }
-            if(unMembreDTO.getNbPret() == unMembreDTO.getLimitePret()) {
-                throw new ServiceException("Le membre "
-                    + unMembreDTO.getNom()
-                    + " (ID de membre : "
-                    + unMembreDTO.getIdMembre()
-                    + ") a atteint sa limite de prêt ("
-                    + unMembreDTO.getLimitePret()
-                    + " emprunt(s) maximum)");
-            }
-            Set<ReservationDTO> reservations = unLivreDTO.getReservations();
 
-            if(!reservations.isEmpty()) {
-                throw new ExistingReservationException("Le livre "
+        MembreDTO unMembreDTO = pretDTO.getMembreDTO();
+        if(unMembreDTO == null) {
+            throw new MissingDTOException("Le membre "
+                + pretDTO.getMembreDTO().getIdMembre()
+                + " n'existe pas");
+        }
+        LivreDTO unLivreDTO = pretDTO.getLivreDTO();
+        if(unLivreDTO == null) {
+            throw new MissingDTOException("Le livre "
+                + pretDTO.getLivreDTO().getIdLivre()
+                + " n'existe pas");
+        }
+        if(unMembreDTO.getNbPret() == unMembreDTO.getLimitePret()) {
+            throw new ServiceException("Le membre "
+                + unMembreDTO.getNom()
+                + " (ID de membre : "
+                + unMembreDTO.getIdMembre()
+                + ") a atteint sa limite de prêt ("
+                + unMembreDTO.getLimitePret()
+                + " emprunt(s) maximum)");
+        }
+        Set<ReservationDTO> reservations = unLivreDTO.getReservations();
+
+        if(!reservations.isEmpty()) {
+            throw new ExistingReservationException("Le livre "
+                + unLivreDTO.getTitre()
+                + " (ID de livre : "
+                + unLivreDTO.getIdLivre()
+                + ") a des réservations"
+                + ")");
+        }
+        List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
+        if(!prets.isEmpty()) {
+            PretDTO unPretDTO = prets.get(0);
+            if(!unMembreDTO.equals(unPretDTO.getMembreDTO())) {
+                MembreDTO booker = unPretDTO.getMembreDTO();
+                throw new ExistingLoanException("Le livre "
                     + unLivreDTO.getTitre()
                     + " (ID de livre : "
                     + unLivreDTO.getIdLivre()
-                    + ") a des réservations"
+                    + ") est prété pour "
+                    + booker.getNom()
                     + ")");
             }
-            List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
-            if(!prets.isEmpty()) {
-                PretDTO unPretDTO = prets.get(0);
-                if(!unMembreDTO.equals(unPretDTO.getMembreDTO())) {
-                    MembreDTO booker = (MembreDTO) getMembreDAO().get(session,
-                        unPretDTO.getMembreDTO().getIdMembre());
-                    throw new ExistingLoanException("Le livre "
-                        + unLivreDTO.getTitre()
-                        + " (ID de livre : "
-                        + unLivreDTO.getIdLivre()
-                        + ") est prété pour "
-                        + booker.getNom()
-                        + ")");
-                }
-            }
-
-            pretDTO.setMembreDTO(unMembreDTO);
-            pretDTO.setLivreDTO(unLivreDTO);
-            pretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
-            addPret(session,
-                pretDTO);
-        } catch(DAOException daoException) {
-            throw new ServiceException(daoException);
         }
+
+        pretDTO.setMembreDTO(unMembreDTO);
+        pretDTO.setLivreDTO(unLivreDTO);
+        pretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
+        addPret(session,
+            pretDTO);
+
     }
 
     /**
@@ -286,77 +260,72 @@ public class PretService extends Service implements IPretService {
         if(pretDTO == null) {
             throw new InvalidDTOException("Le pret ne peut être null");
         }
-        try {
 
-            MembreDTO unMembreDTO = pretDTO.getMembreDTO();
-            if(unMembreDTO == null) {
-                throw new ServiceException("Le membre "
-                    + pretDTO.getMembreDTO().getIdMembre()
-                    + " n'existe pas");
-            }
-
-            LivreDTO unLivreDTO = pretDTO.getLivreDTO();
-            if(unLivreDTO == null) {
-                throw new MissingDTOException("Le livre "
-                    + pretDTO.getLivreDTO().getIdLivre()
-                    + " n'existe pas");
-            }
-            List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
-            if(!reservations.isEmpty()) {
-                ReservationDTO reservationDTO = reservations.get(0);
-                MembreDTO unMembre = (MembreDTO) getMembreDAO().get(session,
-                    reservationDTO.getMembreDTO().getIdMembre());
-                throw new ExistingReservationException("Le livre "
-                    + unLivreDTO.getTitre()
-                    + " (ID de livre : "
-                    + unLivreDTO.getIdLivre()
-                    + ") a des réservations "
-                    + "au membre "
-                    + unMembre.getNom()
-                    + ")");
-            }
-            Set<PretDTO> prets = unLivreDTO.getPrets();
-            if(prets.isEmpty()) {
-                throw new ServiceException("Le livre "
-                    + unLivreDTO.getTitre()
-                    + " (ID de livre : "
-                    + unLivreDTO.getIdLivre()
-                    + ") n'est pas encore prêté");
-            }
-            //            boolean aEteEmprunteParMembre = false;
-            //            for(PretDTO unAutrePretDTO : prets) {
-            //                aEteEmprunteParMembre = unMembreDTO.equals(unAutrePretDTO.getMembreDTO());
-            //            }
-            //            if(!aEteEmprunteParMembre) {
-            //                throw new ServiceException("Le livre "
-            //                    + unLivreDTO.getTitre()
-            //                    + " (ID de livre : "
-            //                    + unLivreDTO.getIdLivre()
-            //                    + ") n'a pas été prêté à "
-            //                    + unMembreDTO.getNom()
-            //                    + " (ID de membre : "
-            //                    + unMembreDTO.getIdMembre()
-            //                    + ")");
-            //            }
-            if(unMembreDTO.getPrets().isEmpty()) {
-                throw new ServiceException("Le livre "
-                    + unLivreDTO.getTitre()
-                    + " (ID de livre : "
-                    + unLivreDTO.getIdLivre()
-                    + ") n'a pas été prêté à "
-                    + unMembreDTO.getNom()
-                    + " (ID de membre : "
-                    + unMembreDTO.getIdMembre()
-                    + ")");
-            }
-
-            pretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
-            updatePret(session,
-                pretDTO);
-
-        } catch(DAOException daoException) {
-            throw new ServiceException(daoException);
+        MembreDTO unMembreDTO = pretDTO.getMembreDTO();
+        if(unMembreDTO == null) {
+            throw new ServiceException("Le membre "
+                + pretDTO.getMembreDTO().getIdMembre()
+                + " n'existe pas");
         }
+
+        LivreDTO unLivreDTO = pretDTO.getLivreDTO();
+        if(unLivreDTO == null) {
+            throw new MissingDTOException("Le livre "
+                + pretDTO.getLivreDTO().getIdLivre()
+                + " n'existe pas");
+        }
+        List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
+        if(!reservations.isEmpty()) {
+            ReservationDTO reservationDTO = reservations.get(0);
+            MembreDTO unMembre = reservationDTO.getMembreDTO();
+            throw new ExistingReservationException("Le livre "
+                + unLivreDTO.getTitre()
+                + " (ID de livre : "
+                + unLivreDTO.getIdLivre()
+                + ") a des réservations "
+                + "au membre "
+                + unMembre.getNom()
+                + ")");
+        }
+        Set<PretDTO> prets = unLivreDTO.getPrets();
+        if(prets.isEmpty()) {
+            throw new ServiceException("Le livre "
+                + unLivreDTO.getTitre()
+                + " (ID de livre : "
+                + unLivreDTO.getIdLivre()
+                + ") n'est pas encore prêté");
+        }
+        //            boolean aEteEmprunteParMembre = false;
+        //            for(PretDTO unAutrePretDTO : prets) {
+        //                aEteEmprunteParMembre = unMembreDTO.equals(unAutrePretDTO.getMembreDTO());
+        //            }
+        //            if(!aEteEmprunteParMembre) {
+        //                throw new ServiceException("Le livre "
+        //                    + unLivreDTO.getTitre()
+        //                    + " (ID de livre : "
+        //                    + unLivreDTO.getIdLivre()
+        //                    + ") n'a pas été prêté à "
+        //                    + unMembreDTO.getNom()
+        //                    + " (ID de membre : "
+        //                    + unMembreDTO.getIdMembre()
+        //                    + ")");
+        //            }
+        if(unMembreDTO.getPrets().isEmpty()) {
+            throw new ServiceException("Le livre "
+                + unLivreDTO.getTitre()
+                + " (ID de livre : "
+                + unLivreDTO.getIdLivre()
+                + ") n'a pas été prêté à "
+                + unMembreDTO.getNom()
+                + " (ID de membre : "
+                + unMembreDTO.getIdMembre()
+                + ")");
+        }
+
+        pretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
+        updatePret(session,
+            pretDTO);
+
     }
 
     /**
@@ -381,30 +350,25 @@ public class PretService extends Service implements IPretService {
             throw new InvalidDTOException("Le pret ne peut être null");
         }
 
-        try {
-
-            LivreDTO unLivreDTO = (LivreDTO) getLivreDAO().get(session,
-                pretDTO.getLivreDTO().getIdLivre());
-            if(unLivreDTO == null) {
-                throw new MissingDTOException("Le livre "
-                    + pretDTO.getLivreDTO().getIdLivre()
-                    + " n'existe pas");
-            }
-            List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
-            PretDTO unPretDTO = new PretDTO();
-            if(prets.isEmpty()) {
-                throw new MissingLoanException("Le livre "
-                    + unLivreDTO.getTitre()
-                    + " (ID de livre : "
-                    + unLivreDTO.getIdLivre()
-                    + ") n'a pas été prêté ");
-            }
-            unPretDTO = prets.get(0);
-            unPretDTO.setDateRetour(new Timestamp(System.currentTimeMillis()));//TODO à revoir
-            //            deletePret(session,
-            //                unPretDTO);
-        } catch(DAOException daoException) {
-            throw new ServiceException(daoException);
+        LivreDTO unLivreDTO = pretDTO.getLivreDTO();
+        if(unLivreDTO == null) {
+            throw new MissingDTOException("Le livre "
+                + pretDTO.getLivreDTO().getIdLivre()
+                + " n'existe pas");
         }
+        List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
+        PretDTO unPretDTO = new PretDTO();
+        if(prets.isEmpty()) {
+            throw new MissingLoanException("Le livre "
+                + unLivreDTO.getTitre()
+                + " (ID de livre : "
+                + unLivreDTO.getIdLivre()
+                + ") n'a pas été prêté ");
+        }
+        unPretDTO = prets.get(0);
+        unPretDTO.setDateRetour(new Timestamp(System.currentTimeMillis()));//TODO à revoir
+        //            deletePret(session,
+        //                unPretDTO);
+
     }
 }
