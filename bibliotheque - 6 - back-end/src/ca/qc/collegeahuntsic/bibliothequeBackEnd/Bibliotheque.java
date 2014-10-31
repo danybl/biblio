@@ -95,7 +95,6 @@ public class Bibliotheque {
      */
     static void traiterTransactions(BufferedReader reader) throws Exception {
         afficherAide();
-        System.out.println("\n\n\n");
         String transaction = lireTransaction(reader);
         while(!finTransaction(transaction)) {
             /* découpage de la transaction en mots*/
@@ -114,7 +113,7 @@ public class Bibliotheque {
     static String lireTransaction(BufferedReader reader) throws IOException {
         String transaction = reader.readLine();
         if(transaction != null) {
-            System.out.println(transaction);
+            Bibliotheque.LOGGER.info(transaction);
         }
         /* echo si lecture dans un fichier */
         return transaction;
@@ -218,6 +217,7 @@ public class Bibliotheque {
                 MembreDTO membreDTO = new MembreDTO();
                 membreDTO.setNom(readString(tokenizer));
                 membreDTO.setTelephone(readString(tokenizer));
+                membreDTO.setNbPret("0");
                 membreDTO.setLimitePret(readString(tokenizer));
                 bibliothequeCreateur.getMembreFacade().inscrireMembre(bibliothequeCreateur.getSession(),
                     membreDTO);

@@ -239,16 +239,16 @@ public class ReservationService extends Service implements IReservationService {
                 + unMembreDTO.getIdMembre()
                 + ")");
         }
-        List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
-        for(ReservationDTO uneAutreReservationDTO : reservations) {
-            if(unLivreDTO.equals(uneAutreReservationDTO.getLivreDTO())) {
-                throw new ExistingReservationException("Le livre "
-                    + unLivreDTO.getTitre()
-                    + " (ID de livre : "
-                    + unLivreDTO.getIdLivre()
-                    + ") est déjà réservé pour quelqu'un d'autre");
-            }
-        }
+        //        List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
+        //        for(ReservationDTO uneAutreReservationDTO : reservations) {
+        //            if(unLivreDTO.equals(uneAutreReservationDTO.getLivreDTO())) {
+        //                throw new ExistingReservationException("Le livre "
+        //                    + unLivreDTO.getTitre()
+        //                    + " (ID de livre : "
+        //                    + unLivreDTO.getIdLivre()
+        //                    + ") est déjà réservé pour quelqu'un d'autre");
+        //            }
+        //        }
         reservationDTO.setLivreDTO(unLivreDTO);
         reservationDTO.setMembreDTO(unMembreDTO);
         reservationDTO.setDateReservation(new Timestamp(System.currentTimeMillis()));
@@ -296,16 +296,15 @@ public class ReservationService extends Service implements IReservationService {
 
             List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
             if(!reservations.isEmpty()) {
-                ReservationDTO uneReservationDTO = reservations.get(0);
-                MembreDTO reserveur = uneReservationDTO.getMembreDTO();
-                throw new ExistingLoanException("Le livre "
+                ReservationDTO uneRservationDTO = reservations.get(0);
+                MembreDTO unMembre = uneRservationDTO.getMembreDTO();
+                throw new ExistingReservationException("Le livre "
                     + unLivreDTO.getTitre()
                     + " (ID de livre : "
                     + unLivreDTO.getIdLivre()
-                    + ") a été réservé pour "
-                    + reserveur.getNom()
-                    + " (ID de membre : "
-                    + reserveur.getIdMembre()
+                    + ") a des réservations "
+                    + "au membre "
+                    + unMembre.getNom()
                     + ")");
             }
             annuler(session,
