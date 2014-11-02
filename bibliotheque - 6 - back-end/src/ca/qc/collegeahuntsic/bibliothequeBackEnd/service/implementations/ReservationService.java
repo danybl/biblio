@@ -298,14 +298,16 @@ public class ReservationService extends Service implements IReservationService {
             if(!reservations.isEmpty()) {
                 ReservationDTO uneRservationDTO = reservations.get(0);
                 MembreDTO unMembre = uneRservationDTO.getMembreDTO();
-                throw new ExistingReservationException("Le livre "
-                    + unLivreDTO.getTitre()
-                    + " (ID de livre : "
-                    + unLivreDTO.getIdLivre()
-                    + ") a des réservations "
-                    + "au membre "
-                    + unMembre.getNom()
-                    + ")");
+                if(!reservationDTO.getMembreDTO().equals(unMembre)) {
+                    throw new ExistingReservationException("Le livre "
+                        + unLivreDTO.getTitre()
+                        + " (ID de livre : "
+                        + unLivreDTO.getIdLivre()
+                        + ") a des réservations "
+                        + "au membre "
+                        + unMembre.getNom()
+                        + ")");
+                }
             }
             annuler(session,
                 reservationDTO);
