@@ -218,16 +218,17 @@ public class PretService extends Service implements IPretService {
                 + ")");
         }
         List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
-        if(!prets.isEmpty()) {
-            PretDTO unPretDTO = prets.get(0);
-            if(!unMembreDTO.equals(unPretDTO.getMembreDTO())) {
-                MembreDTO booker = unPretDTO.getMembreDTO();
+        for(PretDTO unPretDTO : prets) {
+            if(unPretDTO.getDateRetour() == null) {
+                MembreDTO emprunteur = unPretDTO.getMembreDTO();
                 throw new ExistingLoanException("Le livre "
                     + unLivreDTO.getTitre()
                     + " (ID de livre : "
                     + unLivreDTO.getIdLivre()
-                    + ") est prété pour "
-                    + booker.getNom()
+                    + ") a été prêté à "
+                    + emprunteur.getNom()
+                    + " (ID de membre : "
+                    + emprunteur.getIdMembre()
                     + ")");
             }
         }
