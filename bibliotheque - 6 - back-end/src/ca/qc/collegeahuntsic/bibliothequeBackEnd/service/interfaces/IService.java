@@ -1,6 +1,6 @@
 // Fichier IService.java
-// Auteur : Gilles Bénichou
-// Date de création : 2014-09-01
+// Auteur : Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
+// Date de création : 2014-11-04
 
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces;
 
