@@ -1,4 +1,4 @@
-package ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.util;
+package ca.qc.collegeahuntsic.bibliotheque.exception.util;
 
 public class BDCreateurException extends Exception {
 

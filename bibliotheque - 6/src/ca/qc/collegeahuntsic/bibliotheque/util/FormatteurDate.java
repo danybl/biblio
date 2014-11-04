@@ -1,5 +1,5 @@
 
-package ca.qc.collegeahuntsic.bibliothequeBackEnd.util;
+package ca.qc.collegeahuntsic.bibliotheque.util;
 
 import java.sql.Timestamp;
 import java.text.ParseException;

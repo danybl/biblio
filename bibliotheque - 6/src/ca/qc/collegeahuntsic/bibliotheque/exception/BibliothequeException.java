@@ -1,5 +1,5 @@
 
-package ca.qc.collegeahuntsic.bibliothequeBackEnd.exception;
+package ca.qc.collegeahuntsic.bibliotheque.exception;
 
 public class BibliothequeException extends Exception {
 

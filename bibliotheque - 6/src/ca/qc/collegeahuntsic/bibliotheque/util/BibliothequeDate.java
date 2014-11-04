@@ -1,6 +1,6 @@
 // Fichier Date.java
 
-package ca.qc.collegeahuntsic.bibliothequeBackEnd.util;
+package ca.qc.collegeahuntsic.bibliotheque.util;
 
 import java.util.Calendar;
 import java.util.Date;

@@ -1,5 +1,5 @@
 
-package ca.qc.collegeahuntsic.bibliothequeBackEnd;
+package ca.qc.collegeahuntsic.bibliotheque;
 
 public interface Constants {
     /**

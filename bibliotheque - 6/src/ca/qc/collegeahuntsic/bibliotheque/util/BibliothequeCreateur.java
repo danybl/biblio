@@ -1,7 +1,7 @@
 
-package ca.qc.collegeahuntsic.bibliothequeBackEnd.util;
+package ca.qc.collegeahuntsic.bibliotheque.util;
 
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.BibliothequeException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
