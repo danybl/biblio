@@ -1,4 +1,6 @@
 // Fichier IReservationFacade.java
+// Auteur : Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
+// Date de création : 2014-11-04
 
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces;
 
@@ -21,6 +23,7 @@ import org.hibernate.Session;
 /**
  * Interface de façade pour manipuler les réservations dans la base de données.
  *
+ * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
  */
 public interface IReservationFacade extends IFacade {
     /**
