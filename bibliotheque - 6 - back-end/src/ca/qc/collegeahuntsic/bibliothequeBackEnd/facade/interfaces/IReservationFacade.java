@@ -51,6 +51,7 @@ public interface IReservationFacade extends IFacade {
         ExistingLoanException,
         ExistingReservationException,
         InvalidDTOClassException,
+        InvalidLoanLimitException,
         FacadeException;
 
     /**

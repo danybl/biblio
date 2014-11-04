@@ -129,6 +129,7 @@ public interface IReservationService extends IService {
         ExistingLoanException,
         ExistingReservationException,
         InvalidDTOClassException,
+        InvalidLoanLimitException,
         ServiceException;
 
     /**

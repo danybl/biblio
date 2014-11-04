@@ -194,6 +194,7 @@ public class ReservationService extends Service implements IReservationService {
         ExistingLoanException,
         ExistingReservationException,
         InvalidDTOClassException,
+        InvalidLoanLimitException,
         ServiceException {
         if(session == null) {
             throw new InvalidHibernateSessionException("La session ne peut être null");
@@ -215,7 +216,7 @@ public class ReservationService extends Service implements IReservationService {
         for(PretDTO pretDTO : prets) {
             aEteEmprunteParMembre = unMembreDTO.equals(pretDTO.getMembreDTO());
         }
-        if(aEteEmprunteParMembre) { //TODO  on peut utiliser la methode unMembreDTO.getPrets().isEmpty() pour voir si le membre a prete ce livre.
+        if(aEteEmprunteParMembre) {
             throw new ExistingLoanException("Le livre "
                 + unLivreDTO.getTitre()
                 + " (ID de livre : "
@@ -226,8 +227,28 @@ public class ReservationService extends Service implements IReservationService {
                 + unMembreDTO.getIdMembre()
                 + ")");
         }
-        reservationDTO.setLivreDTO(unLivreDTO);
-        reservationDTO.setMembreDTO(unMembreDTO);
+
+        if(unMembreDTO.getNbPret().equals(unMembreDTO.getLimitePret())) {
+            throw new InvalidLoanLimitException("Le membre "
+                + unMembreDTO.getNom()
+                + " (ID de membre : "
+                + unMembreDTO.getIdMembre()
+                + ") a atteint sa limite de prêt ("
+                + unMembreDTO.getLimitePret()
+                + " emprunt(s) maximum)");
+        }
+
+        List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
+        for(ReservationDTO uneAutreReservationDTO : reservations) {
+            if(unLivreDTO.equals(uneAutreReservationDTO.getLivreDTO())) {
+                throw new ExistingReservationException("Le livre "
+                    + unLivreDTO.getTitre()
+                    + " (ID de livre : "
+                    + unLivreDTO.getIdLivre()
+                    + ") est déjà réservé pour quelqu'un d'autre");
+            }
+        }
+
         reservationDTO.setDateReservation(new Timestamp(System.currentTimeMillis()));
         addReservation(session,
             reservationDTO);

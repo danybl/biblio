@@ -77,6 +77,7 @@ public class ReservationFacade extends Facade implements IReservationFacade {
         ExistingLoanException,
         ExistingReservationException,
         InvalidDTOClassException,
+        InvalidLoanLimitException,
         FacadeException {
         try {
             getReservationService().placer(session,
