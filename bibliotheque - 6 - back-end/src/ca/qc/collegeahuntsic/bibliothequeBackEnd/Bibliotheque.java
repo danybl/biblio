@@ -29,7 +29,7 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.util.BibliothequeCreateur;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.util.FormatteurDate;
 import org.apache.log4j.Logger;
 
-/**
+/** @author Dany Benoit-L, Franz Nkezimana, David Gallego, Jaskaran Dhadda, Cedric Soumpholphakdi.
  *
  * Interface du système de gestion d'une bibliothèque
  *
@@ -54,7 +54,6 @@ import org.apache.log4j.Logger;
  * Post-condition
  *   le programme effectue les maj associées à chaque
  *   transaction
- * </pre>
  */
 public class Bibliotheque {
 
@@ -66,39 +65,39 @@ public class Bibliotheque {
      * Ouverture de la BD,
      * traitement des transactions et
      * fermeture de la BD.
+     * @param argv arguments lors du démarage de l'application
+     * @throws Exception Si erreur au démarrage
      */
-    public static void main(String argv[]) throws Exception {
+    public static void main(String[] argv) throws Exception {
         // validation du nombre de paramètres
         if(argv.length < 1) {
             Bibliotheque.LOGGER.info("Usage: java Biblio <serveur> <bd> <user> <password> [<fichier-transactions>]");
             return;
         }
 
-        try {
-            // ouverture du fichier de transactions
-            InputStream sourceTransaction = Bibliotheque.class.getResourceAsStream("/"
-                + argv[0]);
-            try(
-                BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction))) {
+        // ouverture du fichier de transactions
+        final InputStream sourceTransaction = Bibliotheque.class.getResourceAsStream("/"
+            + argv[0]);
+        try(
+            BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction))) {
 
-                bibliothequeCreateur = new BibliothequeCreateur();
-                traiterTransactions(reader);
-            }
-        } catch(Exception e) {
-            //bibliothequeCreateur.rollbackTransaction();
-            e.printStackTrace(System.out);
+            bibliothequeCreateur = new BibliothequeCreateur();
+            traiterTransactions(reader);
         }
     }
 
-    /**
-     * Traitement des transactions de la biblioth�que
+    /** Traitement des transactions de la bibliothèque.
+     * @param reader Buffer pour la lecture d'une transaction
+     * @throws IOException Si erreur de lecture de la transaction
+     * @throws BibliothequeException
+     *      exception lancée s'il y a un problème avec l'exécution de la commande //TODO réviser documentation
      */
-    static void traiterTransactions(BufferedReader reader) throws Exception {
+    static void traiterTransactions(BufferedReader reader) throws IOException,
+    BibliothequeException {
         afficherAide();
         String transaction = lireTransaction(reader);
         while(!finTransaction(transaction)) {
-            /* découpage de la transaction en mots*/
-            StringTokenizer tokenizer = new StringTokenizer(transaction,
+            final StringTokenizer tokenizer = new StringTokenizer(transaction,
                 " ");
             if(tokenizer.hasMoreTokens()) {
                 executerTransaction(tokenizer);
@@ -107,28 +106,27 @@ public class Bibliotheque {
         }
     }
 
-    /**
-     * Lecture d'une transaction
+    /** Lecture d'une transaction.
+     * @param reader Buffer pour la lecture d'une transaction
+     * @throws IOException Si erreur de lecture de la transaction
+     * @return transanction Retourne le résultat de la lecture
      */
     static String lireTransaction(BufferedReader reader) throws IOException {
-        String transaction = reader.readLine();
+        final String transaction = reader.readLine();
         if(transaction != null) {
             Bibliotheque.LOGGER.info(transaction);
         }
-        /* echo si lecture dans un fichier */
         return transaction;
     }
 
-    /**
-     * Décodage et traitement d'une transaction
+    /** Décodage et traitement d'une transaction.
+     * @param tokenizer StringTokenizer pour découper les entrées pour la transaction
+     * @throws Si //TODO
      */
     static void executerTransaction(StringTokenizer tokenizer) throws BibliothequeException {
         try {
-            String command = tokenizer.nextToken();
+            final String command = tokenizer.nextToken();
 
-            /* ******************* */
-            /*         HELP        */
-            /* ******************* */
             if("aide".startsWith(command)) {
                 afficherAide();
             } else if("acquerir".startsWith(command)) {
