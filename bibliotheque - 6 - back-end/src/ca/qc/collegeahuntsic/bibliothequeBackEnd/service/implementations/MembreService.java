@@ -226,14 +226,9 @@ public class MembreService implements IMembreService {
         if(membreDTO == null) {
             throw new InvalidDTOException("Le membre ne peut être null");
         }
-        MembreDTO unMembreDTO = getMembre(session,
-            membreDTO.getIdMembre());
-        if(unMembreDTO == null) {
-            throw new MissingDTOException("Le membre "
-                + membreDTO.getIdMembre()
-                + " n'existe pas");
-        }
-        if(unMembreDTO.getNbPret() != null) {
+        MembreDTO unMembreDTO = membreDTO;
+
+        if(!unMembreDTO.getNbPret().equals("0")) {
             throw new ServiceException("Le membre "
                 + unMembreDTO.getNom()
                 + " (ID de membre : "
