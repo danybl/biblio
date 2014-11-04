@@ -13,6 +13,7 @@ import org.hibernate.Session;
 /**
  * Interface DAO pour manipuler les livres dans la base de données.
  *
+ * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
  */
 public interface ILivreDAO extends IDAO {
     /**

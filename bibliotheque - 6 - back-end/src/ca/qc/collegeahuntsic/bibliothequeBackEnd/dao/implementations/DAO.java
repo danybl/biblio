@@ -24,7 +24,7 @@ import org.hibernate.criterion.Restrictions;
 /**
  * Classe de base pour tous les DAOs.<br />
  * Tous les DAOs devrait en hériter.
- *
+ * @author David Gallego
  */
 public class DAO implements IDAO {
     private Class<?> dtoClass;
