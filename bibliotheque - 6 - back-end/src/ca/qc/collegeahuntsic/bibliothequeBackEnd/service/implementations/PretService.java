@@ -288,7 +288,7 @@ public class PretService extends Service implements IPretService {
                 + unMembre.getNom()
                 + ")");
         }
-        Set<PretDTO> prets = unLivreDTO.getPrets();
+        List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
         if(prets.isEmpty()) {
             throw new ServiceException("Le livre "
                 + unLivreDTO.getTitre()
@@ -296,21 +296,6 @@ public class PretService extends Service implements IPretService {
                 + unLivreDTO.getIdLivre()
                 + ") n'est pas encore prêté");
         }
-        //            boolean aEteEmprunteParMembre = false;
-        //            for(PretDTO unAutrePretDTO : prets) {
-        //                aEteEmprunteParMembre = unMembreDTO.equals(unAutrePretDTO.getMembreDTO());
-        //            }
-        //            if(!aEteEmprunteParMembre) {
-        //                throw new ServiceException("Le livre "
-        //                    + unLivreDTO.getTitre()
-        //                    + " (ID de livre : "
-        //                    + unLivreDTO.getIdLivre()
-        //                    + ") n'a pas été prêté à "
-        //                    + unMembreDTO.getNom()
-        //                    + " (ID de membre : "
-        //                    + unMembreDTO.getIdMembre()
-        //                    + ")");
-        //            }
         if(unMembreDTO.getPrets().isEmpty()) {
             throw new ServiceException("Le livre "
                 + unLivreDTO.getTitre()
