@@ -1,3 +1,6 @@
+// Fichier MembreFacade.java
+// Auteur : Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
+// Date de création : 2014-11-04
 
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.implementations;
 
@@ -20,7 +23,8 @@ import org.hibernate.Session;
 
 /**
  * Facade pour interagir avec le service des membres.
- *
+ * 
+ * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
  */
 public class MembreFacade extends Facade implements IMembreFacade {
     private IMembreService membreService;
@@ -112,7 +116,7 @@ public class MembreFacade extends Facade implements IMembreFacade {
             return getMembreService().getMembre(session,
                 idMembre);
         } catch(ServiceException serviceException) {
-            throw new FacadeException();
+            throw new FacadeException(serviceException);
         }
     }
 }

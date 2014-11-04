@@ -1,3 +1,6 @@
+// Fichier PretFacade.java
+// Auteur : Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
+// Date de création : 2014-11-04
 
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.implementations;
 
@@ -18,6 +21,13 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceExcept
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces.IPretFacade;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces.IPretService;
 import org.hibernate.Session;
+
+/**
+ * Facade pour interagir avec le service des prêts.
+ * 
+ * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
+ * 
+ */
 
 public class PretFacade extends Facade implements IPretFacade {
     private IPretService pretService;
@@ -131,7 +141,7 @@ public class PretFacade extends Facade implements IPretFacade {
             return getPretService().getPret(session,
                 idPret);
         } catch(ServiceException serviceException) {
-            throw new FacadeException();
+            throw new FacadeException(serviceException);
         }
     }
 

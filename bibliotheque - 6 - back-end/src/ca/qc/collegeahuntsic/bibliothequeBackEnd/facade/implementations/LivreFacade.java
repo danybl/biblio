@@ -1,3 +1,6 @@
+// Fichier LivreFacade.java
+// Auteur : Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
+// Date de création : 2014-11-04
 
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.implementations;
 
@@ -20,7 +23,8 @@ import org.hibernate.Session;
 
 /**
  * Facade pour interagir avec le service de livres.
- *
+ * 
+ * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
  */
 public class LivreFacade extends Facade implements ILivreFacade {
     private ILivreService livreService;
@@ -111,7 +115,7 @@ public class LivreFacade extends Facade implements ILivreFacade {
             return getLivreService().getLivre(session,
                 idLivre);
         } catch(ServiceException serviceException) {
-            throw new FacadeException();
+            throw new FacadeException(serviceException);
         }
     }
     //TODO ajouter getAll

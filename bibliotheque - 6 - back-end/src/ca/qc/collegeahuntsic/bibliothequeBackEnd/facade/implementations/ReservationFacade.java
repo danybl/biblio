@@ -141,7 +141,7 @@ public class ReservationFacade extends Facade implements IReservationFacade {
             return getReservationService().getReservation(session,
                 idReservation);
         } catch(ServiceException serviceException) {
-            throw new FacadeException();
+            throw new FacadeException(serviceException);
         }
     }
 
