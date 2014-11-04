@@ -280,7 +280,6 @@ public class ReservationService extends Service implements IReservationService {
             throw new InvalidDTOException("La réservation ne peut être null");
         }
         try {
-
             MembreDTO unMembreDTO = reservationDTO.getMembreDTO();
             if(unMembreDTO == null) {
                 throw new MissingDTOException("Le membre "
@@ -293,11 +292,11 @@ public class ReservationService extends Service implements IReservationService {
                     + reservationDTO.getLivreDTO().getIdLivre()
                     + " n'existe pas");
             }
-
+            ReservationDTO uneReservationDTO = null;
             List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
             if(!reservations.isEmpty()) {
-                ReservationDTO uneRservationDTO = reservations.get(0);
-                MembreDTO unMembre = uneRservationDTO.getMembreDTO();
+                uneReservationDTO = reservations.get(0);
+                MembreDTO unMembre = uneReservationDTO.getMembreDTO();
                 if(!reservationDTO.getMembreDTO().equals(unMembre)) {
                     throw new ExistingReservationException("Le livre "
                         + unLivreDTO.getTitre()
@@ -309,8 +308,7 @@ public class ReservationService extends Service implements IReservationService {
                         + ")");
                 }
             }
-            annuler(session,
-                reservationDTO);
+
             unMembreDTO.setNbPret(Integer.toString(Integer.parseInt(unMembreDTO.getNbPret()) + 1));
             PretDTO unPretDTO = new PretDTO();
             unPretDTO.setMembreDTO(unMembreDTO);
@@ -319,6 +317,8 @@ public class ReservationService extends Service implements IReservationService {
             unPretDTO.setDateRetour(null);
             getPretDAO().add(session,
                 unPretDTO);
+            annuler(session,
+                uneReservationDTO);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
