@@ -1,6 +1,10 @@
 
 package ca.qc.collegeahuntsic.bibliothequeBackEnd;
 
+/**
+ * Constantes utilisées dans les strings.
+ *@author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
+ */
 public interface Constants {
     /**
      * Character for the empty character.

@@ -1,4 +1,3 @@
-// Fichier Date.java
 
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.util;
 
@@ -7,7 +6,7 @@ import java.util.Date;
 
 /**
  * Un objet @{link java.util.Date} amélioré.
- *
+ * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
  */
 public class BibliothequeDate extends Date {
     private static final long serialVersionUID = 1L;
@@ -40,7 +39,7 @@ public class BibliothequeDate extends Date {
      * @return La date de début
      */
     public static Date getStartDate(Date date) {
-        Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.HOUR,
             calendar.getActualMaximum(Calendar.HOUR));
@@ -62,7 +61,7 @@ public class BibliothequeDate extends Date {
      * @return La date de fin
      */
     public static Date getEndDate(Date date) {
-        Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.HOUR,
             calendar.getActualMinimum(Calendar.HOUR));
