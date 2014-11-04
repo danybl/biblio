@@ -145,7 +145,6 @@ public class PretService extends Service implements IPretService {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     @Override
     public List<PretDTO> getAll(Session session,
         String sortByPropertyName) throws InvalidHibernateSessionException,
