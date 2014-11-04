@@ -16,7 +16,7 @@ import org.hibernate.Session;
  * @author David Gallego
  *
  */
-public interface IDAO {
+public interface IDao {
     /**
      * Ajoute un nouveau DTO dans la base de données.
      *

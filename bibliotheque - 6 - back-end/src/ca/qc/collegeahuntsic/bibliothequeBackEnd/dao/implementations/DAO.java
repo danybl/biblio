@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IDAO;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IDao;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.DTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
@@ -26,7 +26,7 @@ import org.hibernate.criterion.Restrictions;
  * Tous les DAOs devrait en hériter.
  * @author David Gallego
  */
-public class DAO implements IDAO {
+public class DAO implements IDao {
     private Class<?> dtoClass;
 
     /**

@@ -7,6 +7,6 @@ package ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces;
  * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
  *
  */
-public interface IReservationDAO extends IDAO {
+public interface IReservationDAO extends IDao {
     //TODO
 }

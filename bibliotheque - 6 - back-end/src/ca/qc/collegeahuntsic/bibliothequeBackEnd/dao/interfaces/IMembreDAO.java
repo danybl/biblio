@@ -17,7 +17,7 @@ import org.hibernate.Session;
  *
  */
 
-public interface IMembreDAO extends IDAO {
+public interface IMembreDAO extends IDao {
     /**
      * Trouve le membre. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. Si aucun membre
      * n'est trouvé, une {@link List} vide est retournée.

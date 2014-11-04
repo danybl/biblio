@@ -15,7 +15,7 @@ import org.hibernate.Session;
  *
  * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
  */
-public interface ILivreDAO extends IDAO {
+public interface ILivreDAO extends IDao {
     /**
      * Trouve les livres à partir d'un titre. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. Si aucun livre
      * n'est trouvé, une {@link List} vide est retournée.

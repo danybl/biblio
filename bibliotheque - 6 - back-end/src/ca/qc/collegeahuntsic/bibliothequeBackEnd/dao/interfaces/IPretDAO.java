@@ -18,7 +18,7 @@ import org.hibernate.Session;
  *
  */
 
-public interface IPretDAO extends IDAO {
+public interface IPretDAO extends IDao {
 
     /**
      * Trouve les prêts d'un livre. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. Si aucun prêt

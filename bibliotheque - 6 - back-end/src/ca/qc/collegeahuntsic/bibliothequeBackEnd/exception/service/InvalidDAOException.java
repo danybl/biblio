@@ -2,7 +2,7 @@ package ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service;
 
 /**
  * Cette exception est utilisée en cas de problème avec un objet
- * {@link ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IDAO}.
+ * {@link ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IDao}.
  * 
  */
 public class InvalidDAOException extends Exception {
