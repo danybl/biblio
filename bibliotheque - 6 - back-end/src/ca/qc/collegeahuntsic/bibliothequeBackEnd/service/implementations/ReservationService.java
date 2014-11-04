@@ -228,16 +228,6 @@ public class ReservationService extends Service implements IReservationService {
                 + unMembreDTO.getIdMembre()
                 + ")");
         }
-        //        List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
-        //        for(ReservationDTO uneAutreReservationDTO : reservations) {
-        //            if(unLivreDTO.equals(uneAutreReservationDTO.getLivreDTO())) {
-        //                throw new ExistingReservationException("Le livre "
-        //                    + unLivreDTO.getTitre()
-        //                    + " (ID de livre : "
-        //                    + unLivreDTO.getIdLivre()
-        //                    + ") est déjà réservé pour quelqu'un d'autre");
-        //            }
-        //        }
         reservationDTO.setLivreDTO(unLivreDTO);
         reservationDTO.setMembreDTO(unMembreDTO);
         reservationDTO.setDateReservation(new Timestamp(System.currentTimeMillis()));
@@ -270,17 +260,7 @@ public class ReservationService extends Service implements IReservationService {
         }
         try {
             MembreDTO unMembreDTO = reservationDTO.getMembreDTO();
-            if(unMembreDTO == null) {
-                throw new MissingDTOException("Le membre "
-                    + reservationDTO.getMembreDTO().getIdMembre()
-                    + " n'existe pas");
-            }
             LivreDTO unLivreDTO = reservationDTO.getLivreDTO();
-            if(unLivreDTO == null) {
-                throw new MissingDTOException("Le livre "
-                    + reservationDTO.getLivreDTO().getIdLivre()
-                    + " n'existe pas");
-            }
             ReservationDTO uneReservationDTO = null;
             List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
             if(!reservations.isEmpty()) {

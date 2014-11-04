@@ -185,19 +185,9 @@ public class PretService extends Service implements IPretService {
         if(pretDTO == null) {
             throw new InvalidDTOException("Le pret ne peut être null");
         }
-
         MembreDTO unMembreDTO = pretDTO.getMembreDTO();
-        if(unMembreDTO == null) {
-            throw new MissingDTOException("Le membre "
-                + pretDTO.getMembreDTO().getIdMembre()
-                + " n'existe pas");
-        }
         LivreDTO unLivreDTO = pretDTO.getLivreDTO();
-        if(unLivreDTO == null) {
-            throw new MissingDTOException("Le livre "
-                + pretDTO.getLivreDTO().getIdLivre()
-                + " n'existe pas");
-        }
+
         if(unMembreDTO.getNbPret() == unMembreDTO.getLimitePret()) {
             throw new ServiceException("Le membre "
                 + unMembreDTO.getNom()
@@ -235,6 +225,7 @@ public class PretService extends Service implements IPretService {
 
         pretDTO.setMembreDTO(unMembreDTO);
         pretDTO.setLivreDTO(unLivreDTO);
+        pretDTO.getMembreDTO().setNbPret(Integer.toString(Integer.parseInt(unMembreDTO.getNbPret()) + 1));
         pretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
         addPret(session,
             pretDTO);
@@ -263,18 +254,8 @@ public class PretService extends Service implements IPretService {
         }
 
         MembreDTO unMembreDTO = pretDTO.getMembreDTO();
-        if(unMembreDTO == null) {
-            throw new ServiceException("Le membre "
-                + pretDTO.getMembreDTO().getIdMembre()
-                + " n'existe pas");
-        }
-
         LivreDTO unLivreDTO = pretDTO.getLivreDTO();
-        if(unLivreDTO == null) {
-            throw new MissingDTOException("Le livre "
-                + pretDTO.getLivreDTO().getIdLivre()
-                + " n'existe pas");
-        }
+
         List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
         if(!reservations.isEmpty()) {
             ReservationDTO reservationDTO = reservations.get(0);
@@ -337,11 +318,7 @@ public class PretService extends Service implements IPretService {
         }
 
         LivreDTO unLivreDTO = pretDTO.getLivreDTO();
-        if(unLivreDTO == null) {
-            throw new MissingDTOException("Le livre "
-                + pretDTO.getLivreDTO().getIdLivre()
-                + " n'existe pas");
-        }
+
         List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
         PretDTO unPretDTO = new PretDTO();
         if(prets.isEmpty()) {
