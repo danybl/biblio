@@ -203,19 +203,8 @@ public class ReservationService extends Service implements IReservationService {
         if(reservationDTO == null) {
             throw new InvalidDTOException("La réservation ne peut être null");
         }
-
         MembreDTO unMembreDTO = reservationDTO.getMembreDTO();
-        if(unMembreDTO == null) {
-            throw new MissingDTOException("Le membre "
-                + reservationDTO.getMembreDTO().getIdMembre()
-                + " n'existe pas");
-        }
         LivreDTO unLivreDTO = reservationDTO.getLivreDTO();
-        if(unLivreDTO == null) {
-            throw new MissingDTOException("Le livre "
-                + reservationDTO.getLivreDTO().getIdLivre()
-                + " n'existe pas");
-        }
         List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
         if(prets.isEmpty()) {
             throw new MissingLoanException("Le livre "
@@ -308,6 +297,15 @@ public class ReservationService extends Service implements IReservationService {
                         + ")");
                 }
             }
+            if(unMembreDTO.getNbPret().equals(unMembreDTO.getLimitePret())) {
+                throw new InvalidLoanLimitException("Le membre "
+                    + unMembreDTO.getNom()
+                    + " (ID de membre : "
+                    + unMembreDTO.getIdMembre()
+                    + ") a atteint sa limite de prêt ("
+                    + unMembreDTO.getLimitePret()
+                    + " emprunt(s) maximum)");
+            }
 
             unMembreDTO.setNbPret(Integer.toString(Integer.parseInt(unMembreDTO.getNbPret()) + 1));
             PretDTO unPretDTO = new PretDTO();
@@ -317,6 +315,7 @@ public class ReservationService extends Service implements IReservationService {
             unPretDTO.setDateRetour(null);
             getPretDAO().add(session,
                 unPretDTO);
+            reservationDTO.getLivreDTO().getReservations().remove(reservationDTO);//TODO reviser
             annuler(session,
                 uneReservationDTO);
         } catch(DAOException daoException) {
