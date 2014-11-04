@@ -156,11 +156,6 @@ public class Bibliotheque {
                 bibliothequeCreateur.commitTransaction();
             } else if("preter".startsWith(command)) {
                 bibliothequeCreateur.beginTransaction();
-                //                MembreDTO membreDTO = new MembreDTO();
-                //                membreDTO.setIdMembre(readString(tokenizer));
-                //                LivreDTO livreDTO = new LivreDTO();
-                //                livreDTO.setIdLivre(readString(tokenizer));
-
                 String idMembre = readString(tokenizer);
                 MembreDTO membreDTO = bibliothequeCreateur.getMembreFacade().getMembre(bibliothequeCreateur.getSession(),
                     idMembre);
@@ -209,8 +204,6 @@ public class Bibliotheque {
                 }
                 bibliothequeCreateur.getPretFacade().retourner(bibliothequeCreateur.getSession(),
                     pretDTO);
-                //La méthode du prof retourne un pret
-                //et bibliocreateur.terminer
                 bibliothequeCreateur.commitTransaction();
             } else if("inscrire".startsWith(command)) {
                 bibliothequeCreateur.beginTransaction();
