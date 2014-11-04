@@ -40,8 +40,6 @@ public class ReservationService extends Service implements IReservationService {
      * Crée le service de la table <code>reservation</code>.
      *
      * @param reservationDAO Le DAO de la table <code>reservation</code>
-     * @param membreDAO Le DAO de la table <code>membre</code>
-     * @param livreDAO Le DAO de la table <code>livre</code>
      * @param pretDAO Le DAO de la table <code>pret</code>
      * @throws InvalidDAOException Si le DAO de réservation est <code>null</code>, si le DAO de membre est <code>null</code>, si le DAO de livre
      *         est <code>null</code> ou si le DAO de prêt est <code>null</code>
@@ -287,7 +285,6 @@ public class ReservationService extends Service implements IReservationService {
                     + " emprunt(s) maximum)");
             }
 
-            unMembreDTO.setNbPret(Integer.toString(Integer.parseInt(unMembreDTO.getNbPret()) + 1));
             PretDTO unPretDTO = new PretDTO();
             unPretDTO.setMembreDTO(unMembreDTO);
             unPretDTO.setLivreDTO(unLivreDTO);

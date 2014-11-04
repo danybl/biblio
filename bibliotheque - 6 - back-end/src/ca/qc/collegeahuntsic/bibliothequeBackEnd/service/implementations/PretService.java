@@ -5,7 +5,6 @@ package ca.qc.collegeahuntsic.bibliothequeBackEnd.service.implementations;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IPretDAO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.MembreDTO;
@@ -21,6 +20,7 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.MissingDTOExcepti
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidDAOException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces.IPretService;
@@ -37,14 +37,8 @@ public class PretService extends Service implements IPretService {
     /**
      * Crée le service de la table <code>livre</code>.
      *
-     * @param livreDAO
-     *            Le DAO de la table <code>livre</code>
-     * @param membreDAO
-     *            Le DAO de la table <code>membre</code>
      * @param pretDAO
      *            Le DAO de la table <code>pret</code>
-     * @param reservationDAO
-     *            Le DAO de la table <code>reservation</code>
      * @throws InvalidDAOException
      *             Si le DAO de livre est <code>null</code>, si le DAO de membre
      *             est <code>null</code>, si le DAO de prêt est
@@ -178,6 +172,7 @@ public class PretService extends Service implements IPretService {
         InvalidSortByPropertyException,
         ExistingLoanException,
         ExistingReservationException,
+        InvalidLoanLimitException,
         ServiceException {
         if(session == null) {
             throw new InvalidHibernateSessionException("La session ne peut être null");
@@ -188,8 +183,8 @@ public class PretService extends Service implements IPretService {
         MembreDTO unMembreDTO = pretDTO.getMembreDTO();
         LivreDTO unLivreDTO = pretDTO.getLivreDTO();
 
-        if(unMembreDTO.getNbPret() == unMembreDTO.getLimitePret()) {
-            throw new ServiceException("Le membre "
+        if(unMembreDTO.getNbPret().equals(unMembreDTO.getLimitePret())) {
+            throw new InvalidLoanLimitException("Le membre "
                 + unMembreDTO.getNom()
                 + " (ID de membre : "
                 + unMembreDTO.getIdMembre()
@@ -197,8 +192,7 @@ public class PretService extends Service implements IPretService {
                 + unMembreDTO.getLimitePret()
                 + " emprunt(s) maximum)");
         }
-        Set<ReservationDTO> reservations = unLivreDTO.getReservations();
-
+        List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
         if(!reservations.isEmpty()) {
             throw new ExistingReservationException("Le livre "
                 + unLivreDTO.getTitre()
