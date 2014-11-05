@@ -15,20 +15,19 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.MissingDTOExcepti
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import org.hibernate.Session;
 
 /**
  * Interface de façade pour manipuler les livres dans la base de données.
  *
  * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
- * 
+ *
  */
 public interface ILivreFacade extends IFacade {
     /**
      * Acquiert un livre.
      *
-     * @param sesssion La sesssion à utiliser
+     * @param session La session à utiliser
      * @param livreDTO Le livre à acquérir
      * @throws InvalidHibernateSessionException Si la sesssion est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
@@ -43,9 +42,9 @@ public interface ILivreFacade extends IFacade {
         FacadeException;
 
     /**
-     * Vend un livre
+     * Vend un livre.
      *
-     * @param sesssion La sesssion à utiliser
+     * @param session La session à utiliser
      * @param livreDTO Le livre à vendre
      * @throws InvalidHibernateSessionException Si la sesssion est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
@@ -72,13 +71,13 @@ public interface ILivreFacade extends IFacade {
         FacadeException;
 
     /**
-     * Lit un livre
+     * Lit un livre.
      *
      * @param session La session à utiliser
      * @param idLivre L'ID du livre à lire
      * @return Le livre
      * @throws InvalidHibernateSessionException Si la sesssion est <code>null</code>
-     * @throws ServiceException S'il y a une erreur avec la base de données
+     * @throws FacadeException S'il y a une erreur avec la base de données
      */
     LivreDTO getLivre(Session session,
         String idLivre) throws InvalidHibernateSessionException,

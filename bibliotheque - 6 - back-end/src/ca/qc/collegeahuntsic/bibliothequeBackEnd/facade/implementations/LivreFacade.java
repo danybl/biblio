@@ -23,7 +23,7 @@ import org.hibernate.Session;
 
 /**
  * Facade pour interagir avec le service de livres.
- * 
+ *
  * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
  */
 public class LivreFacade extends Facade implements ILivreFacade {
@@ -118,5 +118,4 @@ public class LivreFacade extends Facade implements ILivreFacade {
             throw new FacadeException(serviceException);
         }
     }
-    //TODO ajouter getAll
 }

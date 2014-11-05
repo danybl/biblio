@@ -17,7 +17,6 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanE
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import org.hibernate.Session;
 
 /**
@@ -67,6 +66,7 @@ public interface IReservationFacade extends IFacade {
      * @throws MissingDTOException Si la réservation n'existe pas, si le membre n'existe pas ou si le livre n'existe pas
      * @throws InvalidCriterionException Si l'ID du livre est <code>null</code>
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
+     * @throws InvalidCriterionValueException Si il y a problème avec une propriété utilisée pour filtrer une liste de DTOs
      * @throws ExistingReservationException Si la réservation n'est pas la première de la liste
      * @throws ExistingLoanException Si le livre est déjà prêté au membre
      * @throws InvalidLoanLimitException Si le membre a atteint sa limite de prêt
@@ -109,12 +109,11 @@ public interface IReservationFacade extends IFacade {
     /**
      * Lit une reservation.
      *
-     * @param Session La sesssion à utiliser
+     * @param session La session à utiliser
      * @param idReservation L'ID de la reservation à lire
      * @return La reservation
      * @throws InvalidHibernateSessionException Si la sesssion est <code>null</code>
-     * @throws InvalidPrimaryKeyException Si la clef primaire du DTO est <code>null</code>
-     * @throws ServiceException S'il y a une erreur avec la base de données
+     * @throws FacadeException S'il y a une erreur avec la base de données
      */
     ReservationDTO getReservation(Session session,
         String idReservation) throws InvalidHibernateSessionException,

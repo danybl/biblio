@@ -23,7 +23,7 @@ import org.hibernate.Session;
 
 /**
  * Facade pour interagir avec le service des membres.
- * 
+ *
  * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
  */
 public class MembreFacade extends Facade implements IMembreFacade {
@@ -55,7 +55,7 @@ public class MembreFacade extends Facade implements IMembreFacade {
     /**
      * Setter de la variable d'instance <code>this.membreService</code>.
      *
-     * @param livreService La valeur à utiliser pour la variable d'instance <code>this.membreService</code>
+     * @param membreService La valeur à utiliser pour la variable d'instance <code>this.membreService</code>
      */
     private void setMembreService(IMembreService membreService) {
         this.membreService = membreService;

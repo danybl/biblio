@@ -16,12 +16,11 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanE
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import org.hibernate.Session;
 
 /**
  * Interface de façade pour manipuler les prêts dans la base de données.
- * 
+ *
  * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
  */
 
@@ -38,9 +37,11 @@ public interface IPretFacade extends IFacade {
      * @throws MissingDTOException Si le livre n'existe pas
      * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
+     * @throws MissingLoanException Si le livre n'a pas été prêté
      * @throws ExistingLoanException Si le livre a été prêté
      * @throws ExistingReservationException Si le livre a été réservé
-     * @throws ServiceException S'il y a une erreur avec la base de données
+     * @throws InvalidLoanLimitException Si la limite des prêts a été atteint
+     * @throws FacadeException S'il y a une erreur avec la base de données
      */
 
     void emprunter(Session session,
@@ -67,9 +68,11 @@ public interface IPretFacade extends IFacade {
      * @throws MissingDTOException Si le livre n'existe pas
      * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
+     * @throws MissingLoanException Si le livre n'a pas été prêté
      * @throws ExistingLoanException Si le livre a été prêté
      * @throws ExistingReservationException Si le livre a été réservé
-     * @throws ServiceException S'il y a une erreur avec la base de données
+     * @throws InvalidLoanLimitException Si la limite des prêts a été atteint
+     * @throws FacadeException S'il y a une erreur avec la base de données
      */
     void retourner(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
@@ -97,7 +100,7 @@ public interface IPretFacade extends IFacade {
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ExistingLoanException Si le livre a été prêté
      * @throws ExistingReservationException Si le livre a été réservé
-     * @throws ServiceException S'il y a une erreur avec la base de données
+     * @throws FacadeException S'il y a une erreur avec la base de données
      */
 
     void renouveler(Session session,
@@ -114,12 +117,11 @@ public interface IPretFacade extends IFacade {
     /**
      * Lit un prêt.
      *
-     * @param Session La sesssion à utiliser
+     * @param session La session à utiliser
      * @param idPret L'ID du prêt à lire
      * @return Le prêt
      * @throws InvalidHibernateSessionException Si la sesssion est <code>null</code>
-     * @throws InvalidPrimaryKeyException Si la clef primaire du DTO est <code>null</code>
-     * @throws ServiceException S'il y a une erreur avec la base de données
+     * @throws FacadeException S'il y a une erreur avec la base de données
      */
     PretDTO getPret(Session session,
         String idPret) throws InvalidHibernateSessionException,

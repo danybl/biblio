@@ -24,14 +24,20 @@ import org.hibernate.Session;
 
 /**
  * Facade pour interagir avec le service des prêts.
- * 
+ *
  * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
- * 
+ *
  */
 
 public class PretFacade extends Facade implements IPretFacade {
     private IPretService pretService;
 
+    /**
+     * Crée la façade de la table <code>pret</code>.
+     *
+     * @param pretService Le service de la table <code>pret</code>
+     * @throws InvalidServiceException Si le service de membres est <code>null</code>
+     */
     PretFacade(IPretService pretService) throws InvalidServiceException {
         super();
         if(pretService == null) {
@@ -53,7 +59,7 @@ public class PretFacade extends Facade implements IPretFacade {
     /**
      * Setter de la variable d'instance <code>this.reservationService</code>.
      *
-     * @param reservationService La valeur à utiliser pour la variable d'instance <code>this.reservationService</code>
+     * @param pretService La valeur à utiliser pour la variable d'instance <code>this.pretService</code>
      */
     private void setPretService(IPretService pretService) {
         this.pretService = pretService;

@@ -15,7 +15,6 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeExceptio
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import org.hibernate.Session;
 
 /**
@@ -28,7 +27,7 @@ public interface IMembreFacade extends IFacade {
     /**
      * Inscrit un membre.
      *
-     * @param sesssion La session à utiliser
+     * @param session La session à utiliser
      * @param membreDTO Le membre à inscrire
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si le membre est <code>null</code>
@@ -37,6 +36,7 @@ public interface IMembreFacade extends IFacade {
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ExistingReservationException Si la réservation n'est pas la première de la liste
      * @throws ExistingLoanException Si le livre est déjà prêté au membre
+     * @throws InvalidLoanLimitException Si le membre a atteint sa limite de prêts
      * @throws InvalidDTOClassException Si la classe du membre n'est pas celle que prend en charge le DAO
      * @throws FacadeException S'il y a une erreur avec la base de données
      */
@@ -82,13 +82,13 @@ public interface IMembreFacade extends IFacade {
         FacadeException;
 
     /**
-     * Lit un membre
+     * Lit un membre.
      *
      * @param session La session à utiliser
      * @param idMembre L'ID du membre à lire
      * @return Le membre
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
-     * @throws ServiceException S'il y a une erreur avec la base de données
+     * @throws FacadeException  S'il y a une erreur avec la base de données
      */
     MembreDTO getMembre(Session session,
         String idMembre) throws InvalidHibernateSessionException,
