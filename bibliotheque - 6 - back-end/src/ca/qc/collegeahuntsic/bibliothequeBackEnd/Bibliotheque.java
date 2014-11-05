@@ -29,7 +29,7 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.util.BibliothequeCreateur;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.util.FormatteurDate;
 import org.apache.log4j.Logger;
 
-/** @author Dany Benoit-L, Franz Nkezimana, David Gallego, Jaskaran Dhadda, Cedric Soumpholphakdi.
+/** @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa.
  *
  * Interface du système de gestion d'une bibliothèque
  *
@@ -369,20 +369,6 @@ public class Bibliotheque {
     /**
      * lecture d'un int java de la transaction entrée à l'écran
      */
-    //    static int readInt(StringTokenizer tokenizer) throws BibliothequeException {
-    //        if(tokenizer.hasMoreElements()) {
-    //            String token = tokenizer.nextToken();
-    //            try {
-    //                return Integer.valueOf(token).intValue();
-    //            } catch(NumberFormatException e) {
-    //                throw new BibliothequeException("Nombre attendu à la place de \""
-    //                    + token
-    //                    + "\"");
-    //            }
-    //        }
-    //        throw new BibliothequeException("autre paramètre attendu");
-    //
-    //    }
 
     /**
      * lecture d'un long java de la transaction entrée à l'écran

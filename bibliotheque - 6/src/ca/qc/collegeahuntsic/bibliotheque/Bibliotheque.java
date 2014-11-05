@@ -8,18 +8,13 @@ import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.StringTokenizer;
-import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
-import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
-import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
-import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.util.BibliothequeCreateur;
 import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
 import org.apache.log4j.Logger;
 
 /**
- *
+ *@author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa.
  * Interface du système de gestion d'une bibliothèque
  *
  * Ce programme permet d'appeler les transactions de base d'une
@@ -55,6 +50,8 @@ public class Bibliotheque {
      * Ouverture de la BD,
      * traitement des transactions et
      * fermeture de la BD.
+     * @param argv arguments lors du démarage de l'application
+     * @throws Exception Si erreur au démarrage
      */
     public static void main(String argv[]) throws Exception {
         // validation du nombre de paramètres
@@ -65,7 +62,7 @@ public class Bibliotheque {
 
         try {
             // ouverture du fichier de transactions
-            InputStream sourceTransaction = Bibliotheque.class.getResourceAsStream("/"
+            final InputStream sourceTransaction = Bibliotheque.class.getResourceAsStream("/"
                 + argv[0]);
             try(
                 BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction))) {
@@ -79,8 +76,11 @@ public class Bibliotheque {
         }
     }
 
-    /**
-     * Traitement des transactions de la biblioth�que
+    /** Traitement des transactions de la bibliothèque.
+     * @param reader Buffer pour la lecture d'une transaction
+     * @throws IOException Si erreur de lecture de la transaction
+     * @throws BibliothequeException
+     *      exception lancée s'il y a un problème avec l'exécution de la commande //TODO réviser documentation
      */
     static void traiterTransactions(BufferedReader reader) throws Exception {
         afficherAide();
@@ -97,11 +97,13 @@ public class Bibliotheque {
         }
     }
 
-    /**
-     * Lecture d'une transaction
+    /** Lecture d'une transaction.
+     * @param reader Buffer pour la lecture d'une transaction
+     * @throws IOException Si erreur de lecture de la transaction
+     * @return transanction Retourne le résultat de la lecture
      */
     static String lireTransaction(BufferedReader reader) throws IOException {
-        String transaction = reader.readLine();
+        final String transaction = reader.readLine();
         if(transaction != null) {
             System.out.println(transaction);
         }
@@ -109,8 +111,9 @@ public class Bibliotheque {
         return transaction;
     }
 
-    /**
-     * Décodage et traitement d'une transaction
+    /** Décodage et traitement d'une transaction.
+     * @param tokenizer StringTokenizer pour découper les entrées pour la transaction
+     * @throws Si //TODO
      */
     static void executerTransaction(StringTokenizer tokenizer) throws BibliothequeException {
         try {
@@ -203,7 +206,9 @@ public class Bibliotheque {
         Bibliotheque.LOGGER.info("  annulerRes <idReservation>");
     }
 
-    /** Permet d'acquerir un livre */
+    /** Permet d'acquerir un livre.
+     * @param tokenizer StringTokenizer pour découper les entrées pour la transaction
+     */
     static void acquerirLivre(StringTokenizer tokenizer) {
         bibliothequeCreateur.beginTransaction();
         LivreDTO livreDTO = new LivreDTO();
@@ -423,20 +428,6 @@ public class Bibliotheque {
     /**
      * lecture d'un int java de la transaction entrée à l'écran
      */
-    //    static int readInt(StringTokenizer tokenizer) throws BibliothequeException {
-    //        if(tokenizer.hasMoreElements()) {
-    //            String token = tokenizer.nextToken();
-    //            try {
-    //                return Integer.valueOf(token).intValue();
-    //            } catch(NumberFormatException e) {
-    //                throw new BibliothequeException("Nombre attendu à la place de \""
-    //                    + token
-    //                    + "\"");
-    //            }
-    //        }
-    //        throw new BibliothequeException("autre paramètre attendu");
-    //
-    //    }
 
     /**
      * lecture d'un long java de la transaction entrée à l'écran
@@ -460,7 +451,7 @@ public class Bibliotheque {
      */
     static Timestamp readDate(StringTokenizer tokenizer) throws BibliothequeException {
         if(tokenizer.hasMoreElements()) {
-            String token = tokenizer.nextToken();
+            final String token = tokenizer.nextToken();
             try {
                 return FormatteurDate.timestampValue(token);
             } catch(ParseException e) {
