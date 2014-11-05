@@ -108,7 +108,7 @@ public class Bibliotheque {
      *      exception lancée s'il y a un problème avec l'exécution de la commande
      */
     static void traiterTransactions(BufferedReader reader) throws BibliothequeException,
-    IOException {
+        IOException {
         afficherAide();
         System.out.println("\n\n\n");
         String transaction = lireTransaction(reader);
@@ -197,8 +197,7 @@ public class Bibliotheque {
             | InvalidLoanLimitException
             | MissingLoanException
             | FacadeException
-            | InvalidCriterionValueException
-            /*| DuplicateDTOException*/exception) {
+            | InvalidCriterionValueException exception) {
             Bibliotheque.LOGGER.error("**** "
                 + exception.getMessage());
             bibliothequeCreateur.rollbackTransaction();
@@ -240,10 +239,10 @@ public class Bibliotheque {
      * @throws InvalidHibernateSessionException
      */
     static void acquerirLivre(StringTokenizer tokenizer) throws BibliothequeException,
-    InvalidHibernateSessionException,
-    InvalidDTOException,
-    InvalidDTOClassException,
-    FacadeException {
+        InvalidHibernateSessionException,
+        InvalidDTOException,
+        InvalidDTOClassException,
+        FacadeException {
         bibliothequeCreateur.beginTransaction();
         LivreDTO livreDTO = new LivreDTO();
         livreDTO.setTitre(readString(tokenizer));
@@ -267,16 +266,16 @@ public class Bibliotheque {
      * @throws InvalidDTOClassException
      * @throws InvalidDTOException */
     static void vendreLivre(StringTokenizer tokenizer) throws BibliothequeException,
-    InvalidHibernateSessionException,
-    FacadeException,
-    MissingDTOException,
-    InvalidDTOException,
-    InvalidDTOClassException,
-    InvalidCriterionException,
-    InvalidCriterionValueException,
-    InvalidSortByPropertyException,
-    ExistingLoanException,
-    ExistingReservationException {
+        InvalidHibernateSessionException,
+        FacadeException,
+        MissingDTOException,
+        InvalidDTOException,
+        InvalidDTOClassException,
+        InvalidCriterionException,
+        InvalidCriterionValueException,
+        InvalidSortByPropertyException,
+        ExistingLoanException,
+        ExistingReservationException {
         bibliothequeCreateur.beginTransaction();
         String idLivre = readString(tokenizer);
         LivreDTO livreDTO = bibliothequeCreateur.getLivreFacade().getLivre(bibliothequeCreateur.getSession(),
@@ -306,17 +305,17 @@ public class Bibliotheque {
      * @throws InvalidCriterionException
      * @throws InvalidDTOException */
     static void preterLivre(StringTokenizer tokenizer) throws BibliothequeException,
-    InvalidHibernateSessionException,
-    FacadeException,
-    MissingDTOException,
-    InvalidDTOException,
-    InvalidCriterionException,
-    InvalidSortByPropertyException,
-    MissingLoanException,
-    ExistingLoanException,
-    ExistingReservationException,
-    InvalidLoanLimitException,
-    InvalidDTOClassException {
+        InvalidHibernateSessionException,
+        FacadeException,
+        MissingDTOException,
+        InvalidDTOException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        MissingLoanException,
+        ExistingLoanException,
+        ExistingReservationException,
+        InvalidLoanLimitException,
+        InvalidDTOClassException {
         bibliothequeCreateur.beginTransaction();
         String idMembre = readString(tokenizer);
         MembreDTO membreDTO = bibliothequeCreateur.getMembreFacade().getMembre(bibliothequeCreateur.getSession(),
@@ -354,15 +353,15 @@ public class Bibliotheque {
      * @throws InvalidDTOClassException
      * @throws InvalidDTOException */
     static void renouvelerPret(StringTokenizer tokenizer) throws BibliothequeException,
-    InvalidHibernateSessionException,
-    FacadeException,
-    MissingDTOException,
-    InvalidDTOException,
-    InvalidDTOClassException,
-    InvalidCriterionException,
-    InvalidSortByPropertyException,
-    ExistingLoanException,
-    ExistingReservationException {
+        InvalidHibernateSessionException,
+        FacadeException,
+        MissingDTOException,
+        InvalidDTOException,
+        InvalidDTOClassException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        ExistingLoanException,
+        ExistingReservationException {
         bibliothequeCreateur.beginTransaction();
         String idPret = readString(tokenizer);
         PretDTO pretDTO = bibliothequeCreateur.getPretFacade().getPret(bibliothequeCreateur.getSession(),
@@ -391,17 +390,17 @@ public class Bibliotheque {
      * @throws InvalidCriterionException
      * @throws InvalidDTOException */
     static void retournerLivre(StringTokenizer tokenizer) throws InvalidHibernateSessionException,
-    FacadeException,
-    BibliothequeException,
-    MissingDTOException,
-    InvalidDTOException,
-    InvalidCriterionException,
-    InvalidSortByPropertyException,
-    MissingLoanException,
-    ExistingLoanException,
-    ExistingReservationException,
-    InvalidLoanLimitException,
-    InvalidDTOClassException {
+        FacadeException,
+        BibliothequeException,
+        MissingDTOException,
+        InvalidDTOException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        MissingLoanException,
+        ExistingLoanException,
+        ExistingReservationException,
+        InvalidLoanLimitException,
+        InvalidDTOClassException {
         bibliothequeCreateur.beginTransaction();
 
         String idPret = readString(tokenizer);
@@ -430,16 +429,16 @@ public class Bibliotheque {
      * @throws InvalidDTOException
      * @throws InvalidHibernateSessionException */
     static void inscrireMembre(StringTokenizer tokenizer) throws BibliothequeException,
-    InvalidHibernateSessionException,
-    InvalidDTOException,
-    MissingDTOException,
-    InvalidCriterionException,
-    InvalidSortByPropertyException,
-    ExistingReservationException,
-    ExistingLoanException,
-    InvalidLoanLimitException,
-    InvalidDTOClassException,
-    FacadeException {
+        InvalidHibernateSessionException,
+        InvalidDTOException,
+        MissingDTOException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        ExistingReservationException,
+        ExistingLoanException,
+        InvalidLoanLimitException,
+        InvalidDTOClassException,
+        FacadeException {
         bibliothequeCreateur.beginTransaction();
         MembreDTO membreDTO = new MembreDTO();
         membreDTO.setNom(readString(tokenizer));
@@ -464,16 +463,16 @@ public class Bibliotheque {
      * @throws InvalidCriterionException
      * @throws InvalidDTOException */
     static void desinscrireMembre(StringTokenizer tokenizer) throws BibliothequeException,
-    InvalidHibernateSessionException,
-    FacadeException,
-    MissingDTOException,
-    InvalidDTOException,
-    InvalidCriterionException,
-    InvalidSortByPropertyException,
-    ExistingReservationException,
-    ExistingLoanException,
-    InvalidLoanLimitException,
-    InvalidDTOClassException {
+        InvalidHibernateSessionException,
+        FacadeException,
+        MissingDTOException,
+        InvalidDTOException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        ExistingReservationException,
+        ExistingLoanException,
+        InvalidLoanLimitException,
+        InvalidDTOClassException {
         bibliothequeCreateur.beginTransaction();
         String idMembre = readString(tokenizer);
         MembreDTO membreDTO = bibliothequeCreateur.getMembreFacade().getMembre(bibliothequeCreateur.getSession(),
@@ -504,19 +503,19 @@ public class Bibliotheque {
      * @throws InvalidCriterionException
      * @throws InvalidDTOException */
     static void reserverLivre(StringTokenizer tokenizer) throws BibliothequeException,
-    InterruptedException,
-    InvalidHibernateSessionException,
-    FacadeException,
-    MissingDTOException,
-    InvalidDTOException,
-    InvalidCriterionException,
-    InvalidCriterionValueException,
-    InvalidSortByPropertyException,
-    MissingLoanException,
-    ExistingLoanException,
-    ExistingReservationException,
-    InvalidDTOClassException,
-    InvalidLoanLimitException {
+        InterruptedException,
+        InvalidHibernateSessionException,
+        FacadeException,
+        MissingDTOException,
+        InvalidDTOException,
+        InvalidCriterionException,
+        InvalidCriterionValueException,
+        InvalidSortByPropertyException,
+        MissingLoanException,
+        ExistingLoanException,
+        ExistingReservationException,
+        InvalidDTOClassException,
+        InvalidLoanLimitException {
         bibliothequeCreateur.beginTransaction();
         // Juste pour éviter deux dates de réservation strictement identiques
         Thread.sleep(1);
@@ -558,17 +557,17 @@ public class Bibliotheque {
      * @throws InvalidCriterionException
      * @throws InvalidDTOException */
     static void utiliserReservation(StringTokenizer tokenizer) throws BibliothequeException,
-    InvalidHibernateSessionException,
-    FacadeException,
-    MissingDTOException,
-    InvalidDTOException,
-    InvalidCriterionException,
-    InvalidCriterionValueException,
-    InvalidSortByPropertyException,
-    ExistingReservationException,
-    ExistingLoanException,
-    InvalidLoanLimitException,
-    InvalidDTOClassException {
+        InvalidHibernateSessionException,
+        FacadeException,
+        MissingDTOException,
+        InvalidDTOException,
+        InvalidCriterionException,
+        InvalidCriterionValueException,
+        InvalidSortByPropertyException,
+        ExistingReservationException,
+        ExistingLoanException,
+        InvalidLoanLimitException,
+        InvalidDTOClassException {
         bibliothequeCreateur.beginTransaction();
         String idReservation = readString(tokenizer);
         ReservationDTO reservationDTO = bibliothequeCreateur.getReservationFacade().getReservation(bibliothequeCreateur.getSession(),
@@ -591,11 +590,11 @@ public class Bibliotheque {
      * @throws InvalidDTOClassException
      * @throws InvalidDTOException */
     static void annulerReservation(StringTokenizer tokenizer) throws BibliothequeException,
-    InvalidHibernateSessionException,
-    FacadeException,
-    MissingDTOException,
-    InvalidDTOException,
-    InvalidDTOClassException {
+        InvalidHibernateSessionException,
+        FacadeException,
+        MissingDTOException,
+        InvalidDTOException,
+        InvalidDTOClassException {
         bibliothequeCreateur.beginTransaction();
         String idReservation = readString(tokenizer);
         ReservationDTO reservationDTO = bibliothequeCreateur.getReservationFacade().getReservation(bibliothequeCreateur.getSession(),
