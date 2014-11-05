@@ -12,5 +12,5 @@ package ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces;
  *         Singh Dhadda & David Andrés Gallego Mesa
  */
 public interface IService {
-	// Nothing to add so far.
+    // Nothing to add so far.
 }

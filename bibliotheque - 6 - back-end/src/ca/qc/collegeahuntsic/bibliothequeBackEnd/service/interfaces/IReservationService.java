@@ -21,6 +21,8 @@ import org.hibernate.Session;
 /**
  * Interface de service pour manipuler les réservations dans la base de données.
  *
+ * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
+ *
  */
 public interface IReservationService extends IService {
     /**
