@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * DTO de la table Pret<code>pret</code>.
  *
+ *@author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
  */
 public final class PretDTO extends DTO {
 

@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * Permet de représenter un tuple de la table membre.
  *
+ *@author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
  */
 
 public final class MembreDTO extends DTO {
