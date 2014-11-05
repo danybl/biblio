@@ -13,6 +13,16 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public final class MembreDTO extends DTO {
 
+    public static final String ID_MEMBRE_COLUMN_NAME = "idMembre";
+
+    public static final String NOM_COLUMN_NAME = "nom";
+
+    public static final String TELEPHONE_COLUMN_NAME = "telephone";
+
+    public static final String LIMITE_PRET_COLUMN_NAME = "limitePret";
+
+    public static final String NB_PRET_COLUMN_NAME = "nbPret";
+
     private static final long serialVersionUID = 1L;
 
     private String idMembre;
@@ -29,15 +39,12 @@ public final class MembreDTO extends DTO {
 
     private Set<ReservationDTO> reservations;
 
-    public static final String ID_MEMBRE_COLUMN_NAME = "idMembre";
-
-    public static final String NOM_COLUMN_NAME = "nom";
-
-    public static final String TELEPHONE_COLUMN_NAME = "telephone";
-
-    public static final String LIMITE_PRET_COLUMN_NAME = "limitePret";
-
-    public static final String NB_PRET_COLUMN_NAME = "nbPret";
+    /**
+     * Crée un DTO de la table <code>membre</code>.
+     */
+    public MembreDTO() {
+        super();
+    }
 
     //Region get/set
     /**
@@ -45,11 +52,6 @@ public final class MembreDTO extends DTO {
      *
      * @return La variable d'instance <code>this.idMembre</code>
      */
-
-    public MembreDTO() {
-        super();
-    }
-
     public String getIdMembre() {
         return this.idMembre;
     }
@@ -135,18 +137,38 @@ public final class MembreDTO extends DTO {
         this.nbPret = nbPret;
     }
 
+    /**
+     * Getter de la variable d'instance <code>this.prets</code>.
+     *
+     * @return La variable d'instance <code>this.prets</code>
+     */
     public Set<PretDTO> getPrets() {
         return this.prets;
     }
 
+    /**
+     * Setter de la variable d'instance <code>this.prets</code>.
+     *
+     * @param prets La valeur à utiliser pour la variable d'instance <code>this.prets</code>
+     */
     public void setPrets(Set<PretDTO> prets) {
         this.prets = prets;
     }
 
+    /**
+     * Getter de la variable d'instance <code>this.reservations</code>.
+     *
+     * @return La variable d'instance <code>this.reservations</code>
+     */
     public Set<ReservationDTO> getReservations() {
         return this.reservations;
     }
 
+    /**
+     * Setter de la variable d'instance <code>this.reservations</code>.
+     *
+     * @param reservations La valeur à utiliser pour la variable d'instance <code>this.reservations</code>
+     */
     public void setReservations(Set<ReservationDTO> reservations) {
         this.reservations = reservations;
     }
@@ -163,15 +185,12 @@ public final class MembreDTO extends DTO {
             equals = obj != null
                 && obj instanceof MembreDTO;
             if(equals) {
-                MembreDTO membreDTO = (MembreDTO) obj;
-
-                if(membreDTO != null) {
-                    EqualsBuilder equalsBuilder = new EqualsBuilder();
-                    equalsBuilder.appendSuper(super.equals(membreDTO));
-                    equalsBuilder.append(getIdMembre(),
-                        membreDTO.getIdMembre());
-                    equals = equalsBuilder.isEquals();
-                }
+                final MembreDTO membreDTO = (MembreDTO) obj;
+                final EqualsBuilder equalsBuilder = new EqualsBuilder();
+                equalsBuilder.appendSuper(super.equals(membreDTO));
+                equalsBuilder.append(getIdMembre(),
+                    membreDTO.getIdMembre());
+                equals = equalsBuilder.isEquals();
             }
         }
         return equals;
@@ -179,7 +198,7 @@ public final class MembreDTO extends DTO {
 
     @Override
     public int hashCode() {
-        HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(461,
+        final HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(461,
             451);
         hashCodeBuilder.appendSuper(super.hashCode());
         hashCodeBuilder.append(getIdMembre());
