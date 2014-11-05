@@ -9,15 +9,22 @@ import java.util.Date;
 /**
  * Permet de valider le format d'une date en YYYY-MM-DD et de la convertir en un
  * objet Date.
- *
+ *@author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa.
  */
-public class FormatteurDate {
+public final class FormatteurDate {
     private static final String FORMAT_DATE = "yyyy-MM-dd";
 
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat(FormatteurDate.FORMAT_DATE);
 
     static {
         FormatteurDate.SIMPLE_DATE_FORMAT.setLenient(false);
+    }
+
+    /**
+     * Constructeur par défaut.
+     */
+    private FormatteurDate() {
+        //Constructeur par défaut
     }
 
     /**
@@ -28,8 +35,8 @@ public class FormatteurDate {
      * @throws ParseException Si la chaîne de caractères n'est pas formatée correctement
      */
     public static Timestamp timestampValue(String date) throws ParseException {
-        Date dateFormatee = FormatteurDate.SIMPLE_DATE_FORMAT.parse(date);
-        Timestamp timestamp = new Timestamp(dateFormatee.getTime());
+        final Date dateFormatee = FormatteurDate.SIMPLE_DATE_FORMAT.parse(date);
+        final Timestamp timestamp = new Timestamp(dateFormatee.getTime());
         return timestamp;
     }
 
@@ -40,9 +47,9 @@ public class FormatteurDate {
      * @return La chaîne de caractères issue de la conversion
      * @throws ParseException Si le {@link java.sql.Timestamp} n'est pas formaté correctement
      */
-    public static String stringValue(Timestamp timestamp) {
-        Date date = new Date(timestamp.getTime());
-        String dateFormatee = FormatteurDate.SIMPLE_DATE_FORMAT.format(date);
+    public static String stringValue(Timestamp timestamp) throws ParseException {
+        final Date date = new Date(timestamp.getTime());
+        final String dateFormatee = FormatteurDate.SIMPLE_DATE_FORMAT.format(date);
         return dateFormatee;
     }
 }
