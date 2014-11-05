@@ -228,8 +228,8 @@ public class MembreService implements IMembreService {
             throw new InvalidDTOException("Le membre ne peut être null");
         }
         final MembreDTO unMembreDTO = membreDTO;
-
-        if(!unMembreDTO.getNbPret().equals("0")) {
+        final String nullString = null;
+        if(!unMembreDTO.getNbPret().equals(nullString)) {
             throw new ServiceException("Le membre "
                 + unMembreDTO.getNom()
                 + " (ID de membre : "
