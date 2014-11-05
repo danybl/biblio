@@ -4,7 +4,7 @@ package ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao;
 /**
  * Cette exception est utilisée en cas de problème avec une propriété utilisée pour filtrer une liste de DTOs.
  *
- * @author Gilles Benichou
+ *@author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
  */
 public class InvalidCriterionValueException extends Exception {
     private static final long serialVersionUID = 1L;
