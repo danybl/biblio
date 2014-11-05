@@ -36,6 +36,14 @@ public final class ReservationDTO extends DTO {
         super();
     }
 
+    /**
+     * ReservationDTO La reservation à utiliser.
+     *
+     * @param idReservation l'ID à utiliser pour la variable d'instance <code>this.idReservation</code>
+     * @param membreDTO le membre à utiliser pour la variable d'instance <code>this.membreDTO</code>
+     * @param livreDTO le livre à utiliser pour la variable d'instance <code>this.livreDTO</code>
+     * @param datePret la date à utiliser pour la variable d'instance <code>this.datePret</code>
+     * */
     ReservationDTO(String idReservation,
         MembreDTO membreDTO,
         LivreDTO livreDTO,
