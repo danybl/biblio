@@ -1,6 +1,12 @@
 
 package ca.qc.collegeahuntsic.bibliotheque;
 
+/**
+ * Contient des références pour accéder facilement
+ * à des caractère sans surcharger le code textuellement.
+ *
+ * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa.
+ */
 public interface Constants {
     /**
      * Character for the empty character.
