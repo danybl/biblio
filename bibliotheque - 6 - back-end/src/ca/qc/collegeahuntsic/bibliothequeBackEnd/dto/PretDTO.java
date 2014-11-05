@@ -160,11 +160,15 @@ public final class PretDTO extends DTO {
                 && obj instanceof PretDTO;
             if(equals) {
                 PretDTO pretDTO = (PretDTO) obj;
-                EqualsBuilder equalsBuilder = new EqualsBuilder();
-                equalsBuilder.appendSuper(super.equals(pretDTO));
-                equalsBuilder.append(getIdPret(),
-                    pretDTO.getIdPret());
-                equals = equalsBuilder.isEquals();
+                if(pretDTO != null) {
+
+                    EqualsBuilder equalsBuilder = new EqualsBuilder();
+                    equalsBuilder.appendSuper(super.equals(pretDTO));
+                    equalsBuilder.append(getIdPret(),
+                        pretDTO.getIdPret());
+                    equals = equalsBuilder.isEquals();
+                }
+
             }
         }
         return equals;
