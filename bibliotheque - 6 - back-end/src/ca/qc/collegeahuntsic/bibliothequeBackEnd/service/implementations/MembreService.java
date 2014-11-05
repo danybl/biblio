@@ -2,6 +2,7 @@
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.service.implementations;
 
 import java.util.List;
+import org.hibernate.Session;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.DAOException;
@@ -18,7 +19,6 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidDAOExc
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces.IMembreService;
-import org.hibernate.Session;
 
 /**
  * Service de la table <code>membre</code>.
@@ -227,7 +227,7 @@ public class MembreService implements IMembreService {
         if(membreDTO == null) {
             throw new InvalidDTOException("Le membre ne peut être null");
         }
-        MembreDTO unMembreDTO = membreDTO;
+        final MembreDTO unMembreDTO = membreDTO;
 
         if(!unMembreDTO.getNbPret().equals("0")) {
             throw new ServiceException("Le membre "

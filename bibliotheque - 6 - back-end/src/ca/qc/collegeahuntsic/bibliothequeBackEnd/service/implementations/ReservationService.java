@@ -4,6 +4,7 @@ package ca.qc.collegeahuntsic.bibliothequeBackEnd.service.implementations;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Session;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IPretDAO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IReservationDAO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.LivreDTO;
@@ -25,7 +26,6 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLi
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces.IReservationService;
-import org.hibernate.Session;
 
 /**
  * Service de la table <code>reservation</code>.
@@ -211,9 +211,9 @@ public class ReservationService extends Service implements IReservationService {
         if(reservationDTO == null) {
             throw new InvalidDTOException("La réservation ne peut être null");
         }
-        MembreDTO unMembreDTO = reservationDTO.getMembreDTO();
-        LivreDTO unLivreDTO = reservationDTO.getLivreDTO();
-        List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
+        final MembreDTO unMembreDTO = reservationDTO.getMembreDTO();
+        final LivreDTO unLivreDTO = reservationDTO.getLivreDTO();
+        final List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
         if(prets.isEmpty()) {
             throw new MissingLoanException("Le livre "
                 + unLivreDTO.getTitre()
@@ -247,7 +247,7 @@ public class ReservationService extends Service implements IReservationService {
                 + " emprunt(s) maximum)");
         }
 
-        List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
+        final List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
         for(ReservationDTO uneAutreReservationDTO : reservations) {
             if(unLivreDTO.equals(uneAutreReservationDTO.getLivreDTO())) {
                 throw new ExistingReservationException("Le livre "
@@ -287,13 +287,13 @@ public class ReservationService extends Service implements IReservationService {
             throw new InvalidDTOException("La réservation ne peut être null");
         }
         try {
-            MembreDTO unMembreDTO = reservationDTO.getMembreDTO();
-            LivreDTO unLivreDTO = reservationDTO.getLivreDTO();
+            final MembreDTO unMembreDTO = reservationDTO.getMembreDTO();
+            final LivreDTO unLivreDTO = reservationDTO.getLivreDTO();
             ReservationDTO uneReservationDTO = null;
-            List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
+            final List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
             if(!reservations.isEmpty()) {
                 uneReservationDTO = reservations.get(0);
-                MembreDTO unMembre = uneReservationDTO.getMembreDTO();
+                final MembreDTO unMembre = uneReservationDTO.getMembreDTO();
                 if(!reservationDTO.getMembreDTO().equals(unMembre)) {
                     throw new ExistingReservationException("Le livre "
                         + unLivreDTO.getTitre()
@@ -315,7 +315,7 @@ public class ReservationService extends Service implements IReservationService {
                     + " emprunt(s) maximum)");
             }
 
-            PretDTO unPretDTO = new PretDTO();
+            final PretDTO unPretDTO = new PretDTO();
             unPretDTO.setMembreDTO(unMembreDTO);
             unPretDTO.setLivreDTO(unLivreDTO);
             unPretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
@@ -346,7 +346,7 @@ public class ReservationService extends Service implements IReservationService {
         if(reservationDTO == null) {
             throw new InvalidDTOException("La réservation ne peut être null");
         }
-        ReservationDTO uneReservationDTO = getReservation(session,
+        final ReservationDTO uneReservationDTO = getReservation(session,
             reservationDTO.getIdReservation());
         if(uneReservationDTO == null) {
             throw new MissingDTOException("La réservation "

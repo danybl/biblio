@@ -2,6 +2,7 @@
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces;
 
 import java.util.List;
+import org.hibernate.Session;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
@@ -14,7 +15,6 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReser
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
-import org.hibernate.Session;
 
 /**
  * Interface de service pour manipuler les prêts dans la base de données.
@@ -55,7 +55,6 @@ public interface IPretService extends IService {
      * @return Le prêt
      * @throws InvalidHibernateSessionException
      *             , Si la session est <code>null</code>
-     * @throws InvalidPrimaryKeyException
      *             Si la clef primaire du DTO est <code>null</code>
      * @throws ServiceException
      *             , S'il y a une erreur avec la base de données
