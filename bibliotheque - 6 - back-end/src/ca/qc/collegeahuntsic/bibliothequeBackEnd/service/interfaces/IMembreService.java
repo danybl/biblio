@@ -27,7 +27,7 @@ import org.hibernate.Session;
 public interface IMembreService extends IService {
     /**
      * Ajoute un nouveau membre dans la base de données.
-     * 
+     *
      * @param session
      *            La session à utiliser
      * @param membreDTO
@@ -50,7 +50,7 @@ public interface IMembreService extends IService {
 
     /**
      * Lit un membre à partir de la base de données.
-     * 
+     *
      * @param session
      *            La session à utiliser
      * @param idMembre
@@ -67,7 +67,7 @@ public interface IMembreService extends IService {
 
     /**
      * Met à jour un membre dans la base de données.
-     * 
+     *
      * @param session
      *            La session à utiliser
      * @param membreDTO
@@ -90,7 +90,7 @@ public interface IMembreService extends IService {
 
     /**
      * Supprime un membre de la base de données.
-     * 
+     *
      * @param session
      *            La session à utiliser
      * @param membreDTO
@@ -115,7 +115,7 @@ public interface IMembreService extends IService {
      * Trouve tous les membres de la base de données. La liste est classée par
      * ordre croissant sur <code>sortByPropertyName</code>. Si aucun membre
      * n'est trouvée, une {@link List} vide est retournée.
-     * 
+     *
      * @param session
      *            La session à utiliser
      * @param sortByPropertyName
@@ -137,7 +137,7 @@ public interface IMembreService extends IService {
      * Trouve les membres à partir d'un numéro de téléphone. La liste est
      * classée par ordre croissant sur <code>sortByPropertyName</code>. Si aucun
      * membre n'est trouvée, une {@link List} vide est retournée.
-     * 
+     *
      * @param session
      *            La session à utiliser
      * @param numTel
@@ -149,6 +149,8 @@ public interface IMembreService extends IService {
      *             Si la session est <code>null</code>
      * @throws InvalidCriterionException
      *             Si l'ID du membre est <code>null</code>
+     * @throws InvalidCriterionValueException
+     *             Si le titre est <code>null</code>
      * @throws InvalidSortByPropertyException
      *             Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ServiceException
@@ -166,7 +168,7 @@ public interface IMembreService extends IService {
      * Trouve les membres à partir d'un nom. La liste est classée par ordre
      * croissant sur <code>sortByPropertyName</code>. Si aucune réservation
      * n'est trouvée, une {@link List} vide est retournée.
-     * 
+     *
      * @param session
      *            La session à utiliser
      * @param nom
@@ -178,6 +180,8 @@ public interface IMembreService extends IService {
      *             Si la session est <code>null</code>
      * @throws InvalidCriterionException
      *             Si l'ID du membre est <code>null</code>
+     * @throws InvalidCriterionValueException
+     *             Si le titre est <code>null</code>
      * @throws InvalidSortByPropertyException
      *             Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ServiceException
@@ -193,7 +197,7 @@ public interface IMembreService extends IService {
 
     /**
      * Inscrit un membre.
-     * 
+     *
      * @param session
      *            La session à utiliser
      * @param membreDTO
@@ -226,7 +230,7 @@ public interface IMembreService extends IService {
 
     /**
      * Désinscrit un membre.
-     * 
+     *
      * @param session
      *            La session à utiliser
      * @param membreDTO

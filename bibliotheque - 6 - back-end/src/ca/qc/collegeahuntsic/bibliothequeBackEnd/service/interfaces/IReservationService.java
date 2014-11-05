@@ -3,7 +3,6 @@
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces;
 
 import java.util.List;
-import org.hibernate.Session;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionValueException;
@@ -17,6 +16,7 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReser
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
+import org.hibernate.Session;
 
 /**
  * Interface de service pour manipuler les réservations dans la base de données.
@@ -110,12 +110,14 @@ public interface IReservationService extends IService {
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
      * @throws MissingDTOException Si le membre n'existe pas ou si le livre n'existe pas
-     * @throws InvalidCriterionException Si l'ID du livre est <code>null</code>
+     * @throws InvalidCriterionException Si la propriété à utiliser est <code>null</code>
+     * @throws InvalidCriterionValueException Si la reservationDTO à prouver est <code>null</code>
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws MissingLoanException Si le livre n'a pas encore été prêté
      * @throws ExistingLoanException Si le livre est déjà prêté au membre
      * @throws ExistingReservationException Si le membre a déjà réservé ce livre
      * @throws InvalidDTOClassException Si la classe de la réservation n'est pas celle que prend en charge le DAO
+     * @throws InvalidLoanLimitException Si la limite de prêts a été atteinte
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void placer(Session session,
@@ -140,7 +142,8 @@ public interface IReservationService extends IService {
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
      * @throws MissingDTOException Si la réservation n'existe pas, si le membre n'existe pas ou si le livre n'existe pas
-     * @throws InvalidCriterionException Si l'ID du livre est <code>null</code>
+     * @throws InvalidCriterionException Si la propriété à utiliser est <code>null</code>
+     * @throws InvalidCriterionValueException Si l'ID du livre est <code>null</code>
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ExistingReservationException Si la réservation n'est pas la première de la liste
      * @throws ExistingLoanException Si le livre est déjà prêté au membre

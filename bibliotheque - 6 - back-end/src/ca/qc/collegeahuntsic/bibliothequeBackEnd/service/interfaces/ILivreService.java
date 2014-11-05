@@ -148,6 +148,8 @@ public interface ILivreService extends IService {
      * @throws InvalidHibernateSessionException
      *             Si la session est <code>null</code>
      * @throws InvalidCriterionException
+     *             Si la propriété à utiliser est <code>null</code>
+     * @throws InvalidCriterionValueException
      *             Si le titre est <code>null</code>
      * @throws InvalidSortByPropertyException
      *             Si la propriété à utiliser pour classer est <code>null</code>
