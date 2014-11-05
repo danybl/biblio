@@ -37,5 +37,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="lib/bibliotheque-6-back-end.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
