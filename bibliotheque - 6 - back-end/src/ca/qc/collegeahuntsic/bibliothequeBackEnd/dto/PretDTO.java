@@ -12,6 +12,16 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 public final class PretDTO extends DTO {
 
+    public static final String ID_PRET_COLUMN_NAME = "idPret";
+
+    public static final String ID_MEMBRE_COLUMN_NAME = "idMembre";
+
+    public static final String ID_LIVRE_COLUMN_NAME = "idLivre";
+
+    public static final String DATE_PRET_COLUMN_NAME = "datePret";
+
+    public static final String DATE_RETOUR_COLUMN_NAME = "dateRetour";
+
     private static final long serialVersionUID = 1L;
 
     private String idPret;
@@ -24,20 +34,21 @@ public final class PretDTO extends DTO {
 
     private Timestamp dateRetour;
 
-    public static final String ID_PRET_COLUMN_NAME = "idPret";
-
-    public static final String ID_MEMBRE_COLUMN_NAME = "idMembre";
-
-    public static final String ID_LIVRE_COLUMN_NAME = "idLivre";
-
-    public static final String DATE_PRET_COLUMN_NAME = "datePret";
-
-    public static final String DATE_RETOUR_COLUMN_NAME = "dateRetour";
-
+    /**
+     * Crée un DTO de la table <code>pret</code>.
+     */
     public PretDTO() {
         super();
     }
 
+    /**
+     * PretDTO prêt à utiliser.
+     *
+     * @param idPret l'ID à utiliser pour la variable d'instance <code>this.idPret</code>
+     * @param membreDTO le membre à utiliser pour la variable d'instance <code>this.membreDTO</code>
+     * @param livreDTO le livre à utiliser pour la variable d'instance <code>this.livreDTO</code>
+     * @param datePret la date à utiliser pour la variable d'instance <code>this.datePret</code>
+     * */
     PretDTO(String idPret,
         MembreDTO membreDTO,
         LivreDTO livreDTO,
@@ -160,16 +171,13 @@ public final class PretDTO extends DTO {
             equals = obj != null
                 && obj instanceof PretDTO;
             if(equals) {
-                PretDTO pretDTO = (PretDTO) obj;
-                if(pretDTO != null) {
+                final PretDTO pretDTO = (PretDTO) obj;
 
-                    EqualsBuilder equalsBuilder = new EqualsBuilder();
-                    equalsBuilder.appendSuper(super.equals(pretDTO));
-                    equalsBuilder.append(getIdPret(),
-                        pretDTO.getIdPret());
-                    equals = equalsBuilder.isEquals();
-                }
-
+                final EqualsBuilder equalsBuilder = new EqualsBuilder();
+                equalsBuilder.appendSuper(super.equals(pretDTO));
+                equalsBuilder.append(getIdPret(),
+                    pretDTO.getIdPret());
+                equals = equalsBuilder.isEquals();
             }
         }
         return equals;
@@ -180,7 +188,7 @@ public final class PretDTO extends DTO {
      */
     @Override
     public int hashCode() {
-        HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(23,
+        final HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(23,
             13);
         hashCodeBuilder.appendSuper(super.hashCode());
         hashCodeBuilder.append(getIdPret());
