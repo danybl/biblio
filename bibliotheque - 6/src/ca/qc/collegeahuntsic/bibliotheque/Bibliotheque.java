@@ -108,7 +108,7 @@ public class Bibliotheque {
      *      exception lancée s'il y a un problème avec l'exécution de la commande
      */
     static void traiterTransactions(BufferedReader reader) throws BibliothequeException,
-    IOException {
+        IOException {
         afficherAide();
         System.out.println("\n\n\n");
         String transaction = lireTransaction(reader);
@@ -243,7 +243,7 @@ public class Bibliotheque {
         }
     }
 
-    /** Permet la vente un livre.
+    /** Permet de vendre un livre.
      * @param tokenizer StringTokenizer pour séparer les entrées de la commande
      * @throws BibliothequeException Si erreur dans les transaction
      */
@@ -277,7 +277,7 @@ public class Bibliotheque {
         }
     }
 
-    /** Permet la vente un livre.
+    /** Permet de preter un livre.
      * @param tokenizer StringTokenizer pour séparer les entrées de la commande
      * @throws BibliothequeException Si erreur dans les transaction
      */
@@ -322,7 +322,7 @@ public class Bibliotheque {
         }
     }
 
-    /** Permet la vente un livre.
+    /** Permet de renouveler un pret.
      * @param tokenizer StringTokenizer pour séparer les entrées de la commande
      * @throws BibliothequeException Si erreur dans les transaction
      */
@@ -354,7 +354,7 @@ public class Bibliotheque {
         }
     }
 
-    /** Permet la vente un livre.
+    /** Permet de retourner un livre.
      * @param tokenizer StringTokenizer pour séparer les entrées de la commande
      * @throws BibliothequeException Si erreur dans les transaction
      */
