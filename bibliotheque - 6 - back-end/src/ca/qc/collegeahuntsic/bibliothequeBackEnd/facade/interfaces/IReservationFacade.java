@@ -40,6 +40,7 @@ public interface IReservationFacade extends IFacade {
      * @throws ExistingLoanException Si le livre est déjà prêté au membre
      * @throws ExistingReservationException Si le membre a déjà réservé ce livre
      * @throws InvalidDTOClassException Si la classe de la réservation n'est pas celle que prend en charge le DAO
+     * @throws InvalidLoanLimitException Si le membre a atteint sa limite de prêt
      * @throws FacadeException S'il y a une erreur avec la base de données
      */
     void placer(Session session,

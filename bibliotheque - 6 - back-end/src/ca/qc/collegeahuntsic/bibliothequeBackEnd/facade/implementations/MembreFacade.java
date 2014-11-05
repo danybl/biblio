@@ -95,7 +95,6 @@ public class MembreFacade extends Facade implements IMembreFacade {
         InvalidCriterionException,
         InvalidSortByPropertyException,
         InvalidDTOClassException,
-        FacadeException,
         FacadeException {
         try {
             getMembreService().inscrireMembre(session,
