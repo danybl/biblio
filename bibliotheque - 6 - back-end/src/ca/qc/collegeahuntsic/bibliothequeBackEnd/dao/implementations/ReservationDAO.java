@@ -8,6 +8,8 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOClassEx
 /**
  * DAO pour effectuer des CRUDs avec la table <code>reservation</code>.
  *
+ * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
+ *
  */
 public class ReservationDAO extends DAO implements IReservationDAO {
 

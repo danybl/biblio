@@ -21,6 +21,13 @@ import org.hibernate.Session;
 
 public class MembreDAO extends DAO implements IMembreDAO {
 
+    /**
+     * Crée le DAO de la table <code>membre</code>.
+     *
+     * @param membreDTOClass The classe de membre DTO to use
+     * @throws InvalidDTOClassException Si la classe de DTO est <code>null</code>
+     */
+
     public MembreDAO(Class<MembreDTO> membreDTOClass) throws InvalidDTOClassException {
         super(membreDTOClass);
     }

@@ -29,6 +29,7 @@ public interface IMembreDAO extends IDao {
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
+     * @throws InvalidCriterionValueException Si le nom à prouver est <code>null</code>
      * @throws DAOException S'il y a une erreur avec la base de données
      */
 
@@ -51,6 +52,7 @@ public interface IMembreDAO extends IDao {
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
+     * @throws InvalidCriterionValueException Si le numTel à prouver est <code>null</code>
      * @throws DAOException S'il y a une erreur avec la base de données
      */
 

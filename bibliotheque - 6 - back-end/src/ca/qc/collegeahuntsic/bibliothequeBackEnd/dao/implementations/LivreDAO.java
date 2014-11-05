@@ -15,8 +15,17 @@ import org.hibernate.Session;
 /**
  * DAO pour effectuer des CRUDs avec la table <code>livre</code>.
  *
+ * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
+ *
  */
 public class LivreDAO extends DAO implements ILivreDAO {
+
+    /**
+     * Crée le DAO de la table <code>livre</code>.
+     *
+     * @param livreDTOClass The classe de livre DTO to use
+     * @throws InvalidDTOClassException Si la classe de DTO est <code>null</code>
+     */
 
     public LivreDAO(Class<LivreDTO> livreDTOClass) throws InvalidDTOClassException {
         super(livreDTOClass);

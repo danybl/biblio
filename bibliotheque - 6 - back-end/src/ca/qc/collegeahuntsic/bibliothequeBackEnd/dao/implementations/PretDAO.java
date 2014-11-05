@@ -22,6 +22,13 @@ import org.hibernate.Session;
 
 public class PretDAO extends DAO implements IPretDAO {
 
+    /**
+     * Crée un PretDAO.
+     *
+     * @param pretDTOClass La classe de DTO à utiliser
+     * @throws InvalidDTOClassException Si la classe de DTO est <code>null</code>
+     */
+
     public PretDAO(Class<PretDTO> pretDTOClass) throws InvalidDTOClassException {
         super(pretDTOClass);
     }
