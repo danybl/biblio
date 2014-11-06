@@ -342,7 +342,7 @@ public class ReservationService extends Service implements IReservationService {
                 unPretDTO);
             reservationDTO.getLivreDTO().getReservations().remove(reservationDTO);
             annuler(session,
-                reservationDTO);
+                uneReservationDTO);
         } catch(
             DAOException
             | ExistingReservationException
