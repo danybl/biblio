@@ -342,7 +342,7 @@ public class ReservationService extends Service implements IReservationService {
                 unPretDTO);
             reservationDTO.getLivreDTO().getReservations().remove(reservationDTO);
             annuler(session,
-                uneReservationDTO);
+                reservationDTO);
         } catch(
             DAOException
             | ExistingReservationException
@@ -366,10 +366,7 @@ public class ReservationService extends Service implements IReservationService {
         if(reservationDTO == null) {
             throw new InvalidDTOException("La réservation ne peut être null");
         }
-        final ReservationDTO uneReservationDTO = getReservation(session,
-            reservationDTO.getIdReservation());
-
         deleteReservation(session,
-            uneReservationDTO);
+            reservationDTO);
     }
 }
