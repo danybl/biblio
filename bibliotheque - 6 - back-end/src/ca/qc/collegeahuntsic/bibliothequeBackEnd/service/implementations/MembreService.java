@@ -1,21 +1,19 @@
 
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.service.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.MembreDTO;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.MissingDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidDAOException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces.IMembreService;
 import org.hibernate.Session;
@@ -76,7 +74,6 @@ public class MembreService implements IMembreService {
     public void addMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
         ServiceException {
         try {
             getMembreDAO().add(session,
@@ -109,7 +106,6 @@ public class MembreService implements IMembreService {
     public void updateMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
         ServiceException {
         try {
             getMembreDAO().update(session,
@@ -127,7 +123,6 @@ public class MembreService implements IMembreService {
     public void deleteMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
         ServiceException {
         try {
             getMembreDAO().delete(session,
@@ -140,6 +135,7 @@ public class MembreService implements IMembreService {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<MembreDTO> getAllMembre(Session session,
         String sortByPropertyName) throws InvalidHibernateSessionException,
@@ -200,7 +196,6 @@ public class MembreService implements IMembreService {
     public void inscrireMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
         ServiceException {
         addMembre(session,
             membreDTO);
@@ -213,31 +208,28 @@ public class MembreService implements IMembreService {
     public void desinscrireMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
-        ExistingReservationException,
-        ExistingLoanException,
-        InvalidLoanLimitException,
-        InvalidDTOClassException,
         ServiceException {
         if(session == null) {
             throw new InvalidHibernateSessionException("La session ne peut être null");
         }
-        if(membreDTO == null) {
-            throw new InvalidDTOException("Le membre ne peut être null");
+
+        final List<PretDTO> prets = new ArrayList<>(membreDTO.getPrets());
+        try {
+            if(!prets.isEmpty()) {
+                throw new ExistingLoanException("Le membre "
+                    + membreDTO.getNom()
+                    + " (ID de membre : "
+                    + membreDTO.getIdMembre()
+                    + ") a encore des prêts");
+            }
+        } catch(ExistingLoanException ex) {
+            throw new ServiceException(ex);
         }
-        final MembreDTO unMembreDTO = membreDTO;
-        final String nullString = null;
-        if(!unMembreDTO.getNbPret().equals(nullString)) {
-            throw new ServiceException("Le membre "
-                + unMembreDTO.getNom()
-                + " (ID de membre : "
-                + unMembreDTO.getIdMembre()
-                + ") a encore des prêts");
-        }
+
         deleteMembre(session,
-            unMembreDTO);
+            membreDTO);
     }
 
 }

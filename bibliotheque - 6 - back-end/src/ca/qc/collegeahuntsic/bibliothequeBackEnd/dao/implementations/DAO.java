@@ -157,9 +157,7 @@ public class DAO implements IDao {
         if(session == null) {
             throw new InvalidHibernateSessionException("La session Hibernate ne peut être null");
         }
-        if(dto == null) {
-            throw new InvalidDTOException("Le DTO ne peut être null");
-        }
+
         try {
             session.delete(dto);
         } catch(HibernateException hibernateException) {

@@ -8,11 +8,7 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionE
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.MissingDTOException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import org.hibernate.Session;
 
@@ -36,16 +32,12 @@ public interface ILivreService extends IService {
      *             Si la session est <code>null</code>
      * @throws InvalidDTOException
      *             Si le livre est <code>null</code>
-     * @throws InvalidDTOClassException
-     *             Si la classe du livre n'est pas celle que prend en charge le
-     *             DAO
      * @throws ServiceException
      *             S'il y a une erreur avec la base de données
      */
     void addLivre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
         ServiceException;
 
     /**
@@ -76,16 +68,12 @@ public interface ILivreService extends IService {
      *             Si la session est <code>null</code>
      * @throws InvalidDTOException
      *             Si le livre est <code>null</code>
-     * @throws InvalidDTOClassException
-     *             Si la classe du livre n'est pas celle que prend en charge le
-     *             DAO
      * @throws ServiceException
      *             S'il y a une erreur avec la base de données
      */
     void updateLivre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
         ServiceException;
 
     /**
@@ -99,16 +87,12 @@ public interface ILivreService extends IService {
      *             Si la session est <code>null</code>
      * @throws InvalidDTOException
      *             Si le livre est <code>null</code>
-     * @throws InvalidDTOClassException
-     *             Si la classe du livre n'est pas celle que prend en charge le
-     *             DAO
      * @throws ServiceException
      *             S'il y a une erreur avec la base de données
      */
     void deleteLivre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
         ServiceException;
 
     /**
@@ -175,16 +159,12 @@ public interface ILivreService extends IService {
      *             Si la session est <code>null</code>
      * @throws InvalidDTOException
      *             Si le livre est <code>null</code>
-     * @throws InvalidDTOClassException
-     *             Si la classe du livre n'est pas celle que prend en charge le
-     *             DAO
      * @throws ServiceException
      *             S'il y a une erreur avec la base de données
      */
     void acquerir(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
         ServiceException;
 
     /**
@@ -198,30 +178,17 @@ public interface ILivreService extends IService {
      *             Si la session est <code>null</code>
      * @throws InvalidDTOException
      *             Si le livre est <code>null</code>
-     * @throws InvalidDTOClassException
-     *             Si la classe du livre n'est pas celle que prend en charge le
-     *             DAO
-     * @throws MissingDTOException
-     *             Si le livre n'existe pas
      * @throws InvalidCriterionException
      *             Si l'ID du membre est <code>null</code>
      * @throws InvalidSortByPropertyException
      *             Si la propriété à utiliser pour classer est <code>null</code>
-     * @throws ExistingLoanException
-     *             Si le livre a été prêté
-     * @throws ExistingReservationException
-     *             Si le livre a été réservé
      * @throws ServiceException
      *             S'il y a une erreur avec la base de données
      */
     void vendre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
-        MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
-        ExistingLoanException,
-        ExistingReservationException,
         ServiceException;
 }
