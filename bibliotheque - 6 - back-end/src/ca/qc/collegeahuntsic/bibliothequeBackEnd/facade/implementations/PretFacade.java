@@ -42,16 +42,16 @@ public class PretFacade extends Facade implements IPretFacade {
 
     // Region Getters and Setters
     /**
-     * Getter de la variable d'instance <code>this.reservationService</code>.
+     * Getter de la variable d'instance <code>this.pretService</code>.
      *
-     * @return La variable d'instance <code>this.reservationService</code>
+     * @return La variable d'instance <code>this.pretService</code>
      */
     private IPretService getPretService() {
         return this.pretService;
     }
 
     /**
-     * Setter de la variable d'instance <code>this.reservationService</code>.
+     * Setter de la variable d'instance <code>this.pretService</code>.
      *
      * @param pretService La valeur à utiliser pour la variable d'instance <code>this.pretService</code>
      */
