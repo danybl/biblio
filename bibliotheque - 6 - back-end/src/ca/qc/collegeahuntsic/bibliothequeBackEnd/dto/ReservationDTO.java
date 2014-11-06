@@ -142,16 +142,13 @@ public final class ReservationDTO extends DTO {
             if(equals) {
 
                 final ReservationDTO reservationDTO = (ReservationDTO) obj;
-                if(reservationDTO != null) {
-
-                    final EqualsBuilder equalsBuilder = new EqualsBuilder();
-                    equalsBuilder.appendSuper(super.equals(reservationDTO));
-                    equalsBuilder.append(getIdReservation(),
-                        reservationDTO.getIdReservation());
-                    equals = equalsBuilder.isEquals();
-                }
-
+                final EqualsBuilder equalsBuilder = new EqualsBuilder();
+                equalsBuilder.appendSuper(super.equals(reservationDTO));
+                equalsBuilder.append(getIdReservation(),
+                    reservationDTO.getIdReservation());
+                equals = equalsBuilder.isEquals();
             }
+
         }
         return equals;
     }
