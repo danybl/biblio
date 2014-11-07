@@ -19,14 +19,9 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionE
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.MissingDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
 import org.apache.log4j.Logger;
 
 /**
@@ -237,7 +232,6 @@ public class Bibliotheque {
         } catch(
             InvalidHibernateSessionException
             | InvalidDTOException
-            | InvalidDTOClassException
             | FacadeException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
@@ -267,12 +261,9 @@ public class Bibliotheque {
             | FacadeException
             | MissingDTOException
             | InvalidDTOException
-            | InvalidDTOClassException
             | InvalidCriterionException
             | InvalidCriterionValueException
-            | InvalidSortByPropertyException
-            | ExistingLoanException
-            | ExistingReservationException exception) {
+            | InvalidSortByPropertyException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
     }
@@ -312,12 +303,7 @@ public class Bibliotheque {
             | MissingDTOException
             | InvalidDTOException
             | InvalidCriterionException
-            | InvalidSortByPropertyException
-            | MissingLoanException
-            | ExistingLoanException
-            | ExistingReservationException
-            | InvalidLoanLimitException
-            | InvalidDTOClassException exception) {
+            | InvalidSortByPropertyException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
     }
@@ -345,11 +331,8 @@ public class Bibliotheque {
             | FacadeException
             | MissingDTOException
             | InvalidDTOException
-            | InvalidDTOClassException
             | InvalidCriterionException
-            | InvalidSortByPropertyException
-            | ExistingLoanException
-            | ExistingReservationException exception) {
+            | InvalidSortByPropertyException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
     }
@@ -380,12 +363,7 @@ public class Bibliotheque {
             | MissingDTOException
             | InvalidDTOException
             | InvalidCriterionException
-            | InvalidSortByPropertyException
-            | MissingLoanException
-            | ExistingLoanException
-            | ExistingReservationException
-            | InvalidLoanLimitException
-            | InvalidDTOClassException exception) {
+            | InvalidSortByPropertyException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
     }
@@ -408,13 +386,8 @@ public class Bibliotheque {
         } catch(
             InvalidHibernateSessionException
             | InvalidDTOException
-            | MissingDTOException
             | InvalidCriterionException
             | InvalidSortByPropertyException
-            | ExistingReservationException
-            | ExistingLoanException
-            | InvalidLoanLimitException
-            | InvalidDTOClassException
             | FacadeException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
@@ -445,11 +418,7 @@ public class Bibliotheque {
             | MissingDTOException
             | InvalidDTOException
             | InvalidCriterionException
-            | InvalidSortByPropertyException
-            | ExistingReservationException
-            | ExistingLoanException
-            | InvalidLoanLimitException
-            | InvalidDTOClassException exception) {
+            | InvalidSortByPropertyException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
     }
@@ -494,12 +463,7 @@ public class Bibliotheque {
             | InvalidDTOException
             | InvalidCriterionException
             | InvalidCriterionValueException
-            | InvalidSortByPropertyException
-            | MissingLoanException
-            | ExistingLoanException
-            | ExistingReservationException
-            | InvalidDTOClassException
-            | InvalidLoanLimitException exception) {
+            | InvalidSortByPropertyException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
     }
@@ -529,11 +493,7 @@ public class Bibliotheque {
             | InvalidDTOException
             | InvalidCriterionException
             | InvalidCriterionValueException
-            | InvalidSortByPropertyException
-            | ExistingReservationException
-            | ExistingLoanException
-            | InvalidLoanLimitException
-            | InvalidDTOClassException exception) {
+            | InvalidSortByPropertyException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
     }
@@ -560,8 +520,7 @@ public class Bibliotheque {
             InvalidHibernateSessionException
             | FacadeException
             | MissingDTOException
-            | InvalidDTOException
-            | InvalidDTOClassException exception) {
+            | InvalidDTOException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
     }
