@@ -20,7 +20,6 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanE
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidDAOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces.IReservationService;
 import org.hibernate.Session;
@@ -207,13 +206,7 @@ public class ReservationService extends Service implements IReservationService {
         final List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
 
         try {
-            if(prets.isEmpty()) {
-                throw new MissingLoanException("Le livre "
-                    + unLivreDTO.getTitre()
-                    + " (ID de livre : "
-                    + unLivreDTO.getIdLivre()
-                    + ") n'est pas encore prêté");
-            }
+
             boolean aEteEmprunteParMembre = false;
             for(PretDTO pretDTO : prets) {
                 aEteEmprunteParMembre = unMembreDTO.equals(pretDTO.getMembreDTO());
@@ -253,8 +246,7 @@ public class ReservationService extends Service implements IReservationService {
                 }
             }
         } catch(
-            MissingLoanException
-            | ExistingLoanException
+            ExistingLoanException
             | InvalidLoanLimitException
             | ExistingReservationException ex) {
             throw new ServiceException(ex);
