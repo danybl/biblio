@@ -4,7 +4,6 @@ package ca.qc.collegeahuntsic.bibliothequeBackEnd.service.implementations;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.Session;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IPretDAO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IReservationDAO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.LivreDTO;
@@ -23,6 +22,7 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidDAOExc
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces.IReservationService;
+import org.hibernate.Session;
 
 /**
  * Service de la table <code>reservation</code>.
