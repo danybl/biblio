@@ -103,9 +103,9 @@ public class Bibliotheque {
      *      exception lancée s'il y a un problème avec l'exécution de la commande
      */
     static void traiterTransactions(BufferedReader reader) throws BibliothequeException,
-        IOException {
+    IOException {
         afficherAide();
-        System.out.println("\n\n\n");
+        Bibliotheque.LOGGER.info("\n\n");
         String transaction = lireTransaction(reader);
         while(!finTransaction(transaction)) {
             // découpage de la transaction en mots
@@ -126,7 +126,7 @@ public class Bibliotheque {
     static String lireTransaction(BufferedReader reader) throws IOException {
         final String transaction = reader.readLine();
         if(transaction != null) {
-            System.out.println(transaction);
+            Bibliotheque.LOGGER.info(transaction);
         }
         return transaction;
     }
@@ -177,7 +177,7 @@ public class Bibliotheque {
                     // ne rien faire; c'est un commentaire
                     break;
                 default:
-                    System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
+                    Bibliotheque.LOGGER.info("  Transactions non reconnue.  Essayer \"aide\"");
                     break;
             }
         } catch(BibliothequeException exception) {
