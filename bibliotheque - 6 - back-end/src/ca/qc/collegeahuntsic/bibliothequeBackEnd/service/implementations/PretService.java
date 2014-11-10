@@ -311,6 +311,7 @@ public class PretService extends Service implements IPretService {
         final List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
 
         PretDTO unPretDTO = pretDTO;
+        final MembreDTO membreDTO = pretDTO.getMembreDTO();
 
         try {
             if(prets.isEmpty()) {
@@ -325,6 +326,7 @@ public class PretService extends Service implements IPretService {
         }
 
         unPretDTO = prets.get(0);
+        unPretDTO.getMembreDTO().setNbPret(Integer.toString(Integer.parseInt(membreDTO.getNbPret()) - 1));
         unPretDTO.setDateRetour(new Timestamp(System.currentTimeMillis()));
         updatePret(session,
             unPretDTO);

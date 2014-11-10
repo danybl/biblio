@@ -102,7 +102,7 @@ public class Bibliotheque {
      *      exception lancée s'il y a un problème avec l'exécution de la commande
      */
     static void traiterTransactions(BufferedReader reader) throws BibliothequeException,
-        IOException {
+    IOException {
         afficherAide();
         Bibliotheque.LOGGER.info("\n\n");
         String transaction = lireTransaction(reader);
@@ -483,6 +483,8 @@ public class Bibliotheque {
                     + " n'existe pas");
             }
             bibliothequeCreateur.getReservationFacade().utiliser(bibliothequeCreateur.getSession(),
+                reservationDTO);
+            bibliothequeCreateur.getReservationFacade().annuler(bibliothequeCreateur.getSession(),
                 reservationDTO);
             bibliothequeCreateur.commitTransaction();
         } catch(
