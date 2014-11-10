@@ -91,7 +91,6 @@ public class Bibliotheque {
                 traiterTransactions(reader);
             }
         } catch(BibliothequeException exception) {
-            //bibliothequeCreateur.rollbackTransaction();
             exception.printStackTrace(System.out);
         }
     }
@@ -103,7 +102,7 @@ public class Bibliotheque {
      *      exception lancée s'il y a un problème avec l'exécution de la commande
      */
     static void traiterTransactions(BufferedReader reader) throws BibliothequeException,
-    IOException {
+        IOException {
         afficherAide();
         Bibliotheque.LOGGER.info("\n\n");
         String transaction = lireTransaction(reader);
