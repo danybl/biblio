@@ -4,11 +4,12 @@ package ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces;
 
 import java.util.List;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.ReservationDTO;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import org.hibernate.Session;
 
@@ -97,17 +98,17 @@ public interface IReservationService extends IService {
      * @param reservationDTO La réservation à placer
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
-     * @throws InvalidCriterionException Si la propriété à utiliser est <code>null</code>
-     * @throws InvalidCriterionValueException Si la reservationDTO à prouver est <code>null</code>
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
+     * @throws ExistingLoanException Si prêt existe déjà
+     * @throws InvalidLoanLimitException Si limite de prêt atteinte
+     * @throws ExistingReservationException Si réservation existe déjà
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void placer(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidCriterionValueException,
-        InvalidSortByPropertyException,
+        ExistingLoanException,
+        InvalidLoanLimitException,
+        ExistingReservationException,
         ServiceException;
 
     /**
@@ -117,17 +118,17 @@ public interface IReservationService extends IService {
      * @param reservationDTO La réservation à utiliser
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
-     * @throws InvalidCriterionException Si la propriété à utiliser est <code>null</code>
-     * @throws InvalidCriterionValueException Si l'ID du livre est <code>null</code>
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
+     * @throws InvalidLoanLimitException Si la limite de prêts a été atteinte
+     * @throws ExistingReservationException Si une réservation existe déjà
+     * @throws ExistingLoanException Si un prêt existe déjà
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void utiliser(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidCriterionValueException,
-        InvalidSortByPropertyException,
+        InvalidLoanLimitException,
+        ExistingReservationException,
+        ExistingLoanException,
         ServiceException;
 
     /**

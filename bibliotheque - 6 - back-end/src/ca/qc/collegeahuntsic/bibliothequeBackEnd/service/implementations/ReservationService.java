@@ -11,8 +11,6 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.DAOException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
@@ -185,14 +183,15 @@ public class ReservationService extends Service implements IReservationService {
 
     /**
      * {@inheritDoc}
+     * @throws ExistingReservationException
      */
     @Override
     public void placer(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidCriterionValueException,
-        InvalidSortByPropertyException,
+        ExistingLoanException,
+        ExistingReservationException,
+        InvalidLoanLimitException,
         ServiceException {
         if(session == null) {
             throw new InvalidHibernateSessionException("La session ne peut être null");
@@ -205,51 +204,43 @@ public class ReservationService extends Service implements IReservationService {
 
         final List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
 
-        try {
+        boolean aEteEmprunteParMembre = false;
+        for(PretDTO pretDTO : prets) {
+            aEteEmprunteParMembre = unMembreDTO.equals(pretDTO.getMembreDTO());
+        }
+        if(aEteEmprunteParMembre) {
+            throw new ExistingLoanException("Le livre "
+                + unLivreDTO.getTitre()
+                + " (ID de livre : "
+                + unLivreDTO.getIdLivre()
+                + ") est déjà prêté à "
+                + unMembreDTO.getNom()
+                + " (ID de membre : "
+                + unMembreDTO.getIdMembre()
+                + ")");
+        }
+        final List<PretDTO> membrePrets = new ArrayList<>(unMembreDTO.getPrets());
 
-            boolean aEteEmprunteParMembre = false;
-            for(PretDTO pretDTO : prets) {
-                aEteEmprunteParMembre = unMembreDTO.equals(pretDTO.getMembreDTO());
-            }
-            if(aEteEmprunteParMembre) {
-                throw new ExistingLoanException("Le livre "
+        if(unMembreDTO.getLimitePret().equals(String.valueOf(membrePrets.size()))) {
+            throw new InvalidLoanLimitException("Le membre "
+                + unMembreDTO.getNom()
+                + " (ID de membre : "
+                + unMembreDTO.getIdMembre()
+                + ") a atteint sa limite de prêt ("
+                + unMembreDTO.getLimitePret()
+                + " emprunt(s) maximum)");
+        }
+
+        final List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
+
+        for(ReservationDTO uneAutreReservationDTO : reservations) {
+            if(unLivreDTO.equals(uneAutreReservationDTO.getLivreDTO())) {
+                throw new ExistingReservationException("Le livre "
                     + unLivreDTO.getTitre()
                     + " (ID de livre : "
                     + unLivreDTO.getIdLivre()
-                    + ") est déjà prêté à "
-                    + unMembreDTO.getNom()
-                    + " (ID de membre : "
-                    + unMembreDTO.getIdMembre()
-                    + ")");
+                    + ") est déjà réservé pour quelqu'un d'autre");
             }
-            final List<PretDTO> membrePrets = new ArrayList<>(unMembreDTO.getPrets());
-
-            if(unMembreDTO.getLimitePret().equals(String.valueOf(membrePrets.size()))) {
-                throw new InvalidLoanLimitException("Le membre "
-                    + unMembreDTO.getNom()
-                    + " (ID de membre : "
-                    + unMembreDTO.getIdMembre()
-                    + ") a atteint sa limite de prêt ("
-                    + unMembreDTO.getLimitePret()
-                    + " emprunt(s) maximum)");
-            }
-
-            final List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
-
-            for(ReservationDTO uneAutreReservationDTO : reservations) {
-                if(unLivreDTO.equals(uneAutreReservationDTO.getLivreDTO())) {
-                    throw new ExistingReservationException("Le livre "
-                        + unLivreDTO.getTitre()
-                        + " (ID de livre : "
-                        + unLivreDTO.getIdLivre()
-                        + ") est déjà réservé pour quelqu'un d'autre");
-                }
-            }
-        } catch(
-            ExistingLoanException
-            | InvalidLoanLimitException
-            | ExistingReservationException ex) {
-            throw new ServiceException(ex);
         }
 
         reservationDTO.setDateReservation(new Timestamp(System.currentTimeMillis()));
@@ -265,9 +256,9 @@ public class ReservationService extends Service implements IReservationService {
     public void utiliser(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidCriterionValueException,
-        InvalidSortByPropertyException,
+        InvalidLoanLimitException,
+        ExistingReservationException,
+        ExistingLoanException,
         ServiceException {
         if(session == null) {
             throw new InvalidHibernateSessionException("La session ne peut être null");
@@ -335,12 +326,8 @@ public class ReservationService extends Service implements IReservationService {
             //reservationDTO.getLivreDTO().getReservations().remove(reservationDTO);
             //            annuler(session,
             //                uneReservationDTO);
-        } catch(
-            DAOException
-            | ExistingReservationException
-            | ExistingLoanException
-            | InvalidLoanLimitException ex) {
-            throw new ServiceException(ex);
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
         }
     }
 

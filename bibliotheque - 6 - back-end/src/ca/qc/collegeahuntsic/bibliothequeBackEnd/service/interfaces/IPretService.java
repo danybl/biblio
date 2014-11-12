@@ -3,10 +3,13 @@ package ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces;
 
 import java.util.List;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.PretDTO;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import org.hibernate.Session;
 
@@ -97,15 +100,17 @@ public interface IPretService extends IService {
      * @param pretDTO Le prêt à emprunter
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
+     * @throws ExistingLoanException Si prêt existe déjà
+     * @throws ExistingReservationException Si réservation existe déjà
+     * @throws InvalidLoanLimitException Si limite de prêt atteinte
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void emprunter(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
+        InvalidLoanLimitException,
+        ExistingReservationException,
+        ExistingLoanException,
         ServiceException;
 
     /**
@@ -115,15 +120,17 @@ public interface IPretService extends IService {
      * @param pretDTO Le prêt à renouveler
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
+     * @throws ExistingReservationException Si réservation existe déjà
+     * @throws MissingLoanException Si prêt n'existe pas
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void renouveler(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
         InvalidSortByPropertyException,
+        ExistingReservationException,
+        MissingLoanException,
         ServiceException;
 
     /**
@@ -133,15 +140,15 @@ public interface IPretService extends IService {
      * @param pretDTO Le prêt du livre à retourner
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
+     * @throws MissingLoanException Si prêt n'existe pas
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
 
     void retourner(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
         InvalidSortByPropertyException,
+        MissingLoanException,
         ServiceException;
 }

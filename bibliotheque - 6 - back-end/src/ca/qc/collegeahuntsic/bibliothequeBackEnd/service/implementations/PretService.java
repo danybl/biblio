@@ -11,7 +11,6 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.DAOException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
@@ -163,8 +162,9 @@ public class PretService extends Service implements IPretService {
     public void emprunter(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
+        InvalidLoanLimitException,
+        ExistingReservationException,
+        ExistingLoanException,
         ServiceException {
         if(session == null) {
             throw new InvalidHibernateSessionException("La session ne peut être null");
@@ -175,47 +175,40 @@ public class PretService extends Service implements IPretService {
 
         final List<PretDTO> membrePrets = new ArrayList<>(membreDTO.getPrets());
 
-        try {
-            if(membreDTO.getLimitePret().equals(String.valueOf(membrePrets.size()))) {
-                throw new InvalidLoanLimitException("Le membre "
-                    + membreDTO.getNom()
-                    + " (ID de membre : "
-                    + membreDTO.getIdMembre()
-                    + ") a atteint sa limite de prêt ("
-                    + membreDTO.getLimitePret()
-                    + " emprunt(s) maximum)");
-            }
+        if(membreDTO.getLimitePret().equals(String.valueOf(membrePrets.size()))) {
+            throw new InvalidLoanLimitException("Le membre "
+                + membreDTO.getNom()
+                + " (ID de membre : "
+                + membreDTO.getIdMembre()
+                + ") a atteint sa limite de prêt ("
+                + membreDTO.getLimitePret()
+                + " emprunt(s) maximum)");
+        }
 
-            final List<ReservationDTO> reservations = new ArrayList<>(livreDTO.getReservations());
-            if(!reservations.isEmpty()) {
-                throw new ExistingReservationException("Le livre "
+        final List<ReservationDTO> reservations = new ArrayList<>(livreDTO.getReservations());
+        if(!reservations.isEmpty()) {
+            throw new ExistingReservationException("Le livre "
+                + livreDTO.getTitre()
+                + " (ID de livre : "
+                + livreDTO.getIdLivre()
+                + ") a des réservations"
+                + ")");
+        }
+
+        final List<PretDTO> livrePrets = new ArrayList<>(livreDTO.getPrets());
+        for(PretDTO unPretDTO : livrePrets) {
+            if(unPretDTO.getDateRetour() == null) {
+                final MembreDTO emprunteur = unPretDTO.getMembreDTO();
+                throw new ExistingLoanException("Le livre "
                     + livreDTO.getTitre()
                     + " (ID de livre : "
                     + livreDTO.getIdLivre()
-                    + ") a des réservations"
+                    + ") a été prêté à "
+                    + emprunteur.getNom()
+                    + " (ID de membre : "
+                    + emprunteur.getIdMembre()
                     + ")");
             }
-
-            final List<PretDTO> livrePrets = new ArrayList<>(livreDTO.getPrets());
-            for(PretDTO unPretDTO : livrePrets) {
-                if(unPretDTO.getDateRetour() == null) {
-                    final MembreDTO emprunteur = unPretDTO.getMembreDTO();
-                    throw new ExistingLoanException("Le livre "
-                        + livreDTO.getTitre()
-                        + " (ID de livre : "
-                        + livreDTO.getIdLivre()
-                        + ") a été prêté à "
-                        + emprunteur.getNom()
-                        + " (ID de membre : "
-                        + emprunteur.getIdMembre()
-                        + ")");
-                }
-            }
-        } catch(
-            InvalidLoanLimitException
-            | ExistingReservationException
-            | ExistingLoanException ex) {
-            throw new ServiceException(ex);
         }
 
         pretDTO.setMembreDTO(membreDTO);
@@ -231,13 +224,16 @@ public class PretService extends Service implements IPretService {
 
     /**
      * {@inheritDoc}
+     * @throws ExistingReservationException
+     * @throws
      */
     @Override
     public void renouveler(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
         InvalidSortByPropertyException,
+        ExistingReservationException,
+        MissingLoanException,
         ServiceException {
         if(session == null) {
             throw new InvalidHibernateSessionException("La session ne peut être null");
@@ -248,42 +244,36 @@ public class PretService extends Service implements IPretService {
 
         final List<ReservationDTO> reservations = new ArrayList<>(unLivreDTO.getReservations());
 
-        try {
-            if(!reservations.isEmpty()) {
-                final ReservationDTO reservationDTO = reservations.get(0);
-                final MembreDTO unMembre = reservationDTO.getMembreDTO();
-                throw new ExistingReservationException("Le livre "
-                    + unLivreDTO.getTitre()
-                    + " (ID de livre : "
-                    + unLivreDTO.getIdLivre()
-                    + ") a des réservations "
-                    + "au membre "
-                    + unMembre.getNom()
-                    + ")");
-            }
-            final List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
-            if(prets.isEmpty()) {
-                throw new MissingLoanException("Le livre "
-                    + unLivreDTO.getTitre()
-                    + " (ID de livre : "
-                    + unLivreDTO.getIdLivre()
-                    + ") n'est pas encore prêté");
-            }
-            if(unMembreDTO.getPrets().isEmpty()) {
-                throw new MissingLoanException("Le livre "
-                    + unLivreDTO.getTitre()
-                    + " (ID de livre : "
-                    + unLivreDTO.getIdLivre()
-                    + ") n'a pas été prêté à "
-                    + unMembreDTO.getNom()
-                    + " (ID de membre : "
-                    + unMembreDTO.getIdMembre()
-                    + ")");
-            }
-        } catch(
-            ExistingReservationException
-            | MissingLoanException ex) {
-            throw new ServiceException(ex);
+        if(!reservations.isEmpty()) {
+            final ReservationDTO reservationDTO = reservations.get(0);
+            final MembreDTO unMembre = reservationDTO.getMembreDTO();
+            throw new ExistingReservationException("Le livre "
+                + unLivreDTO.getTitre()
+                + " (ID de livre : "
+                + unLivreDTO.getIdLivre()
+                + ") a des réservations "
+                + "au membre "
+                + unMembre.getNom()
+                + ")");
+        }
+        final List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
+        if(prets.isEmpty()) {
+            throw new MissingLoanException("Le livre "
+                + unLivreDTO.getTitre()
+                + " (ID de livre : "
+                + unLivreDTO.getIdLivre()
+                + ") n'est pas encore prêté");
+        }
+        if(unMembreDTO.getPrets().isEmpty()) {
+            throw new MissingLoanException("Le livre "
+                + unLivreDTO.getTitre()
+                + " (ID de livre : "
+                + unLivreDTO.getIdLivre()
+                + ") n'a pas été prêté à "
+                + unMembreDTO.getNom()
+                + " (ID de membre : "
+                + unMembreDTO.getIdMembre()
+                + ")");
         }
 
         pretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
@@ -294,13 +284,14 @@ public class PretService extends Service implements IPretService {
 
     /**
      * {@inheritDoc}
+     * @throws
      */
     @Override
     public void retourner(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
         InvalidSortByPropertyException,
+        MissingLoanException,
         ServiceException {
         if(session == null) {
             throw new InvalidHibernateSessionException("La session ne peut être null");
@@ -312,19 +303,13 @@ public class PretService extends Service implements IPretService {
 
         PretDTO unPretDTO = pretDTO;
         final MembreDTO membreDTO = pretDTO.getMembreDTO();
-
-        try {
-            if(prets.isEmpty()) {
-                throw new MissingLoanException("Le livre "
-                    + unLivreDTO.getTitre()
-                    + " (ID de livre : "
-                    + unLivreDTO.getIdLivre()
-                    + ") n'a pas été prêté ");
-            }
-        } catch(MissingLoanException ex) {
-            throw new ServiceException(ex);
+        if(prets.isEmpty()) {
+            throw new MissingLoanException("Le livre "
+                + unLivreDTO.getTitre()
+                + " (ID de livre : "
+                + unLivreDTO.getIdLivre()
+                + ") n'a pas été prêté ");
         }
-
         unPretDTO = prets.get(0);
         unPretDTO.getMembreDTO().setNbPret(Integer.toString(Integer.parseInt(membreDTO.getNbPret()) - 1));
         unPretDTO.setDateRetour(new Timestamp(System.currentTimeMillis()));
