@@ -16,12 +16,15 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.MissingDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
 import org.apache.log4j.Logger;
 
 /**
@@ -102,7 +105,7 @@ public class Bibliotheque {
      *      exception lancée s'il y a un problème avec l'exécution de la commande
      */
     static void traiterTransactions(BufferedReader reader) throws BibliothequeException,
-    IOException {
+        IOException {
         afficherAide();
         Bibliotheque.LOGGER.info("\n\n");
         String transaction = lireTransaction(reader);
@@ -115,6 +118,7 @@ public class Bibliotheque {
             }
             transaction = lireTransaction(reader);
         }
+
     }
 
     /** Lecture d'une transaction.
@@ -133,6 +137,10 @@ public class Bibliotheque {
     /** Décodage et traitement d'une transaction.
      * @param tokenizer StringTokenizer pour découper les entrées pour la transaction
      * @throws BibliothequeException Si erreur dans la transaction
+     * @throws ExistingLoanException
+     * @throws ExistingReservationException
+     * @throws InvalidLoanLimitException
+     * @throws MissingLoanException
      */
     static void executerTransaction(StringTokenizer tokenizer) throws BibliothequeException {
         try {
@@ -259,10 +267,7 @@ public class Bibliotheque {
             InvalidHibernateSessionException
             | FacadeException
             | MissingDTOException
-            | InvalidDTOException
-            | InvalidCriterionException
-            | InvalidCriterionValueException
-            | InvalidSortByPropertyException exception) {
+            | InvalidDTOException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
     }
@@ -301,8 +306,9 @@ public class Bibliotheque {
             | FacadeException
             | MissingDTOException
             | InvalidDTOException
-            | InvalidCriterionException
-            | InvalidSortByPropertyException exception) {
+            | InvalidLoanLimitException
+            | ExistingReservationException
+            | ExistingLoanException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
     }
@@ -330,8 +336,8 @@ public class Bibliotheque {
             | FacadeException
             | MissingDTOException
             | InvalidDTOException
-            | InvalidCriterionException
-            | InvalidSortByPropertyException exception) {
+            | ExistingReservationException
+            | MissingLoanException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
     }
@@ -361,8 +367,7 @@ public class Bibliotheque {
             | BibliothequeException
             | MissingDTOException
             | InvalidDTOException
-            | InvalidCriterionException
-            | InvalidSortByPropertyException exception) {
+            | MissingLoanException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
     }
@@ -415,9 +420,7 @@ public class Bibliotheque {
             InvalidHibernateSessionException
             | FacadeException
             | MissingDTOException
-            | InvalidDTOException
-            | InvalidCriterionException
-            | InvalidSortByPropertyException exception) {
+            | InvalidDTOException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
     }
@@ -460,9 +463,9 @@ public class Bibliotheque {
             | FacadeException
             | MissingDTOException
             | InvalidDTOException
-            | InvalidCriterionException
-            | InvalidCriterionValueException
-            | InvalidSortByPropertyException exception) {
+            | ExistingLoanException
+            | InvalidLoanLimitException
+            | ExistingReservationException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
     }
@@ -492,9 +495,9 @@ public class Bibliotheque {
             | FacadeException
             | MissingDTOException
             | InvalidDTOException
-            | InvalidCriterionException
-            | InvalidCriterionValueException
-            | InvalidSortByPropertyException exception) {
+            | InvalidLoanLimitException
+            | ExistingReservationException
+            | ExistingLoanException exception) {
             throw new BibliothequeException(exception.getMessage());
         }
     }
