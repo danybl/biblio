@@ -224,14 +224,11 @@ public class PretService extends Service implements IPretService {
 
     /**
      * {@inheritDoc}
-     * @throws ExistingReservationException
-     * @throws
      */
     @Override
     public void renouveler(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidSortByPropertyException,
         ExistingReservationException,
         MissingLoanException,
         ServiceException {
@@ -284,13 +281,11 @@ public class PretService extends Service implements IPretService {
 
     /**
      * {@inheritDoc}
-     * @throws
      */
     @Override
     public void retourner(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidSortByPropertyException,
         MissingLoanException,
         ServiceException {
         if(session == null) {

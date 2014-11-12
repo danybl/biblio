@@ -120,7 +120,6 @@ public interface IPretService extends IService {
      * @param pretDTO Le prêt à renouveler
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ExistingReservationException Si réservation existe déjà
      * @throws MissingLoanException Si prêt n'existe pas
      * @throws ServiceException S'il y a une erreur avec la base de données
@@ -128,7 +127,6 @@ public interface IPretService extends IService {
     void renouveler(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidSortByPropertyException,
         ExistingReservationException,
         MissingLoanException,
         ServiceException;
@@ -140,7 +138,6 @@ public interface IPretService extends IService {
      * @param pretDTO Le prêt du livre à retourner
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws MissingLoanException Si prêt n'existe pas
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
@@ -148,7 +145,6 @@ public interface IPretService extends IService {
     void retourner(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidSortByPropertyException,
         MissingLoanException,
         ServiceException;
 }

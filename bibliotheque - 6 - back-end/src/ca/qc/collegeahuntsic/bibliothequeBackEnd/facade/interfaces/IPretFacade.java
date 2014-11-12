@@ -5,11 +5,13 @@
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces;
 
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.PretDTO;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
 import org.hibernate.Session;
 
 /**
@@ -27,17 +29,19 @@ public interface IPretFacade extends IFacade {
      * @param pretDTO Le prêt à emprunter
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws FacadeException S'il y a une erreur avec la base de données
+     * @throws ExistingLoanException Si prêt existe déjà
+     * @throws ExistingReservationException Si réservation existe déjà
+     * @throws InvalidLoanLimitException Si limite de prêts atteinte
      */
 
     void emprunter(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
-        FacadeException;
+        FacadeException,
+        InvalidLoanLimitException,
+        ExistingReservationException,
+        ExistingLoanException;
 
     /**
      * Retourne un livre.
@@ -46,16 +50,14 @@ public interface IPretFacade extends IFacade {
      * @param pretDTO Le prêt du livre à retourner
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws FacadeException S'il y a une erreur avec la base de données
+     * @throws MissingLoanException Si prêt est <code>null</code>
      */
     void retourner(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
-        FacadeException;
+        FacadeException,
+        MissingLoanException;
 
     /**
      * Renouvele un prêt.
@@ -64,17 +66,17 @@ public interface IPretFacade extends IFacade {
      * @param pretDTO Le prêt à renouveler
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws FacadeException S'il y a une erreur avec la base de données
+     * @throws MissingLoanException Si prêt est <code>null</code>
+     * @throws ExistingReservationException Si prêt existant
      */
 
     void renouveler(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
-        FacadeException;
+        FacadeException,
+        ExistingReservationException,
+        MissingLoanException;
 
     /**
      * Lit un prêt.

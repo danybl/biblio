@@ -183,7 +183,6 @@ public class ReservationService extends Service implements IReservationService {
 
     /**
      * {@inheritDoc}
-     * @throws ExistingReservationException
      */
     @Override
     public void placer(Session session,
