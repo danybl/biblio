@@ -195,8 +195,6 @@ public class LivreService extends Service implements ILivreService {
     public void vendre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
         ServiceException {
 
         if(session == null) {

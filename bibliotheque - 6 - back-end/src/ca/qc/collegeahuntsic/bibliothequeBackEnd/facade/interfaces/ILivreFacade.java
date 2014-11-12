@@ -5,10 +5,7 @@
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces;
 
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.LivreDTO;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeException;
 import org.hibernate.Session;
@@ -42,18 +39,12 @@ public interface ILivreFacade extends IFacade {
      * @param livreDTO Le livre à vendre
      * @throws InvalidHibernateSessionException Si la sesssion est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
-     * @throws InvalidCriterionValueException Si la value est <code>null</code>
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws FacadeException S'il y a une erreur avec la base de données
      */
 
     void vendre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidCriterionValueException,
-        InvalidSortByPropertyException,
         FacadeException;
 
     /**

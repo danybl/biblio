@@ -178,9 +178,6 @@ public interface ILivreService extends IService {
      *             Si la session est <code>null</code>
      * @throws InvalidDTOException
      *             Si le livre est <code>null</code>
-     * @throws InvalidCriterionException
-     *             Si l'ID du membre est <code>null</code>
-     * @throws InvalidSortByPropertyException
      *             Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ServiceException
      *             S'il y a une erreur avec la base de données
@@ -188,7 +185,5 @@ public interface ILivreService extends IService {
     void vendre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
         ServiceException;
 }

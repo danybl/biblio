@@ -81,8 +81,6 @@ public class MembreFacade extends Facade implements IMembreFacade {
     public void desinscrireMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
         FacadeException {
         try {
             getMembreService().desinscrireMembre(session,

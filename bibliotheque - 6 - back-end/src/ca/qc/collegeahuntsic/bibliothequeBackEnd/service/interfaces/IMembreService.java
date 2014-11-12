@@ -189,9 +189,6 @@ public interface IMembreService extends IService {
      *             Si la session est <code>null</code>
      * @throws InvalidDTOException
      *             Si le membre est <code>null</code>
-     * @throws InvalidCriterionException
-     *             Si l'ID du membre est <code>null</code>
-     * @throws InvalidSortByPropertyException
      *             Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ServiceException
      *             S'il y a une erreur avec la base de données
@@ -199,8 +196,6 @@ public interface IMembreService extends IService {
     void inscrireMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
         ServiceException;
 
     /**
@@ -214,9 +209,6 @@ public interface IMembreService extends IService {
      *             Si la session est <code>null</code>
      * @throws InvalidDTOException
      *             Si le membre est <code>null</code>
-     * @throws InvalidCriterionException
-     *             Si l'ID du membre est <code>null</code>
-     * @throws InvalidSortByPropertyException
      *             Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ServiceException
      *             S'il y a une erreur avec la base de données
@@ -224,7 +216,5 @@ public interface IMembreService extends IService {
     void desinscrireMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
         ServiceException;
 }
