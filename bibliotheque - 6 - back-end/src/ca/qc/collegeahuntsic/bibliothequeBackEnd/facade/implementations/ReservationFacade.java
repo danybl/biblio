@@ -5,13 +5,13 @@
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.implementations;
 
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.ReservationDTO;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.InvalidServiceException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces.IReservationFacade;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces.IReservationService;
@@ -67,10 +67,10 @@ public class ReservationFacade extends Facade implements IReservationFacade {
     public void placer(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidCriterionValueException,
-        InvalidSortByPropertyException,
-        FacadeException {
+        FacadeException,
+        ExistingLoanException,
+        InvalidLoanLimitException,
+        ExistingReservationException {
         try {
             getReservationService().placer(session,
                 reservationDTO);
@@ -81,15 +81,18 @@ public class ReservationFacade extends Facade implements IReservationFacade {
 
     /**
      * {@inheritDoc}
+     * @throws ExistingLoanException
+     * @throws ExistingReservationException
+     * @throws InvalidLoanLimitException
      */
     @Override
     public void utiliser(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidCriterionValueException,
-        InvalidSortByPropertyException,
-        FacadeException {
+        FacadeException,
+        InvalidLoanLimitException,
+        ExistingReservationException,
+        ExistingLoanException {
         try {
             getReservationService().utiliser(session,
                 reservationDTO);

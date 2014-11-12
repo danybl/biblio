@@ -6,7 +6,6 @@ package ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.implementations;
 
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.InvalidServiceException;
@@ -64,9 +63,6 @@ public class PretFacade extends Facade implements IPretFacade {
 
     /**
      * {@inheritDoc}
-     * @throws ExistingLoanException
-     * @throws ExistingReservationException
-     * @throws InvalidLoanLimitException
      */
     @Override
     public void emprunter(Session session,
@@ -86,8 +82,6 @@ public class PretFacade extends Facade implements IPretFacade {
 
     /**
      * {@inheritDoc}
-     * @throws MissingLoanException
-     * @throws InvalidSortByPropertyException
      */
     @Override
     public void retourner(Session session,

@@ -5,12 +5,12 @@
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces;
 
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.ReservationDTO;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
 import org.hibernate.Session;
 
 /**
@@ -26,18 +26,18 @@ public interface IReservationFacade extends IFacade {
      * @param reservationDTO La réservation à placer
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
-     * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
-     * @throws InvalidCriterionValueException Si la value est <code>null</code>
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws FacadeException S'il y a une erreur avec la base de données
+     * @throws ExistingLoanException Si prêt existe déjà
+     * @throws InvalidLoanLimitException Si limite de prêt atteinte
+     * @throws ExistingReservationException Si réservation existe déjà
      */
     void placer(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidCriterionValueException,
-        InvalidSortByPropertyException,
-        FacadeException;
+        FacadeException,
+        ExistingLoanException,
+        InvalidLoanLimitException,
+        ExistingReservationException;
 
     /**
      * Utilise une réservation.
@@ -46,18 +46,18 @@ public interface IReservationFacade extends IFacade {
      * @param reservationDTO La réservation à utiliser
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
-     * @throws InvalidCriterionException Si l'ID du livre est <code>null</code>
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
-     * @throws InvalidCriterionValueException Si il y a problème avec une propriété utilisée pour filtrer une liste de DTOs
      * @throws FacadeException S'il y a une erreur avec la base de données
+     * @throws ExistingLoanException Si prêt existe déjà
+     * @throws InvalidLoanLimitException Si limite de prêt atteinte
+     * @throws ExistingReservationException Si réservation existe déjà
      */
     void utiliser(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidCriterionValueException,
-        InvalidSortByPropertyException,
-        FacadeException;
+        FacadeException,
+        InvalidLoanLimitException,
+        ExistingReservationException,
+        ExistingLoanException;
 
     /**
      * Annule une réservation.
