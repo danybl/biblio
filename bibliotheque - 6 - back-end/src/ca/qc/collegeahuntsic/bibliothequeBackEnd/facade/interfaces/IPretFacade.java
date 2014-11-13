@@ -29,19 +29,19 @@ public interface IPretFacade extends IFacade {
      * @param pretDTO Le prêt à emprunter
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws FacadeException S'il y a une erreur avec la base de données
      * @throws ExistingLoanException Si prêt existe déjà
-     * @throws ExistingReservationException Si réservation existe déjà
      * @throws InvalidLoanLimitException Si limite de prêts atteinte
+     * @throws ExistingReservationException Si réservation existe déjà
+     * @throws FacadeException S'il y a une erreur avec la base de données
      */
 
     void emprunter(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        FacadeException,
+        ExistingLoanException,
         InvalidLoanLimitException,
         ExistingReservationException,
-        ExistingLoanException;
+        FacadeException;
 
     /**
      * Retourne un livre.
@@ -66,17 +66,17 @@ public interface IPretFacade extends IFacade {
      * @param pretDTO Le prêt à renouveler
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws FacadeException S'il y a une erreur avec la base de données
      * @throws MissingLoanException Si prêt est <code>null</code>
      * @throws ExistingReservationException Si prêt existant
+     * @throws FacadeException S'il y a une erreur avec la base de données
      */
 
     void renouveler(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        FacadeException,
+        MissingLoanException,
         ExistingReservationException,
-        MissingLoanException;
+        FacadeException;
 
     /**
      * Lit un prêt.

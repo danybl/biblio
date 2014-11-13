@@ -35,6 +35,7 @@ public interface IPretDAO extends IDao {
      * @throws DAOException S'il y a une erreur avec la base de données
      */
 
+    // TODO ajouter des methodes findByMembre et findByLivre
     List<PretDTO> findByDateRetour(Session session,
         Timestamp dateRetour,
         String sortByPropertyName) throws InvalidHibernateSessionException,

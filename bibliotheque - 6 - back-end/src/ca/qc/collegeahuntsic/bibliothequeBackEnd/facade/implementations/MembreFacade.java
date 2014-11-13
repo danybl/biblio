@@ -4,8 +4,8 @@
 
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.implementations;
 
+import java.util.List;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.MembreDTO;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
@@ -63,14 +63,28 @@ public class MembreFacade extends Facade implements IMembreFacade {
     public void inscrireMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
         FacadeException {
         try {
             getMembreService().inscrireMembre(session,
                 membreDTO);
         } catch(ServiceException serviceException) {
-            throw new FacadeException();
+            throw new FacadeException(serviceException);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateMembre(Session session,
+        MembreDTO membreDTO) throws InvalidHibernateSessionException,
+        InvalidDTOException,
+        FacadeException {
+        try {
+            getMembreService().updateMembre(session,
+                membreDTO);
+        } catch(ServiceException serviceException) {
+            throw new FacadeException(serviceException);
         }
     }
 
@@ -100,6 +114,22 @@ public class MembreFacade extends Facade implements IMembreFacade {
         try {
             return getMembreService().getMembre(session,
                 idMembre);
+        } catch(ServiceException serviceException) {
+            throw new FacadeException(serviceException);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<MembreDTO> getAllMembres(Session session,
+        String sortByPropertyName) throws InvalidHibernateSessionException,
+        InvalidSortByPropertyException,
+        FacadeException {
+        try {
+            return getMembreService().getAllMembres(session,
+                sortByPropertyName);
         } catch(ServiceException serviceException) {
             throw new FacadeException(serviceException);
         }

@@ -68,10 +68,10 @@ public class PretFacade extends Facade implements IPretFacade {
     public void emprunter(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        FacadeException,
+        ExistingLoanException,
         InvalidLoanLimitException,
         ExistingReservationException,
-        ExistingLoanException {
+        FacadeException {
         try {
             getPretService().emprunter(session,
                 pretDTO);
@@ -105,9 +105,9 @@ public class PretFacade extends Facade implements IPretFacade {
     public void renouveler(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        FacadeException,
+        MissingLoanException,
         ExistingReservationException,
-        MissingLoanException {
+        FacadeException {
         try {
             getPretService().renouveler(session,
                 pretDTO);

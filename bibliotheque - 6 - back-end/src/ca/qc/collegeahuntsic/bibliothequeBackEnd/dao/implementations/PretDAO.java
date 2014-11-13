@@ -46,7 +46,7 @@ public class PretDAO extends DAO implements IPretDAO {
         InvalidSortByPropertyException,
         DAOException {
 
-        return (List<PretDTO>) super.find(session,
+        return (List<PretDTO>) find(session,
             PretDTO.DATE_RETOUR_COLUMN_NAME,
             dateRetour,
             sortByPropertyName);
@@ -65,7 +65,7 @@ public class PretDAO extends DAO implements IPretDAO {
         InvalidSortByPropertyException,
         DAOException {
 
-        return (List<PretDTO>) super.find(session,
+        return (List<PretDTO>) find(session,
             PretDTO.DATE_PRET_COLUMN_NAME,
             datePret,
             sortByPropertyName);

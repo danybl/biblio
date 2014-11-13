@@ -11,6 +11,7 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeExceptio
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
 import org.hibernate.Session;
 
 /**
@@ -26,18 +27,18 @@ public interface IReservationFacade extends IFacade {
      * @param reservationDTO La réservation à placer
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
-     * @throws FacadeException S'il y a une erreur avec la base de données
+     * @throws MissingLoanException Si le livre n'a pas encore été prêté
      * @throws ExistingLoanException Si prêt existe déjà
-     * @throws InvalidLoanLimitException Si limite de prêt atteinte
      * @throws ExistingReservationException Si réservation existe déjà
+     * @throws FacadeException S'il y a une erreur avec la base de données
      */
     void placer(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        FacadeException,
+        MissingLoanException,
         ExistingLoanException,
-        InvalidLoanLimitException,
-        ExistingReservationException;
+        ExistingReservationException,
+        FacadeException;
 
     /**
      * Utilise une réservation.
@@ -46,18 +47,18 @@ public interface IReservationFacade extends IFacade {
      * @param reservationDTO La réservation à utiliser
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
-     * @throws FacadeException S'il y a une erreur avec la base de données
+     * @throws ExistingReservationException Si réservation existe déjà
      * @throws ExistingLoanException Si prêt existe déjà
      * @throws InvalidLoanLimitException Si limite de prêt atteinte
-     * @throws ExistingReservationException Si réservation existe déjà
+     * @throws FacadeException S'il y a une erreur avec la base de données
      */
     void utiliser(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        FacadeException,
-        InvalidLoanLimitException,
         ExistingReservationException,
-        ExistingLoanException;
+        ExistingLoanException,
+        InvalidLoanLimitException,
+        FacadeException;
 
     /**
      * Annule une réservation.

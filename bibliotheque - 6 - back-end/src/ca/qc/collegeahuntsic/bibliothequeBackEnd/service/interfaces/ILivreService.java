@@ -9,6 +9,8 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionV
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import org.hibernate.Session;
 
@@ -170,20 +172,18 @@ public interface ILivreService extends IService {
     /**
      * Vend un livre.
      *
-     * @param session
-     *            La session à utiliser
-     * @param livreDTO
-     *            Le livre à vendre
-     * @throws InvalidHibernateSessionException
-     *             Si la session est <code>null</code>
-     * @throws InvalidDTOException
-     *             Si le livre est <code>null</code>
-     *             Si la propriété à utiliser pour classer est <code>null</code>
-     * @throws ServiceException
-     *             S'il y a une erreur avec la base de données
+     * @param session La session à utiliser
+     * @param livreDTO Le livre à vendre
+     * @throws InvalidHibernateSessionException Si la session est <code>null</code>
+     * @throws InvalidDTOException Si le livre est <code>null</code>
+     * @throws ExistingLoanException Si le livre a été prêté
+     * @throws ExistingReservationException Si le livre a été réservé
+     * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void vendre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
+        ExistingLoanException,
+        ExistingReservationException,
         ServiceException;
 }

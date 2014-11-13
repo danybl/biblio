@@ -101,16 +101,16 @@ public interface IPretService extends IService {
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
      * @throws ExistingLoanException Si prêt existe déjà
-     * @throws ExistingReservationException Si réservation existe déjà
      * @throws InvalidLoanLimitException Si limite de prêt atteinte
+     * @throws ExistingReservationException Si réservation existe déjà
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void emprunter(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
+        ExistingLoanException,
         InvalidLoanLimitException,
         ExistingReservationException,
-        ExistingLoanException,
         ServiceException;
 
     /**
@@ -120,15 +120,15 @@ public interface IPretService extends IService {
      * @param pretDTO Le prêt à renouveler
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws ExistingReservationException Si réservation existe déjà
      * @throws MissingLoanException Si prêt n'existe pas
+     * @throws ExistingReservationException Si réservation existe déjà
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void renouveler(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        ExistingReservationException,
         MissingLoanException,
+        ExistingReservationException,
         ServiceException;
 
     /**

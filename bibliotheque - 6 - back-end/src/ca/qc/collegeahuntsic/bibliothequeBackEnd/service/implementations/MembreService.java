@@ -6,6 +6,7 @@ import java.util.List;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.PretDTO;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionValueException;
@@ -13,6 +14,7 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateS
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidDAOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces.IMembreService;
@@ -197,6 +199,12 @@ public class MembreService implements IMembreService {
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         ServiceException {
+        if(session == null) {
+            throw new InvalidHibernateSessionException("La session Hibernate ne peut être null");
+        }
+        if(membreDTO == null) {
+            throw new InvalidDTOException("Le membre ne peut être null");
+        }
         addMembre(session,
             membreDTO);
     }
@@ -208,24 +216,35 @@ public class MembreService implements IMembreService {
     public void desinscrireMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
+        ExistingLoanException,
+        ExistingReservationException,
         ServiceException {
         if(session == null) {
             throw new InvalidHibernateSessionException("La session ne peut être null");
         }
 
-        final List<PretDTO> prets = new ArrayList<>(membreDTO.getPrets());
-        try {
-            if(!prets.isEmpty()) {
-                throw new ExistingLoanException("Le membre "
-                    + membreDTO.getNom()
-                    + " (ID de membre : "
-                    + membreDTO.getIdMembre()
-                    + ") a encore des prêts");
-            }
-        } catch(ExistingLoanException ex) {
-            throw new ServiceException(ex);
+        if(membreDTO == null) {
+            throw new InvalidDTOException("Le membre ne peut être null");
         }
 
+        final List<PretDTO> prets = new ArrayList<>(membreDTO.getPrets());
+
+        if(!prets.isEmpty()) {
+            throw new ExistingLoanException("Le membre "
+                + membreDTO.getNom()
+                + " (ID de membre : "
+                + membreDTO.getIdMembre()
+                + ") a encore des prêts");
+        }
+
+        final List<ReservationDTO> reservations = new ArrayList<>(membreDTO.getReservations());
+        if(!reservations.isEmpty()) {
+            throw new ExistingReservationException("Le membre "
+                + membreDTO.getNom()
+                + " (ID de membre : "
+                + membreDTO.getIdMembre()
+                + ") a des réservations");
+        }
         deleteMembre(session,
             membreDTO);
     }

@@ -12,6 +12,7 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.InvalidService
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces.IReservationFacade;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces.IReservationService;
@@ -67,10 +68,10 @@ public class ReservationFacade extends Facade implements IReservationFacade {
     public void placer(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        FacadeException,
+        MissingLoanException,
         ExistingLoanException,
-        InvalidLoanLimitException,
-        ExistingReservationException {
+        ExistingReservationException,
+        FacadeException {
         try {
             getReservationService().placer(session,
                 reservationDTO);
@@ -89,10 +90,10 @@ public class ReservationFacade extends Facade implements IReservationFacade {
     public void utiliser(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        FacadeException,
-        InvalidLoanLimitException,
         ExistingReservationException,
-        ExistingLoanException {
+        ExistingLoanException,
+        InvalidLoanLimitException,
+        FacadeException {
         try {
             getReservationService().utiliser(session,
                 reservationDTO);

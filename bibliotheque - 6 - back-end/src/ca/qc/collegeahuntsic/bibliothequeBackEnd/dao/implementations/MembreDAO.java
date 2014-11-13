@@ -44,7 +44,7 @@ public class MembreDAO extends DAO implements IMembreDAO {
         InvalidSortByPropertyException,
         InvalidCriterionValueException,
         DAOException {
-        return (List<MembreDTO>) super.find(session,
+        return (List<MembreDTO>) find(session,
             MembreDTO.NOM_COLUMN_NAME,
             nom,
             sortByPropertyName);
@@ -63,7 +63,7 @@ public class MembreDAO extends DAO implements IMembreDAO {
         InvalidCriterionValueException,
         DAOException {
 
-        return (List<MembreDTO>) super.find(session,
+        return (List<MembreDTO>) find(session,
             MembreDTO.TELEPHONE_COLUMN_NAME,
             numTel,
             sortByPropertyName);

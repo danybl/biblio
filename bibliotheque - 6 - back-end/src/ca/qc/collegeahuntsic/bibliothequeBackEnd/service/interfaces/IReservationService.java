@@ -10,6 +10,7 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOExcepti
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import org.hibernate.Session;
 
@@ -98,16 +99,16 @@ public interface IReservationService extends IService {
      * @param reservationDTO La réservation à placer
      * @throws InvalidHibernateSessionException Si la session est <code>null</code>
      * @throws InvalidDTOException Si la réservation est <code>null</code>
+     * @throws MissingLoanException Si le livre n'a pas encore été prêté
      * @throws ExistingLoanException Si prêt existe déjà
-     * @throws InvalidLoanLimitException Si limite de prêt atteinte
      * @throws ExistingReservationException Si réservation existe déjà
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void placer(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
+        MissingLoanException,
         ExistingLoanException,
-        InvalidLoanLimitException,
         ExistingReservationException,
         ServiceException;
 

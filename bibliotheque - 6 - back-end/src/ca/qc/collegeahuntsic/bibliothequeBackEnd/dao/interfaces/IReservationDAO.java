@@ -8,5 +8,5 @@ package ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces;
  *
  */
 public interface IReservationDAO extends IDao {
-    //TODO
+    //TODO ajouter methodes findByMembre et findByLivre
 }

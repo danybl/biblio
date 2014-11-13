@@ -184,6 +184,12 @@ public class LivreService extends Service implements ILivreService {
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         ServiceException {
+        if(session == null) {
+            throw new InvalidHibernateSessionException("La session Hibernate ne peut être null");
+        }
+        if(livreDTO == null) {
+            throw new InvalidDTOException("Le livre ne peut être null");
+        }
         addLivre(session,
             livreDTO);
     }
@@ -195,50 +201,50 @@ public class LivreService extends Service implements ILivreService {
     public void vendre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
+        ExistingLoanException,
+        ExistingReservationException,
         ServiceException {
 
         if(session == null) {
             throw new InvalidHibernateSessionException("La Session ne peut être null");
         }
-        try {
-            final List<PretDTO> prets = new ArrayList<>(livreDTO.getPrets());
-            if(!prets.isEmpty()) {
-                for(PretDTO pretDTO : prets) {
-                    if(pretDTO.getDateRetour() == null) {
-                        final MembreDTO emprunteur = pretDTO.getMembreDTO();
-                        throw new ExistingLoanException("Le livre "
-                            + livreDTO.getTitre()
-                            + " (ID de livre : "
-                            + livreDTO.getIdLivre()
-                            + ") a été prêté à "
-                            + emprunteur.getNom()
-                            + " (ID de membre : "
-                            + emprunteur.getIdMembre()
-                            + ")");
-                    }
-                }
-            }
-            final List<ReservationDTO> reservations = new ArrayList<>(livreDTO.getReservations());
-            if(!reservations.isEmpty()) {
-                final ReservationDTO reservationDTO = reservations.get(0);
-                final MembreDTO booker = reservationDTO.getMembreDTO();
-                throw new ExistingReservationException("Le livre "
-                    + livreDTO.getTitre()
-                    + " (ID de livre : "
-                    + livreDTO.getIdLivre()
-                    + ") est réservé pour "
-                    + booker.getNom()
-                    + " (ID de membre : "
-                    + booker.getIdMembre()
-                    + ")");
-            }
-            deleteLivre(session,
-                livreDTO);
-        } catch(
-            ExistingLoanException
-            | ExistingReservationException ex) {
-            throw new ServiceException(ex);
+
+        if(livreDTO == null) {
+            throw new InvalidDTOException("Le livre ne peut être null");
         }
 
+        final List<PretDTO> prets = new ArrayList<>(livreDTO.getPrets());
+        if(!prets.isEmpty()) {
+            for(PretDTO pretDTO : prets) {
+                if(pretDTO.getDateRetour() == null) {
+                    final MembreDTO emprunteur = pretDTO.getMembreDTO();
+                    throw new ExistingLoanException("Le livre "
+                        + livreDTO.getTitre()
+                        + " (ID de livre : "
+                        + livreDTO.getIdLivre()
+                        + ") a été prêté à "
+                        + emprunteur.getNom()
+                        + " (ID de membre : "
+                        + emprunteur.getIdMembre()
+                        + ")");
+                }
+            }
+        }
+        final List<ReservationDTO> reservations = new ArrayList<>(livreDTO.getReservations());
+        if(!reservations.isEmpty()) {
+            final ReservationDTO reservationDTO = reservations.get(0);
+            final MembreDTO booker = reservationDTO.getMembreDTO();
+            throw new ExistingReservationException("Le livre "
+                + livreDTO.getTitre()
+                + " (ID de livre : "
+                + livreDTO.getIdLivre()
+                + ") est réservé pour "
+                + booker.getNom()
+                + " (ID de membre : "
+                + booker.getIdMembre()
+                + ")");
+        }
+        deleteLivre(session,
+            livreDTO);
     }
 }

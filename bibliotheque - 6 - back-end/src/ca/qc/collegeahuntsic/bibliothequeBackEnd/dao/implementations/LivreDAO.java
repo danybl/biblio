@@ -43,7 +43,7 @@ public class LivreDAO extends DAO implements ILivreDAO {
         InvalidSortByPropertyException,
         DAOException {
 
-        return (List<LivreDTO>) super.find(session,
+        return (List<LivreDTO>) find(session,
             LivreDTO.TITRE_COLUMN_NAME,
             titre,
             sortByPropertyName);
