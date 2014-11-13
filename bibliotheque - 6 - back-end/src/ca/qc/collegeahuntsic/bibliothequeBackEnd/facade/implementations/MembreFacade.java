@@ -11,6 +11,8 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByProp
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.InvalidServiceException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces.IMembreFacade;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces.IMembreService;
@@ -90,12 +92,16 @@ public class MembreFacade extends Facade implements IMembreFacade {
 
     /**
      * {@inheritDoc}
+     * @throws ExistingReservationException
+     * @throws ExistingLoanException
      */
     @Override
     public void desinscrireMembre(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        FacadeException {
+        FacadeException,
+        ExistingLoanException,
+        ExistingReservationException {
         try {
             getMembreService().desinscrireMembre(session,
                 membreDTO);
@@ -128,7 +134,7 @@ public class MembreFacade extends Facade implements IMembreFacade {
         InvalidSortByPropertyException,
         FacadeException {
         try {
-            return getMembreService().getAllMembres(session,
+            return getMembreService().getAllMembre(session,
                 sortByPropertyName);
         } catch(ServiceException serviceException) {
             throw new FacadeException(serviceException);
