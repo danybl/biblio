@@ -1,3 +1,4 @@
+// Fichier Bibliotheque.java
 
 package ca.qc.collegeahuntsic.bibliotheque;
 
@@ -15,9 +16,7 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.ReservationDTO;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.MissingDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeException;
@@ -25,7 +24,8 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanE
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.MissingLoanException;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *
@@ -55,18 +55,18 @@ import org.apache.log4j.Logger;
  *
  * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa.
  */
-public class Bibliotheque {
+public final class Bibliotheque {
 
     private static BibliothequeCreateur bibliothequeCreateur;
 
-    private static final Logger LOGGER = Logger.getLogger(Bibliotheque.class);
+    private static final Log LOGGER = LogFactory.getLog(Bibliotheque.class);
 
     /**
-     * Constructeur par défaut.
+     *Constructeur privé pour empêcher toute instanciation.
      *
      */
     private Bibliotheque() {
-        //Constructeur par défaut
+        super();
     }
 
     /**
@@ -74,27 +74,26 @@ public class Bibliotheque {
      * traitement des transactions et
      * fermeture de la BD.
      * @param argv arguments lors du démarage de l'application
-     * @throws Exception Si erreur au démarrage
      */
-    public static void main(String[] argv) throws Exception {
-        // validation du nombre de paramètres
+    public static void main(String[] argv) {
         if(argv.length < 1) {
-            Bibliotheque.LOGGER.info("Usage: java Biblio <serveur> <bd> <user> <password> [<fichier-transactions>]");
+            Bibliotheque.LOGGER.info("Usage: java Bibliotheque <fichier-transactions>");
             return;
         }
-
         try {
-            // ouverture du fichier de transactions
             final InputStream sourceTransaction = Bibliotheque.class.getResourceAsStream("/"
                 + argv[0]);
             try(
                 BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction))) {
-
-                bibliothequeCreateur = new BibliothequeCreateur();
-                traiterTransactions(reader);
+                Bibliotheque.bibliothequeCreateur = new BibliothequeCreateur();
+                Bibliotheque.traiterTransactions(reader);
             }
-        } catch(BibliothequeException exception) {
-            exception.printStackTrace(System.out);
+        } catch(IOException ioException) {
+            Bibliotheque.LOGGER.error(" **** "
+                + ioException.getMessage());
+        } catch(BibliothequeException bibliothequeException) {
+            Bibliotheque.LOGGER.error(" **** "
+                + bibliothequeException.getMessage());
         }
     }
 
@@ -126,7 +125,7 @@ public class Bibliotheque {
      * @throws IOException Si erreur de lecture de la transaction
      * @return transanction Retourne le résultat de la lecture
      */
-    static String lireTransaction(BufferedReader reader) throws IOException {
+    private static String lireTransaction(BufferedReader reader) throws IOException {
         final String transaction = reader.readLine();
         if(transaction != null) {
             Bibliotheque.LOGGER.info(transaction);
@@ -134,15 +133,13 @@ public class Bibliotheque {
         return transaction;
     }
 
-    /** Décodage et traitement d'une transaction.
-     * @param tokenizer StringTokenizer pour découper les entrées pour la transaction
-     * @throws BibliothequeException Si erreur dans la transaction
-     * @throws ExistingLoanException
-     * @throws ExistingReservationException
-     * @throws InvalidLoanLimitException
-     * @throws MissingLoanException
+    /**
+     * Décodage et traitement d'une transaction.
+     *
+     * @param tokenizer Le tokenizer à utiliser
+     * @throws BibliothequeException S'il y a une erreur d'exécution
      */
-    static void executerTransaction(StringTokenizer tokenizer) throws BibliothequeException {
+    private static void executerTransaction(StringTokenizer tokenizer) throws BibliothequeException {
         try {
             final String command = tokenizer.nextToken();
 
@@ -191,17 +188,13 @@ public class Bibliotheque {
             Bibliotheque.LOGGER.error("**** "
                 + exception.getMessage());
             bibliothequeCreateur.rollbackTransaction();
-            //        } catch(InterruptedException interruptedException) {
-            //            Bibliotheque.LOGGER.error("**** "
-            //                + interruptedException.toString());
-            //            bibliothequeCreateur.rollbackTransaction();
         }
     }
 
     /**
      * Affiche le menu des transactions acceptées par le système.
      * */
-    static void afficherAide() {
+    private static void afficherAide() {
         Bibliotheque.LOGGER.info("\n");
         Bibliotheque.LOGGER.info("Chaque transaction comporte un nom et une liste d'arguments");
         Bibliotheque.LOGGER.info("separes par des espaces. La liste peut etre vide.");
@@ -222,11 +215,124 @@ public class Bibliotheque {
         Bibliotheque.LOGGER.info("  annulerRes <idReservation>");
     }
 
+    /**
+     * Vérifie si la fin du traitement des transactions est
+     * atteinte.
+     * @param transaction String pour l'entrée de la transaction
+     * @return True si fin du fichier atteint, sinon false
+     */
+    private static boolean finTransaction(String transaction) {
+        boolean resultat = true;
+        if(transaction != null) {
+            final StringTokenizer tokenizer = new StringTokenizer(transaction,
+                " ");
+            resultat = tokenizer.hasMoreTokens();
+            if(resultat) {
+                final String commande = tokenizer.nextToken();
+                resultat = "exit".equals(commande);
+            }
+        }
+        return resultat;
+    }
+
+    /**
+     * Lit une chaîne de caractères de la transaction.
+     *
+     * @param tokenizer Le tokenizer à utiliser
+     * @return La chaîne de caractères de la transaction
+     * @throws BibliothequeException S'il y a un problème de lecture
+     */
+    private static String readString(StringTokenizer tokenizer) throws BibliothequeException {
+        if(tokenizer.hasMoreElements()) {
+            return tokenizer.nextToken();
+        }
+        throw new BibliothequeException("autre paramètre attendu");
+    }
+
+    /**
+     * Lit une une date en format YYYY-MM-DD.
+     *
+     * @param tokenizer Le tokenizer à utiliser
+     * @return La date en format YYYY-MM-DD
+     * @throws BibliothequeException S'il y a un problème de lecture
+     */
+    private static Timestamp readDate(StringTokenizer tokenizer) throws BibliothequeException {
+        if(tokenizer.hasMoreElements()) {
+            final String token = tokenizer.nextToken();
+            try {
+                return FormatteurDate.timestampValue(token);
+            } catch(ParseException parseException) {
+                throw new BibliothequeException("Date en format YYYY-MM-DD attendue à la place  de \""
+                    + token
+                    + "\"",
+                    parseException);
+            }
+        }
+        throw new BibliothequeException("autre paramètre attendu");
+    }
+
+    /** Permet d'inscrire d'un membre.
+     * @param tokenizer StringTokenizer pour séparer les entrées
+     * @throws BibliothequeException Si exception dans les transaction
+     */
+    private static void inscrireMembre(StringTokenizer tokenizer) throws BibliothequeException {
+        try {
+            bibliothequeCreateur.beginTransaction();
+            final MembreDTO membreDTO = new MembreDTO();
+            membreDTO.setNom(readString(tokenizer));
+            membreDTO.setTelephone(readString(tokenizer));
+            membreDTO.setNbPret("0");
+            membreDTO.setLimitePret(readString(tokenizer));
+            bibliothequeCreateur.getMembreFacade().inscrireMembre(bibliothequeCreateur.getSession(),
+                membreDTO);
+            bibliothequeCreateur.commitTransaction();
+        } catch(
+            InvalidHibernateSessionException
+            | InvalidDTOException
+            | FacadeException exception) {
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
+            bibliothequeCreateur.rollbackTransaction();
+        }
+    }
+
+    /**
+     * Permet de desinscrire d'un membre.
+     * @param tokenizer StringTokenizer pour découper les entrées
+     * @throws BibliothequeException Si erreur dans la transaction
+     */
+    private static void desinscrireMembre(StringTokenizer tokenizer) throws BibliothequeException {
+        try {
+            bibliothequeCreateur.beginTransaction();
+            final String idMembre = readString(tokenizer);
+            final MembreDTO membreDTO = bibliothequeCreateur.getMembreFacade().getMembre(bibliothequeCreateur.getSession(),
+                idMembre);
+            if(membreDTO == null) {
+                throw new MissingDTOException("Le membre "
+                    + idMembre
+                    + " n'existe pas");
+            }
+            bibliothequeCreateur.getMembreFacade().desinscrireMembre(bibliothequeCreateur.getSession(),
+                membreDTO);
+            bibliothequeCreateur.commitTransaction();
+        } catch(
+            //TODO
+            //| ExistingLoanException | ExistingReservationException
+            InvalidHibernateSessionException
+            | InvalidDTOException
+            | MissingDTOException
+            | FacadeException exception) {
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
+            bibliothequeCreateur.rollbackTransaction();
+        }
+    }
+
     /** Permet d'acquerir un livre.
      * @param tokenizer StringTokenizer pour découper les entrées pour la transaction
      * @throws BibliothequeException Si erreur dans les transaction
      */
-    static void acquerirLivre(StringTokenizer tokenizer) throws BibliothequeException {
+    private static void acquerirLivre(StringTokenizer tokenizer) throws BibliothequeException {
         try {
             bibliothequeCreateur.beginTransaction();
             final LivreDTO livreDTO = new LivreDTO();
@@ -240,7 +346,9 @@ public class Bibliotheque {
             InvalidHibernateSessionException
             | InvalidDTOException
             | FacadeException exception) {
-            throw new BibliothequeException(exception.getMessage());
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
+            bibliothequeCreateur.rollbackTransaction();
         }
     }
 
@@ -248,7 +356,7 @@ public class Bibliotheque {
      * @param tokenizer StringTokenizer pour séparer les entrées de la commande
      * @throws BibliothequeException Si erreur dans les transaction
      */
-    static void vendreLivre(StringTokenizer tokenizer) throws BibliothequeException {
+    private static void vendreLivre(StringTokenizer tokenizer) throws BibliothequeException {
         try {
             bibliothequeCreateur.beginTransaction();
             final String idLivre = readString(tokenizer);
@@ -264,11 +372,17 @@ public class Bibliotheque {
 
             bibliothequeCreateur.commitTransaction();
         } catch(
+            //TODO
+            // | InvalidPrimaryKeyException
+            // | ExistingLoanException
+            // | ExistingReservationException 
             InvalidHibernateSessionException
+            | InvalidDTOException
             | FacadeException
-            | MissingDTOException
-            | InvalidDTOException exception) {
-            throw new BibliothequeException(exception.getMessage());
+            | MissingDTOException exception) {
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
+            bibliothequeCreateur.rollbackTransaction();
         }
     }
 
@@ -276,7 +390,7 @@ public class Bibliotheque {
      * @param tokenizer StringTokenizer pour séparer les entrées de la commande
      * @throws BibliothequeException Si erreur dans les transaction
      */
-    static void preterLivre(StringTokenizer tokenizer) throws BibliothequeException {
+    private static void preterLivre(StringTokenizer tokenizer) throws BibliothequeException {
         try {
             bibliothequeCreateur.beginTransaction();
             final String idMembre = readString(tokenizer);
@@ -302,14 +416,18 @@ public class Bibliotheque {
                 pretDTO);
             bibliothequeCreateur.commitTransaction();
         } catch(
+            //TODO
+            // | InvalidPrimaryKeyException 
             InvalidHibernateSessionException
+            | InvalidDTOException
             | FacadeException
             | MissingDTOException
-            | InvalidDTOException
             | InvalidLoanLimitException
             | ExistingReservationException
             | ExistingLoanException exception) {
-            throw new BibliothequeException(exception.getMessage());
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
+            bibliothequeCreateur.rollbackTransaction();
         }
     }
 
@@ -317,7 +435,7 @@ public class Bibliotheque {
      * @param tokenizer StringTokenizer pour séparer les entrées de la commande
      * @throws BibliothequeException Si erreur dans les transaction
      */
-    static void renouvelerPret(StringTokenizer tokenizer) throws BibliothequeException {
+    private static void renouvelerPret(StringTokenizer tokenizer) throws BibliothequeException {
         try {
             bibliothequeCreateur.beginTransaction();
             final String idPret = readString(tokenizer);
@@ -332,13 +450,17 @@ public class Bibliotheque {
                 pretDTO);
             bibliothequeCreateur.commitTransaction();
         } catch(
+            // TODO
+            // | InvalidPrimaryKeyException
             InvalidHibernateSessionException
+            | InvalidDTOException
             | FacadeException
             | MissingDTOException
-            | InvalidDTOException
             | ExistingReservationException
             | MissingLoanException exception) {
-            throw new BibliothequeException(exception.getMessage());
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
+            bibliothequeCreateur.rollbackTransaction();
         }
     }
 
@@ -346,7 +468,7 @@ public class Bibliotheque {
      * @param tokenizer StringTokenizer pour séparer les entrées de la commande
      * @throws BibliothequeException Si erreur dans les transaction
      */
-    static void retournerLivre(StringTokenizer tokenizer) throws BibliothequeException {
+    private static void retournerLivre(StringTokenizer tokenizer) throws BibliothequeException {
         try {
             bibliothequeCreateur.beginTransaction();
 
@@ -362,66 +484,18 @@ public class Bibliotheque {
                 pretDTO);
             bibliothequeCreateur.commitTransaction();
         } catch(
+            //TODO
+            // | InvalidPrimaryKeyException
+            // retirer : BibliothequeException
             InvalidHibernateSessionException
+            | InvalidDTOException
             | FacadeException
             | BibliothequeException
             | MissingDTOException
-            | InvalidDTOException
             | MissingLoanException exception) {
-            throw new BibliothequeException(exception.getMessage());
-        }
-    }
-
-    /** Permet d'inscrire d'un membre.
-     * @param tokenizer StringTokenizer pour séparer les entrées
-     * @throws BibliothequeException Si exception dans les transaction
-     */
-    static void inscrireMembre(StringTokenizer tokenizer) throws BibliothequeException {
-        try {
-            bibliothequeCreateur.beginTransaction();
-            final MembreDTO membreDTO = new MembreDTO();
-            membreDTO.setNom(readString(tokenizer));
-            membreDTO.setTelephone(readString(tokenizer));
-            membreDTO.setNbPret("0");
-            membreDTO.setLimitePret(readString(tokenizer));
-            bibliothequeCreateur.getMembreFacade().inscrireMembre(bibliothequeCreateur.getSession(),
-                membreDTO);
-            bibliothequeCreateur.commitTransaction();
-        } catch(
-            InvalidHibernateSessionException
-            | InvalidDTOException
-            | InvalidCriterionException
-            | InvalidSortByPropertyException
-            | FacadeException exception) {
-            throw new BibliothequeException(exception.getMessage());
-        }
-    }
-
-    /**
-     * Permet de desinscrire d'un membre.
-     * @param tokenizer StringTokenizer pour découper les entrées
-     * @throws BibliothequeException Si erreur dans la transaction
-     */
-    static void desinscrireMembre(StringTokenizer tokenizer) throws BibliothequeException {
-        try {
-            bibliothequeCreateur.beginTransaction();
-            final String idMembre = readString(tokenizer);
-            final MembreDTO membreDTO = bibliothequeCreateur.getMembreFacade().getMembre(bibliothequeCreateur.getSession(),
-                idMembre);
-            if(membreDTO == null) {
-                throw new MissingDTOException("Le membre "
-                    + idMembre
-                    + " n'existe pas");
-            }
-            bibliothequeCreateur.getMembreFacade().desinscrireMembre(bibliothequeCreateur.getSession(),
-                membreDTO);
-            bibliothequeCreateur.commitTransaction();
-        } catch(
-            InvalidHibernateSessionException
-            | FacadeException
-            | MissingDTOException
-            | InvalidDTOException exception) {
-            throw new BibliothequeException(exception.getMessage());
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
+            bibliothequeCreateur.rollbackTransaction();
         }
     }
 
@@ -430,7 +504,7 @@ public class Bibliotheque {
      * @param tokenizer StringTokenizer pour découper les entrées
      * @throws BibliothequeException Si erreur dans la transaction
      */
-    static void reserverLivre(StringTokenizer tokenizer) throws BibliothequeException {
+    private static void reserverLivre(StringTokenizer tokenizer) throws BibliothequeException {
         try {
             bibliothequeCreateur.beginTransaction();
             // Juste pour éviter deux dates de réservation strictement identiques
@@ -458,15 +532,21 @@ public class Bibliotheque {
                 reservationDTO);
             bibliothequeCreateur.commitTransaction();
         } catch(
-            InterruptedException
-            | InvalidHibernateSessionException
-            | FacadeException
-            | MissingDTOException
+            //TODO
+            // InvalidPrimaryKeyException
+            // ExistingLoanException
+            // retirer : InterruptedException et InvalidLoanLimitException
+            InvalidHibernateSessionException
             | InvalidDTOException
-            | ExistingLoanException
+            | FacadeException
+            | InterruptedException
+            | MissingDTOException
             | InvalidLoanLimitException
-            | ExistingReservationException exception) {
-            throw new BibliothequeException(exception.getMessage());
+            | ExistingReservationException
+            | ExistingLoanException exception) {
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
+            bibliothequeCreateur.rollbackTransaction();
         }
     }
 
@@ -474,7 +554,7 @@ public class Bibliotheque {
      * @param tokenizer StringTokenizer pour découper les entrées
      * @throws BibliothequeException Si erreur dans la transaction
      */
-    static void utiliserReservation(StringTokenizer tokenizer) throws BibliothequeException {
+    private static void utiliserReservation(StringTokenizer tokenizer) throws BibliothequeException {
         try {
             bibliothequeCreateur.beginTransaction();
             final String idReservation = readString(tokenizer);
@@ -491,14 +571,18 @@ public class Bibliotheque {
                 reservationDTO);
             bibliothequeCreateur.commitTransaction();
         } catch(
+            //TODO
+            // InvalidPrimaryKeyException
             InvalidHibernateSessionException
+            | InvalidDTOException
             | FacadeException
             | MissingDTOException
-            | InvalidDTOException
-            | InvalidLoanLimitException
+            | ExistingLoanException
             | ExistingReservationException
-            | ExistingLoanException exception) {
-            throw new BibliothequeException(exception.getMessage());
+            | InvalidLoanLimitException exception) {
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
+            bibliothequeCreateur.rollbackTransaction();
         }
     }
 
@@ -506,7 +590,7 @@ public class Bibliotheque {
      * @param tokenizer StringTokenizer pour découper les entrées
      * @throws BibliothequeException Si erreur dans transaction
      */
-    static void annulerReservation(StringTokenizer tokenizer) throws BibliothequeException {
+    private static void annulerReservation(StringTokenizer tokenizer) throws BibliothequeException {
         try {
             bibliothequeCreateur.beginTransaction();
             final String idReservation = readString(tokenizer);
@@ -521,89 +605,17 @@ public class Bibliotheque {
                 reservationDTO);
             bibliothequeCreateur.commitTransaction();
         } catch(
+            //TODO
+            // InvalidPrimaryKeyException
             InvalidHibernateSessionException
+            | InvalidDTOException
             | FacadeException
-            | MissingDTOException
-            | InvalidDTOException exception) {
-            throw new BibliothequeException(exception.getMessage());
+            | MissingDTOException exception) {
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
+            bibliothequeCreateur.rollbackTransaction();
         }
     }
 
-    /**
-     * Vérifie si la fin du traitement des transactions est
-     * atteinte.
-     * @param transaction String pour l'entrée de la transaction
-     * @return True si fin du fichier atteint, sinon false
-     */
-    static boolean finTransaction(String transaction) {
-        // fin de fichier atteinte
-        if(transaction == null) {
-            return true;
-        }
-        StringTokenizer tokenizer = new StringTokenizer(transaction,
-            " ");
-        //NOTE : CODE CI-DESSOUS A REVOIR!!
+} //class
 
-        // ligne ne contenant que des espaces
-        if(!tokenizer.hasMoreTokens()) {
-            return false;
-        }
-
-        // commande "exit"
-        String commande = tokenizer.nextToken();
-        if(commande.equals("exit")) {
-            return true;
-        }
-        return false;
-
-    }
-
-    /** lecture d'une chaine de caractères de la transaction entrée à l'écran.
-     * @param tokenizer
-     */
-    static String readString(StringTokenizer tokenizer) throws BibliothequeException {
-        if(tokenizer.hasMoreElements()) {
-            return tokenizer.nextToken();
-        }
-        throw new BibliothequeException("autre paramètre attendu");
-
-    }
-
-    /**
-     * lecture d'un int java de la transaction entrée à l'écran
-     */
-
-    /**
-     * lecture d'un long java de la transaction entrée à l'écran
-     */
-    static long readLong(StringTokenizer tokenizer) throws BibliothequeException {
-        if(tokenizer.hasMoreElements()) {
-            String token = tokenizer.nextToken();
-            try {
-                return Long.valueOf(token).longValue();
-            } catch(NumberFormatException e) {
-                throw new BibliothequeException("Nombre attendu à la place de \""
-                    + token
-                    + "\"");
-            }
-        }
-        throw new BibliothequeException("autre paramètre attendu");
-    }
-
-    /**
-     * lecture d'une date en format YYYY-MM-DD
-     */
-    static Timestamp readDate(StringTokenizer tokenizer) throws BibliothequeException {
-        if(tokenizer.hasMoreElements()) {
-            final String token = tokenizer.nextToken();
-            try {
-                return FormatteurDate.timestampValue(token);
-            } catch(ParseException e) {
-                throw new BibliothequeException("Date en format YYYY-MM-DD attendue à la place  de \""
-                    + token
-                    + "\"");
-            }
-        }
-        throw new BibliothequeException("autre paramètre attendu");
-    }
-}//class
