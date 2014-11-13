@@ -3,7 +3,7 @@ package ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao;
 
 /**
  * Cette exception est utilisée en cas de problème avec un objet
- * {@link ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.DAO}.
+ * {@link ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IDao}.
  *
  * @author Cedric Soumpholphakdy, Dany Benoit-Lafond, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
  */

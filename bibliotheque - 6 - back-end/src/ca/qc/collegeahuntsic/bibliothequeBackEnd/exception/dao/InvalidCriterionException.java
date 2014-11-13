@@ -25,7 +25,7 @@ public class InvalidCriterionException extends Exception {
      * is not initialized, and may subsequently be initialized by a call to
      * {@link java.lang.Throwable#initCause(java.lang.Throwable)
      * Throwable.initCause(Throwable)}.
-     * 
+     *
      * @param message
      *            The detail message. The detail message is saved for later
      *            retrieval by the {@link java.lang.Throwable#getMessage()
@@ -43,7 +43,7 @@ public class InvalidCriterionException extends Exception {
      * for other throwables (for example,
      * {@link java.security.PrivilegedActionException PrivilegedActionException}
      * ).
-     * 
+     *
      * @param cause
      *            The cause (which is saved for later retrieval by the
      *            {@link java.lang.Throwable#getCause() Throwable.getCause()}
@@ -58,7 +58,7 @@ public class InvalidCriterionException extends Exception {
      * Constructs a new exception with the specified detail message and cause.
      * Note that the detail message associated with cause is not automatically
      * incorporated in this exception's detail message.
-     * 
+     *
      * @param message
      *            The detail message. The detail message is saved for later
      *            retrieval by the Throwable.getMessage() method
@@ -78,7 +78,7 @@ public class InvalidCriterionException extends Exception {
      * Constructs a new exception with the specified detail message, cause,
      * suppression enabled or disabled, and writable stack trace enabled or
      * disabled.
-     * 
+     *
      * @param message
      *            The detail message
      * @param cause
