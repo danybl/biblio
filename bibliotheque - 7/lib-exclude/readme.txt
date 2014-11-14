@@ -1,1 +1,0 @@
-﻿Library to exclude building as it is already included in any servlet container.

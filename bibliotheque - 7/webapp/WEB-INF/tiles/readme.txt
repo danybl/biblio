@@ -1,1 +1,0 @@
-﻿Tiles definition files.
