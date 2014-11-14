@@ -316,12 +316,12 @@ public final class Bibliotheque {
                 membreDTO);
             bibliothequeCreateur.commitTransaction();
         } catch(
-            //TODO
-            //| ExistingLoanException | ExistingReservationException
             InvalidHibernateSessionException
             | InvalidDTOException
             | MissingDTOException
-            | FacadeException exception) {
+            | FacadeException
+            | ExistingLoanException
+            | ExistingReservationException exception) {
             Bibliotheque.LOGGER.error(" **** "
                 + exception.getMessage());
             bibliothequeCreateur.rollbackTransaction();
@@ -372,14 +372,12 @@ public final class Bibliotheque {
 
             bibliothequeCreateur.commitTransaction();
         } catch(
-            //TODO
-            // | InvalidPrimaryKeyException
-            // | ExistingLoanException
-            // | ExistingReservationException 
             InvalidHibernateSessionException
             | InvalidDTOException
             | FacadeException
-            | MissingDTOException exception) {
+            | MissingDTOException
+            | ExistingLoanException
+            | ExistingReservationException exception) {
             Bibliotheque.LOGGER.error(" **** "
                 + exception.getMessage());
             bibliothequeCreateur.rollbackTransaction();
@@ -416,8 +414,6 @@ public final class Bibliotheque {
                 pretDTO);
             bibliothequeCreateur.commitTransaction();
         } catch(
-            //TODO
-            // | InvalidPrimaryKeyException 
             InvalidHibernateSessionException
             | InvalidDTOException
             | FacadeException
@@ -450,8 +446,6 @@ public final class Bibliotheque {
                 pretDTO);
             bibliothequeCreateur.commitTransaction();
         } catch(
-            // TODO
-            // | InvalidPrimaryKeyException
             InvalidHibernateSessionException
             | InvalidDTOException
             | FacadeException
@@ -484,9 +478,6 @@ public final class Bibliotheque {
                 pretDTO);
             bibliothequeCreateur.commitTransaction();
         } catch(
-            //TODO
-            // | InvalidPrimaryKeyException
-            // retirer : BibliothequeException
             InvalidHibernateSessionException
             | InvalidDTOException
             | FacadeException
@@ -532,18 +523,14 @@ public final class Bibliotheque {
                 reservationDTO);
             bibliothequeCreateur.commitTransaction();
         } catch(
-            //TODO
-            // InvalidPrimaryKeyException
-            // ExistingLoanException
-            // retirer : InterruptedException et InvalidLoanLimitException
             InvalidHibernateSessionException
             | InvalidDTOException
             | FacadeException
             | InterruptedException
             | MissingDTOException
-            | InvalidLoanLimitException
             | ExistingReservationException
-            | ExistingLoanException exception) {
+            | ExistingLoanException
+            | MissingLoanException exception) {
             Bibliotheque.LOGGER.error(" **** "
                 + exception.getMessage());
             bibliothequeCreateur.rollbackTransaction();
@@ -571,8 +558,6 @@ public final class Bibliotheque {
                 reservationDTO);
             bibliothequeCreateur.commitTransaction();
         } catch(
-            //TODO
-            // InvalidPrimaryKeyException
             InvalidHibernateSessionException
             | InvalidDTOException
             | FacadeException
@@ -605,8 +590,6 @@ public final class Bibliotheque {
                 reservationDTO);
             bibliothequeCreateur.commitTransaction();
         } catch(
-            //TODO
-            // InvalidPrimaryKeyException
             InvalidHibernateSessionException
             | InvalidDTOException
             | FacadeException
