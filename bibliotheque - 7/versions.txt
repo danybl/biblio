@@ -1,1 +1,0 @@
-﻿v7_00: Initial version.
