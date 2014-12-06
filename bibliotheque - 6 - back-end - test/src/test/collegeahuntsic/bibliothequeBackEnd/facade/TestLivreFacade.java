@@ -60,6 +60,20 @@ public class TestLivreFacade extends TestCase {
         super.tearDown();
     }
 
+    /**
+     * Configures the tests to be executed in this test case. This suite is now visible for a {@link junit.awtui.TestRunner}.<br /><br />
+     * The suite contains all test cases for:{@link test.collegeahuntsic.bibliothequeBackEnd.facade.TestLivreFacade}<br />
+     * <ul>
+     * <li>{@link test.collegeahuntsic.bibliothequeBackEnd.facade.TestLivreFacade#testAcquerirLivre()}
+     * <li>{@link test.collegeahuntsic.bibliothequeBackEnd.facade.TestLivreFacade#testGetAllLivres()}
+     * <li>{@link test.collegeahuntsic.bibliothequeBackEnd.facade.TestLivreFacade#testGetLivre()}
+     * <li>{@link test.collegeahuntsic.bibliothequeBackEnd.facade.TestLivreFacade#testUpdateLivre()}
+     * <li>{@link test.collegeahuntsic.bibliothequeBackEnd.facade.TestLivreFacade#testVendreLivre()}
+     * </ul>
+     *
+     * @return Test The tests to be executed in this test case
+     */
+
     public static Test suite() {
         final TestSuite suite = new TestSuite(TestLivreFacade.TEST_CASE_TITLE);
         suite.addTestSuite(TestCase.class);
