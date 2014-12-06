@@ -5,14 +5,15 @@ import java.sql.Timestamp;
 import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import test.collegeahuntsic.bibliothequeBackEnd.exception.TestCaseFailedException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import test.collegeahuntsic.bibliothequeBackEnd.exception.TestCaseFailedException;
 
 /**
  *
@@ -26,12 +27,11 @@ public class TestLivreFacade extends TestCase {
 
     private final static String TEST_CASE_TITLE = "Livre facade test case"; //$NON-NLS-1$
 
-    //
-    //    private final static String TITRE = "Titre "; //$NON-NLS-1$
-    //
-    //    private final static String AUTEUR = "Auteur "; //$NON-NLS-1$
-    //
-    //    private static int sequence = 1;
+    private static final String TITLE = "Titre "; //$NON-NLS-1$
+
+    private final static String AUTEUR = "Auteur "; //$NON-NLS-1$
+
+    private static int sequence = 1;
 
     /**
      *
@@ -79,6 +79,37 @@ public class TestLivreFacade extends TestCase {
         suite.addTestSuite(TestCase.class);
         suite.addTestSuite(TestLivreFacade.class);
         return suite;
+    }
+
+    /**
+     * Tests if {@link ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces.ILivreFacade#acquerirLivre(org.hibernate.Session, ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.LivreDTO)}.
+     *
+     * @throws TestCaseFailedException If an error occurs
+     */
+    public void testAcquerirLivre() throws TestCaseFailedException {
+        try {
+            beginTransaction();
+            final LivreDTO livreDTO = new LivreDTO();
+            livreDTO.setTitre(TestLivreFacade.TITLE
+                + TestLivreFacade.sequence);
+            livreDTO.setAuteur(TestLivreFacade.AUTEUR
+                + TestLivreFacade.sequence);
+            livreDTO.setDateAcquisition(new Timestamp(System.currentTimeMillis()));
+            TestLivreFacade.sequence = TestLivreFacade.sequence + 1;
+            getLivreFacade().acquerirLivre(getSession(),
+                livreDTO);
+            commitTransaction();
+        } catch(
+            InvalidHibernateSessionException
+            | InvalidDTOException
+            | FacadeException exception) {
+            try {
+                rollbackTransaction();
+            } catch(TestCaseFailedException testCaseFailedException) {
+                TestLivreFacade.LOGGER.error(testCaseFailedException);
+            }
+            TestLivreFacade.LOGGER.error(exception);
+        }
     }
 
     /**
