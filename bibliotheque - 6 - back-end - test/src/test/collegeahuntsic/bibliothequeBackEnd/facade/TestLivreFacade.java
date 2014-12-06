@@ -185,6 +185,63 @@ public class TestLivreFacade extends TestCase {
     }
 
     /**
+     * Test if {@link ca.qc.collegeahuntsic.bibliothqueBackEnd.facade.interfaces.ILivreFacade}.
+     *
+     * @throws TestCaseFailedException If an error occurs
+     * */
+    public void testUpdateLivre() throws TestCaseFailedException {
+        try {
+            testAcquerirLivre();
+            beginTransaction();
+            final List<LivreDTO> livres = getLivreFacade().getAllLivres(getSession(),
+                LivreDTO.TITRE_COLUMN_NAME);
+            assertFalse(livres.isEmpty());
+            LivreDTO livreDTO = livres.get(livres.size() - 1);
+            assertNotNull(livreDTO);
+            assertNotNull(livreDTO.getIdLivre());
+            assertNotNull(livreDTO.getTitre());
+            assertNotNull(livreDTO.getAuteur());
+            assertNotNull(livreDTO.getDateAcquisition());
+            final String idLivre = livreDTO.getIdLivre();
+            final String titre = livreDTO.getTitre();
+            final String auteur = livreDTO.getAuteur();
+            final Timestamp dateAcquisition = livreDTO.getDateAcquisition();
+            commitTransaction();
+
+            beginTransaction();
+            livreDTO = getLivreFacade().getLivre(getSession(),
+                idLivre);
+            assertNotNull(livreDTO);
+            assertNotNull(livreDTO.getIdLivre());
+            assertNotNull(livreDTO.getTitre());
+            assertNotNull(livreDTO.getAuteur());
+            assertNotNull(livreDTO.getDateAcquisition());
+
+            assertEquals(idLivre,
+                livreDTO.getIdLivre());
+            assertEquals(titre,
+                livreDTO.getTitre());
+            assertEquals(auteur,
+                livreDTO.getAuteur());
+            assertEquals(dateAcquisition,
+                livreDTO.getDateAcquisition());
+            commitTransaction();
+
+        } catch(
+            InvalidHibernateSessionException
+            | InvalidSortByPropertyException
+            | InvalidPrimaryKeyException
+            | FacadeException exception) {
+            try {
+                rollbackTransaction();
+            } catch(TestCaseFailedException testCaseFailedException) {
+                TestLivreFacade.LOGGER.error(testCaseFailedException);
+            }
+            TestLivreFacade.LOGGER.error(exception);
+        }
+    }
+
+    /**
      *
      * Tests if {@link ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces.ILivreFacade#vendreLivre
      * (org.hibernate.Session, ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.LivreDTO)}.

@@ -6,7 +6,6 @@ package test.collegeahuntsic.bibliothequeBackEnd;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import test.collegeahuntsic.bibliothequeBackEnd.facade.TestCase;
 import test.collegeahuntsic.bibliothequeBackEnd.facade.TestLivreFacade;
 
 /**
@@ -60,7 +59,7 @@ public class TestAll extends junit.framework.TestCase {
      */
     public static Test suite() {
         final TestSuite suite = new TestSuite(TestAll.TEST_CASE_TITLE);
-        suite.addTestSuite(TestCase.class);
+        suite.addTestSuite(TestLivreFacade.class);
         suite.addTestSuite(TestLivreFacade.class);
         return suite;
     }
