@@ -77,7 +77,6 @@ public class TestLivreFacade extends TestCase {
 
     public static Test suite() {
         final TestSuite suite = new TestSuite(TestLivreFacade.TEST_CASE_TITLE);
-        suite.addTestSuite(TestCase.class);
         suite.addTestSuite(TestLivreFacade.class);
         return suite;
     }
