@@ -185,7 +185,7 @@ public class TestLivreFacade extends TestCase {
     }
 
     /**
-     * Test if {@link ca.qc.collegeahuntsic.bibliothqueBackEnd.facade.interfaces.ILivreFacade#getLivre(org.hibernate.Session, String)}.
+     * Test if {@link ca.qc.collegeahuntsic.bibliothqueBackEnd.facade.interfaces.ILivreFacade#updateLivre(org.hibernate.Session, String)}.
      *
      * @throws TestCaseFailedException If an error occurs
      * */
@@ -203,9 +203,20 @@ public class TestLivreFacade extends TestCase {
             assertNotNull(livreDTO.getAuteur());
             assertNotNull(livreDTO.getDateAcquisition());
             final String idLivre = livreDTO.getIdLivre();
-            final String titre = livreDTO.getTitre();
-            final String auteur = livreDTO.getAuteur();
+            final String titre = livreDTO.getTitre()
+                + TestLivreFacade.sequence;
+            final String auteur = livreDTO.getAuteur()
+                + TestLivreFacade.sequence;
             final Timestamp dateAcquisition = livreDTO.getDateAcquisition();
+
+            livreDTO.setAuteur(auteur);
+            livreDTO.setTitre(titre);
+            livreDTO.setDateAcquisition(dateAcquisition);
+
+            getLivreFacade().updateLivre(getSession(),
+                livreDTO);
+            TestLivreFacade.sequence += 1;
+
             commitTransaction();
 
             beginTransaction();
@@ -231,7 +242,8 @@ public class TestLivreFacade extends TestCase {
             InvalidHibernateSessionException
             | InvalidSortByPropertyException
             | InvalidPrimaryKeyException
-            | FacadeException exception) {
+            | FacadeException
+            | InvalidDTOException exception) {
             try {
                 rollbackTransaction();
             } catch(TestCaseFailedException testCaseFailedException) {
