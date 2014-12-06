@@ -185,6 +185,39 @@ public class TestLivreFacade extends TestCase {
     }
 
     /**
+     * Tests if {@link ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces.ILivreFacade#getAllLivres(org.hibernate.Session, String)}.
+     *
+     * @throws TestCaseFailedException If an error occurs
+     */
+
+    public void testGetAllLivres() throws TestCaseFailedException {
+        try {
+            testAcquerirLivre();
+            beginTransaction();
+            final List<LivreDTO> livres = getLivreFacade().getAllLivres(getSession(),
+                LivreDTO.TITRE_COLUMN_NAME);
+            assertFalse(livres.isEmpty());
+            for(LivreDTO livreDTO : livres) {
+                assertNotNull(livreDTO.getIdLivre());
+                assertNotNull(livreDTO.getTitre());
+                assertNotNull(livreDTO.getAuteur());
+                assertNotNull(livreDTO.getDateAcquisition());
+            }
+            commitTransaction();
+        } catch(
+            InvalidHibernateSessionException
+            | InvalidSortByPropertyException
+            | FacadeException exception) {
+            try {
+                rollbackTransaction();
+            } catch(TestCaseFailedException testCaseFailedException) {
+                TestLivreFacade.LOGGER.error(testCaseFailedException);
+            }
+            TestLivreFacade.LOGGER.error(exception);
+        }
+    }
+
+    /**
      * Test if {@link ca.qc.collegeahuntsic.bibliothqueBackEnd.facade.interfaces.ILivreFacade#updateLivre(org.hibernate.Session, String)}.
      *
      * @throws TestCaseFailedException If an error occurs
