@@ -16,28 +16,26 @@ import org.apache.commons.logging.LogFactory;
 import test.collegeahuntsic.bibliothequeBackEnd.exception.TestCaseFailedException;
 
 /**
+ * Test case for {@link ca.qc.collegeahuntsic.bibliothqueBackEnd.facade.interfaces.ILivreFacade}.
  *
- * TODO Test case for
- *
- * @author Dany Benoit-Lafond
+ * @author Dany Benoit-Lafond,Cedric Soumpholphakdy, Nkezimana Franz, Jaskaran Singh Dhadda & David Andrés Gallego Mesa
  */
 public class TestLivreFacade extends TestCase {
 
-    private final static Log LOGGER = LogFactory.getLog(TestLivreFacade.class);
+    private static final Log LOGGER = LogFactory.getLog(TestLivreFacade.class);
 
-    private final static String TEST_CASE_TITLE = "Livre facade test case"; //$NON-NLS-1$
+    private static final String TEST_CASE_TITLE = "Livre facade test case"; //$NON-NLS-1$
 
     private static final String TITLE = "Titre "; //$NON-NLS-1$
 
-    private final static String AUTEUR = "Auteur "; //$NON-NLS-1$
+    private static final String AUTEUR = "Auteur "; //$NON-NLS-1$
 
     private static int sequence = 1;
 
     /**
-     *
      * Default constructor.
      *
-     * @param The name of the test case
+     * @param name The name of the test case
      * @throws TestCaseFailedException If an error occurs
      */
     public TestLivreFacade(String name) throws TestCaseFailedException {
@@ -63,6 +61,7 @@ public class TestLivreFacade extends TestCase {
     /**
      * Configures the tests to be executed in this test case. This suite is now visible for a {@link junit.awtui.TestRunner}.<br /><br />
      * The suite contains all test cases for:{@link test.collegeahuntsic.bibliothequeBackEnd.facade.TestLivreFacade}<br />
+     *
      * <ul>
      * <li>{@link test.collegeahuntsic.bibliothequeBackEnd.facade.TestLivreFacade#testAcquerirLivre()}
      * <li>{@link test.collegeahuntsic.bibliothequeBackEnd.facade.TestLivreFacade#testGetAllLivres()}
@@ -82,7 +81,8 @@ public class TestLivreFacade extends TestCase {
     }
 
     /**
-     * Tests if {@link ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces.ILivreFacade#acquerirLivre(org.hibernate.Session, ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.LivreDTO)}.
+     * Tests if {@link ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces.ILivreFacade#acquerirLivre
+     * (org.hibernate.Session, ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.LivreDTO)}.
      *
      * @throws TestCaseFailedException If an error occurs
      */
