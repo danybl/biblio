@@ -185,7 +185,7 @@ public class TestLivreFacade extends TestCase {
     }
 
     /**
-     * Test if {@link ca.qc.collegeahuntsic.bibliothqueBackEnd.facade.interfaces.ILivreFacade}.
+     * Test if {@link ca.qc.collegeahuntsic.bibliothqueBackEnd.facade.interfaces.ILivreFacade#getLivre(org.hibernate.Session, String)}.
      *
      * @throws TestCaseFailedException If an error occurs
      * */
