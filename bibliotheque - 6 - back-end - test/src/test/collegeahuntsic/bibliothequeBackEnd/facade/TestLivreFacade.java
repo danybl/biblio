@@ -11,6 +11,8 @@ import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidPrimaryKey
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingLoanException;
+import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service.ExistingReservationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import test.collegeahuntsic.bibliothequeBackEnd.exception.TestCaseFailedException;
@@ -173,6 +175,54 @@ public class TestLivreFacade extends TestCase {
             | InvalidSortByPropertyException
             | InvalidPrimaryKeyException
             | FacadeException exception) {
+            try {
+                rollbackTransaction();
+            } catch(TestCaseFailedException testCaseFailedException) {
+                TestLivreFacade.LOGGER.error(testCaseFailedException);
+            }
+            TestLivreFacade.LOGGER.error(exception);
+        }
+    }
+
+    /**
+     *
+     * Tests if {@link ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces.ILivreFacade#vendreLivre
+     * (org.hibernate.Session, ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.LivreDTO)}.
+     *
+     * @throws TestCaseFailedException If an error occurs
+     */
+    public void testVendreLivre() throws TestCaseFailedException {
+        try {
+            testAcquerirLivre();
+            beginTransaction();
+            final List<LivreDTO> livres = getLivreFacade().getAllLivres(getSession(),
+                LivreDTO.TITRE_COLUMN_NAME);
+            assertFalse(livres.isEmpty());
+            LivreDTO livreDTO = livres.get(livres.size() - 1);
+            assertNotNull(livreDTO);
+            assertNotNull(livreDTO.getIdLivre());
+            assertNotNull(livreDTO.getAuteur());
+            assertNotNull(livreDTO.getTitre());
+            assertNotNull(livreDTO.getDateAcquisition());
+            final String idLivre = livreDTO.getIdLivre();
+            livreDTO.getIdLivre();
+            getLivreFacade().vendreLivre(getSession(),
+                livreDTO);
+            commitTransaction();
+
+            beginTransaction();
+            livreDTO = getLivreFacade().getLivre(getSession(),
+                idLivre);
+            assertNull(livreDTO);
+            commitTransaction();
+        } catch(
+            FacadeException
+            | InvalidHibernateSessionException
+            | InvalidSortByPropertyException
+            | InvalidPrimaryKeyException
+            | InvalidDTOException
+            | ExistingLoanException
+            | ExistingReservationException exception) {
             try {
                 rollbackTransaction();
             } catch(TestCaseFailedException testCaseFailedException) {
