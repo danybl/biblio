@@ -207,7 +207,7 @@ public class TestLivreFacade extends TestCase {
                 + TestLivreFacade.sequence;
             final String auteur = livreDTO.getAuteur()
                 + TestLivreFacade.sequence;
-            final Timestamp dateAcquisition = livreDTO.getDateAcquisition();
+            final Timestamp dateAcquisition = new Timestamp(System.currentTimeMillis());
 
             livreDTO.setAuteur(auteur);
             livreDTO.setTitre(titre);
