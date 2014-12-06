@@ -5,15 +5,15 @@ import java.sql.Timestamp;
 import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import test.collegeahuntsic.bibliothequeBackEnd.exception.TestCaseFailedException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade.FacadeException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import test.collegeahuntsic.bibliothequeBackEnd.exception.TestCaseFailedException;
 
 /**
  *
@@ -35,7 +35,7 @@ public class TestLivreFacade extends TestCase {
 
     /**
      *
-     * Default constructor
+     * Default constructor.
      *
      * @param The name of the test case
      * @throws TestCaseFailedException If an error occurs
